@@ -1,1 +1,0 @@
-# seugi-ios
