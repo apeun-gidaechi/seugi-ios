@@ -9,15 +9,19 @@
 
 import SwiftUI
 
-struct BottomNavigation: View {
-    @Binding var selectedTab: BottomNavigationType
+public struct SeugiBottomNavigation: View {
+    @Binding var selectedTab: SeugiBottomNavigationType
     
-    var body: some View {
+    public init(selectedTab: Binding<SeugiBottomNavigationType>) {
+        self._selectedTab = selectedTab
+    }
+    
+    public var body: some View {
         HStack {
-            let mainViews = BottomNavigationType.allCases
+            let mainViews = SeugiBottomNavigationType.allCases
             ForEach(mainViews, id: \.self) { tab in
                 Spacer()
-                BottomNavigationCeil(type: tab, isSelected: selectedTab == tab)
+                SeugiBottomNavigationCell(type: tab, isSelected: selectedTab == tab)
                     .onTapGesture {
                         selectedTab = tab
                     }
@@ -31,5 +35,6 @@ struct BottomNavigation: View {
             let impactMed = UIImpactFeedbackGenerator(style: .rigid)
             impactMed.impactOccurred()
         }
+        .shadow(.bottomNavigation(.default))
     }
 }

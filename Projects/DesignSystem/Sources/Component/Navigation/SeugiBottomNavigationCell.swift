@@ -8,12 +8,12 @@
 
 import SwiftUI
 
-struct BottomNavigationCeil: View {
+struct SeugiBottomNavigationCell: View {
     
-    let type: BottomNavigationType
+    let type: SeugiBottomNavigationType
     let isSelected: Bool
     
-    init(type: BottomNavigationType, isSelected: Bool) {
+    init(type: SeugiBottomNavigationType, isSelected: Bool) {
         self.type = type
         self.isSelected = isSelected
     }

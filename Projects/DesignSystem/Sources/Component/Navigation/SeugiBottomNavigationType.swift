@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-enum BottomNavigationType: CaseIterable {
+public enum SeugiBottomNavigationType: CaseIterable {
     case home
     case chat
     case people
