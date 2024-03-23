@@ -18,6 +18,9 @@ struct ColorPreview: View {
                 ColorPreviewCell(colors: Color.SeugiColorSystem.Sub.allCases)
                 ColorPreviewCell(colors: Color.SeugiColorSystem.Red.allCases)
                 ColorPreviewCell(colors: Color.SeugiColorSystem.Orange.allCases)
+                SeugiGradientSystem.primary
+                    .frame(height: 128)
+                    .frame(maxWidth: .infinity)
             }
         }
     }
