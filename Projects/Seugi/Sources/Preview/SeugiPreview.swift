@@ -20,6 +20,7 @@ enum SeugiPreview: String, CaseIterable {
     case badge = "Badge"
     case divider = "Divider"
     case listItem = "ListItem"
+    case avatar = "Avatar"
     
     var view: some View {
         Group {
@@ -33,6 +34,7 @@ enum SeugiPreview: String, CaseIterable {
             case .badge: BadgePreview()
             case .divider: DividerPreview()
             case .listItem: ListItemPreview()
+            case .avatar: AvatarPreview()
             }
         }
     }

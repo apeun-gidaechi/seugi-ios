@@ -8,23 +8,25 @@
 
 import SwiftUI
 
-struct SeugiAvatar: View {
+public struct SeugiAvatar: View {
     
-    var image: String?
     var type: SeugiAvatarType
     
-    init(_ image: String?,
-         type: SeugiAvatarType = .medium
+    public init(type: SeugiAvatarType
     ) {
-        self.image = image
         self.type = type
     }
     
-    var body: some View {
-        Image(image ?? DesignSystemAsset.personFill.name)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
+    public var body: some View {
+        Circle()
+            .seugiForeground(.primary(.p200))
             .frame(width: type.size, height: type.size)
-            .clipShape(Circle())
+            .overlay {
+                DesignSystemAsset.personFill.swiftUIImage
+                    .resizable()
+                    .renderingMode(.template)
+                    .seugiForeground(.primary(.p300))
+                    .frame(width: type.size / 2, height: type.size / 2)
+            }
     }
 }
