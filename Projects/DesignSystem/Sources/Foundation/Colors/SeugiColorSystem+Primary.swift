@@ -1,7 +1,7 @@
 import SwiftUI
 
 public extension Color.SeugiColorSystem {
-    enum Primary: SeugiColorable {
+    enum Primary: SeugiColorable, CaseIterable {
         case p050
         case p100
         case p200

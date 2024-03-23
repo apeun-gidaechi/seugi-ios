@@ -1,5 +1,5 @@
 import SwiftUI
 
-protocol SeugiColorable {
+public protocol SeugiColorable {
     var color: Color { get }
 }
