@@ -1,12 +1,14 @@
+//
+//  View+if.swift
+//  DesignSystem
+//
+//  Created by dgsw8th71 on 3/23/24.
+//  Copyright © 2024 seugi. All rights reserved.
+//
+
 import SwiftUI
 
-extension View {
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape(RoundedCorner(radius: radius, corners: corners))
-    }
-}
-
-extension View {
+public extension View {
     /// Applies the given transform if the given condition evaluates to `true`.
     /// - Parameters:
     ///   - condition: The condition to evaluate.
