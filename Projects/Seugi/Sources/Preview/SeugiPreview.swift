@@ -12,11 +12,13 @@ import DesignSystem
 enum SeugiPreview: String, CaseIterable {
     
     case color = "Color"
+    case font = "Font"
     
     var view: some View {
         Group {
             switch self {
             case .color: ColorPreview()
+            case .font: FontPreview()
             }
         }
     }
@@ -26,6 +28,7 @@ enum SeugiPreview: String, CaseIterable {
             List(Self.allCases, id: \.self) { preview in
                 NavigationLink {
                     preview.view
+                        .navigationTitle(preview.rawValue)
                 } label: {
                     Text("\(preview.rawValue) Preview")
                 }

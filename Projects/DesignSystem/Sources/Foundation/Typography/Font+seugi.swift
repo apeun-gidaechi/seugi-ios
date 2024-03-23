@@ -1,7 +1,7 @@
 import SwiftUI
 
 public extension Font {
-    enum SeugiFontSystem: SeugiFontable {
+    enum SeugiFontSystem: SeugiFontable, CaseIterable {
         case display1
         case display2
         case title1
