@@ -21,6 +21,12 @@ struct ButtonPreview: View {
                         print("\(type) small")
                     }
                 }
+                SeugiToggle(isOn: .constant(true))
+                SeugiToggle(isOn: .constant(false))
+                ForEach(ToggleSize.allCases, id: \.self) {
+                    SeugiToggle(isOn: .constant(true), type: .checkbox(size: $0))
+                    SeugiToggle(isOn: .constant(false), type: .checkbox(size: $0))
+                }
             }
             .padding(.horizontal, 20)
         }
