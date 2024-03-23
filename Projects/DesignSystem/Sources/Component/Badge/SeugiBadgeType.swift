@@ -8,23 +8,14 @@
 
 import SwiftUI
 
-enum SeugiBadgeType {
-    case small
-    case medium
-    case large
+public enum SeugiBadgeType {
+    case normal
+    case number(Int)
     
-    var width: CGFloat {
-        return switch self {
-        case .small: 8
-        case .medium: 6
-        case .large: 12
-        }
-    }
-    
-    var hasLabel: Bool {
-        return switch self {
-        case .large: true
-        default: false
+    var size: CGFloat {
+        switch self {
+        case .normal: 12
+        case .number: 20
         }
     }
 }

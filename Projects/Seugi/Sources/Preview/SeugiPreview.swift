@@ -17,6 +17,7 @@ enum SeugiPreview: String, CaseIterable {
     case button = "Button"
     case textField = "TextField"
     case bottomNavigation = "BottomNavigation"
+    case badge = "Badge"
     
     var view: some View {
         Group {
@@ -27,6 +28,7 @@ enum SeugiPreview: String, CaseIterable {
             case .button: ButtonPreview()
             case .textField: TextFieldPreview()
             case .bottomNavigation: BottomNavigationPreview()
+            case .badge: BadgePreview()
             }
         }
     }

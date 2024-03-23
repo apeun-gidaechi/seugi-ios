@@ -8,23 +8,28 @@
 
 import SwiftUI
 
-struct SeugiBadge: View {
+public struct SeugiBadge: View {
     
     var type: SeugiBadgeType
     
-    init(type: SeugiBadgeType = .large) {
+    public init(type: SeugiBadgeType) {
         self.type = type
     }
     
-    var body: some View {
-        Circle()
-            .foregroundStyle(Color.seugi(.gray(.g100)))
-            .frame(width: type.width)
-            .overlay {
-                if type.hasLabel {
-                    Text("N")
-                        .foregroundStyle(Color.white)
-                }
-            }
+    public var body: some View {
+        if case let .number(n) = type {
+            let text = n >= 300 ? "300+" : String(n)
+            Text(text)
+                .font(.seugi(.caption2))
+                .frame(height: type.size)
+                .padding(.horizontal, 8)
+                .background(Color.seugi(.orange(.o500)))
+                .cornerRadius(type.size / 2, corners: .allCorners)
+                .seugiForeground(.sub(.white))
+        } else {
+            Circle()
+                .seugiForeground(.orange(.o500))
+                .frame(height: type.size)
+        }
     }
 }
