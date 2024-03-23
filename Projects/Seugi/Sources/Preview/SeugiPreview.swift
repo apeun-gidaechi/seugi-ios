@@ -13,12 +13,14 @@ enum SeugiPreview: String, CaseIterable {
     
     case color = "Color"
     case font = "Font"
+    case shadow = "Shadow"
     
     var view: some View {
         Group {
             switch self {
             case .color: ColorPreview()
             case .font: FontPreview()
+            case .shadow: ShadowPreview()
             }
         }
     }
