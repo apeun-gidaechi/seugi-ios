@@ -8,19 +8,19 @@
 
 import SwiftUI
 
-struct SeugiTextField: View {
+public struct SeugiTextField: View {
     
     // MARK: - parameters
     let hint: String
     @Binding var text: String
-    let textFieldType: SeugiTextFieldType
+    let type: SeugiTextFieldType
     
-    init(_ hint: String = "",
-         text: Binding<String>,
-         textFieldType: SeugiTextFieldType = .none(hasXMark: true)) {
+    public init(_ hint: String = "",
+                text: Binding<String>,
+                type: SeugiTextFieldType = .none(hasXMark: true)) {
         self.hint = hint
         self._text = text
-        self.textFieldType = textFieldType
+        self.type = type
     }
     
     // MARK: - local state
@@ -28,13 +28,10 @@ struct SeugiTextField: View {
     @State private var isHide: Bool = true
     
     // MARK: - View
-    var body: some View {
-        
-        let lineWidth = isFocused ? 1.5 : 1
-        let strokeColor: Color = isFocused ? .seugi(.primary(.p500)) : .seugi(.gray(.g300))
+    public var body: some View {
         
         Group {
-            if textFieldType == .password && isHide {
+            if type == .password && isHide {
                 SecureField(hint,
                             text: $text)
             } else {
@@ -42,45 +39,70 @@ struct SeugiTextField: View {
                           text: $text)
             }
         }
-        .autocorrectionDisabled()
+        .textFieldStyle(
+            SeugiTextFieldStyle(text: text, isFocused: isFocused, isHide: isHide, type: type) {
+                text = ""
+            } onClickHide: {
+                isHide.toggle()
+            }
+        )
         .focused($isFocused)
-        .frame(maxWidth: .infinity)
-        .frame(height: 52)
-        .background(Color.white)
-        .padding(.horizontal, 16)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .font(.seugi(.body2))
-        .accentColor(.seugi(.primary(.p500)))
-        .foregroundStyle(.black)
-        .overlay(
-            ZStack {
-                RoundedCorner(radius: 12)
-                    .stroke(strokeColor, lineWidth: lineWidth)
-                HStack(spacing: 0) {
-                    Spacer()
-                    
-                    switch textFieldType {
-                    case .none(let hasXMark):
-                        if hasXMark && !text.isEmpty {
-                            Image(DesignSystemAsset.closeFill.name)
+    }
+}
+
+struct SeugiTextFieldStyle: TextFieldStyle {
+    
+    @Environment(\.isEnabled) var isEnabled
+    var text: String
+    var isFocused: Bool
+    var isHide: Bool
+    var type: SeugiTextFieldType
+    var onClickClose: () -> ()
+    var onClickHide: () -> ()
+    
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        
+        let lineWidth = isFocused ? 1.5 : 1
+        let strokeColor: Color = isFocused ? .seugi(.primary(.p500)) : .seugi(.gray(.g300))
+        
+        configuration
+            .autocorrectionDisabled()
+            .textInputAutocapitalization(.never)
+            .frame(maxWidth: .infinity)
+            .frame(height: 52)
+            .background(Color.seugi(.sub(.white)))
+            .padding(.horizontal, 16)
+            .cornerRadius(12, corners: .allCorners)
+            .font(.seugi(.subtitle2))
+            .accentColor(.seugi(.primary(.p500)))
+            .seugiForeground(isEnabled ? .sub(.black) : .gray(.g400))
+            .overlay(
+                ZStack {
+                    RoundedCorner(radius: 12)
+                        .stroke(isEnabled ? strokeColor : .seugi(.gray(.g200)), lineWidth: lineWidth)
+                    HStack(spacing: 0) {
+                        Spacer()
+                        switch type {
+                        case .none(let hasXMark):
+                            if hasXMark && !text.isEmpty {
+                                DesignSystemAsset.closeFill.swiftUIImage
+                                    .renderingMode(.template)
+                                    .seugiForeground(.gray(.g500))
+                                    .onTapGesture {
+                                        onClickClose()
+                                    }
+                            }
+                        case .password:
+                            (isHide ? DesignSystemAsset.hideFill.swiftUIImage : DesignSystemAsset.showFill.swiftUIImage)
                                 .renderingMode(.template)
                                 .seugiForeground(.gray(.g500))
                                 .onTapGesture {
-                                    text = ""
+                                    onClickHide()
                                 }
                         }
-                    case .password:
-                        Image(isHide ? DesignSystemAsset.hideFill.name : DesignSystemAsset.showFill.name)
-                            .renderingMode(.template)
-                            .seugiForeground(.gray(.g500))
-                            .onTapGesture {
-                                isHide.toggle()
-                            }
                     }
+                    .padding(.trailing, 16)
                 }
-                .padding(.trailing, 16)
-            }
-        )
-        .padding(.horizontal, 20)
+            )
     }
 }

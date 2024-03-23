@@ -6,7 +6,7 @@
 //  Copyright © 2024 tuist.io. All rights reserved.
 //
 
-enum SeugiTextFieldType: Equatable {
+public enum SeugiTextFieldType: Equatable {
     case none(hasXMark: Bool)
     case password
 }
