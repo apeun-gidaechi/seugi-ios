@@ -8,27 +8,50 @@
 
 import SwiftUI
 
-enum SeugiButtonType {
+public enum SeugiButtonType: CaseIterable {
     case primary
     case black
     case red
-    case none
+    case transparent
+    case shadow
     
     var backgroundColor: Color {
         switch self {
         case .primary: .seugi(.primary(.p500))
         case .black: .seugi(.sub(.black))
         case .red: .seugi(.red(.r200))
-        case .none: .seugi(.gray(.g100))
+        case .transparent: .seugi(.sub(.transparent))
+        case .shadow: .seugi(.sub(.white))
+        }
+    }
+    
+    var disabledBackgroundColor: Color {
+        switch self {
+        case .primary: .seugi(.primary(.p100))
+        case .black: .seugi(.gray(.g500))
+        case .red: .seugi(.red(.r100))
+        case .transparent: .seugi(.sub(.transparent))
+        case .shadow: .seugi(.sub(.white))
         }
     }
     
     var foregroundColor: Color {
         switch self {
-        case .primary: .seugi(.sub(.black))
+        case .primary: .seugi(.sub(.white))
         case .black: .seugi(.sub(.white))
         case .red: .seugi(.red(.r500))
-        case .none: .seugi(.gray(.g500))
+        case .transparent: .seugi(.sub(.black))
+        case .shadow: .seugi(.sub(.black))
+        }
+    }
+    
+    var disabledForegroundColor: Color {
+        switch self {
+        case .primary: .seugi(.sub(.white))
+        case .black: .seugi(.sub(.white))
+        case .red: .seugi(.red(.r300))
+        case .transparent: .seugi(.sub(.black))
+        case .shadow: .seugi(.gray(.g500))
         }
     }
 }
