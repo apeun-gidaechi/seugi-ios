@@ -21,6 +21,7 @@ enum SeugiPreview: String, CaseIterable {
     case divider = "Divider"
     case listItem = "ListItem"
     case avatar = "Avatar"
+    case topBar = "TopBar"
     
     var view: some View {
         Group {
@@ -35,6 +36,7 @@ enum SeugiPreview: String, CaseIterable {
             case .divider: DividerPreview()
             case .listItem: ListItemPreview()
             case .avatar: AvatarPreview()
+            case .topBar: TopBarPreview()
             }
         }
     }
@@ -44,12 +46,11 @@ enum SeugiPreview: String, CaseIterable {
             List(Self.allCases, id: \.self) { preview in
                 NavigationLink {
                     preview.view
-                        .navigationTitle(preview.rawValue)
+                    //                        .navigationTitle(preview.rawValue)
                 } label: {
                     Text("\(preview.rawValue) Preview")
                 }
             }
-            .navigationTitle("Seugi Preivew")
         }
     }
 }
