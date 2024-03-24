@@ -9,13 +9,15 @@ public extension Project {
         organizationName: String = "seugi",
         packages: [Package] = [],
         deploymentTargets: DeploymentTargets? = .iOS("16.4"),
+        scripts: [ProjectDescription.TargetScript] = [],
         dependencies: [TargetDependency] = [],
         sources: SourceFilesList = ["Sources/**"],
         resources: ResourceFileElements? = nil,
         infoPlist: InfoPlist = .default
     ) -> Project {
         let settings: Settings = .settings(
-            base: ["OTHER_LDFLAGS": .string("-ObjC")],
+            base: ["OTHER_LDFLAGS": .string("-ObjC"),
+                   "ENABLE_USER_SCRIPT_SANDBOXING": .string("No")],
             configurations: [
                 .debug(name: .debug),
                 .release(name: .release)
@@ -29,6 +31,7 @@ public extension Project {
                                infoPlist: infoPlist,
                                sources: sources,
                                resources: resources,
+                               scripts: scripts,
                                dependencies: dependencies,
                                settings: settings)
         
@@ -39,6 +42,7 @@ public extension Project {
                                 deploymentTargets: deploymentTargets,
                                 infoPlist: infoPlist,
                                 sources: ["Tests/**"],
+                                scripts: scripts,
                                 dependencies: [.target(name: name)]
         )
         

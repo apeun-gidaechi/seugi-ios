@@ -12,6 +12,7 @@ let project = Project.makeModule(
     name: "Seugi",
     destinations: .iOS,
     product: .app,
+    scripts: [.swiftLint],
     dependencies: [
         .Project.DesignSystem,
         .Project.Feature

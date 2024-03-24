@@ -11,6 +11,7 @@ import ProjectDescriptionHelpers
 let project = Project.makeModule(
     name: "DesignSystem",
     product: .staticFramework,
+    scripts: [.swiftLint],
     dependencies: [],
     resources: ["Resources/**"]
 )
