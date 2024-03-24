@@ -18,7 +18,6 @@ public extension SeugiShadowSystem {
 
 extension SeugiShadowSystem.Ev {
     
-    
     var color: Color {
         switch self {
         case .ev1: .init(0x000000, alpha: 0.04)
@@ -45,6 +44,5 @@ extension SeugiShadowSystem.Ev {
         case .ev2: 4
         case .ev3: 6
         }
-    }
-        
+    } 
 }

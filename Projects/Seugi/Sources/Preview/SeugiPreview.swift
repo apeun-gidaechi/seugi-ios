@@ -10,7 +10,6 @@ import SwiftUI
 import DesignSystem
 
 enum SeugiPreview: String, CaseIterable {
-    
     case color = "Color"
     case font = "Font"
     case shadow = "Shadow"
@@ -23,7 +22,6 @@ enum SeugiPreview: String, CaseIterable {
     case avatar = "Avatar"
     case topBar = "TopBar"
     case category = "Category"
-    
     var view: some View {
         Group {
             switch self {
@@ -42,7 +40,6 @@ enum SeugiPreview: String, CaseIterable {
             }
         }
     }
-    
     static var preview: some View {
         NavigationStack {
             List(Self.allCases, id: \.self) { preview in

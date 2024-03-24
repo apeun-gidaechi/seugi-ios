@@ -10,9 +10,7 @@ import SwiftUI
 import DesignSystem
 
 struct BottomNavigationPreview: View {
-    
     @State var selectedTab = SeugiBottomNavigationType.allCases[0]
-    
     var body: some View {
         ScrollView {
             VStack {

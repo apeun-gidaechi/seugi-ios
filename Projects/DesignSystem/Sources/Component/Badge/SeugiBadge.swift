@@ -9,16 +9,13 @@
 import SwiftUI
 
 public struct SeugiBadge: View {
-    
     var type: SeugiBadgeType
-    
     public init(type: SeugiBadgeType) {
         self.type = type
     }
-    
     public var body: some View {
-        if case let .number(n) = type {
-            let text = n >= 300 ? "300+" : String(n)
+        if case let .number(num) = type {
+            let text = num >= 300 ? "300+" : String(num)
             Text(text)
                 .font(.seugi(.caption2))
                 .frame(height: type.size)

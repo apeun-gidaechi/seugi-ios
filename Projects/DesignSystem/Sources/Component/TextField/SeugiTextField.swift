@@ -25,7 +25,7 @@ public struct SeugiTextField: View {
     
     // MARK: - local state
     @FocusState private var isFocused: Bool
-    @State private var isHide: Bool = true
+    @State private var isHide = true
     
     // MARK: - View
     public var body: some View {
@@ -57,8 +57,8 @@ struct SeugiTextFieldStyle: TextFieldStyle {
     var isFocused: Bool
     var isHide: Bool
     var type: SeugiTextFieldType
-    var onClickClose: () -> ()
-    var onClickHide: () -> ()
+    var onClickClose: () -> Void
+    var onClickHide: () -> Void
     
     func _body(configuration: TextField<Self._Label>) -> some View {
         

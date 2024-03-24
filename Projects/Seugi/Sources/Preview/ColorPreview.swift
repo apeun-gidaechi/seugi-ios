@@ -27,9 +27,7 @@ struct ColorPreview: View {
 }
 
 private struct ColorPreviewCell: View {
-    
     var colors: [SeugiColorable]
-    
     var body: some View {
         HStack(spacing: 0) {
             ForEach(colors, id: \.color) { color in

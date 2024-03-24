@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SwiftUI
 
 public enum ToggleType {
     case `default`

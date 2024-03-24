@@ -19,5 +19,4 @@ public extension SeugiDivider {
         case horizontal
         case vertical
     }
-    
 }

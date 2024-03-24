@@ -8,31 +8,6 @@
 
 import SwiftUI
 
-//public struct SeugiToggle: View {
-//    
-//    @Binding var isOn: Bool
-//    
-//    public init(isOn: Binding<Bool>) {
-//        self._isOn = isOn
-//    }
-//    
-//    public var body: some View {
-//        Toggle("", isOn: $isOn)
-//            .labelsHidden()
-//            .seugiForeground(.primary(.p300))
-//            .tint(.seugi(.primary(.p500)))
-//            .frame(width: 54, height: 28)
-//    }
-//}
-//
-//  Toggle.swift
-//  Sui
-//
-//  Created by dgsw8th71 on 3/7/24.
-//
-
-import SwiftUI
-
 public struct SeugiToggle: View {
     
     @Binding var isOn: Bool

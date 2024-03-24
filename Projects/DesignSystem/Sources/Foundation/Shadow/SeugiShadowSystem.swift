@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 public enum SeugiShadowSystem {
     case ev(Ev)
     case bottomNavigation(BottomNavigation)

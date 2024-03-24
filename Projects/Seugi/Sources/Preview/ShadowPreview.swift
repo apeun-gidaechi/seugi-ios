@@ -13,12 +13,12 @@ struct ShadowPreview: View {
     var body: some View {
         ScrollView {
             VStack {
-                ForEach(SeugiShadowSystem.Ev.allCases, id: \.self) { ev in
+                ForEach(SeugiShadowSystem.Ev.allCases, id: \.self) {
                     Rectangle()
                         .frame(width: 64, height: 64)
                         .seugiForeground(.sub(.white))
                         .clipShape(RoundedRectangle(cornerRadius: 16))
-                        .shadow(.ev(ev))
+                        .shadow(.ev($0))
                 }
                 Spacer()
             }

@@ -10,9 +10,7 @@ import SwiftUI
 import DesignSystem
 
 struct ListItemPreview: View {
-    
     @State var isOn = false
-    
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {

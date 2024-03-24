@@ -6,7 +6,6 @@
 //  Copyright © 2024 b8nd. All rights reserved.
 //
 
-
 import SwiftUI
 
 public struct SeugiBottomNavigation: View {

@@ -42,5 +42,4 @@ public extension View {
         self
             .foregroundStyle(Color.seugi(style))
     }
-    
 }

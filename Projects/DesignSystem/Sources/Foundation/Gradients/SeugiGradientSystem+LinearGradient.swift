@@ -13,4 +13,3 @@ public struct SeugiGradientSystem {
                                         startPoint: .top,
                                         endPoint: .bottom)
 }
-

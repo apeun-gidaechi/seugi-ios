@@ -17,4 +17,3 @@ public extension Color.SeugiColorSystem.Sub {
         }
     }
 }
-

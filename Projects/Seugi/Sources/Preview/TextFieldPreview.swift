@@ -10,9 +10,7 @@ import SwiftUI
 import DesignSystem
 
 struct TextFieldPreview: View {
-    
     @State var tf1 = ""
-    
     var body: some View {
         ScrollView {
             VStack {

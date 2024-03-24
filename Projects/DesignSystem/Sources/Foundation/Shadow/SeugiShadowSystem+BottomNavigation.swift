@@ -16,7 +16,6 @@ public extension SeugiShadowSystem {
 
 extension SeugiShadowSystem.BottomNavigation {
     
-    
     var color: Color {
         switch self {
         case .default: .init(0x000000, alpha: 0.04)
@@ -36,5 +35,4 @@ extension SeugiShadowSystem.BottomNavigation {
     var y: CGFloat {
         0
     }
-        
 }

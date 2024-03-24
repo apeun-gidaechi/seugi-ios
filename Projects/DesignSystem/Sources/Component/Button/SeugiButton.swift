@@ -33,7 +33,7 @@ public struct SeugiButton: View {
             callback()
         } label: {
             Text(!isLoading ? text : "")
-//                .buttonStyle(SeugiButtonStyle(type: type, size: size))
+            //                .buttonStyle(SeugiButtonStyle(type: type, size: size))
                 .overlay {
                     if isLoading {
                         ProgressView()
@@ -48,14 +48,14 @@ public struct SeugiButton: View {
 public extension SeugiButton {
     
     static func large(_ text: String,
-                             type: SeugiButtonType,
-                             isLoading: Bool = false, callback: @escaping () -> ()) -> SeugiButton {
+                      type: SeugiButtonType,
+                      isLoading: Bool = false, callback: @escaping () -> Void) -> SeugiButton {
         .init(text, type: type, size: .large, isLoading: isLoading, callback: callback)
     }
     
     static func small(_ text: String,
-                             type: SeugiButtonType,
-                             isLoading: Bool = false, callback: @escaping () -> ()) -> SeugiButton {
+                      type: SeugiButtonType,
+                      isLoading: Bool = false, callback: @escaping () -> Void) -> SeugiButton {
         .init(text, type: type, size: .small, isLoading: isLoading, callback: callback)
     }
 }
