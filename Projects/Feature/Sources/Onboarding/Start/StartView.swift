@@ -84,6 +84,7 @@ public struct StartView: View {
                     isPresented = false
                     navController.path.append(.emailSignIn)
                 }
+                .padding(.top, 20)
                 .padding(.horizontal, 20)
                 // TODO: change to OAuth button
                 SeugiButton("Google로 계속하기", type: .shadow) {
@@ -94,8 +95,9 @@ public struct StartView: View {
                     // TODO: handle navigate to sign in view
                 }
                 .padding(.horizontal, 20)
+                Spacer()
             }
-            .presentationDetents([.height(300)])
+            .presentationDetents([.height(256)])
         }
     }
 }
