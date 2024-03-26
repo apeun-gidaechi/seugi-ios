@@ -44,7 +44,7 @@ public struct StartView: View {
                         .seugiForeground(.sub(.white))
                 }
                 .toLeading()
-                .padding(.leading, 20)
+                .padding(.leading, 24)
                 .opacity(opacity1)
                 .offset(y: offsetY1)
                 Spacer()
