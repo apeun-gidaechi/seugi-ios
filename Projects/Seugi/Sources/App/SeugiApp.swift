@@ -5,7 +5,8 @@ import SwiftUI
 struct SeugiApp: App {
     var body: some Scene {
         WindowGroup {
-            SeugiPreview.preview
+//            SeugiPreview.preview
+            StartView()
         }
     }
 }

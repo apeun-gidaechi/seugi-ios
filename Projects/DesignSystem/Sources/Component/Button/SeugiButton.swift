@@ -18,7 +18,7 @@ public struct SeugiButton: View {
     
     public init(_ text: String,
                 type: SeugiButtonType,
-                size: SeugiButtonSize,
+                size: SeugiButtonSize = .large,
                 isLoading: Bool = false,
                 callback: @escaping () -> Void) {
         self.text = text
