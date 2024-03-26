@@ -1,5 +1,6 @@
 import DesignSystem
 import SwiftUI
+import Feature
 
 @main
 struct SeugiApp: App {

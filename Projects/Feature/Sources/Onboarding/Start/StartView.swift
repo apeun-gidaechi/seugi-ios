@@ -9,7 +9,7 @@
 import SwiftUI
 import DesignSystem
 
-struct StartView: View {
+public struct StartView: View {
     
     @State private var offsetY1: CGFloat = 16
     @State private var opacity1 = 0.0
@@ -17,7 +17,9 @@ struct StartView: View {
     @State private var offsetY2: CGFloat = 16
     @State private var opacity2 = 0.0
     
-    var body: some View {
+    public init() {}
+    
+    public var body: some View {
         ZStack {
             SeugiGradientSystem.primary
                 .ignoresSafeArea()

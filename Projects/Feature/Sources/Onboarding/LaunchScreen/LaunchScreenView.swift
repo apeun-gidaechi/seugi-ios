@@ -9,8 +9,11 @@
 import SwiftUI
 import DesignSystem
 
-struct LaunchScreenView: View {
-    var body: some View {
+public struct LaunchScreenView: View {
+    
+    public init() {}
+    
+    public var body: some View {
         SeugiAvatar(type: .extraLarge)
             .toCenter()
     }
