@@ -15,6 +15,11 @@ struct SeugiApp: App {
                         switch viewType {
                         case .start: StartView()
                         case .emailSignIn: EmailSignInView()
+                        case .emailSignUp: EmptyView()
+                        case .oauthSignUp: EmptyView()
+                        case .joinSchool: EmptyView()
+                        case .selectingJob: SelectingJobView()
+                        default: EmptyView()
                         }
                     }
             }
@@ -24,5 +29,5 @@ struct SeugiApp: App {
 }
 
 #Preview {
-    EmailSignInView()
+    SelectingJobView()
 }
