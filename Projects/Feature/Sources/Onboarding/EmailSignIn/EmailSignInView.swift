@@ -12,7 +12,8 @@ import DesignSystem
 public struct EmailSignInView: View {
     
     @ObservedObject private var vm = EmailSignInViewModel()
-    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject private var navController: NavigationController
+    @Environment(\.dismiss) private var dismiss
     
     public init() {}
     
@@ -27,7 +28,7 @@ public struct EmailSignInView: View {
                     .font(.seugi(.body1))
                     .seugiForeground(.gray(.g600))
                 Button {
-                    // TODO:
+                    navController.path.append(.selectingJob)
                 } label: {
                     Text("가입하기")
                         .font(.seugi(.body1))
