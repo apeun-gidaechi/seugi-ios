@@ -17,6 +17,8 @@ public struct StartView: View {
     @State private var offsetY2: CGFloat = 16
     @State private var opacity2 = 0.0
     
+    @State private var isPresented = false
+    
     public init() {}
     
     public var body: some View {
@@ -50,7 +52,7 @@ public struct StartView: View {
                     .offset(y: offsetY2)
                 Spacer()
                 SeugiButton("시작하기", type: .shadow) {
-                    // TODO: handle
+                    isPresented = true
                 }
                 .padding(.bottom, 16)
                 .padding(.horizontal, 20)
@@ -74,5 +76,12 @@ public struct StartView: View {
                 opacity2 = 1
             }
         }
+        .sheet(isPresented: $isPresented) {
+            StartViewSheet()
+        }
     }
+}
+
+#Preview {
+    StartView()
 }
