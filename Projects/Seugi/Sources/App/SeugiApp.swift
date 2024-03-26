@@ -4,10 +4,25 @@ import Feature
 
 @main
 struct SeugiApp: App {
+    
+    @StateObject var navController = NavigationController()
+    
     var body: some Scene {
         WindowGroup {
-//            SeugiPreview.preview
-            StartView()
+            NavigationStack(path: $navController.path) {
+                StartView()
+                    .navigationDestination(for: ViewType.self) { viewType in
+                        switch viewType {
+                        case .start: StartView()
+                        case .emailSignIn: EmailSignInView()
+                        }
+                    }
+            }
+            .environmentObject(navController)
         }
     }
+}
+
+#Preview {
+    EmailSignInView()
 }

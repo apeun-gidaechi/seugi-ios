@@ -9,6 +9,7 @@
 import SwiftUI
 
 public extension View {
+    
     func seugiToolbar(_ title: String,
                       backButtonTapped: @escaping () -> Void) -> some View {
         self
