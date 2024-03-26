@@ -11,20 +11,22 @@ import SwiftUI
 public extension View {
     
     func seugiToolbar(_ title: String,
-                      backButtonTapped: @escaping () -> Void) -> some View {
+                      backButtonTapped: (() -> Void)? = nil) -> some View {
         self
             .navigationBarBackButtonHidden()
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     HStack(spacing: 0) {
-                        Button {
-                            backButtonTapped()
-                        } label: {
-                            DesignSystemAsset.arrowLeftLine.swiftUIImage
-                                .resizable()
-                                .renderingMode(.template)
-                                .seugiForeground(.sub(.black))
-                                .frame(width: 28, height: 28)
+                        if let backButtonTapped {
+                            Button {
+                                backButtonTapped()
+                            } label: {
+                                DesignSystemAsset.arrowLeftLine.swiftUIImage
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .seugiForeground(.sub(.black))
+                                    .frame(width: 28, height: 28)
+                            }
                         }
                         
                         Text(title)
