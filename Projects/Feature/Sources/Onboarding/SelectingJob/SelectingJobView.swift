@@ -42,6 +42,7 @@ public struct SelectingJobView: View {
                 navController.path.append(.emailSignUp)
             }
             .padding(.horizontal, 20)
+            .padding(.bottom, 16)
         }
         .seugiToolbar("회원가입") {
             dismiss()
