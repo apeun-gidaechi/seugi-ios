@@ -11,6 +11,8 @@ import DesignSystem
 
 public struct StartView: View {
     
+    @EnvironmentObject var navController: NavigationController
+    
     @State private var offsetY1: CGFloat = 16
     @State private var opacity1 = 0.0
     
@@ -77,7 +79,23 @@ public struct StartView: View {
             }
         }
         .sheet(isPresented: $isPresented) {
-            StartViewSheet()
+            VStack(spacing: 8) {
+                SeugiButton("이메일로 계속하기", type: .black) {
+                    isPresented = false
+                    navController.path.append(.emailSignIn)
+                }
+                .padding(.horizontal, 20)
+                // TODO: change to OAuth button
+                SeugiButton("Google로 계속하기", type: .shadow) {
+                    // TODO: handle navigate to sign in view
+                }
+                .padding(.horizontal, 20)
+                SeugiButton("Apple로 계속하기", type: .shadow) {
+                    // TODO: handle navigate to sign in view
+                }
+                .padding(.horizontal, 20)
+            }
+            .presentationDetents([.height(300)])
         }
     }
 }
