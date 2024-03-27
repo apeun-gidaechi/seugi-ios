@@ -5,7 +5,9 @@ import ChatFeature
 struct ChatViewExample: App {
     var body: some Scene {
         WindowGroup {
-            ChatView()
+            NavigationStack {
+                ChatView()
+            }
         }
     }
 }

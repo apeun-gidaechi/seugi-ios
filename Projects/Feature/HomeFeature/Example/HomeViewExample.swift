@@ -5,7 +5,9 @@ import HomeFeature
 struct HomeViewExample: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            NavigationStack {
+                HomeView()
+            }
         }
     }
 }
