@@ -29,7 +29,7 @@ public struct EmailSignInView: View {
                     .font(.seugi(.body1))
                     .seugiForeground(.gray(.g600))
                 Button {
-                    navController.path.append(.selectingJob)
+                    navController.onboardingPath.append(.selectingJob)
                 } label: {
                     Text("가입하기")
                         .font(.seugi(.body1))

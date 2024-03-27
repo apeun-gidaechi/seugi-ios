@@ -40,7 +40,7 @@ public struct SelectingJobView: View {
             Spacer()
             SeugiButton("계속하기", type: .primary) {
                 // TODO: email, oauth에 따라 다른 view로 이동하기
-                navController.path.append(.emailSignUp)
+                navController.onboardingPath.append(.emailSignUp)
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 16)

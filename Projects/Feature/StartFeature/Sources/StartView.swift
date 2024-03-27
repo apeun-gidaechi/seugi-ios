@@ -83,7 +83,7 @@ public struct StartView: View {
             VStack(spacing: 8) {
                 SeugiButton("이메일로 계속하기", type: .black) {
                     isPresented = false
-                    navController.path.append(.emailSignIn)
+                    navController.onboardingPath.append(.emailSignIn)
                 }
                 .padding(.top, 20)
                 .padding(.horizontal, 20)

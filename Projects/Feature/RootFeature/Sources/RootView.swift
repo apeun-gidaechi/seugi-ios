@@ -17,7 +17,7 @@ public struct RootView: View {
     public init() {}
     
     public var body: some View {
-        if isAuthed {
+        if !isAuthed {
             NavigationStack(path: $navController.onboardingPath) {
                 StartView()
                     .navigationDestination(for: ViewType.Onboarding.self) { viewType in
