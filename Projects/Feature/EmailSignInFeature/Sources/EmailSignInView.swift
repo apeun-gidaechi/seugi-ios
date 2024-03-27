@@ -22,7 +22,7 @@ public struct EmailSignInView: View {
         VStack(spacing: 16) {
             SeugiTextFieldForm("이메일을 입력해주세요", text: $vm.email, label: "이메일", isForcedLabel: true)
                 .padding(.top, 16)
-            SeugiTextFieldForm("비밀번호를 입력해주세요", text: $vm.email, label: "비밀번호", isForcedLabel: true)
+            SeugiTextFieldForm("비밀번호를 입력해주세요", text: $vm.password, type: .password, label: "비밀번호", isForcedLabel: true)
             Spacer()
             HStack(spacing: 0) {
                 Text("계정이 없으시다면?")
