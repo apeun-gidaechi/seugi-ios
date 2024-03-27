@@ -34,5 +34,6 @@ struct SeugiBottomNavigationCell: View {
                 .font(.seugi(.caption2))
                 .foregroundStyle(textColor)
         }
+        .padding(.horizontal, 4)
     }
 }

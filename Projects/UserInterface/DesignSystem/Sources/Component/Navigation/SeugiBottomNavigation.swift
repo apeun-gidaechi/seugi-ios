@@ -28,7 +28,7 @@ public struct SeugiBottomNavigation: View {
             }
             Spacer()
         }
-        .padding(.top, 10)
+        .padding(.vertical, 10)
         .background(Color.white)
         .clipShape(RoundedCorner(radius: 12))
         .onChange(of: selectedTab) { _ in
