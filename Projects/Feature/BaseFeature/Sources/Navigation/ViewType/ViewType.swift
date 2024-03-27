@@ -9,13 +9,4 @@
 import Foundation
 
 public enum ViewType {
-    // MARK: onboarding
-    case start
-    case emailSignIn
-    case selectingJob
-    case emailSignUp
-    case oauthSignUp
-    case joinSchool
-    
-    // MARK: main
 }

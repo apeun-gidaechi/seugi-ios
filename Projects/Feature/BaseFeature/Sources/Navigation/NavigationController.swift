@@ -9,7 +9,8 @@
 import Foundation
 
 public class NavigationController: ObservableObject {
-    @Published public var path: [ViewType] = []
+    @Published public var onboardingPath: [ViewType.Onboarding] = []
+    @Published public var mainPath: [ViewType.Main] = []
     
     public init() {}
 }
