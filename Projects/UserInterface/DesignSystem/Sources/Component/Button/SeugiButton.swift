@@ -82,14 +82,13 @@ struct SeugiButtonStyle: ButtonStyle {
             .if(type == .shadow) {
                 $0.shadow(.ev(.ev1))
             }
-            .background(configuration.isPressed ? backgroundColor.opacity(0.8) : backgroundColor)
+            .background(backgroundColor)
             .cornerRadius(12, corners: .allCorners)
         
             // animation
-            .opacity(configuration.isPressed ? 0.8 : 1)
+            .opacity(configuration.isPressed ? 0.64 : 1)
             .scaleEffect(configuration.isPressed ? 0.96 : 1)
             .animation(.easeOut, value: 1)
             .disabled(configuration.isPressed)
-            // cornerRadius
     }
 }
