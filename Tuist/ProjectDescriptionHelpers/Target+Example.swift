@@ -15,7 +15,7 @@ public extension Target {
         Target(name: "\(name)Example",
                destinations: env.destinations,
                product: .app,
-               bundleId: "\(env.organizationName).\(env.name)Example",
+               bundleId: "\(env.organizationName).\(env.name)\(name)Example",
                deploymentTargets: env.deploymentTargets,
                infoPlist: .extendingDefault(with: [
                 "UIUserInterfaceStyle":"Light",

@@ -38,6 +38,10 @@ public extension ModulePaths {
         case StartFeature
         
         // main
+        case MainFeature
+        case HomeFeature
+        case ChatFeature
+        case ChatDetailFeature
     }
     
     enum Service: String, CaseIterable {
