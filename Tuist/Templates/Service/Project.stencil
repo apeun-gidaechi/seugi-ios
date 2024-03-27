@@ -1,0 +1,13 @@
+import ProjectDescription
+import ProjectDescriptionHelpers
+
+let project = Project.makeModule(
+    name: ModulePaths.Service.{{ name }}Service.rawValue,
+    product: .staticLibrary,
+    targets: [
+        .feature(name: ModulePaths.Service.{{ name }}Service.rawValue, dependencies: [
+            .service(target: .BaseService)
+        ])
+    ],
+    scripts: [.swiftLint]
+)

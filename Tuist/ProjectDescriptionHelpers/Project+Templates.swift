@@ -1,17 +1,16 @@
 import ProjectDescription
-
+import EnvironmentPlugin
 
 public extension Project {
     static func makeModule(
         name: String,
-        destinations: Destinations = .iOS,
         product: Product,
-        organizationName: String = "seugi",
         packages: [Package] = [],
-        deploymentTargets: DeploymentTargets? = .iOS("16.4"),
+        targets: [Target] = [],
         scripts: [ProjectDescription.TargetScript] = [],
-        dependencies: [TargetDependency] = [],
-        sources: SourceFilesList = ["Sources/**"],
+        appDependencies: [TargetDependency]? = nil,
+        testDependencies: [TargetDependency]? = nil,
+        sources: SourceFilesList? = ["Sources/**"],
         resources: ResourceFileElements? = nil,
         infoPlist: InfoPlist = .default
     ) -> Project {
@@ -21,43 +20,47 @@ public extension Project {
             configurations: [
                 .debug(name: .debug),
                 .release(name: .release)
-            ], defaultSettings: .recommended)
-        
-        let appTarget = Target(name: name,
-                               destinations: destinations,
-                               product: product,
-                               bundleId: "\(organizationName).\(name)",
-                               deploymentTargets: deploymentTargets,
-                               infoPlist: infoPlist,
-                               sources: sources,
-                               resources: resources,
-                               scripts: scripts,
-                               dependencies: dependencies,
-                               settings: settings)
-        
-        let testTarget = Target(name: "\(name)Tests",
-                                destinations: .iOS,
-                                product: .unitTests,
-                                bundleId: "\(organizationName).\(name)Tests",
-                                deploymentTargets: deploymentTargets,
-                                infoPlist: infoPlist,
-                                sources: ["Tests/**"],
-                                scripts: scripts,
-                                dependencies: [.target(name: name)]
+            ], defaultSettings: .recommended
         )
+        
+        var targets = targets
+        
+        if let appDependencies {
+            let appTarget = Target(name: name,
+                                   destinations: env.destinations,
+                                   product: product,
+                                   bundleId: "\(env.organizationName).\(env.name)",
+                                   deploymentTargets: env.deploymentTargets,
+                                   infoPlist: infoPlist,
+                                   sources: sources,
+                                   resources: resources,
+                                   scripts: scripts,
+                                   dependencies: appDependencies,
+                                   settings: settings)
+            targets.append(appTarget)
+        }
+        
+        if let testDependencies {
+            let testTarget = Target(name: "\(name)Tests",
+                                    destinations: env.destinations,
+                                    product: .unitTests,
+                                    bundleId: "\(env.organizationName).\(env.name)Tests",
+                                    deploymentTargets: env.deploymentTargets,
+                                    infoPlist: infoPlist,
+                                    sources: ["Tests/**"],
+                                    scripts: scripts,
+                                    dependencies: testDependencies
+            )
+            targets.append(testTarget)
+        }
         
         let schemes: [Scheme] = [
             .makeScheme(target: .debug, name: name)
         ]
         
-        let targets: [Target] = [
-            appTarget,
-            testTarget
-        ]
-        
         return Project(
             name: name,
-            organizationName: organizationName,
+            organizationName: env.organizationName,
             packages: packages,
             settings: settings,
             targets: targets,
