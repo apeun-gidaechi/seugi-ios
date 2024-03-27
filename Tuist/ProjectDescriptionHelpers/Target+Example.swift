@@ -17,15 +17,21 @@ public extension Target {
                product: .app,
                bundleId: "\(env.organizationName).\(env.name)Example",
                deploymentTargets: env.deploymentTargets,
-               infoPlist: .default,
+               infoPlist: .extendingDefault(with: [
+                "UIUserInterfaceStyle":"Light",
+                "LSRequiresIPhoneOS":.boolean(true),
+                "UIApplicationSceneManifest": [ "UIApplicationSupportsMultipleScenes": .boolean(false)
+                                              ],
+                "UILaunchStoryboardName": .string("")
+               ]),
                sources: ["Example/**"],
                dependencies: dependencies,
                settings: .settings(
-                base: ["OTHER_LDFLAGS": .string("-ObjC")],
+                base: env.baseSetting,
                 configurations: [
                     .debug(name: .debug),
                     .release(name: .release)
-                ]
+                ], defaultSettings: .recommended
                )
         )
     }

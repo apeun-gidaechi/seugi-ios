@@ -16,7 +16,7 @@ public extension Project {
     ) -> Project {
         let settings: Settings = .settings(
             base: ["OTHER_LDFLAGS": .string("-ObjC"),
-                   "ENABLE_USER_SCRIPT_SANDBOXING": .string("No")],
+                   "ENABLE_USER_SCRIPT_SANDBOXING": .string("No")].merging(env.baseSetting),
             configurations: [
                 .debug(name: .debug),
                 .release(name: .release)
