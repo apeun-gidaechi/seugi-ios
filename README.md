@@ -14,6 +14,6 @@
 
 ## 🏃‍♂️ Run Project
 ```bash
-tuist init
-tuist generate
+tuist install
+make
 ```
