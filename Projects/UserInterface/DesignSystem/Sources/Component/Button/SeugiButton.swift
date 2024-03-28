@@ -41,7 +41,7 @@ public struct SeugiButton: View {
                 }
         }
         .disabled(isLoading)
-        .buttonStyle(SeugiButtonStyle(type: type, size: size))
+        .buttonStyle(SeugiButtonStyle(type: type, size: size, isLoading: isLoading))
     }
 }
 
@@ -65,6 +65,7 @@ struct SeugiButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) var isEnabled
     var type: SeugiButtonType
     var size: SeugiButtonSize
+    var isLoading: Bool
     
     func makeBody(configuration: Configuration) -> some View {
         let backgroundColor = isEnabled ? type.backgroundColor : type.disabledBackgroundColor
@@ -74,6 +75,9 @@ struct SeugiButtonStyle: ButtonStyle {
             .frame(height: size.height)
             .if(size == .small) {
                 $0.padding(.horizontal, 12)
+                    .if(isLoading) {
+                        $0.padding(.horizontal, 24)
+                    }
             }
             .if(size == .large) {
                 $0.frame(maxWidth: .infinity)
