@@ -69,6 +69,7 @@ struct SeugiButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         let backgroundColor = isEnabled ? type.backgroundColor : type.disabledBackgroundColor
         configuration.label
+            // style
             .font(size.font)
             .frame(height: size.height)
             .if(size == .small) {
@@ -78,14 +79,16 @@ struct SeugiButtonStyle: ButtonStyle {
                 $0.frame(maxWidth: .infinity)
             }
             .foregroundStyle(isEnabled ? type.foregroundColor : type.disabledForegroundColor)
-            .background(configuration.isPressed ? backgroundColor.opacity(0.8) : backgroundColor)
-            .opacity(configuration.isPressed ? 0.8 : 1)
-            .cornerRadius(12, corners: .allCorners)
-            .scaleEffect(configuration.isPressed ? 0.96 : 1)
-            .animation(.easeOut, value: 1)
-            .disabled(configuration.isPressed)
             .if(type == .shadow) {
                 $0.shadow(.ev(.ev1))
             }
+            .background(backgroundColor)
+            .cornerRadius(12, corners: .allCorners)
+        
+            // animation
+            .opacity(configuration.isPressed ? 0.64 : 1)
+            .scaleEffect(configuration.isPressed ? 0.96 : 1)
+            .animation(.easeOut, value: 1)
+            .disabled(configuration.isPressed)
     }
 }

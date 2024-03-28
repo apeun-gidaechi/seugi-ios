@@ -2,6 +2,7 @@ import SwiftUI
 import BaseFeature
 import DesignSystem
 import HomeFeature
+import ChatFeature
 
 public struct MainView: View {
     
@@ -14,8 +15,8 @@ public struct MainView: View {
         NavigationStack {
             ZStack {
                 switch bottomNavigationController.selectedTab {
-                case .home: EmptyView()
-                case .chat: EmptyView()
+                case .home: HomeView()
+                case .chat: ChatView()
                 case .people: EmptyView()
                 case .notification: EmptyView()
                 case .profile: EmptyView()
