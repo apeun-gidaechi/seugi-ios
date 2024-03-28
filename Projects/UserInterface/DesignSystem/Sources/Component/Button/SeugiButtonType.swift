@@ -14,6 +14,7 @@ public enum SeugiButtonType: CaseIterable {
     case red
     case transparent
     case shadow
+    case gray
     
     var backgroundColor: Color {
         switch self {
@@ -22,6 +23,7 @@ public enum SeugiButtonType: CaseIterable {
         case .red: .seugi(.red(.r200))
         case .transparent: .seugi(.sub(.transparent))
         case .shadow: .seugi(.sub(.white))
+        case .gray: .seugi(.gray(.g100))
         }
     }
     
@@ -32,6 +34,7 @@ public enum SeugiButtonType: CaseIterable {
         case .red: .seugi(.red(.r100))
         case .transparent: .seugi(.sub(.transparent))
         case .shadow: .seugi(.sub(.white))
+        case .gray: .seugi(.gray(.g100))
         }
     }
     
@@ -42,6 +45,7 @@ public enum SeugiButtonType: CaseIterable {
         case .red: .seugi(.red(.r500))
         case .transparent: .seugi(.sub(.black))
         case .shadow: .seugi(.sub(.black))
+        case .gray: .seugi(.gray(.g600))
         }
     }
     
@@ -52,6 +56,7 @@ public enum SeugiButtonType: CaseIterable {
         case .red: .seugi(.red(.r300))
         case .transparent: .seugi(.sub(.black))
         case .shadow: .seugi(.gray(.g500))
+        case .gray: .seugi(.gray(.g500))
         }
     }
 }
