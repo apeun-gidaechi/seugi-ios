@@ -15,5 +15,5 @@
 ## 🏃‍♂️ Run Project
 ```bash
 tuist install
-make
+make generate
 ```
