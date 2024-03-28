@@ -22,6 +22,8 @@ enum SeugiPreview: String, CaseIterable {
     case avatar = "Avatar"
     case topBar = "TopBar"
     case category = "Category"
+    case chatList = "ChatList"
+    case memberList = "MemberList"
     var view: some View {
         Group {
             switch self {
@@ -37,6 +39,8 @@ enum SeugiPreview: String, CaseIterable {
             case .avatar: AvatarPreview()
             case .topBar: TopBarPreview()
             case .category: CategoryPreview()
+            case .chatList: ChatListPreview()
+            case .memberList: MemberListPreview()
             }
         }
     }
