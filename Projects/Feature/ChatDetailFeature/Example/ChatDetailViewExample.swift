@@ -5,7 +5,9 @@ import ChatDetailFeature
 struct ChatDetailViewExample: App {
     var body: some Scene {
         WindowGroup {
-            ChatDetailView()
+            NavigationStack {
+                ChatDetailView()
+            }
         }
     }
 }

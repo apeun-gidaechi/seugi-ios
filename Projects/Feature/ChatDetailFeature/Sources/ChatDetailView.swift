@@ -19,5 +19,12 @@ public struct ChatDetailView: View {
         .seugiToolbar("노영재") {
             dismiss()
         }
+        .seugiIcon(icon1: DesignSystemAsset.searchLine.swiftUIImage, 
+                   icon1ButtonTapped: {
+            // handle searching
+        },
+                   icon2: DesignSystemAsset.hamburgerHorizontalLine.swiftUIImage) {
+            // handle side menu
+        }
     }
 }
