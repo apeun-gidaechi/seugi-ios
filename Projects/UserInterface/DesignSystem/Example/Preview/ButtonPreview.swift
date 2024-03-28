@@ -20,6 +20,12 @@ struct ButtonPreview: View {
                     SeugiButton.small("계속하기", type: type) {
                         print("\(type) small")
                     }
+                    SeugiButton.large("계속하기", type: type, isLoading: true) {
+                        print("\(type) large")
+                    }
+                    SeugiButton.small("계속하기", type: type, isLoading: true) {
+                        print("\(type) small")
+                    }
                 }
                 SeugiToggle(isOn: .constant(true))
                 SeugiToggle(isOn: .constant(false))
