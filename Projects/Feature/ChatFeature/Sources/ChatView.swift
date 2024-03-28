@@ -7,7 +7,7 @@ public struct ChatView: View {
     
     public var body: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: 0) {
                 SeugiChatList()
                 SeugiChatList()
             }
