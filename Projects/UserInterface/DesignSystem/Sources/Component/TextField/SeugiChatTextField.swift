@@ -38,6 +38,7 @@ public struct SeugiChatTextField: View {
             }
             TextField(hint, text: $text)
                 .autocorrectionDisabled()
+                .font(.seugi(.subtitle2))
                 .textInputAutocapitalization(.never)
                 .frame(maxWidth: .infinity)
                 .frame(height: 32)
