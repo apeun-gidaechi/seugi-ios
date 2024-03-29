@@ -23,7 +23,6 @@ public struct RoundedCirclePreview: View {
                 SeugiRoundedCircleImage.small(type: .school)
                 SeugiRoundedCircleImage.small(type: .image)
                 SeugiRoundedCircleImage.small(type: .fill(image: DesignSystemAsset.studentActive.swiftUIImage))
-                
             }
         }
     }
