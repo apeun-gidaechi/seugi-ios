@@ -36,7 +36,7 @@ public struct EmailSignInView: View {
                         .seugiForeground(.primary(.p500))
                 }
             }
-            SeugiButton("로그인", type: .primary) {
+            SeugiButton.large("로그인", type: .primary) {
                 // TODO:
             }
             .padding(.bottom, 16)

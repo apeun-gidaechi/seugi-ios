@@ -29,7 +29,7 @@ public struct JoinSchoolView: View {
                     .seugiForeground(.primary(.p500))
                     .font(.seugi(.body1))
             }
-            SeugiButton("계속하기", type: .primary) {
+            SeugiButton.large("계속하기", type: .primary) {
                 // TODO: handle join school
             }
             .padding(Edge.Set.bottom, 16)

@@ -54,7 +54,7 @@ public struct StartView: View {
                     .opacity(opacity2)
                     .offset(y: offsetY2)
                 Spacer()
-                SeugiButton("시작하기", type: .shadow) {
+                SeugiButton.large("시작하기", type: .shadow) {
                     isPresented = true
                 }
                 .padding(.bottom, 16)
@@ -81,18 +81,18 @@ public struct StartView: View {
         }
         .sheet(isPresented: $isPresented) {
             VStack(spacing: 8) {
-                SeugiButton("이메일로 계속하기", type: .black) {
+                SeugiButton.large("이메일로 계속하기", type: .black) {
                     isPresented = false
                     navController.onboardingPath.append(.emailSignIn)
                 }
                 .padding(.top, 20)
                 .padding(.horizontal, 20)
                 // TODO: change to OAuth button
-                SeugiButton("Google로 계속하기", type: .shadow) {
+                SeugiButton.large("Google로 계속하기", type: .shadow) {
                     // TODO: handle navigate to sign in view
                 }
                 .padding(.horizontal, 20)
-                SeugiButton("Apple로 계속하기", type: .shadow) {
+                SeugiButton.large("Apple로 계속하기", type: .shadow) {
                     // TODO: handle navigate to sign in view
                 }
                 .padding(.horizontal, 20)
