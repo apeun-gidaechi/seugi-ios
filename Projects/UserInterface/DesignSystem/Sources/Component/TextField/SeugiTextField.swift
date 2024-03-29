@@ -79,7 +79,7 @@ struct SeugiTextFieldStyle: TextFieldStyle {
             .seugiForeground(isEnabled ? .sub(.black) : .gray(.g400))
             .overlay(
                 ZStack {
-                    RoundedCorner(radius: 12)
+                    RoundedCornerShape(radius: 12)
                         .stroke(isEnabled ? strokeColor : .seugi(.gray(.g200)), lineWidth: lineWidth)
                     HStack(spacing: 0) {
                         Spacer()

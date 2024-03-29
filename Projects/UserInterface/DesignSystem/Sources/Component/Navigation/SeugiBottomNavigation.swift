@@ -30,7 +30,7 @@ public struct SeugiBottomNavigation: View {
         }
         .padding(.vertical, 10)
         .background(Color.white)
-        .clipShape(RoundedCorner(radius: 12))
+        .cornerRadius(12, corners: .allCorners)
         .onChange(of: selectedTab) { _ in
             let impactMed = UIImpactFeedbackGenerator(style: .rigid)
             impactMed.impactOccurred()

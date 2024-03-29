@@ -10,11 +10,11 @@ import SwiftUI
 
 public extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape(RoundedCorner(radius: radius, corners: corners))
+        clipShape(RoundedCornerShape(radius: radius, corners: corners))
     }
     
     func stroke(_ radius: CGFloat, color: Color, lineWidth: CGFloat = 1) -> some View {
-        let roundedCorner = RoundedCorner(radius: radius, corners: .allCorners)
+        let roundedCorner = RoundedCornerShape(radius: radius, corners: .allCorners)
         return self
             .clipShape(roundedCorner)
             .overlay {
