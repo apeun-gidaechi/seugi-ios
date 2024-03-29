@@ -9,8 +9,8 @@ private let template = Template(
     ],
     items: [
         .string(
-            path: "Projects/Service/\(nameAttribute)Service/Sources/Sources.swift",
-            contents: " "
+            path: "Projects/Service/\(nameAttribute)Service/Sources/\(nameAttribute)Service.swift",
+            contents: "import BaseService"
         ),
         .file(
             path: "Projects/Service/\(nameAttribute)Service/Project.swift",

@@ -1,11 +1,11 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.makeModule(
-    name: ModulePaths.Service.{{ name }}Service.rawValue,
-    product: .staticLibrary,
+
+let project = Project.makeService(
+    target: .{{ name }}Service,
     targets: [
-        .feature(name: ModulePaths.Service.{{ name }}Service.rawValue, dependencies: [
+        .makeService(target: .{{ name }}Service, dependencies: [
             .service(target: .BaseService)
         ])
     ],
