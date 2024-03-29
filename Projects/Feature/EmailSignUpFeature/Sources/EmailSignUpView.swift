@@ -35,7 +35,7 @@ public struct EmailSignUpView: View {
                     .seugiForeground(.primary(.p500))
                     .font(.seugi(.body1))
             }
-            SeugiButton("계속하기", type: .primary) {
+            SeugiButton.large("계속하기", type: .primary) {
                 // TODO: handle sign up
             }
             .padding(.bottom, 16)

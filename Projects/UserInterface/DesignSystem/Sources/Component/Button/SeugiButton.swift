@@ -16,7 +16,7 @@ public struct SeugiButton: View {
     var isLoading: Bool
     var callback: () -> Void
     
-    public init(_ text: String,
+    private init(_ text: String,
                 type: SeugiButtonType,
                 size: SeugiButtonSize = .large,
                 isLoading: Bool = false,
