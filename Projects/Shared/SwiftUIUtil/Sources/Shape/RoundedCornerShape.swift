@@ -8,12 +8,17 @@
 
 import SwiftUI
 
-struct RoundedCornerShape: Shape {
+public struct RoundedCornerShape: Shape {
     
-    var radius: CGFloat = .zero
-    var corners: UIRectCorner = .allCorners
+    var radius: CGFloat
+    var corners: UIRectCorner
     
-    func path(in rect: CGRect) -> Path {
+    public init(radius: CGFloat = .zero, corners: UIRectCorner = .allCorners) {
+        self.radius = radius
+        self.corners = corners
+    }
+    
+    public func path(in rect: CGRect) -> Path {
         var path = Path()
         
         let p1 = CGPoint(x: rect.minX, y: corners.contains(.topLeft) ? rect.minY + radius  : rect.minY )
