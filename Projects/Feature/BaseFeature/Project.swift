@@ -1,11 +1,10 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.makeModule(
-    name: ModulePaths.Feature.BaseFeature.rawValue,
-    product: .staticLibrary,
+let project = Project.makeFeature(
+    target: .BaseFeature,
     targets: [
-        .feature(name: ModulePaths.Feature.BaseFeature.rawValue, dependencies: [
+        .makeFeature(target: .BaseFeature, dependencies: [
             .userInterface(target: .DesignSystem),
             .shared(target: .GlobalThirdPartyLibrary),
             .shared(target: .SwiftUIUtil)

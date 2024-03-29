@@ -8,8 +8,12 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.makeModule(
-    name: ModulePaths.Shared.SwiftUIUtil.rawValue,
-    product: .staticFramework,
-    appDependencies: []
+let project = Project.makeShared(
+    target: .SwiftUIUtil,
+    targets: [
+        .makeShared(target: .SwiftUIUtil, dependencies: [
+            
+        ])
+    ],
+    scripts: [.swiftLint]
 )

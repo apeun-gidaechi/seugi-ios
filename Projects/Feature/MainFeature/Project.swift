@@ -1,20 +1,17 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.makeModule(
-    name: ModulePaths.Feature.MainFeature.rawValue,
-    product: .staticLibrary,
+let project = Project.makeFeature(
+    target: .MainFeature,
     targets: [
-        .feature(name: ModulePaths.Feature.MainFeature.rawValue,
-                 dependencies: [
-                    .feature(target: .BaseFeature),
-                    .feature(target: .HomeFeature),
-                    .feature(target: .ChatFeature)
-                 ]),
-        .example(name: ModulePaths.Feature.MainFeature.rawValue,
-                 dependencies: [
-                    .feature(target: .MainFeature)
-                 ])
+        .makeFeature(target: .MainFeature, dependencies: [
+            .feature(target: .BaseFeature),
+            .feature(target: .HomeFeature),
+            .feature(target: .ChatFeature)
+        ]),
+        .makeFeatureExample(target: .MainFeature, dependencies: [
+            .feature(target: .MainFeature)
+        ])
     ],
     scripts: [.swiftLint]
 )

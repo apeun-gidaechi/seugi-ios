@@ -1,12 +1,10 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
-import DependencyPlugin
 
-let project = Project.makeModule(
-    name: ModulePaths.Service.AuthService.rawValue,
-    product: .staticLibrary,
+let project = Project.makeService(
+    target: .AuthService,
     targets: [
-        .feature(name: ModulePaths.Service.AuthService.rawValue, dependencies: [
+        .makeService(target: .AuthService, dependencies: [
             .service(target: .BaseService)
         ])
     ],

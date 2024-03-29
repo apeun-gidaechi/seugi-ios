@@ -1,11 +1,10 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.makeModule(
-    name: ModulePaths.Service.BaseService.rawValue,
-    product: .staticLibrary,
+let project = Project.makeService(
+    target: .BaseService,
     targets: [
-        .service(name: ModulePaths.Service.BaseService.rawValue, dependencies: [
+        .makeService(target: .BaseService, dependencies: [
             .shared(target: .GlobalThirdPartyLibrary)
         ]),
     ],

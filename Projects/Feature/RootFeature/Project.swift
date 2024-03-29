@@ -1,11 +1,10 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.makeModule(
-    name: ModulePaths.Feature.RootFeature.rawValue,
-    product: .staticLibrary,
+let project = Project.makeFeature(
+    target: .RootFeature,
     targets: [
-        .feature(name: ModulePaths.Feature.RootFeature.rawValue, dependencies: [
+        .makeFeature(target: .RootFeature, dependencies: [
             // base
             .feature(target: .BaseFeature),
             // onboarding
@@ -22,11 +21,9 @@ let project = Project.makeModule(
             .feature(target: .ChatFeature),
             .feature(target: .ChatDetailFeature)
         ]),
-        .example(name: ModulePaths.Feature.RootFeature.rawValue,
-         dependencies: [
+        .makeFeatureExample(target: .RootFeature, dependencies: [
             .feature(target: .RootFeature)
-         ])
+        ])
     ],
     scripts: [.swiftLint]
 )
-
