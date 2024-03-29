@@ -8,17 +8,15 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.makeModule(
-    name: ModulePaths.UserInterface.DesignSystem.rawValue,
-    product: .staticFramework,
+let project = Project.makeUserInterface(
+    target: .DesignSystem,
     targets: [
-        .userInterface(name: ModulePaths.UserInterface.DesignSystem.rawValue, dependencies: [
+        .makeUserInterface(target: .DesignSystem, dependencies: [
             .shared(target: .SwiftUIUtil)
         ]),
-        .example(name: ModulePaths.UserInterface.DesignSystem.rawValue, dependencies: [
+        .makeUserInterfaceExample(target: .DesignSystem, dependencies: [
             .userInterface(target: .DesignSystem)
         ])
     ],
-    scripts: [.swiftLint],
-    resources: ["Resources/**"]
+    scripts: [.swiftLint]
 )

@@ -1,14 +1,13 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.makeModule(
-    name: ModulePaths.Feature.EmailSignInFeature.rawValue,
-    product: .staticLibrary,
+let project = Project.makeFeature(
+    target: .EmailSignInFeature,
     targets: [
-        .feature(name: ModulePaths.Feature.EmailSignInFeature.rawValue, dependencies: [
+        .makeFeature(target: .EmailSignInFeature, dependencies: [
             .feature(target: .BaseFeature)
         ]),
-        .example(name: ModulePaths.Feature.EmailSignInFeature.rawValue, dependencies: [
+        .makeFeatureExample(target: .EmailSignInFeature, dependencies: [
             .feature(target: .EmailSignInFeature)
         ])
     ],

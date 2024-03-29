@@ -1,17 +1,15 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.makeModule(
-    name: ModulePaths.Feature.SelectingJobFeature.rawValue,
-    product: .staticLibrary,
+let project = Project.makeFeature(
+    target: .SelectingJobFeature,
     targets: [
-        .feature(name: ModulePaths.Feature.SelectingJobFeature.rawValue, dependencies: [
+        .makeFeature(target: .SelectingJobFeature, dependencies: [
             .feature(target: .BaseFeature)
         ]),
-        .example(name: ModulePaths.Feature.SelectingJobFeature.rawValue,
-         dependencies: [
+        .makeFeatureExample(target: .SelectingJobFeature, dependencies: [
             .feature(target: .SelectingJobFeature)
-         ])
+        ])
     ],
     scripts: [.swiftLint]
 )

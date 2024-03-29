@@ -1,17 +1,15 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.makeModule(
-    name: ModulePaths.Feature.JoinSchoolSuccessFeature.rawValue,
-    product: .staticLibrary,
+let project = Project.makeFeature(
+    target: .JoinSchoolSuccessFeature,
     targets: [
-        .feature(name: ModulePaths.Feature.JoinSchoolSuccessFeature.rawValue, dependencies: [
+        .makeFeature(target: .JoinSchoolSuccessFeature, dependencies: [
             .feature(target: .BaseFeature)
         ]),
-        .example(name: ModulePaths.Feature.JoinSchoolSuccessFeature.rawValue,
-         dependencies: [
+        .makeFeatureExample(target: .JoinSchoolSuccessFeature, dependencies: [
             .feature(target: .JoinSchoolSuccessFeature)
-         ])
+        ])
     ],
     scripts: [.swiftLint]
 )

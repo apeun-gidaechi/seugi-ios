@@ -8,8 +8,11 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.makeModule(
-    name: ModulePaths.Shared.GlobalThirdPartyLibrary.rawValue,
-    product: .staticFramework,
-    appDependencies: []
+let project = Project.makeShared(
+    target: .GlobalThirdPartyLibrary,
+    targets: [
+        .makeShared(target: .GlobalThirdPartyLibrary, dependencies: [
+            
+        ])
+    ]
 )
