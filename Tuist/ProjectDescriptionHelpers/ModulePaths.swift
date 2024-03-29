@@ -32,6 +32,7 @@ public extension ModulePaths {
         case EmailSignUpFeature
         case EmailSignInFeature
         case JoinSchoolFeature
+        case JoinSchoolSuccessFeature
         case LaunchScreenFeature
         case OAuthSignUpFeature
         case SelectingJobFeature
