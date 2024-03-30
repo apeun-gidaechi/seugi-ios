@@ -1,13 +1,11 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-
 let project = Project.makeService(
     target: .{{ name }}Service,
     targets: [
         .makeService(target: .{{ name }}Service, dependencies: [
             .service(target: .BaseService)
         ])
-    ],
-    scripts: [.swiftLint]
+    ]
 )
