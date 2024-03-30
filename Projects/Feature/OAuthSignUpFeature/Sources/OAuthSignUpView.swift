@@ -32,7 +32,7 @@ public struct OAuthSignUpView: View {
                     .font(.seugi(.body1))
             }
             SeugiButton.large("계속하기", type: .primary) {
-                // TODO: handle sign up
+                // handle sign up
             }
             .padding(.bottom, 16)
         }

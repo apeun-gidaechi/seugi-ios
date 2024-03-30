@@ -13,7 +13,6 @@ import BaseFeature
 public struct EmailSignInView: View {
     
     @ObservedObject private var vm = EmailSignInViewModel()
-    @EnvironmentObject private var navController: NavigationController
     @Environment(\.dismiss) private var dismiss
     
     public init() {}
@@ -29,7 +28,7 @@ public struct EmailSignInView: View {
                     .font(.seugi(.body1))
                     .seugiForeground(.gray(.g600))
                 Button {
-                    navController.onboardingPath.append(.selectingJob)
+                    // handle sign in
                 } label: {
                     Text("가입하기")
                         .font(.seugi(.body1))
