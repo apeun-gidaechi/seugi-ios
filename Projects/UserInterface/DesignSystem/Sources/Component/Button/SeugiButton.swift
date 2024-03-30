@@ -42,6 +42,7 @@ public struct SeugiButton: View {
         }
         .disabled(isLoading)
         .buttonStyle(SeugiButtonStyle(type: type, size: size, isLoading: isLoading))
+        
     }
 }
 
@@ -88,11 +89,6 @@ struct SeugiButtonStyle: ButtonStyle {
             }
             .background(backgroundColor)
             .cornerRadius(12, corners: .allCorners)
-        
-            // animation
-            .opacity(configuration.isPressed ? 0.64 : 1)
-            .scaleEffect(configuration.isPressed ? 0.96 : 1)
-            .animation(.easeOut, value: 1)
-            .disabled(configuration.isPressed)
+            .addPressAnimation(configuration.isPressed)
     }
 }

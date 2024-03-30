@@ -14,10 +14,16 @@ public struct SeugiCategory: View {
     
     var text: String
     var isSelected: Bool
+    var action: () -> Void
     
-    public init(text: String, isSelected: Bool) {
+    public init(
+        text: String,
+        isSelected: Bool,
+        action: @escaping () -> Void
+    ) {
         self.text = text
         self.isSelected = isSelected
+        self.action = action
     }
     
     public var body: some View {
@@ -25,12 +31,17 @@ public struct SeugiCategory: View {
         let foregroundColor: Color.SeugiColorSystem = isSelected ? .sub(.white) : .gray(.g500)
         let backgroundColor: Color = isSelected ? .seugi(.primary(.p500)) : .seugi(.gray(.g100))
         
-        Text(text)
-            .font(.seugi(.subtitle2))
-            .frame(height: Self.categoryHeight)
-            .padding(.horizontal, 16)
-            .seugiForeground(foregroundColor)
-            .background(backgroundColor)
-            .cornerRadius(Self.categoryHeight / 2, corners: .allCorners)
+        Button {
+            action()
+        } label: {
+            Text(text)
+                .font(.seugi(.subtitle2))
+                .frame(height: Self.categoryHeight)
+                .padding(.horizontal, 16)
+                .seugiForeground(foregroundColor)
+                .background(backgroundColor)
+                .cornerRadius(Self.categoryHeight / 2, corners: .allCorners)
+        }
+        .applyAnimation()
     }
 }

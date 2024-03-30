@@ -29,8 +29,8 @@ public enum SeugiButtonType: CaseIterable {
     
     var disabledBackgroundColor: Color {
         switch self {
-        case .primary: .seugi(.primary(.p100))
-        case .black: .seugi(.gray(.g500))
+        case .primary: .seugi(.primary(.p200))
+        case .black: .seugi(.gray(.g600))
         case .red: .seugi(.red(.r100))
         case .transparent: .seugi(.sub(.transparent))
         case .shadow: .seugi(.sub(.white))
