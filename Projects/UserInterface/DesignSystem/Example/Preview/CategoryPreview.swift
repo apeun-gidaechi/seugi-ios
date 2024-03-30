@@ -13,8 +13,12 @@ struct CategoryPreview: View {
     var body: some View {
         ScrollView {
             VStack {
-                SeugiCategory(text: "전체", isSelected: true)
-                SeugiCategory(text: "바인드", isSelected: false)
+                SeugiCategory(text: "전체", isSelected: true) {
+                    
+                }
+                SeugiCategory(text: "바인드", isSelected: false) {
+                    
+                }
             }
         }
     }
