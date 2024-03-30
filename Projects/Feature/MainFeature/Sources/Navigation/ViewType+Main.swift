@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import BaseFeature
 
-enum MainViewType {
-    case home
-    case chat
+public extension ViewType {
+    enum Main {
+        case chatDetail
+    }
 }

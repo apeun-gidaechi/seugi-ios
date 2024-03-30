@@ -9,31 +9,24 @@
 import SwiftUI
 import DesignSystem
 import BaseFeature
+import SchoolCodeFeature
+import JoinSuccessFeature
 
 public struct JoinSchoolView: View {
     
-    @ObservedObject private var vm = JoinSchoolViewModel()
+    @StateObject private var navController = JoinSchoolNavigationController()
     
     public init() {}
     
     public var body: some View {
-        VStack(spacing: 16) {
-            SeugiTextFieldForm("초대코드를 입력해 주세요", text: $vm.code, label: "초대코드")
-                .padding(.top, 16)
-            Spacer()
-            Button {
-                
-            } label: {
-                Text("초대 초드가 오지 않는다면?")
-                    .seugiForeground(.primary(.p500))
-                    .font(.seugi(.body1))
-            }
-            SeugiButton.large("계속하기", type: .primary) {
-                // TODO: handle join school
-            }
-            .padding(Edge.Set.bottom, 16)
+        NavigationStack(path: $navController.path) {
+            EmptyView()
+                .navigationDestination(for: ViewType.JoinSchool.self) { viewType in
+                    switch viewType {
+                    case .schoolCode: SchoolCodeView { navController.navigateTo(.joinSuccess) }
+                    case .joinSuccess: JoinSuccessView()
+                    }
+                }
         }
-        .padding(.horizontal, 20)
-        .seugiToolbar("학교 가입")
     }
 }
