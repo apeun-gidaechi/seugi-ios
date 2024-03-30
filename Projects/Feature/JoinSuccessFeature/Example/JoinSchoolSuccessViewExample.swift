@@ -1,12 +1,12 @@
 import SwiftUI
-import JoinSchoolSuccessFeature
+import JoinSuccessFeature
 
 @main
 struct JoinSchoolSuccessViewExample: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                JoinSchoolSuccessView()
+                JoinSuccessView()
             }
         }
     }
