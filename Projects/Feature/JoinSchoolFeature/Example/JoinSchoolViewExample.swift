@@ -7,7 +7,6 @@ struct JoinSchoolViewExample: App {
     var body: some Scene {
         WindowGroup {
             JoinSchoolView()
-                .environmentObject(NavigationController())
         }
     }
 }

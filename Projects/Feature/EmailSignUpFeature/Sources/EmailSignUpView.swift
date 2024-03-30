@@ -13,7 +13,6 @@ import BaseFeature
 public struct EmailSignUpView: View {
     
     @ObservedObject private var vm = EmailSignUpViewModel()
-    @EnvironmentObject private var navController: NavigationController
     @Environment(\.dismiss) private var dismiss
     
     public init() {}
@@ -36,7 +35,7 @@ public struct EmailSignUpView: View {
                     .font(.seugi(.body1))
             }
             SeugiButton.large("계속하기", type: .primary) {
-                // TODO: handle sign up
+                // handle sign up
             }
             .padding(.bottom, 16)
         }

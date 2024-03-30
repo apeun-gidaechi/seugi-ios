@@ -4,9 +4,7 @@ import SwiftUI
 import DesignSystem
 import BaseFeature
 
-public struct JoinSchoolSuccessView: View {
-    
-    @EnvironmentObject private var navController: NavigationController
+public struct JoinSuccessView: View {
     
     public init() {}
     

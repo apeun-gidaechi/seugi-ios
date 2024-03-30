@@ -13,7 +13,6 @@ import BaseFeature
 public struct OAuthSignUpView: View {
     
     @ObservedObject private var vm = OAuthSignUpViewModel()
-    @EnvironmentObject private var navController: NavigationController
     @Environment(\.dismiss) private var dismiss
     
     public init() {}
@@ -33,7 +32,7 @@ public struct OAuthSignUpView: View {
                     .font(.seugi(.body1))
             }
             SeugiButton.large("계속하기", type: .primary) {
-                // TODO: handle sign up
+                // handle sign up
             }
             .padding(.bottom, 16)
         }

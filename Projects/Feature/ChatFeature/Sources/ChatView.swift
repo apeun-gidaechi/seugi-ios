@@ -3,7 +3,13 @@ import DesignSystem
 
 public struct ChatView: View {
     
-    public init() {}
+    var navigateToChatDetail: () -> Void
+    
+    public init(
+        navigateToChatDetail: @escaping () -> Void
+    ) {
+        self.navigateToChatDetail = navigateToChatDetail
+    }
     
     public var body: some View {
         ScrollView {
