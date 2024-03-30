@@ -7,7 +7,8 @@ let project = Project.makeFeature(
         .makeFeature(target: .MainFeature, dependencies: [
             .feature(target: .BaseFeature),
             .feature(target: .HomeFeature),
-            .feature(target: .ChatFeature)
+            .feature(target: .ChatFeature),
+            .feature(target: .ChatDetailFeature)
         ]),
         .makeFeatureExample(target: .MainFeature, dependencies: [
             .feature(target: .MainFeature)
