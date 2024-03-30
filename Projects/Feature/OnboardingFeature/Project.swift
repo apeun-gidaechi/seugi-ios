@@ -16,6 +16,5 @@ let project = Project.makeFeature(
         .makeFeatureExample(target: .OnboardingFeature, dependencies: [
             .feature(target: .OnboardingFeature)
         ])
-    ],
-    scripts: [.swiftLint]
+    ]
 )

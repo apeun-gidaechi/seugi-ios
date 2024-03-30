@@ -10,7 +10,6 @@ let project = Project.makeFeature(
         .makeFeatureExample(target: .JoinSuccessFeature, dependencies: [
             .feature(target: .JoinSuccessFeature)
         ])
-    ],
-    scripts: [.swiftLint]
+    ]
 )
 

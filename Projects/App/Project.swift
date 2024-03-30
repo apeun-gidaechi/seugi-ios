@@ -14,6 +14,5 @@ let project = Project.makeApp(
         .makeApp(target: .App, dependenceis: [
             .feature(target: .RootFeature)
         ], infoPlist: .file(path: "Support/Info.plist"))
-    ],
-    scripts: [.swiftLint]
+    ]
 )

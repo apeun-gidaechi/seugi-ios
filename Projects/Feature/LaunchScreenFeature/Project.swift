@@ -10,7 +10,6 @@ let project = Project.makeFeature(
         .makeFeatureExample(target: .LaunchScreenFeature, dependencies: [
             .feature(target: .LaunchScreenFeature)
         ])
-    ],
-    scripts: [.swiftLint]
+    ]
 )
 

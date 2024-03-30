@@ -10,7 +10,6 @@ let project = Project.makeFeature(
         .makeFeatureExample(target: .OAuthSignUpFeature, dependencies: [
             .feature(target: .OAuthSignUpFeature)
         ])
-    ],
-    scripts: [.swiftLint]
+    ]
 )
 

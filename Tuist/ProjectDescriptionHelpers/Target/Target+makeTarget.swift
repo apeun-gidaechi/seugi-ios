@@ -16,6 +16,7 @@ extension Target {
         infoPlist: InfoPlist,
         sources: SourceFilesList,
         resources: ResourceFileElements? = nil,
+        scripts: [TargetScript] = [],
         dependencies: [TargetDependency]
     ) -> Self {
         .init(name: name,
@@ -26,6 +27,7 @@ extension Target {
               infoPlist: infoPlist,
               sources: sources,
               resources: resources,
+              scripts: scripts,
               dependencies: dependencies,
               settings: .settings(
                 base: env.baseSetting,

@@ -9,7 +9,5 @@ let project = Project.makeFeature(
             .shared(target: .GlobalThirdPartyLibrary),
             .shared(target: .SwiftUIUtil)
         ])
-    ],
-    scripts: [.swiftLint]
+    ]
 )
-

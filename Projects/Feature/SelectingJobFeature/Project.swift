@@ -10,7 +10,6 @@ let project = Project.makeFeature(
         .makeFeatureExample(target: .SelectingJobFeature, dependencies: [
             .feature(target: .SelectingJobFeature)
         ])
-    ],
-    scripts: [.swiftLint]
+    ]
 )
 

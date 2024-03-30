@@ -8,8 +8,7 @@ extension Project {
         name: String,
         product: Product,
         packages: [Package] = [],
-        targets: [Target] = [],
-        scripts: [ProjectDescription.TargetScript] = []
+        targets: [Target] = []
     ) -> Project {
         let settings: Settings = .settings(
             base: ["OTHER_LDFLAGS": .string("-ObjC"),
@@ -19,33 +18,6 @@ extension Project {
                 .release(name: .release)
             ], defaultSettings: .recommended
         )
-        
-//            let appTarget = Target(name: name,
-//                                   destinations: env.destinations,
-//                                   product: product,
-//                                   bundleId: "\(env.organizationName).\(env.name)",
-//                                   deploymentTargets: env.deploymentTargets,
-//                                   infoPlist: infoPlist,
-//                                   sources: sources,
-//                                   resources: resources,
-//                                   scripts: scripts,
-//                                   dependencies: appDependencies,
-//                                   settings: settings)
-        
-        
-//        if let testDependencies {
-//            let testTarget = Target(name: "\(name)Tests",
-//                                    destinations: env.destinations,
-//                                    product: .unitTests,
-//                                    bundleId: "\(env.organizationName).\(env.name)Tests",
-//                                    deploymentTargets: env.deploymentTargets,
-//                                    infoPlist: infoPlist,
-//                                    sources: ["Tests/**"],
-//                                    scripts: scripts,
-//                                    dependencies: testDependencies
-//            )
-//            targets.append(testTarget)
-//        }
         
         let schemes: [Scheme] = [
             .makeScheme(target: .debug, name: name)
