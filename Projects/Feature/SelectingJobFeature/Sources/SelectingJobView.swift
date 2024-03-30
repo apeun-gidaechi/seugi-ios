@@ -13,7 +13,6 @@ import BaseFeature
 public struct SelectingJobView: View {
     
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject private var navController: NavigationController
     @State private var selectedTab: JobType? = nil
     
     public init() {}
@@ -40,7 +39,6 @@ public struct SelectingJobView: View {
             Spacer()
             SeugiButton.large("계속하기", type: .primary) {
                 // TODO: email, oauth에 따라 다른 view로 이동하기
-                navController.onboardingPath.append(.emailSignUp)
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 16)

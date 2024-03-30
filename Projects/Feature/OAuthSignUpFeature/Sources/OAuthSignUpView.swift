@@ -13,7 +13,6 @@ import BaseFeature
 public struct OAuthSignUpView: View {
     
     @ObservedObject private var vm = OAuthSignUpViewModel()
-    @EnvironmentObject private var navController: NavigationController
     @Environment(\.dismiss) private var dismiss
     
     public init() {}
