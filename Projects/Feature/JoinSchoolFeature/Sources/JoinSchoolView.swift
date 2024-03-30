@@ -12,7 +12,6 @@ import BaseFeature
 
 public struct JoinSchoolView: View {
     
-    @EnvironmentObject private var navController: NavigationController
     @ObservedObject private var vm = JoinSchoolViewModel()
     
     public init() {}

@@ -6,8 +6,6 @@ import BaseFeature
 
 public struct JoinSchoolSuccessView: View {
     
-    @EnvironmentObject private var navController: NavigationController
-    
     public init() {}
     
     public var body: some View {

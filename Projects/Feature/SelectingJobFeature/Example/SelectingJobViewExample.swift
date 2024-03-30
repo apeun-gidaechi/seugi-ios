@@ -7,7 +7,6 @@ struct SelectingJobViewExample: App {
     var body: some Scene {
         WindowGroup {
             SelectingJobView()
-                .environmentObject(NavigationController())
         }
     }
 }
