@@ -44,10 +44,12 @@ opt_in_rules:
 - strict_fileprivate
 - toggle_bool
 - trailing_closure
-- unused_import
 - vertical_whitespace_closing_braces
 - yoda_condition
 - trailing_whitespace
+
+analyzer_rules:
+- unused_import
 
 excluded:
 - Carthage
