@@ -1,18 +1,22 @@
 import SwiftUI
 import BaseFeature
 import OnboardingFeature
+import JoinSchoolFeature
 import MainFeature
 
 public struct RootView: View {
     
-    private var isAuthed = false
+    @State private var authType: AuthType = .notFoundJoinedSchool
     
     public init() {}
     
     public var body: some View {
-        if !isAuthed {
+        switch authType {
+        case .unAuthorized:
             OnboardingView()
-        } else {
+        case .notFoundJoinedSchool:
+            JoinSchoolView()
+        case .authorized:
             MainView()
         }
     }

@@ -10,11 +10,9 @@ import BaseFeature
 
 public extension ViewType {
     enum Onboarding {
-        case start
         case emailSignIn
         case selectingJob
         case emailSignUp
         case oauthSignUp
-        case joinSchool
     }
 }
