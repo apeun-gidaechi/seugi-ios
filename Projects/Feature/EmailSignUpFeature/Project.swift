@@ -10,6 +10,5 @@ let project = Project.makeFeature(
         .makeFeatureExample(target: .EmailSignUpFeature, dependencies: [
             .feature(target: .EmailSignUpFeature)
         ])
-    ],
-    scripts: [.swiftLint]
+    ]
 )

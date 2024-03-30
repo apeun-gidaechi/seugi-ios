@@ -10,7 +10,5 @@ let project = Project.makeFeature(
         .makeFeatureExample(target: .ChatDetailFeature, dependencies: [
             .feature(target: .ChatDetailFeature)
         ])
-    ],
-    scripts: [.swiftLint]
+    ]
 )
-

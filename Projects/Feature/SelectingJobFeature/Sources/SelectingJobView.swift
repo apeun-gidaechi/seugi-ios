@@ -13,7 +13,7 @@ import BaseFeature
 public struct SelectingJobView: View {
     
     @Environment(\.dismiss) var dismiss
-    @State private var selectedTab: JobType? = nil
+    @State private var selectedTab: JobType?
     
     var navigateToEmailSignUp: () -> Void
     var navigateToOAuthSignUp: () -> Void

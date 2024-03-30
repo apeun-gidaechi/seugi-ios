@@ -10,6 +10,5 @@ let project = Project.makeFeature(
         .makeFeatureExample(target: .SchoolCodeFeature, dependencies: [
             .feature(target: .SchoolCodeFeature)
         ])
-    ],
-    scripts: [.swiftLint]
+    ]
 )

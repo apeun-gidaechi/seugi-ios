@@ -7,6 +7,5 @@ let project = Project.makeService(
         .makeService(target: .AuthService, dependencies: [
             .service(target: .BaseService)
         ])
-    ],
-    scripts: [.swiftLint]
+    ]
 )

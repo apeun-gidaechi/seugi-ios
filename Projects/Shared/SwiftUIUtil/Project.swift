@@ -11,9 +11,6 @@ import ProjectDescriptionHelpers
 let project = Project.makeShared(
     target: .SwiftUIUtil,
     targets: [
-        .makeShared(target: .SwiftUIUtil, dependencies: [
-            
-        ])
-    ],
-    scripts: [.swiftLint]
+        .makeShared(target: .SwiftUIUtil, dependencies: [])
+    ]
 )

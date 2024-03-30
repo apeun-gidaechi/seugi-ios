@@ -11,63 +11,53 @@ public extension Project {
     static func makeApp(
         target: ModulePaths.App,
         packages: [Package] = [],
-        targets: [Target] = [],
-        scripts: [TargetScript] = []
+        targets: [Target] = []
     ) -> Self {
         .makeProject(
             name: target.rawValue,
             product: .app,
             packages: packages,
-            targets: targets,
-            scripts: scripts
+            targets: targets
         )
     }
     
     static func makeFeature(
         target: ModulePaths.Feature,
         packages: [Package] = [],
-        targets: [Target] = [],
-        scripts: [TargetScript] = []
+        targets: [Target] = []
     ) -> Self {
         .makeProject(name: target.rawValue,
                     product: .staticLibrary,
-                    targets: targets,
-                    scripts: scripts)
+                    targets: targets)
     }
     
     static func makeService(
         target: ModulePaths.Service,
         packages: [Package] = [],
-        targets: [Target] = [],
-        scripts: [TargetScript] = []
+        targets: [Target] = []
     ) -> Self {
         .makeProject(name: target.rawValue,
                     product: .staticLibrary,
-                    targets: targets,
-                    scripts: scripts)
+                    targets: targets)
     }
     
     static func makeShared(
         target: ModulePaths.Shared,
         packages: [Package] = [],
-        targets: [Target],
-        scripts: [TargetScript] = []
+        targets: [Target]
     ) -> Self {
         .makeProject(name: target.rawValue,
                     product: .staticLibrary,
-                    targets: targets,
-                    scripts: scripts)
+                    targets: targets)
     }
     
     static func makeUserInterface(
         target: ModulePaths.UserInterface,
         packages: [Package] = [],
-        targets: [Target] = [],
-        scripts: [TargetScript] = []
+        targets: [Target] = []
     ) -> Self {
         .makeProject(name: target.rawValue,
                     product: .staticFramework,
-                    targets: targets,
-                    scripts: scripts)
+                    targets: targets)
     }
 }

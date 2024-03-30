@@ -17,6 +17,5 @@ let project = Project.makeUserInterface(
         .makeUserInterfaceExample(target: .DesignSystem, dependencies: [
             .userInterface(target: .DesignSystem)
         ])
-    ],
-    scripts: [.swiftLint]
+    ]
 )

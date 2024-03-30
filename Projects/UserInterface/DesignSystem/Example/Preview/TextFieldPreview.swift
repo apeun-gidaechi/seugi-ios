@@ -21,11 +21,7 @@ struct TextFieldPreview: View {
                     .disabled(true)
                 SeugiTextFieldForm("하이잉", text: $tf1, label: "하이", isForcedLabel: false)
                 SeugiTextFieldForm("하이잉", text: $tf1, label: "하이")
-                SeugiChatTextField("하이", text: $tf1) {
-                    
-                } sendButtonTapped: {
-                    
-                }
+                SeugiChatTextField("하이", text: $tf1) {} sendButtonTapped: {}
             }
         }
     }

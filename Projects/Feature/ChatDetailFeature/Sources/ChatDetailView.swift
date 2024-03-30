@@ -19,9 +19,9 @@ public struct ChatDetailView: View {
                 }
             }
             SeugiChatTextField("메세지 보내기", text: $text) {
-                
+                // handle more
             } sendButtonTapped: {
-                
+                // handle send message
             }
             .toBottom()
             .padding(.horizontal, 8)

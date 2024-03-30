@@ -12,6 +12,5 @@ let project = Project.makeFeature(
         .makeFeatureExample(target: .JoinSchoolFeature, dependencies: [
             .feature(target: .JoinSchoolFeature)
         ])
-    ],
-    scripts: [.swiftLint]
+    ]
 )

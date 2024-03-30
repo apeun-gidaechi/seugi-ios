@@ -21,6 +21,7 @@ public extension Target {
                     infoPlist: infoPlist,
                     sources: ["Sources/**"],
                     resources: ["Resources/**"],
+                    scripts: [.swiftLint],
                     dependencies: dependenceis)
     }
     
@@ -33,6 +34,7 @@ public extension Target {
                     bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)",
                     infoPlist: .default,
                     sources: ["Sources/**"],
+                    scripts: [.swiftLint],
                     dependencies: dependencies)
     }
     
@@ -64,6 +66,7 @@ public extension Target {
                     bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)",
                     infoPlist: .default,
                     sources: ["Sources/**"],
+                    scripts: [.swiftLint],
                     dependencies: dependencies)
     }
     
@@ -76,6 +79,7 @@ public extension Target {
                     bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)",
                     infoPlist: .default,
                     sources: ["Sources/**"],
+                    scripts: [.swiftLint],
                     dependencies: dependencies)
     }
     
@@ -89,6 +93,7 @@ public extension Target {
                     infoPlist: .default,
                     sources: ["Sources/**"],
                     resources: ["Resources/**"],
+                    scripts: [.swiftLint],
                     dependencies: dependencies)
     }
     
@@ -109,6 +114,7 @@ public extension Target {
                     ]),
                     sources: ["Example/**"],
                     resources: ["Resources/**"],
+                    scripts: [.swiftLint],
                     dependencies: dependencies)
     }
 }

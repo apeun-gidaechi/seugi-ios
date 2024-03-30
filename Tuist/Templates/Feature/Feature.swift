@@ -9,11 +9,11 @@ private let template = Template(
     ],
     items: [
         .string(
-            path: "Projects/Feature/\(nameAttribute)Feature/Example/\(nameAttribute)FeatureViewExample.swift",
+            path: "Projects/Feature/\(nameAttribute)Feature/Example/\(nameAttribute)ViewExample.swift",
             contents: "import \(nameAttribute)Feature"
         ),
         .string(
-            path: "Projects/Feature/\(nameAttribute)Feature/Sources/\(nameAttribute)FeatureView.swift",
+            path: "Projects/Feature/\(nameAttribute)Feature/Sources/\(nameAttribute)View.swift",
             contents: "import BaseFeature"
         ),
         .file(

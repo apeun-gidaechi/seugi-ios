@@ -7,6 +7,5 @@ let project = Project.makeService(
         .makeService(target: .BaseService, dependencies: [
             .shared(target: .GlobalThirdPartyLibrary)
         ]),
-    ],
-    scripts: [.swiftLint]
+    ]
 )
