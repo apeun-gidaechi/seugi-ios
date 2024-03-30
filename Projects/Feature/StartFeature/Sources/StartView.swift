@@ -8,7 +8,6 @@
 
 import SwiftUI
 import DesignSystem
-import BaseFeature
 
 public struct StartView: View {
     

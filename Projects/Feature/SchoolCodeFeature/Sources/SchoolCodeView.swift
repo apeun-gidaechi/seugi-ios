@@ -36,7 +36,7 @@ public struct SchoolCodeView: View {
             SeugiButton.large("계속하기", type: .primary) {
                 navigateToJoinSuccess()
             }
-            .padding(Edge.Set.bottom, 16)
+            .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
         .seugiToolbar("학교 가입")
