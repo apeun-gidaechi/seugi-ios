@@ -39,4 +39,3 @@ struct JobCell: View {
         .stroke(12, color: isActive ? .seugi(.primary(.p500)) : .seugi(.gray(.g300)), lineWidth: isActive ? 2 : 1)
     }
 }
-

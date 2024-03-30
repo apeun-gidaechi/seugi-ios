@@ -17,10 +17,10 @@ public struct SeugiButton: View {
     var callback: () -> Void
     
     private init(_ text: String,
-                type: SeugiButtonType,
-                size: SeugiButtonSize = .large,
-                isLoading: Bool = false,
-                callback: @escaping () -> Void) {
+                 type: SeugiButtonType,
+                 size: SeugiButtonSize = .large,
+                 isLoading: Bool = false,
+                 callback: @escaping () -> Void) {
         self.text = text
         self.type = type
         self.size = size
@@ -42,7 +42,6 @@ public struct SeugiButton: View {
         }
         .disabled(isLoading)
         .buttonStyle(SeugiButtonStyle(type: type, size: size, isLoading: isLoading))
-        
     }
 }
 
@@ -71,7 +70,7 @@ struct SeugiButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         let backgroundColor = isEnabled ? type.backgroundColor : type.disabledBackgroundColor
         configuration.label
-            // style
+        // style
             .font(size.font)
             .frame(height: size.height)
             .if(size == .small) {

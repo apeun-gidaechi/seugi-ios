@@ -12,4 +12,3 @@ let project = Project.makeFeature(
         ])
     ]
 )
-

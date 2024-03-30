@@ -28,7 +28,7 @@ public struct EmailSignUpView: View {
             
             Spacer()
             Button {
-                
+                // handle
             } label: {
                 Text("이미 계정이 있으신가요?")
                     .seugiForeground(.primary(.p500))

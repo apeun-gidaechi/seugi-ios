@@ -58,8 +58,7 @@ public extension View {
                                 .frame(width: 28, height: 28)
                         }
                         if let icon2ButtonTapped,
-                           let icon2
-                        {
+                           let icon2 {
                             Button {
                                 icon2ButtonTapped()
                             } label: {
@@ -70,7 +69,6 @@ public extension View {
                                     .frame(width: 28, height: 28)
                             }
                         }
-                        
                     }
                     .frame(height: 44)
                 }

@@ -13,6 +13,4 @@ import DesignSystem
 class BottomNavigationController: ObservableObject {
     
     @Published var selectedTab: SeugiBottomNavigationType = .home
-    
-    
 }

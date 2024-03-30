@@ -24,4 +24,3 @@ public struct ChatItemPreview: View {
         }
     }
 }
-
