@@ -1,11 +1,3 @@
-//
-//  JoinSchoolView.swift
-//  Feature
-//
-//  Created by dgsw8th71 on 3/26/24.
-//  Copyright © 2024 seugi. All rights reserved.
-//
-
 import SwiftUI
 import DesignSystem
 import BaseFeature
@@ -20,10 +12,9 @@ public struct JoinSchoolView: View {
     
     public var body: some View {
         NavigationStack(path: $navController.path) {
-            EmptyView()
+            SchoolCodeView { navController.navigateTo(.joinSuccess) }
                 .navigationDestination(for: ViewType.JoinSchool.self) { viewType in
                     switch viewType {
-                    case .schoolCode: SchoolCodeView { navController.navigateTo(.joinSuccess) }
                     case .joinSuccess: JoinSuccessView()
                     }
                 }

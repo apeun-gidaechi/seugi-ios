@@ -10,7 +10,7 @@ import Foundation
 import BaseFeature
 
 final class JoinSchoolNavigationController: ObservableObject {
-    @Published public var path: [ViewType.JoinSchool] = [.schoolCode]
+    @Published public var path: [ViewType.JoinSchool] = []
     
     public func navigateTo(_ view: ViewType.JoinSchool) {
         path.append(view)

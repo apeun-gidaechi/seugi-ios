@@ -11,7 +11,6 @@ import BaseFeature
 
 public extension ViewType {
     enum JoinSchool {
-        case schoolCode
         case joinSuccess
     }
 }
