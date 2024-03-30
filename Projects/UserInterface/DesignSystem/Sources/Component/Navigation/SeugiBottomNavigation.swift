@@ -21,10 +21,12 @@ public struct SeugiBottomNavigation: View {
             let mainViews = SeugiBottomNavigationType.allCases
             ForEach(mainViews, id: \.self) { tab in
                 Spacer()
-                SeugiBottomNavigationCell(type: tab, isSelected: selectedTab == tab)
-                    .onTapGesture {
-                        selectedTab = tab
-                    }
+                Button {
+                    selectedTab = tab
+                } label: {
+                    SeugiBottomNavigationCell(type: tab, isSelected: selectedTab == tab)
+                }
+                .applyAnimation()
             }
             Spacer()
         }
