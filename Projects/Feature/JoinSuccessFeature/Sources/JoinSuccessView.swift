@@ -4,7 +4,7 @@ import SwiftUI
 import DesignSystem
 import BaseFeature
 
-public struct JoinSchoolSuccessView: View {
+public struct JoinSuccessView: View {
     
     public init() {}
     

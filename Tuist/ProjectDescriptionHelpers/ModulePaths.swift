@@ -29,21 +29,21 @@ public extension ModulePaths {
         case RootFeature
         
         // onboarding
-        case OnboardingFeature
-        // onboarding/sub
+        case OnboardingFeature // root
         case EmailSignUpFeature
         case EmailSignInFeature
-        case JoinSchoolFeature
-        case JoinSchoolSuccessFeature
         case LaunchScreenFeature
         case OAuthSignUpFeature
         case SelectingJobFeature
         case StartFeature
         
-        // main
-        case MainFeature
+        // join
+        case JoinSchoolFeature // root
+        case JoinSuccessFeature
+        case SchoolCodeFeature
         
-        // main/sub
+        // main
+        case MainFeature // root
         case HomeFeature
         case ChatFeature
         case ChatDetailFeature

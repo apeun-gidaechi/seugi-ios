@@ -8,8 +8,6 @@ let project = Project.makeFeature(
             .feature(target: .BaseFeature),
             .feature(target: .EmailSignInFeature),
             .feature(target: .EmailSignUpFeature),
-            .feature(target: .JoinSchoolFeature),
-            .feature(target: .JoinSchoolSuccessFeature),
             .feature(target: .LaunchScreenFeature),
             .feature(target: .OAuthSignUpFeature),
             .feature(target: .SelectingJobFeature),
