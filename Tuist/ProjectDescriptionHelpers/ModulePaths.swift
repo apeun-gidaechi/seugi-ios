@@ -29,6 +29,8 @@ public extension ModulePaths {
         case RootFeature
         
         // onboarding
+        case OnboardingFeature
+        // onboarding/sub
         case EmailSignUpFeature
         case EmailSignInFeature
         case JoinSchoolFeature
@@ -40,6 +42,8 @@ public extension ModulePaths {
         
         // main
         case MainFeature
+        
+        // main/sub
         case HomeFeature
         case ChatFeature
         case ChatDetailFeature
