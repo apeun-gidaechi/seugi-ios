@@ -15,6 +15,7 @@ enum SeugiPreview: String, CaseIterable {
     case shadow = "Shadow"
     case button = "Button"
     case textField = "TextField"
+    case menu = "Menu"
     case bottomNavigation = "BottomNavigation"
     case badge = "Badge"
     case divider = "Divider"
@@ -26,6 +27,7 @@ enum SeugiPreview: String, CaseIterable {
     case memberList = "MemberList"
     case chatItem = "ChatItem"
     case roundedCircle = "RoundedCircle"
+    
     var view: some View {
         Group {
             switch self {
@@ -34,6 +36,7 @@ enum SeugiPreview: String, CaseIterable {
             case .shadow: ShadowPreview()
             case .button: ButtonPreview()
             case .textField: TextFieldPreview()
+            case .menu: DropdownPreview()
             case .bottomNavigation: BottomNavigationPreview()
             case .badge: BadgePreview()
             case .divider: DividerPreview()
