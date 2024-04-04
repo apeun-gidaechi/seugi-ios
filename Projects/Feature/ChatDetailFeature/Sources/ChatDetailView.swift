@@ -25,7 +25,7 @@ public struct ChatDetailView: View {
             }
             .toBottom()
             .padding(.horizontal, 8)
-            .padding(.bottom, 16)
+            .padding(.bottom, 8)
         }
         .seugiToolbar("노영재") {
             dismiss()
