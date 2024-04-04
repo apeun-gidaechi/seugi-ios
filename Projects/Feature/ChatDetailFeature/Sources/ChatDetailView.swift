@@ -28,6 +28,7 @@ public struct ChatDetailView: View {
             .padding(.horizontal, 8)
             .padding(.bottom, 8)
         }
+        .hideKeyboardWhenTap()
         .seugiToolbar(
             "노영재",
             icon1: DesignSystemAsset.searchLine.swiftUIImage,
