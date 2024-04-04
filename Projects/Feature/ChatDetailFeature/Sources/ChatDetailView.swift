@@ -12,7 +12,7 @@ public struct ChatDetailView: View {
     @State private var text = ""
     @State private var isDrawerOpen = false
     @State private var scrollViewProxy: ScrollViewProxy?
-
+    
     public init() {}
     
     public var body: some View {
@@ -42,35 +42,49 @@ public struct ChatDetailView: View {
                 }
             }
             .background(Color.seugi(.primary(.p050)))
-            SeugiChatTextField("메세지 보내기", text: $text) {
-                // handle more
-            } sendButtonTapped: {
-                // handle send message
-                if let scrollViewProxy {
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        scrollViewProxy.scrollTo(ChatType.bottom)
+            GeometryReader { reader in
+                VStack {
+                    Spacer()
+                    Color.seugi(.primary(.p050))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: reader.safeAreaInsets.bottom + 56 - 12, alignment: .bottom)
+                }
+                .ignoresSafeArea()
+                SeugiChatTextField("메세지 보내기", text: $text) {
+                    // handle more
+                } sendButtonTapped: {
+                    // handle send message
+                    if let scrollViewProxy {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            scrollViewProxy.scrollTo(ChatType.bottom)
+                        }
                     }
                 }
+                .toBottom()
+                .padding(.horizontal, 8)
+                .padding(.bottom, 8)
             }
-            .toBottom()
-            .padding(.horizontal, 8)
-            .padding(.bottom, 8)
-        }
-        .hideKeyboardWhenTap()
-        .seugiToolbar(
-            "노영재",
-            icon1: DesignSystemAsset.searchLine.swiftUIImage,
-            icon1ButtonTapped: {
-                // handle searching
-            },
-            icon2: DesignSystemAsset.hamburgerHorizontalLine.swiftUIImage,
-            icon2ButtonTapped: {
-                isDrawerOpen = true
-            }, backButtonTapped: {
-                dismiss()
-            })
-        .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
-            Text("갱갱ㅇ")
+            .hideKeyboardWhenTap()
+            .seugiToolbar(
+                "노영재",
+                showShadow: true,
+                icon1: DesignSystemAsset.searchLine.swiftUIImage,
+                icon1ButtonTapped: {
+                    // handle searching
+                },
+                icon2: DesignSystemAsset.hamburgerHorizontalLine.swiftUIImage,
+                icon2ButtonTapped: {
+                    isDrawerOpen = true
+                }, backButtonTapped: {
+                    dismiss()
+                }
+            )
+            .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
+                Text("갱갱ㅇ")
+            }
+            .onChange(of: isDrawerOpen) { _ in
+                hideKeyboard()
+            }
         }
     }
 }

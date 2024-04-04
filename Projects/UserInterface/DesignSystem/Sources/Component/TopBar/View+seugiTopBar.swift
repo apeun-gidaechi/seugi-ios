@@ -12,6 +12,7 @@ public extension View {
     
     func seugiToolbar(
         _ title: String,
+        showShadow: Bool = false,
         icon1: Image? = nil,
         icon1ButtonTapped: (() -> Void)? = nil,
         icon2: Image? = nil,
@@ -71,6 +72,9 @@ public extension View {
                 
                 self
                     .navigationBarBackButtonHidden()
+            }
+            .if(showShadow) {
+                $0.shadow(.ev(.ev1))
             }
         }
 }
