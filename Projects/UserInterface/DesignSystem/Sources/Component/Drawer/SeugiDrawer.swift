@@ -33,13 +33,21 @@ public struct SeugiDrawerModifier<Body>: ViewModifier where Body: View {
     }
     
     public func body(content: Content) -> some View {
-        ZStack {
-            content
-            body()
-                .frame(width: width)
-                .offset(x: isDrawerOpen ? 0 : -width)
-                .animation(.default, value: 1)
-                .toLeading()
-        }
+        content
+            .overlay {
+                Color.black.opacity(isDrawerOpen ? 0.3 : 0)
+                    .animation(.default)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        isDrawerOpen = false
+                    }
+                body()
+                    .toTop()
+                    .frame(width: width)
+                    .background(Color.seugi(.sub(.white)))
+                    .offset(x: isDrawerOpen ? UIScreen.main.bounds.width - width : UIScreen.main.bounds.width)
+                    .animation(.default)
+                    .toLeading()
+            }
     }
 }

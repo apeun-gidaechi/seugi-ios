@@ -5,6 +5,7 @@ public struct ChatDetailView: View {
     
     @Environment(\.dismiss) private var dismiss
     @State private var text = ""
+    @State private var isDrawerOpen = false
     
     public init() {}
     
@@ -30,12 +31,17 @@ public struct ChatDetailView: View {
         .seugiToolbar("노영재") {
             dismiss()
         }
-        .seugiIcon(icon1: DesignSystemAsset.searchLine.swiftUIImage, 
-                   icon1ButtonTapped: {
-            // handle searching
-        },
-                   icon2: DesignSystemAsset.hamburgerHorizontalLine.swiftUIImage) {
-            // handle side menu
+        .seugiIcon(
+            icon1: DesignSystemAsset.searchLine.swiftUIImage,
+            icon1ButtonTapped: {
+                // handle searching
+            },
+            icon2: DesignSystemAsset.hamburgerHorizontalLine.swiftUIImage,
+            icon2ButtonTapped: {
+                isDrawerOpen = true
+            })
+        .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
+            Text("갱갱ㅇ")
         }
     }
 }
