@@ -13,7 +13,7 @@ public extension View {
     func seugiToolbar<TrailingContent>(
         _ title: String,
         showShadow: Bool = false,
-        trailingContent: @escaping () -> TrailingContent = { EmptyView() },
+        @ViewBuilder trailingContent: @escaping () -> TrailingContent = { EmptyView() },
         backButtonTapped: (() -> Void)? = nil
     ) -> some View where TrailingContent: View {
         VStack(spacing: 0) {
