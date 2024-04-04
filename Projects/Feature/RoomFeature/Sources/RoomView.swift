@@ -4,12 +4,15 @@ import DesignSystem
 
 public struct RoomView: View {
     
-    var navigateToRoomDetail: () -> Void
+    private var navigateToRoomDetail: () -> Void
+    private var navigateToCreateRoom: () -> Void
     
     public init(
-        navigateToRoomDetail: @escaping () -> Void
+        navigateToRoomDetail: @escaping () -> Void,
+        navigateToCreateRoom: @escaping () -> Void
     ) {
         self.navigateToRoomDetail = navigateToRoomDetail
+        self.navigateToCreateRoom = navigateToCreateRoom
     }
     
     public var body: some View {
@@ -32,7 +35,9 @@ public struct RoomView: View {
         .seugiToolbar(
             "단체",
             icon1: DesignSystemAsset.addFill.swiftUIImage,
-            icon1ButtonTapped: {},
+            icon1ButtonTapped: {
+                navigateToCreateRoom()
+            },
             icon2: DesignSystemAsset.searchLine.swiftUIImage,
             icon2ButtonTapped: {}
         )

@@ -12,5 +12,8 @@ import BaseFeature
 public extension ViewType {
     enum Main {
         case chatDetail
+        case roomDetail
+        case firstCreateRoom
+        case SecondCreateRoom
     }
 }

@@ -4,6 +4,9 @@ import DesignSystem
 import HomeFeature
 import ChatFeature
 import ChatDetailFeature
+import RoomFeature
+import CreateRoomFeature
+//import RoomDetailFeature
 
 public struct MainView: View {
     @StateObject private var bottomNavigationController = BottomNavigationController()
@@ -17,6 +20,14 @@ public struct MainView: View {
                 .navigationDestination(for: ViewType.Main.self) { viewType in
                     switch viewType {
                     case .chatDetail: ChatDetailView()
+//                    case .roomDetail: RoomDetailView()
+                    case .firstCreateRoom: FirstCreateRoomView(
+                        navigateToSecondCreateRoom: {
+                            navController.navigateTo(.SecondCreateRoom)
+                        }
+                    )
+                    case .SecondCreateRoom: SecondCreateRoomView()
+                    default: EmptyView()
                     }
                 }
         }
@@ -28,7 +39,14 @@ public struct MainView: View {
             switch bottomNavigationController.selectedTab {
             case .home: HomeView()
             case .chat: ChatView { navController.navigateTo(.chatDetail) }
-            case .people: EmptyView()
+            case .room: RoomView(
+                navigateToRoomDetail: {
+                    navController.navigateTo(.roomDetail)
+                },
+                navigateToCreateRoom: {
+                    navController.navigateTo(.firstCreateRoom)
+                }
+            )
             case .notification: EmptyView()
             case .profile: EmptyView()
             }

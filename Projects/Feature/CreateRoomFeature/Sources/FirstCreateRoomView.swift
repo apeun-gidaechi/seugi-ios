@@ -6,7 +6,13 @@ public struct FirstCreateRoomView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    public init() {}
+    private let navigateToSecondCreateRoom: () -> Void
+    
+    public init(
+        navigateToSecondCreateRoom: @escaping () -> Void
+    ) {
+        self.navigateToSecondCreateRoom = navigateToSecondCreateRoom
+    }
     
     public var body: some View {
         VStack(spacing: 0) {
@@ -26,7 +32,7 @@ public struct FirstCreateRoomView: View {
         }
         .seugiToolbar("멤버 선택", trailingContent: {
             SeugiButton.small("완료", type: .transparent) {
-                // handle navigate to CreateRoom-2
+                navigateToSecondCreateRoom()
             }
         }) {
             dismiss()
