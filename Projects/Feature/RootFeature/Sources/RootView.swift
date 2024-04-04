@@ -6,7 +6,7 @@ import MainFeature
 
 public struct RootView: View {
     
-    @State private var authType: AuthType = .notFoundJoinedSchool
+    @State private var authType: AuthType = .unAuthorized
     
     public init() {}
     

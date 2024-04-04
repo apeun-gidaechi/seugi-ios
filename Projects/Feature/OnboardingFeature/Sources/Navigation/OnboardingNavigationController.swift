@@ -19,4 +19,8 @@ public final class OnboardingNavigationController: ObservableObject {
     public func navigateToRootView() {
         path.removeAll()
     }
+    
+    public func replacePath(_ views: [ViewType.Onboarding]) {
+        path = views
+    }
 }

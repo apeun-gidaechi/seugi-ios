@@ -26,7 +26,8 @@ struct JobCell: View {
                         .resizable()
                 }
             }
-            .frame(height: 120)
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 120, height: 120)
             let textColor: Color.SeugiColorSystem = isActive ? .sub(.black) : .gray(.g500)
             Text(jobType.rawValue)
                 .font(.seugi(.subtitle2))
