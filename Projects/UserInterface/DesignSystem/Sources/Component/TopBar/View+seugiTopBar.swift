@@ -65,8 +65,8 @@ public extension View {
                         }
                     }
                 }
-                .frame(height: 44)
-                .padding(.horizontal, 12)
+                .frame(height: 54)
+                .padding(.horizontal, 16)
                 .background(Color.seugi(.sub(.white)))
                 
                 self
