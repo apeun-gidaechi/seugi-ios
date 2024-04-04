@@ -28,10 +28,8 @@ public struct ChatDetailView: View {
             .padding(.horizontal, 8)
             .padding(.bottom, 8)
         }
-        .seugiToolbar("노영재") {
-            dismiss()
-        }
-        .seugiIcon(
+        .seugiToolbar(
+            "노영재",
             icon1: DesignSystemAsset.searchLine.swiftUIImage,
             icon1ButtonTapped: {
                 // handle searching
@@ -39,6 +37,8 @@ public struct ChatDetailView: View {
             icon2: DesignSystemAsset.hamburgerHorizontalLine.swiftUIImage,
             icon2ButtonTapped: {
                 isDrawerOpen = true
+            }, backButtonTapped: {
+                dismiss()
             })
         .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
             Text("갱갱ㅇ")
