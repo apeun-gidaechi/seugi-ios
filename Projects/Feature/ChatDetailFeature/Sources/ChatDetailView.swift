@@ -80,11 +80,65 @@ public struct ChatDetailView: View {
                 }
             )
             .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
-                Text("갱갱ㅇ")
+                drawerBody
             }
             .onChange(of: isDrawerOpen) { _ in
                 hideKeyboard()
             }
+        }
+    }
+    
+    @ViewBuilder
+    private var drawerBody: some View {
+        VStack(spacing: 0) {
+            Text("멤버")
+                .padding(.leading, 16)
+                .toLeading()
+                .font(.seugi(.subtitle2))
+                .frame(height: 40)
+            SeugiDivider(thickness: .thin)
+            ScrollView {
+                LazyVStack(spacing: 0) {
+                    SeugiMemberList(type: .invitation)
+                    ForEach(0..<30, id: \.self) {
+                        SeugiMemberList(type: .normal)
+                            .id($0)
+                    }
+                }
+            }
+            Spacer()
+            SeugiDivider(thickness: .thin)
+            HStack(spacing: 16) {
+                makeImageButton(DesignSystemAsset.logoutLine.swiftUIImage) {
+                    // handle
+                }
+                
+                Spacer()
+                makeImageButton(DesignSystemAsset.notificationFill.swiftUIImage) {
+                    // handle
+                }
+                makeImageButton(DesignSystemAsset.settingFill.swiftUIImage) {
+                    // handle
+                }
+            }
+            .padding(.horizontal, 16)
+            .frame(height: 40)
+        }
+    }
+    
+    @ViewBuilder
+    private func makeImageButton(
+        _ image: Image,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button {
+            action()
+        } label: {
+            image
+                .resizable()
+                .renderingMode(.template)
+                .frame(width: 28, height: 28)
+                .seugiForeground(.gray(.g600))
         }
     }
 }
