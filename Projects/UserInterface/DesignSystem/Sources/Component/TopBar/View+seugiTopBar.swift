@@ -10,44 +10,65 @@ import SwiftUI
 
 public extension View {
     
-    func seugiToolbar(_ title: String,
-                      backButtonTapped: (() -> Void)? = nil) -> some View {
-        self
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    HStack(spacing: 0) {
-                        if let backButtonTapped {
-                            Button {
-                                backButtonTapped()
-                            } label: {
-                                DesignSystemAsset.arrowLeftLine.swiftUIImage
-                                    .resizable()
-                                    .renderingMode(.template)
-                                    .seugiForeground(.sub(.black))
-                                    .frame(width: 28, height: 28)
-                            }
-                        }
-                        
-                        Text(title)
-                            .font(.seugi(.subtitle1))
+    func seugiToolbar<TrailingContent>(
+        _ title: String,
+        showShadow: Bool = false,
+        trailingContent: @escaping () -> TrailingContent = { EmptyView() },
+        backButtonTapped: (() -> Void)? = nil
+    ) -> some View where TrailingContent: View {
+        VStack(spacing: 0) {
+            HStack(spacing: 0) {
+                if let backButtonTapped {
+                    Button {
+                        backButtonTapped()
+                    } label: {
+                        DesignSystemAsset.arrowLeftLine.swiftUIImage
+                            .resizable()
+                            .renderingMode(.template)
                             .seugiForeground(.sub(.black))
-                            .padding(.leading, 8)
+                            .frame(width: 28, height: 28)
                     }
-                    .frame(height: 44)
                 }
+                
+                Text(title)
+                    .font(.seugi(.subtitle1))
+                    .seugiForeground(.sub(.black))
+                    .if(backButtonTapped != nil) {
+                        $0.padding(.leading, 16)
+                    }
+                
+                Spacer()
+                
+                trailingContent()
             }
+            .frame(height: 54)
+            .padding(.horizontal, 16)
+            .background(Color.seugi(.sub(.white)))
+            
+            self
+                .navigationBarBackButtonHidden()
+        }
+        .if(showShadow) {
+            $0.shadow(.ev(.ev1))
+        }
     }
     
-    func seugiIcon(icon1: Image,
-                   icon1ButtonTapped: @escaping (() -> Void),
-                   icon2: Image? = nil,
-                   icon2ButtonTapped: (() -> Void)? = nil) -> some View {
-        self
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    HStack(spacing: 16) {
+    func seugiToolbar(
+        _ title: String,
+        showShadow: Bool = false,
+        icon1: Image? = nil,
+        icon1ButtonTapped: (() -> Void)? = nil,
+        icon2: Image? = nil,
+        icon2ButtonTapped: (() -> Void)? = nil,
+        backButtonTapped: (() -> Void)? = nil
+    ) -> some View {
+        self.seugiToolbar(
+            title,
+            showShadow: showShadow,
+            trailingContent: {
+                Group {
+                    if let icon1ButtonTapped,
+                       let icon1 {
                         Button {
                             icon1ButtonTapped()
                         } label: {
@@ -57,21 +78,23 @@ public extension View {
                                 .seugiForeground(.sub(.black))
                                 .frame(width: 28, height: 28)
                         }
-                        if let icon2ButtonTapped,
-                           let icon2 {
-                            Button {
-                                icon2ButtonTapped()
-                            } label: {
-                                icon2
-                                    .resizable()
-                                    .renderingMode(.template)
-                                    .seugiForeground(.sub(.black))
-                                    .frame(width: 28, height: 28)
-                            }
+                        .padding(.trailing, 16)
+                    }
+                    if let icon2ButtonTapped,
+                       let icon2 {
+                        Button {
+                            icon2ButtonTapped()
+                        } label: {
+                            icon2
+                                .resizable()
+                                .renderingMode(.template)
+                                .seugiForeground(.sub(.black))
+                                .frame(width: 28, height: 28)
                         }
                     }
-                    .frame(height: 44)
                 }
-            }
+            },
+            backButtonTapped: backButtonTapped
+        )
     }
 }

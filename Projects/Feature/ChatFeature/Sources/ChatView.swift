@@ -14,8 +14,18 @@ public struct ChatView: View {
     public var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                SeugiChatList()
-                SeugiChatList()
+                Button {
+                    navigateToChatDetail()
+                } label: {
+                    SeugiChatList()
+                }
+                .applyAnimation()
+                Button {
+                    navigateToChatDetail()
+                } label: {
+                    SeugiChatList()
+                }
+                .applyAnimation()
             }
         }
         .seugiToolbar("채팅")

@@ -6,8 +6,8 @@ import ChatFeature
 import ChatDetailFeature
 
 public struct MainView: View {
-    @StateObject var bottomNavigationController = BottomNavigationController()
-    @StateObject var navController = MainNavigationController()
+    @StateObject private var bottomNavigationController = BottomNavigationController()
+    @StateObject private var navController = MainNavigationController()
     
     public init() {}
     

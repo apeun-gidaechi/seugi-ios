@@ -1,41 +1,144 @@
 import SwiftUI
 import DesignSystem
 
+enum ChatType: Hashable {
+    case chat(id: Int)
+    case bottom
+}
+
 public struct ChatDetailView: View {
     
     @Environment(\.dismiss) private var dismiss
     @State private var text = ""
+    @State private var isDrawerOpen = false
+    @State private var scrollViewProxy: ScrollViewProxy?
     
     public init() {}
     
     public var body: some View {
         ZStack {
-            ScrollView {
-                VStack {
-                    ChatItemDateView(date: "2024년 3월 21일 목요일")
-                    ChatItemView(author: "이강현", type: .other)
-                    ChatItemView(author: "이강현", type: .me)
-                    ChatItemView(author: "박재욱", type: .other)
+            ScrollViewReader { scrollViewProxy in
+                ScrollView {
+                    LazyVStack {
+                        ChatItemDateView(date: "2024년 3월 21일 목요일").id(ChatType.chat(id: 1))
+                        ChatItemView(author: "이강현", type: .other).id(ChatType.chat(id: 2))
+                        ChatItemView(author: "이강현", type: .me).id(ChatType.chat(id: 3))
+                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 4))
+                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 5))
+                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 6))
+                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 7))
+                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 8))
+                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 9))
+                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 10))
+                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 11))
+                        Color.clear
+                            .frame(height: 52)
+                            .id(ChatType.bottom)
+                    }
+                    .onAppear {
+                        self.scrollViewProxy = scrollViewProxy
+                        scrollViewProxy.scrollTo(ChatType.bottom)
+                    }
                 }
             }
-            SeugiChatTextField("메세지 보내기", text: $text) {
-                // handle more
-            } sendButtonTapped: {
-                // handle send message
+            .background(Color.seugi(.primary(.p050)))
+            GeometryReader { reader in
+                VStack {
+                    Spacer()
+                    Color.seugi(.primary(.p050))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: reader.safeAreaInsets.bottom + 56 - 12, alignment: .bottom)
+                }
+                .ignoresSafeArea()
+                SeugiChatTextField("메세지 보내기", text: $text) {
+                    // handle more
+                } sendButtonTapped: {
+                    // handle send message
+                    if let scrollViewProxy {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            scrollViewProxy.scrollTo(ChatType.bottom)
+                        }
+                    }
+                }
+                .toBottom()
+                .padding(.horizontal, 8)
+                .padding(.bottom, 8)
             }
-            .toBottom()
-            .padding(.horizontal, 8)
-            .padding(.bottom, 16)
+            .hideKeyboardWhenTap()
+            .seugiToolbar(
+                "노영재",
+                showShadow: true,
+                icon1: DesignSystemAsset.searchLine.swiftUIImage,
+                icon1ButtonTapped: {
+                    // handle searching
+                },
+                icon2: DesignSystemAsset.hamburgerHorizontalLine.swiftUIImage,
+                icon2ButtonTapped: {
+                    isDrawerOpen = true
+                }, backButtonTapped: {
+                    dismiss()
+                }
+            )
+            .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
+                drawerBody
+            }
+            .onChange(of: isDrawerOpen) { _ in
+                hideKeyboard()
+            }
         }
-        .seugiToolbar("노영재") {
-            dismiss()
+    }
+    
+    @ViewBuilder
+    private var drawerBody: some View {
+        VStack(spacing: 0) {
+            Text("멤버")
+                .padding(.leading, 16)
+                .toLeading()
+                .font(.seugi(.subtitle2))
+                .frame(height: 40)
+            SeugiDivider(thickness: .thin)
+            ScrollView {
+                LazyVStack(spacing: 0) {
+                    SeugiMemberList(type: .invitation)
+                    ForEach(0..<30, id: \.self) {
+                        SeugiMemberList(type: .normal)
+                            .id($0)
+                    }
+                }
+            }
+            Spacer()
+            SeugiDivider(thickness: .thin)
+            HStack(spacing: 16) {
+                makeImageButton(DesignSystemAsset.logoutLine.swiftUIImage) {
+                    // handle
+                }
+                
+                Spacer()
+                makeImageButton(DesignSystemAsset.notificationFill.swiftUIImage) {
+                    // handle
+                }
+                makeImageButton(DesignSystemAsset.settingFill.swiftUIImage) {
+                    // handle
+                }
+            }
+            .padding(.horizontal, 16)
+            .frame(height: 40)
         }
-        .seugiIcon(icon1: DesignSystemAsset.searchLine.swiftUIImage, 
-                   icon1ButtonTapped: {
-            // handle searching
-        },
-                   icon2: DesignSystemAsset.hamburgerHorizontalLine.swiftUIImage) {
-            // handle side menu
+    }
+    
+    @ViewBuilder
+    private func makeImageButton(
+        _ image: Image,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button {
+            action()
+        } label: {
+            image
+                .resizable()
+                .renderingMode(.template)
+                .frame(width: 28, height: 28)
+                .seugiForeground(.gray(.g600))
         }
     }
 }
