@@ -31,6 +31,7 @@ public struct SeugiChatList: View {
                 SeugiBadge(type: .number(72))
             }
         }
+        .background(Color.seugi(.sub(.white)))
         .padding(.horizontal, 16)
         .padding(.vertical, 16)
     }
