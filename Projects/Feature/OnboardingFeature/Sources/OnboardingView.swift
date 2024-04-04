@@ -3,7 +3,6 @@ import BaseFeature
 import StartFeature
 import EmailSignInFeature
 import EmailSignUpFeature
-import JoinSchoolFeature
 import OAuthSignUpFeature
 import SelectingJobFeature
 
@@ -18,13 +17,19 @@ public struct OnboardingView: View {
             StartView {
                 navController.navigateTo(.emailSignIn)
             } navigateToOAuthSignUp: {
-                navController.navigateTo(.oauthSignUp)
+                navController.navigateTo(.selectingJob)
             }
             .navigationDestination(for: ViewType.Onboarding.self) { viewType in
                 switch viewType {
-                case .emailSignIn: EmailSignInView()
-                case .emailSignUp: EmailSignUpView()
-                case .oauthSignUp: OAuthSignUpView()
+                case .emailSignIn: EmailSignInView {
+                    navController.replacePath([.selectingJob])
+                }
+                case .emailSignUp: EmailSignUpView {
+                    navController.replacePath([.emailSignIn])
+                }
+                case .oauthSignUp: OAuthSignUpView {
+                    navController.navigateToRootView()
+                }
                 case .selectingJob: SelectingJobView {
                     navController.navigateTo(.emailSignUp)
                 } navigateToOAuthSignUp: {

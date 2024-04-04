@@ -14,8 +14,13 @@ public struct EmailSignInView: View {
     
     @ObservedObject private var vm = EmailSignInViewModel()
     @Environment(\.dismiss) private var dismiss
+    var navigateToSignUp: () -> Void
     
-    public init() {}
+    public init(
+        navigateToSignUp: @escaping () -> Void
+    ) {
+        self.navigateToSignUp = navigateToSignUp
+    }
     
     public var body: some View {
         VStack(spacing: 16) {
@@ -28,7 +33,7 @@ public struct EmailSignInView: View {
                     .font(.seugi(.body1))
                     .seugiForeground(.gray(.g600))
                 Button {
-                    // handle sign in
+                    navigateToSignUp()
                 } label: {
                     Text("가입하기")
                         .font(.seugi(.body1))

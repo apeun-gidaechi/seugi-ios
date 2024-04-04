@@ -14,8 +14,13 @@ public struct OAuthSignUpView: View {
     
     @ObservedObject private var vm = OAuthSignUpViewModel()
     @Environment(\.dismiss) private var dismiss
+    var navigateToRoot: () -> Void
     
-    public init() {}
+    public init(
+        navigateToRoot: @escaping () -> Void
+    ) {
+        self.navigateToRoot = navigateToRoot
+    }
     
     public var body: some View {
         VStack(spacing: 16) {
@@ -25,7 +30,7 @@ public struct OAuthSignUpView: View {
             
             Spacer()
             Button {
-                // handle
+                navigateToRoot()
             } label: {
                 Text("이미 계정이 있으신가요?")
                     .seugiForeground(.primary(.p500))
