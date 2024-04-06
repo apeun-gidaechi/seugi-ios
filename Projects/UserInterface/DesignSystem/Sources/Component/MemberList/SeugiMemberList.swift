@@ -11,10 +11,12 @@ import SwiftUI
 public struct SeugiMemberList<Content>: View where Content: View {
     
     private var type: SeugiMemberListType
-    private var content: (() -> Content)?
+    private var content: () -> Content
     
-    public init(type: SeugiMemberListType = .normal,
-                content: (() -> Content)? = { EmptyView() }) {
+    public init(
+        type: SeugiMemberListType = .normal,
+        @ViewBuilder content: @escaping () -> Content = { EmptyView() }
+    ) {
         self.type = type
         self.content = content
     }
@@ -40,7 +42,7 @@ public struct SeugiMemberList<Content>: View where Content: View {
                     .seugiForeground(.sub(.black))
             }
             Spacer()
-            content?()
+            content()
         }
         .padding(16)
     }

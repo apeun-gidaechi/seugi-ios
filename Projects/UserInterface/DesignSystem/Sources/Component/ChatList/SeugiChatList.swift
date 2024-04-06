@@ -10,25 +10,41 @@ import SwiftUI
 
 public struct SeugiChatList: View {
     
-    public init() {}
+    private let type: SeugiChatListType
+    
+    public init(
+        type: SeugiChatListType = .chat
+    ) {
+        self.type = type
+    }
     
     public var body: some View {
         HStack(spacing: 16) {
             SeugiAvatar(type: .large)
             VStack(alignment: .leading, spacing: 2) {
-                Text("노영재")
-                    .font(.seugi(.subtitle2))
-                    .seugiForeground(.sub(.black))
+                HStack(alignment: .bottom, spacing: 4) {
+                    Text("노영재")
+                        .font(.seugi(.subtitle2))
+                        .seugiForeground(.sub(.black))
+                    if case .people(let memberCount) = type {
+                        Text("\(memberCount)")
+                            .font(.seugi(.body2))
+                            .seugiForeground(.gray(.g500))
+                    }
+                }
                 Text("나 사실...")
                     .font(.seugi(.body2))
                     .seugiForeground(.gray(.g600))
             }
             Spacer()
-            VStack {
+            VStack(spacing: 4) {
                 Text("12:39")
                     .font(.seugi(.body2))
                     .seugiForeground(.gray(.g500))
-                SeugiBadge(type: .number(72))
+                if case .people(let memberCount) = type,
+                   memberCount > 0 {
+                    SeugiBadge(type: .number(memberCount))
+                }
             }
         }
         .background(Color.seugi(.sub(.white)))

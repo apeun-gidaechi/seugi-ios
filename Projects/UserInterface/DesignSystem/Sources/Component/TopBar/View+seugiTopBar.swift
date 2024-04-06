@@ -13,7 +13,7 @@ public extension View {
     func seugiToolbar<TrailingContent>(
         _ title: String,
         showShadow: Bool = false,
-        trailingContent: @escaping () -> TrailingContent = { EmptyView() },
+        @ViewBuilder trailingContent: @escaping () -> TrailingContent = { EmptyView() },
         backButtonTapped: (() -> Void)? = nil
     ) -> some View where TrailingContent: View {
         VStack(spacing: 0) {
@@ -66,7 +66,7 @@ public extension View {
             title,
             showShadow: showShadow,
             trailingContent: {
-                Group {
+                HStack(spacing: 16) {
                     if let icon1ButtonTapped,
                        let icon1 {
                         Button {
@@ -78,7 +78,6 @@ public extension View {
                                 .seugiForeground(.sub(.black))
                                 .frame(width: 28, height: 28)
                         }
-                        .padding(.trailing, 16)
                     }
                     if let icon2ButtonTapped,
                        let icon2 {

@@ -11,7 +11,7 @@ import SwiftUI
 public enum SeugiBottomNavigationType: CaseIterable {
     case home
     case chat
-    case people
+    case room
     case notification
     case profile
     
@@ -19,7 +19,7 @@ public enum SeugiBottomNavigationType: CaseIterable {
         switch self {
         case .home: "홈"
         case .chat: "채팅"
-        case .people: "단체"
+        case .room: "단체"
         case .notification: "알림"
         case .profile: "프로필"
         }
@@ -29,7 +29,7 @@ public enum SeugiBottomNavigationType: CaseIterable {
         switch self {
         case .home: DesignSystemAsset.homeFill.swiftUIImage
         case .chat: DesignSystemAsset.chatFill.swiftUIImage
-        case .people: DesignSystemAsset.peopleFill.swiftUIImage
+        case .room: DesignSystemAsset.peopleFill.swiftUIImage
         case .notification: DesignSystemAsset.notificationFill.swiftUIImage
         case .profile: DesignSystemAsset.personFill.swiftUIImage
         }
