@@ -10,14 +10,12 @@ import SwiftUI
 import DesignSystem
 
 struct TopBarPreview: View {
-    @Environment(\.dismiss) var dismiss
     var body: some View {
         ScrollView {
             Text("Hello, Seugi!")
                 .font(.seugi(.display1))
         }
-        .seugiToolbar("로그인") {
-            dismiss()
-        }
+        .seugiTopbar("로그인")
+        .showShadow()
     }
 }

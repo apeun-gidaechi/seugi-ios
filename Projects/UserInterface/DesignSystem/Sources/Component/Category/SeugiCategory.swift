@@ -10,16 +10,18 @@ import SwiftUI
 
 public struct SeugiCategory: View {
     
+    public typealias AsyncAction = () async -> Void
+    
     private static let categoryHeight: CGFloat = 34
     
     var text: String
     var isSelected: Bool
-    var action: () -> Void
+    var action: AsyncAction
     
     public init(
         text: String,
         isSelected: Bool,
-        action: @escaping () -> Void
+        action: @escaping AsyncAction
     ) {
         self.text = text
         self.isSelected = isSelected
@@ -32,13 +34,15 @@ public struct SeugiCategory: View {
         let backgroundColor: Color = isSelected ? .seugi(.primary(.p500)) : .seugi(.gray(.g100))
         
         Button {
-            action()
+            Task {
+                await action()
+            }
         } label: {
             Text(text)
                 .font(.seugi(.subtitle2))
                 .frame(height: Self.categoryHeight)
                 .padding(.horizontal, 16)
-                .seugiForeground(foregroundColor)
+                .seugiColor(foregroundColor)
                 .background(backgroundColor)
                 .cornerRadius(Self.categoryHeight / 2, corners: .allCorners)
         }

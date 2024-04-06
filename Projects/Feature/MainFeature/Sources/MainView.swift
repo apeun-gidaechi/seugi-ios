@@ -6,7 +6,6 @@ import ChatFeature
 import ChatDetailFeature
 import RoomFeature
 import CreateRoomFeature
-//import RoomDetailFeature
 
 public struct MainView: View {
     @StateObject private var bottomNavigationController = BottomNavigationController()
@@ -20,7 +19,6 @@ public struct MainView: View {
                 .navigationDestination(for: ViewType.Main.self) { viewType in
                     switch viewType {
                     case .chatDetail: ChatDetailView()
-//                    case .roomDetail: RoomDetailView()
                     case .firstCreateRoom: FirstCreateRoomView(
                         navigateToSecondCreateRoom: {
                             navController.navigateTo(.SecondCreateRoom)

@@ -8,44 +8,79 @@
 
 import SwiftUI
 
-public extension View {
+public struct SeugiTopBarView: View {
     
-    func seugiToolbar<TrailingContent>(
-        _ title: String,
-        showShadow: Bool = false,
-        @ViewBuilder trailingContent: @escaping () -> TrailingContent = { EmptyView() },
-        backButtonTapped: (() -> Void)? = nil
-    ) -> some View where TrailingContent: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    private let title: String
+    private let showShadow: Bool
+    private let showBackButton: Bool
+    private let subView: AnyView?
+    private let buttons: [SeugiTopBarButton]
+    private let content: AnyView
+    
+    public init(
+        title: String,
+        showShadow: Bool,
+        showBackButton: Bool,
+        subView: AnyView? = nil,
+        buttons: [SeugiTopBarButton],
+        content: AnyView
+    ) {
+        self.title = title
+        self.showShadow = showShadow
+        self.showBackButton = showBackButton
+        self.subView = subView
+        self.buttons = buttons
+        self.content = content
+    }
+    
+    public var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                if let backButtonTapped {
+                if showBackButton {
                     Button {
-                        backButtonTapped()
+                        dismiss()
                     } label: {
                         DesignSystemAsset.arrowLeftLine.swiftUIImage
                             .resizable()
                             .renderingMode(.template)
-                            .seugiForeground(.sub(.black))
+                            .seugiColor(.sub(.black))
                             .frame(width: 28, height: 28)
                     }
                 }
                 
                 Text(title)
                     .font(.seugi(.subtitle1))
-                    .seugiForeground(.sub(.black))
-                    .if(backButtonTapped != nil) {
+                    .seugiColor(.sub(.black))
+                    .if(showBackButton) {
                         $0.padding(.leading, 16)
                     }
                 
                 Spacer()
                 
-                trailingContent()
+                subView
+                
+                HStack(spacing: 16) {
+                    ForEach(buttons.indices, id: \.self) { idx in
+                        let button = buttons[idx]
+                        Button {
+                            button.action()
+                        } label: {
+                            button.icon
+                                .resizable()
+                                .renderingMode(.template)
+                                .seugiColor(.sub(.black))
+                                .frame(width: 28, height: 28)
+                        }
+                    }
+                }
             }
             .frame(height: 54)
             .padding(.horizontal, 16)
             .background(Color.seugi(.sub(.white)))
-            
-            self
+            .navigationBarBackButtonHidden()
+            content
                 .navigationBarBackButtonHidden()
         }
         .if(showShadow) {
@@ -53,47 +88,45 @@ public extension View {
         }
     }
     
-    func seugiToolbar(
-        _ title: String,
-        showShadow: Bool = false,
-        icon1: Image? = nil,
-        icon1ButtonTapped: (() -> Void)? = nil,
-        icon2: Image? = nil,
-        icon2ButtonTapped: (() -> Void)? = nil,
-        backButtonTapped: (() -> Void)? = nil
-    ) -> some View {
-        self.seugiToolbar(
-            title,
-            showShadow: showShadow,
-            trailingContent: {
-                HStack(spacing: 16) {
-                    if let icon1ButtonTapped,
-                       let icon1 {
-                        Button {
-                            icon1ButtonTapped()
-                        } label: {
-                            icon1
-                                .resizable()
-                                .renderingMode(.template)
-                                .seugiForeground(.sub(.black))
-                                .frame(width: 28, height: 28)
-                        }
-                    }
-                    if let icon2ButtonTapped,
-                       let icon2 {
-                        Button {
-                            icon2ButtonTapped()
-                        } label: {
-                            icon2
-                                .resizable()
-                                .renderingMode(.template)
-                                .seugiForeground(.sub(.black))
-                                .frame(width: 28, height: 28)
-                        }
-                    }
-                }
-            },
-            backButtonTapped: backButtonTapped
+    public func button(_ button: SeugiTopBarButton) -> SeugiTopBarView {
+        Self.init(title: title,
+                  showShadow: showShadow,
+                  showBackButton: showBackButton,
+                  subView: subView,
+                  buttons: buttons + [button],
+                  content: content
+        )
+    }
+    
+    public func showShadow(_ condition: Bool = true) -> SeugiTopBarView {
+        Self.init(title: title,
+                  showShadow: condition,
+                  showBackButton: showBackButton,
+                  subView: subView,
+                  buttons: buttons,
+                  content: content
+        )
+    }
+    
+    public func subView<S: View>(@ViewBuilder content: @escaping () -> S) -> SeugiTopBarView {
+        Self.init(title: title,
+                  showShadow: showShadow,
+                  showBackButton: showBackButton,
+                  subView: AnyView(content()),
+                  buttons: buttons,
+                  content: self.content
+        )
+    }
+}
+
+public extension View {
+    func seugiTopbar(_ title: String) -> SeugiTopBarView {
+        SeugiTopBarView(
+            title: title,
+            showShadow: false,
+            showBackButton: true,
+            buttons: [],
+            content: AnyView(self)
         )
     }
 }
