@@ -22,7 +22,7 @@ public struct ChatItemViewCell: View {
     public var body: some View {
         Text(text)
             .font(.seugi(.body1))
-            .seugiForeground(type.foregroundColor)
+            .seugiColor(type.foregroundColor)
             .padding(12)
             .background(Color.seugi(type.backgroundColor))
             .cornerRadius(8, corners: type.corners)

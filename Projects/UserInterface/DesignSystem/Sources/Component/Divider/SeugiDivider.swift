@@ -40,6 +40,6 @@ public struct SeugiDivider: View {
                     .frame(width: 1)
             }
         }
-        .seugiForeground(.gray(.g200))
+        .seugiColor(.gray(.g200))
     }
 }

@@ -18,7 +18,7 @@ public struct MemberListPreview: View {
                 SeugiMemberList(type: .normal) {
                     DesignSystemAsset.checkFill.swiftUIImage
                         .renderingMode(.template)
-                        .seugiForeground(.primary(.p500))
+                        .seugiColor(.primary(.p500))
                 }
                 SeugiMemberList(type: .invitation)
             }

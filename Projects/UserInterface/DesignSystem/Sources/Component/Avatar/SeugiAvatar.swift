@@ -19,13 +19,13 @@ public struct SeugiAvatar: View {
     
     public var body: some View {
         Circle()
-            .seugiForeground(.primary(.p200))
+            .seugiColor(.primary(.p200))
             .frame(width: type.size, height: type.size)
             .overlay {
                 DesignSystemAsset.personFill.swiftUIImage
                     .resizable()
                     .renderingMode(.template)
-                    .seugiForeground(.primary(.p300))
+                    .seugiColor(.primary(.p300))
                     .frame(width: type.size / 2, height: type.size / 2)
             }
     }

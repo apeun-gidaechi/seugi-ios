@@ -33,7 +33,7 @@ public struct SeugiChatTextField: View {
                 DesignSystemAsset.addFill.swiftUIImage
                     .resizable()
                     .renderingMode(.template)
-                    .seugiForeground(.gray(.g400))
+                    .seugiColor(.gray(.g400))
                     .frame(width: 32, height: 32)
             }
             TextField(hint, text: $text)
@@ -42,7 +42,7 @@ public struct SeugiChatTextField: View {
                 .textInputAutocapitalization(.never)
                 .frame(maxWidth: .infinity)
                 .frame(height: 32)
-                .seugiForeground(.sub(.black))
+                .seugiColor(.sub(.black))
                 .tint(.seugi(.primary(.p500)))
             let sendButtonColor: Color.SeugiColorSystem = text.isEmpty ? .gray(.g400) : .primary(.p500)
             Button {
@@ -51,7 +51,7 @@ public struct SeugiChatTextField: View {
                 DesignSystemAsset.sendFill.swiftUIImage
                     .resizable()
                     .renderingMode(.template)
-                    .seugiForeground(sendButtonColor)
+                    .seugiColor(sendButtonColor)
                     .frame(width: 32, height: 32)
             }
         }

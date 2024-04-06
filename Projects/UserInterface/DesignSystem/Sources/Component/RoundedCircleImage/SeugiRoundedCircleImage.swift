@@ -33,7 +33,7 @@ public struct SeugiRoundedCircleImage: View {
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: imageSize, height: imageSize)
-                    .seugiForeground(.gray(.g400))
+                    .seugiColor(.gray(.g400))
             }
         }
         .frame(width: size.rawValue, height: size.rawValue)

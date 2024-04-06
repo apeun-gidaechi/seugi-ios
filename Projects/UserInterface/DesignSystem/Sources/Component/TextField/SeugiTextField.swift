@@ -76,7 +76,7 @@ struct SeugiTextFieldStyle: TextFieldStyle {
             .cornerRadius(12, corners: .allCorners)
             .font(.seugi(.subtitle2))
             .accentColor(.seugi(.primary(.p500)))
-            .seugiForeground(isEnabled ? .sub(.black) : .gray(.g400))
+            .seugiColor(isEnabled ? .sub(.black) : .gray(.g400))
             .overlay(
                 ZStack {
                     RoundedCornerShape(radius: 12)
@@ -88,7 +88,7 @@ struct SeugiTextFieldStyle: TextFieldStyle {
                             if hasXMark && !text.isEmpty {
                                 DesignSystemAsset.closeFill.swiftUIImage
                                     .renderingMode(.template)
-                                    .seugiForeground(.gray(.g500))
+                                    .seugiColor(.gray(.g500))
                                     .onTapGesture {
                                         onClickClose()
                                     }
@@ -96,7 +96,7 @@ struct SeugiTextFieldStyle: TextFieldStyle {
                         case .password:
                             (isHide ? DesignSystemAsset.hideFill.swiftUIImage : DesignSystemAsset.showFill.swiftUIImage)
                                 .renderingMode(.template)
-                                .seugiForeground(.gray(.g500))
+                                .seugiColor(.gray(.g500))
                                 .onTapGesture {
                                     onClickHide()
                                 }

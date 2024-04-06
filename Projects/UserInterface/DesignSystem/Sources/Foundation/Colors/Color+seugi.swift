@@ -38,8 +38,13 @@ public extension Color {
 
 public extension View {
     
-    func seugiForeground(_ style: Color.SeugiColorSystem) -> some View {
+    func seugiColor(_ style: Color.SeugiColorSystem) -> some View {
         self
             .foregroundStyle(Color.seugi(style))
+    }
+    
+    func seugiBackground(_ style: Color.SeugiColorSystem) -> some View {
+        self
+            .background(Color.seugi(style))
     }
 }

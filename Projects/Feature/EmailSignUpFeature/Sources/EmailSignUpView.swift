@@ -36,7 +36,7 @@ public struct EmailSignUpView: View {
                 navigateToSignIn()
             } label: {
                 Text("이미 계정이 있으신가요?")
-                    .seugiForeground(.primary(.p500))
+                    .seugiColor(.primary(.p500))
                     .font(.seugi(.body1))
             }
             SeugiButton.large("계속하기", type: .primary) {

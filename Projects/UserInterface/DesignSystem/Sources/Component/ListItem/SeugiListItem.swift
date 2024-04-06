@@ -48,7 +48,7 @@ public struct SeugiListItem: View {
         HStack {
             Text(title)
                 .font(.seugi(.subtitle2))
-                .seugiForeground(.sub(.black))
+                .seugiColor(.sub(.black))
                 .padding(.leading, 20)
             Spacer()
             if let isOn {
@@ -58,7 +58,7 @@ public struct SeugiListItem: View {
             if let description {
                 Text(description)
                     .font(.seugi(.subtitle2))
-                    .seugiForeground(.gray(.g500))
+                    .seugiColor(.gray(.g500))
                     .padding(.trailing, 20)
             }
         }

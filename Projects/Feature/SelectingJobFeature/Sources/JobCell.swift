@@ -31,7 +31,7 @@ struct JobCell: View {
             let textColor: Color.SeugiColorSystem = isActive ? .sub(.black) : .gray(.g500)
             Text(jobType.rawValue)
                 .font(.seugi(.subtitle2))
-                .seugiForeground(textColor)
+                .seugiColor(textColor)
         }
         .padding(16)
         .frame(maxWidth: .infinity)

@@ -22,10 +22,10 @@ public struct SeugiBadge: View {
                 .padding(.horizontal, 8)
                 .background(Color.seugi(.orange(.o500)))
                 .cornerRadius(type.size / 2, corners: .allCorners)
-                .seugiForeground(.sub(.white))
+                .seugiColor(.sub(.white))
         } else {
             Circle()
-                .seugiForeground(.orange(.o500))
+                .seugiColor(.orange(.o500))
                 .frame(height: type.size)
         }
     }

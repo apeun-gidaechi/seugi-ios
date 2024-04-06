@@ -16,7 +16,7 @@ struct ShadowPreview: View {
                 ForEach(SeugiShadowSystem.Ev.allCases, id: \.self) {
                     Rectangle()
                         .frame(width: 64, height: 64)
-                        .seugiForeground(.sub(.white))
+                        .seugiColor(.sub(.white))
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                         .shadow(.ev($0))
                 }

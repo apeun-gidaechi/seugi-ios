@@ -33,10 +33,10 @@ public struct SeugiTextFieldForm: View {
             HStack(spacing: 2) {
                 Text(label)
                     .font(.seugi(.subtitle2))
-                    .seugiForeground(.sub(.black))
+                    .seugiColor(.sub(.black))
                 Text("*")
                     .font(.seugi(.subtitle2))
-                    .seugiForeground(.red(.r500))
+                    .seugiColor(.red(.r500))
             }
             .padding(.leading, 4)
             SeugiTextField(hint, text: $text, type: type)

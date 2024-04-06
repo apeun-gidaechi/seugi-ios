@@ -47,7 +47,7 @@ struct SeugiCheckboxStyle: ToggleStyle {
                     .renderingMode(.template)
                     .resizable()
                     .frame(width: size.rawValue, height: size.rawValue)
-                    .seugiForeground(configuration.isOn ? .primary(.p500) : .gray(.g500))
+                    .seugiColor(configuration.isOn ? .primary(.p500) : .gray(.g500))
                 configuration.label
             }
         }

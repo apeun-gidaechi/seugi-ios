@@ -63,7 +63,7 @@ struct SeugiCodeTextFieldStyle: TextFieldStyle {
             .background(Color.seugi(.sub(.white)))
             .padding(.horizontal, 16)
             .accentColor(.seugi(.sub(.transparent)))
-            .seugiForeground(.sub(.transparent))
+            .seugiColor(.sub(.transparent))
     }
 }
 
@@ -87,7 +87,7 @@ struct SeugiCodeCell: View {
             .cornerRadius(12, corners: .allCorners)
             .font(.seugi(.subtitle2))
             .accentColor(.seugi(.primary(.p500)))
-            .seugiForeground(isEnabled ? .sub(.black) : .gray(.g400))
+            .seugiColor(isEnabled ? .sub(.black) : .gray(.g400))
             .allowsHitTesting(false)
             .overlay(
                 ZStack {

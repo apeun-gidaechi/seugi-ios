@@ -28,18 +28,18 @@ public struct SeugiMemberList<Content>: View where Content: View {
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 28, height: 28)
-                    .seugiForeground(.primary(.p400))
+                    .seugiColor(.primary(.p400))
             } else {
                 SeugiAvatar(type: .large)
             }
             if case .invitation = type {
                 Text("멤버 초대하기")
                     .font(.seugi(.subtitle2))
-                    .seugiForeground(.primary(.p400))
+                    .seugiColor(.primary(.p400))
             } else {
                 Text("노영재")
                     .font(.seugi(.subtitle2))
-                    .seugiForeground(.sub(.black))
+                    .seugiColor(.sub(.black))
             }
             Spacer()
             content()

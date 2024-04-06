@@ -25,22 +25,22 @@ public struct SeugiChatList: View {
                 HStack(alignment: .bottom, spacing: 4) {
                     Text("노영재")
                         .font(.seugi(.subtitle2))
-                        .seugiForeground(.sub(.black))
+                        .seugiColor(.sub(.black))
                     if case .people(let memberCount) = type {
                         Text("\(memberCount)")
                             .font(.seugi(.body2))
-                            .seugiForeground(.gray(.g500))
+                            .seugiColor(.gray(.g500))
                     }
                 }
                 Text("나 사실...")
                     .font(.seugi(.body2))
-                    .seugiForeground(.gray(.g600))
+                    .seugiColor(.gray(.g600))
             }
             Spacer()
             VStack(spacing: 4) {
                 Text("12:39")
                     .font(.seugi(.body2))
-                    .seugiForeground(.gray(.g500))
+                    .seugiColor(.gray(.g500))
                 if case .people(let memberCount) = type,
                    memberCount > 0 {
                     SeugiBadge(type: .number(memberCount))

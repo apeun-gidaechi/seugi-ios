@@ -17,10 +17,10 @@ public struct JoinSuccessView: View {
                     .padding(.bottom, 16)
                 Text("대구 소프트웨어 마이스터 고등학교")
                     .font(.seugi(.subtitle1))
-                    .seugiForeground(.sub(.black))
+                    .seugiColor(.sub(.black))
                 Text("학생 213명 선생님 32명")
                     .font(.seugi(.body1))
-                    .seugiForeground(.gray(.g600))
+                    .seugiColor(.gray(.g600))
             }
             
             Spacer()

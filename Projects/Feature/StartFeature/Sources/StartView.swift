@@ -44,11 +44,11 @@ public struct StartView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     Text("스기")
                         .font(.seugi(.display1))
-                        .seugiForeground(.sub(.white))
+                        .seugiColor(.sub(.white))
                     Text("학생, 선생님 모두 함께하는\n스마트 스쿨 플랫폼")
                         .multilineTextAlignment(.leading)
                         .font(.seugi(.subtitle2))
-                        .seugiForeground(.sub(.white))
+                        .seugiColor(.sub(.white))
                 }
                 .toLeading()
                 .padding(.leading, 24)

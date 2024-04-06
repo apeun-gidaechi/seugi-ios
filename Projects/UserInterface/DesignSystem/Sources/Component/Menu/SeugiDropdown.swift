@@ -37,13 +37,13 @@ public struct SeugiDropdown<T: Hashable & CustomStringConvertible>: View {
         } label: {
             HStack {
                 Text(hint)
-                    .seugiForeground(.gray(.g500))
+                    .seugiColor(.gray(.g500))
                     .font(.seugi(.subtitle2))
                 Spacer()
                 DesignSystemAsset.expandDownLine.swiftUIImage
                     .resizable()
                     .renderingMode(.template)
-                    .seugiForeground(.gray(.g500))
+                    .seugiColor(.gray(.g500))
                     .frame(width: 24, height: 24)
             }
         }
@@ -66,7 +66,7 @@ struct SeugiDropdownStyle: MenuStyle {
             .cornerRadius(12, corners: .allCorners)
             .font(.seugi(.subtitle2))
             .accentColor(.seugi(.primary(.p500)))
-            .seugiForeground(isEnabled ? .sub(.black) : .gray(.g400))
+            .seugiColor(isEnabled ? .sub(.black) : .gray(.g400))
             .overlay(
                 RoundedCornerShape(radius: 12)
                     .stroke(isEnabled ? strokeColor : .seugi(.gray(.g200)), lineWidth: 1)

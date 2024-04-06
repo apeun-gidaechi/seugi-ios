@@ -138,7 +138,7 @@ public struct ChatDetailView: View {
                 .resizable()
                 .renderingMode(.template)
                 .frame(width: 28, height: 28)
-                .seugiForeground(.gray(.g600))
+                .seugiColor(.gray(.g600))
         }
     }
 }
