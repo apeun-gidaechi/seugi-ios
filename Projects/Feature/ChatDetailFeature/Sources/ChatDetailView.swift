@@ -87,7 +87,7 @@ public struct ChatDetailView: View {
             Text("멤버")
                 .padding(.leading, 16)
                 .toLeading()
-                .font(.seugi(.subtitle2))
+                .font(.subtitle(.s2))
                 .frame(height: 40)
             SeugiDivider(thickness: .thin)
             ScrollView {

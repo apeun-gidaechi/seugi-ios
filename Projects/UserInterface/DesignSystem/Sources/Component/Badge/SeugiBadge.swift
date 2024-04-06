@@ -17,7 +17,7 @@ public struct SeugiBadge: View {
         if case let .number(num) = type {
             let text = num >= 300 ? "300+" : String(num)
             Text(text)
-                .font(.seugi(.caption2))
+                .font(.caption(.c2))
                 .frame(height: type.size)
                 .padding(.horizontal, 8)
                 .background(Color.seugi(.orange(.o500)))

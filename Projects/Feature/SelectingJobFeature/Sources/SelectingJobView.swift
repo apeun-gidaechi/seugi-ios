@@ -30,7 +30,7 @@ public struct SelectingJobView: View {
             Spacer()
             VStack {
                 Text("학생이신가요?\n아니면 선생님이신가요?")
-                    .font(.seugi(.subtitle1))
+                    .font(.subtitle(.s1))
                     .toLeading()
                     .padding(.leading, 4)
                 HStack {

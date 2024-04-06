@@ -16,10 +16,10 @@ public struct JoinSuccessView: View {
                 SeugiRoundedCircleImage.small(type: .fill(image: .studentActive))
                     .padding(.bottom, 16)
                 Text("대구 소프트웨어 마이스터 고등학교")
-                    .font(.seugi(.subtitle1))
+                    .font(.subtitle(.s1))
                     .seugiColor(.sub(.black))
                 Text("학생 213명 선생님 32명")
-                    .font(.seugi(.body1))
+                    .font(.body(.b1))
                     .seugiColor(.gray(.g600))
             }
             

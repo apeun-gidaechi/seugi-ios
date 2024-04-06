@@ -21,8 +21,8 @@ public enum SeugiButtonSize {
     
     var font: Font {
         switch self {
-        case .large: .seugi(.subtitle2)
-        case .small: .seugi(.body2)
+        case .large: .subtitle(.s2)
+        case .small: .body(.b2)
         }
     }
 }

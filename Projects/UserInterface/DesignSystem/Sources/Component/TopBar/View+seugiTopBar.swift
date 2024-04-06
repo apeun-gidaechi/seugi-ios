@@ -51,7 +51,7 @@ public struct SeugiTopBarView: View {
                 }
                 
                 Text(title)
-                    .font(.seugi(.subtitle1))
+                    .font(.subtitle(.s1))
                     .seugiColor(.sub(.black))
                     .if(showBackButton) {
                         $0.padding(.leading, 16)

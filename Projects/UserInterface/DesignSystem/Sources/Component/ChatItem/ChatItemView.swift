@@ -31,7 +31,7 @@ public struct ChatItemView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     if case .other = type {
                         Text(author)
-                            .font(.seugi(.body1))
+                            .font(.body(.b1))
                             .seugiColor(.gray(.g600))
                     }
                     VStack(alignment: type == .other ? .leading : .trailing, spacing: 8) {
@@ -45,10 +45,10 @@ public struct ChatItemView: View {
                             VStack(alignment: type == .other ? .leading : .trailing, spacing: 0) {
                                 Text("1")
                                     .seugiColor(.gray(.g600))
-                                    .font(.seugi(.caption1))
+                                    .font(.caption(.c1))
                                 Text("오후 7:44")
                                     .seugiColor(.gray(.g600))
-                                    .font(.seugi(.caption2))
+                                    .font(.caption(.c2))
                             }
                             if case .me = type {
                                 ChatItemViewCell(text: "iOS 정말 재미있어요!", type: type)

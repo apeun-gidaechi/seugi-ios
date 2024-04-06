@@ -21,7 +21,7 @@ public struct ChatItemViewCell: View {
     
     public var body: some View {
         Text(text)
-            .font(.seugi(.body1))
+            .font(.body(.b1))
             .seugiColor(type.foregroundColor)
             .padding(12)
             .background(Color.seugi(type.backgroundColor))

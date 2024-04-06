@@ -20,7 +20,7 @@ public struct ChatItemDateView: View {
         HStack {
             Spacer()
             Text(date)
-                .font(.seugi(.caption2))
+                .font(.caption(.c2))
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
                 .background(Color.seugi(.gray(.g100)))

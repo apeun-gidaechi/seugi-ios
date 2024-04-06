@@ -34,11 +34,11 @@ public struct SeugiMemberList<Content>: View where Content: View {
             }
             if case .invitation = type {
                 Text("멤버 초대하기")
-                    .font(.seugi(.subtitle2))
+                    .font(.subtitle(.s2))
                     .seugiColor(.primary(.p400))
             } else {
                 Text("노영재")
-                    .font(.seugi(.subtitle2))
+                    .font(.subtitle(.s2))
                     .seugiColor(.sub(.black))
             }
             Spacer()

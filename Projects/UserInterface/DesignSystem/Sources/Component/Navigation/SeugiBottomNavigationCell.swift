@@ -31,7 +31,7 @@ struct SeugiBottomNavigationCell: View {
                 .padding(.top, 4)
                 .foregroundStyle(imageColor)
             Text(type.text)
-                .font(.seugi(.caption2))
+                .font(.caption(.c2))
                 .foregroundStyle(textColor)
         }
         .padding(.horizontal, 4)

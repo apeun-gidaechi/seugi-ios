@@ -39,7 +39,7 @@ public struct SeugiCategory: View {
             }
         } label: {
             Text(text)
-                .font(.seugi(.subtitle2))
+                .font(.subtitle(.s2))
                 .frame(height: Self.categoryHeight)
                 .padding(.horizontal, 16)
                 .seugiColor(foregroundColor)

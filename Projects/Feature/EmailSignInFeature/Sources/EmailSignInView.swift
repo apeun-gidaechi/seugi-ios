@@ -29,13 +29,13 @@ public struct EmailSignInView: View {
             Spacer()
             HStack(spacing: 0) {
                 Text("계정이 없으시다면?")
-                    .font(.seugi(.body1))
+                    .font(.body(.b1))
                     .seugiColor(.gray(.g600))
                 Button {
                     navigateToSignUp()
                 } label: {
                     Text("가입하기")
-                        .font(.seugi(.body1))
+                        .font(.body(.b1))
                         .seugiColor(.primary(.p500))
                 }
             }

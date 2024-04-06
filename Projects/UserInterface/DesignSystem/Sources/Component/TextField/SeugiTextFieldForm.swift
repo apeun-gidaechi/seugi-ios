@@ -32,10 +32,10 @@ public struct SeugiTextFieldForm: View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 2) {
                 Text(label)
-                    .font(.seugi(.subtitle2))
+                    .font(.subtitle(.s2))
                     .seugiColor(.sub(.black))
                 Text("*")
-                    .font(.seugi(.subtitle2))
+                    .font(.subtitle(.s2))
                     .seugiColor(.red(.r500))
             }
             .padding(.leading, 4)

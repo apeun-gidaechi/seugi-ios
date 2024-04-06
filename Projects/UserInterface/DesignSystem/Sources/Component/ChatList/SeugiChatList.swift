@@ -24,22 +24,22 @@ public struct SeugiChatList: View {
             VStack(alignment: .leading, spacing: 2) {
                 HStack(alignment: .bottom, spacing: 4) {
                     Text("노영재")
-                        .font(.seugi(.subtitle2))
+                        .font(.subtitle(.s2))
                         .seugiColor(.sub(.black))
                     if case .people(let memberCount) = type {
                         Text("\(memberCount)")
-                            .font(.seugi(.body2))
+                            .font(.body(.b2))
                             .seugiColor(.gray(.g500))
                     }
                 }
                 Text("나 사실...")
-                    .font(.seugi(.body2))
+                    .font(.body(.b2))
                     .seugiColor(.gray(.g600))
             }
             Spacer()
             VStack(spacing: 4) {
                 Text("12:39")
-                    .font(.seugi(.body2))
+                    .font(.body(.b2))
                     .seugiColor(.gray(.g500))
                 if case .people(let memberCount) = type,
                    memberCount > 0 {
