@@ -13,7 +13,6 @@ import BaseFeature
 public struct OAuthSignUpView: View {
     
     @ObservedObject private var vm = OAuthSignUpViewModel()
-    @Environment(\.dismiss) private var dismiss
     var navigateToRoot: () -> Void
     
     public init(
@@ -42,8 +41,6 @@ public struct OAuthSignUpView: View {
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
-        .seugiToolbar("회원가입") {
-            dismiss()
-        }
+        .seugiTopBar("회원가입")
     }
 }

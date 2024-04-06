@@ -12,7 +12,6 @@ import DesignSystem
 
 public struct SecondCreateRoomView: View {
     
-    @Environment(\.dismiss) private var dismiss
     @State private var roomTitle = ""
     
     public init() {}
@@ -23,12 +22,11 @@ public struct SecondCreateRoomView: View {
                 .padding(.horizontal, 20)
             Spacer()
         }
-        .seugiToolbar("", trailingContent: {
+        .seugiTopBar("")
+        .subView {
             SeugiButton.small("완료", type: .transparent) {
                 // handle navigate to CreateRoom-2
             }
-        }) {
-            dismiss()
         }
     }
 }

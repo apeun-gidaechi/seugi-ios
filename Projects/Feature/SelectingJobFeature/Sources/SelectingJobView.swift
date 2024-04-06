@@ -12,7 +12,6 @@ import BaseFeature
 
 public struct SelectingJobView: View {
     
-    @Environment(\.dismiss) var dismiss
     @State private var selectedTab: JobType?
     
     var navigateToEmailSignUp: () -> Void
@@ -52,8 +51,6 @@ public struct SelectingJobView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 16)
         }
-        .seugiToolbar("회원가입") {
-            dismiss()
-        }
+        .seugiTopBar("회원가입")
     }
 }

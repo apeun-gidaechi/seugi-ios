@@ -12,4 +12,9 @@ public struct SeugiTopBarButton {
     
     public let icon: Image
     public let action: () -> Void
+    
+    public init(icon: Image, action: @escaping () -> Void) {
+        self.icon = icon
+        self.action = action
+    }
 }

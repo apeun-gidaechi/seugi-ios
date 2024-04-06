@@ -13,7 +13,6 @@ import BaseFeature
 public struct EmailSignUpView: View {
     
     @ObservedObject private var vm = EmailSignUpViewModel()
-    @Environment(\.dismiss) private var dismiss
     var navigateToSignIn: () -> Void
     
     public init(
@@ -45,8 +44,6 @@ public struct EmailSignUpView: View {
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
-        .seugiToolbar("회원가입") {
-            dismiss()
-        }
+        .seugiTopBar("회원가입")
     }
 }

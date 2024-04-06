@@ -30,6 +30,7 @@ public struct JoinSuccessView: View {
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
-        .seugiToolbar("학교 가입")
+        .seugiTopBar("학교 가입")
+        .hideBackButton()
     }
 }

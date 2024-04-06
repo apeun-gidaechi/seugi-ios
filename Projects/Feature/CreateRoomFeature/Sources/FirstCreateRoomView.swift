@@ -4,8 +4,6 @@ import DesignSystem
 
 public struct FirstCreateRoomView: View {
     
-    @Environment(\.dismiss) private var dismiss
-    
     private let navigateToSecondCreateRoom: () -> Void
     
     public init(
@@ -30,13 +28,11 @@ public struct FirstCreateRoomView: View {
             }
             Spacer()
         }
-        .seugiToolbar("멤버 선택", trailingContent: {
+        .seugiTopBar("멤버 선택")
+        .subView {
             SeugiButton.small("완료", type: .transparent) {
                 navigateToSecondCreateRoom()
             }
-        }) {
-            dismiss()
         }
     }
 }
-

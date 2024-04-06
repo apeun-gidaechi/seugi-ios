@@ -88,8 +88,9 @@ public struct SeugiTopBarView: View {
         }
     }
     
-    public func button(_ button: SeugiTopBarButton) -> SeugiTopBarView {
-        Self.init(title: title,
+    public func button(_ icon: Image, action: @escaping () -> Void) -> SeugiTopBarView {
+        let button = SeugiTopBarButton(icon: icon, action: action)
+        return Self.init(title: title,
                   showShadow: showShadow,
                   showBackButton: showBackButton,
                   subView: subView,
@@ -117,10 +118,20 @@ public struct SeugiTopBarView: View {
                   content: self.content
         )
     }
+    
+    public func hideBackButton(_ condition: Bool = true) -> SeugiTopBarView {
+        Self.init(title: title,
+                  showShadow: showShadow,
+                  showBackButton: !condition,
+                  subView: subView,
+                  buttons: buttons,
+                  content: content
+        )
+    }
 }
 
 public extension View {
-    func seugiTopbar(_ title: String) -> SeugiTopBarView {
+    func seugiTopBar(_ title: String) -> SeugiTopBarView {
         SeugiTopBarView(
             title: title,
             showShadow: false,

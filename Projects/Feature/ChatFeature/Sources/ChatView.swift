@@ -28,10 +28,10 @@ public struct ChatView: View {
                 .applyAnimation()
             }
         }
-        .seugiToolbar(
-            "채팅",
-            icon1: DesignSystemAsset.searchLine.swiftUIImage,
-            icon1ButtonTapped: {}
-        )
+        .seugiTopBar("채팅")
+        .hideBackButton()
+        .button(DesignSystemAsset.searchLine.swiftUIImage) {
+            //
+        }
     }
 }

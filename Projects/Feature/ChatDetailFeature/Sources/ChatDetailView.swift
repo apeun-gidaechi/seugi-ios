@@ -8,7 +8,6 @@ enum ChatType: Hashable {
 
 public struct ChatDetailView: View {
     
-    @Environment(\.dismiss) private var dismiss
     @State private var text = ""
     @State private var isDrawerOpen = false
     @State private var scrollViewProxy: ScrollViewProxy?
@@ -65,20 +64,14 @@ public struct ChatDetailView: View {
                 .padding(.bottom, 8)
             }
             .hideKeyboardWhenTap()
-            .seugiToolbar(
-                "노영재",
-                showShadow: true,
-                icon1: DesignSystemAsset.searchLine.swiftUIImage,
-                icon1ButtonTapped: {
-                    // handle searching
-                },
-                icon2: DesignSystemAsset.hamburgerHorizontalLine.swiftUIImage,
-                icon2ButtonTapped: {
-                    isDrawerOpen = true
-                }, backButtonTapped: {
-                    dismiss()
-                }
-            )
+            .seugiTopBar("노영재")
+            .showShadow()
+            .button(DesignSystemAsset.searchLine.swiftUIImage) {
+                // handle searching
+            }
+            .button(DesignSystemAsset.hamburgerHorizontalLine.swiftUIImage) {
+                isDrawerOpen = true
+            }
             .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
                 drawerBody
             }

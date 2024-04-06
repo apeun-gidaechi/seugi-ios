@@ -32,14 +32,13 @@ public struct RoomView: View {
                 .applyAnimation()
             }
         }
-        .seugiToolbar(
-            "단체",
-            icon1: DesignSystemAsset.addFill.swiftUIImage,
-            icon1ButtonTapped: {
-                navigateToCreateRoom()
-            },
-            icon2: DesignSystemAsset.searchLine.swiftUIImage,
-            icon2ButtonTapped: {}
-        )
+        .seugiTopBar("단체")
+        .button(DesignSystemAsset.addFill.swiftUIImage) {
+            navigateToCreateRoom()
+        }
+        .button(DesignSystemAsset.searchLine.swiftUIImage) {
+            //
+        }
+        .hideBackButton()
     }
 }
