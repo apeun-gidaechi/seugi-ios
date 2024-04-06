@@ -1,38 +1,28 @@
 import SwiftUI
 
 public extension Font {
-    enum SeugiFontSystem: SeugiFontable, CaseIterable {
-        case display1
-        case display2
-        case title1
-        case title2
-        case subtitle1
-        case subtitle2
-        case body1
-        case body2
-        case caption1
-        case caption2
+    
+    static func pretendard(_ style: SeugiTypography) -> Font {
+        custom(style.weight.rawValue, size: style.size)
     }
     
-    static func seugi(_ style: SeugiFontSystem) -> Font {
-        return style.font
+    static func display(_ type: Font.Display) -> Font {
+        pretendard(type)
     }
-}
-
-public extension Font.SeugiFontSystem {
-    var font: Font {
-        switch self {
-        case .display1:
-            DesignSystemFontFamily.Pretendard.bold.swiftUIFont(size: 36)
-        case .display2: DesignSystemFontFamily.Pretendard.bold.swiftUIFont(size: 32)
-        case .title1: DesignSystemFontFamily.Pretendard.bold.swiftUIFont(size: 28)
-        case .title2: DesignSystemFontFamily.Pretendard.bold.swiftUIFont(size: 24)
-        case .subtitle1: DesignSystemFontFamily.Pretendard.semiBold.swiftUIFont(size: 20)
-        case .subtitle2: DesignSystemFontFamily.Pretendard.semiBold.swiftUIFont(size: 16)
-        case .body1: DesignSystemFontFamily.Pretendard.semiBold.swiftUIFont(size: 14)
-        case .body2: DesignSystemFontFamily.Pretendard.regular.swiftUIFont(size: 14)
-        case .caption1: DesignSystemFontFamily.Pretendard.semiBold.swiftUIFont(size: 12)
-        case .caption2: DesignSystemFontFamily.Pretendard.regular.swiftUIFont(size: 12)
-        }
+    
+    static func title(_ type: Font.Title) -> Font {
+        pretendard(type)
+    }
+    
+    static func subtitle(_ type: Font.SubTitle) -> Font {
+        pretendard(type)
+    }
+    
+    static func body(_ type: Font.Body) -> Font {
+        pretendard(type)
+    }
+    
+    static func caption(_ type: Font.Caption) -> Font {
+        pretendard(type)
     }
 }
