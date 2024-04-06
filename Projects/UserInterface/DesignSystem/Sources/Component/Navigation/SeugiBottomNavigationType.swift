@@ -25,13 +25,13 @@ public enum SeugiBottomNavigationType: CaseIterable {
         }
     }
     
-    var image: Image {
+    var image: SeugiIconography {
         switch self {
-        case .home: DesignSystemAsset.homeFill.swiftUIImage
-        case .chat: DesignSystemAsset.chatFill.swiftUIImage
-        case .room: DesignSystemAsset.peopleFill.swiftUIImage
-        case .notification: DesignSystemAsset.notificationFill.swiftUIImage
-        case .profile: DesignSystemAsset.personFill.swiftUIImage
+        case .home: .homeFill
+        case .chat: .chatFill
+        case .room: .peopleFill
+        case .notification: .notificationFill
+        case .profile: .personFill
         }
     }
 }

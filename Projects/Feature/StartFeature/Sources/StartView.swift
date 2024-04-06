@@ -36,7 +36,7 @@ public struct StartView: View {
                 .ignoresSafeArea()
             VStack {
                 Spacer()
-                DesignSystemAsset.cloud1.swiftUIImage
+                Image(image: .cloud1)
                     .toTrailing()
                     .opacity(opacity1)
                     .offset(y: offsetY1)
@@ -55,7 +55,7 @@ public struct StartView: View {
                 .opacity(opacity1)
                 .offset(y: offsetY1)
                 Spacer()
-                DesignSystemAsset.cloud2.swiftUIImage
+                Image(image: .cloud2)
                     .toLeading()
                     .opacity(opacity2)
                     .offset(y: offsetY2)

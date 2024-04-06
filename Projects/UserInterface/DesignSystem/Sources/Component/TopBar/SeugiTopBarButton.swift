@@ -10,10 +10,10 @@ import SwiftUI
 
 public struct SeugiTopBarButton {
     
-    public let icon: Image
+    public let icon: SeugiIconography
     public let action: () -> Void
     
-    public init(icon: Image, action: @escaping () -> Void) {
+    public init(icon: SeugiIconography, action: @escaping () -> Void) {
         self.icon = icon
         self.action = action
     }

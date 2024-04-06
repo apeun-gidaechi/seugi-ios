@@ -33,10 +33,10 @@ public struct RoomView: View {
             }
         }
         .seugiTopBar("단체")
-        .button(DesignSystemAsset.addFill.swiftUIImage) {
+        .button(.addFill) {
             navigateToCreateRoom()
         }
-        .button(DesignSystemAsset.searchLine.swiftUIImage) {
+        .button(.searchLine) {
             //
         }
         .hideBackButton()

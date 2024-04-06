@@ -16,7 +16,7 @@ public struct MemberListPreview: View {
             VStack(spacing: 0) {
                 SeugiMemberList(type: .normal)
                 SeugiMemberList(type: .normal) {
-                    DesignSystemAsset.checkFill.swiftUIImage
+                    Image(icon: .checkFill)
                         .renderingMode(.template)
                         .seugiColor(.primary(.p500))
                 }

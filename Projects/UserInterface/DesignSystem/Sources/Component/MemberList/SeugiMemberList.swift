@@ -24,7 +24,7 @@ public struct SeugiMemberList<Content>: View where Content: View {
     public var body: some View {
         HStack(spacing: 16) {
             if case .invitation = type {
-                DesignSystemAsset.addRingLine.swiftUIImage
+                Image(icon: .addRingLine)
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 28, height: 28)

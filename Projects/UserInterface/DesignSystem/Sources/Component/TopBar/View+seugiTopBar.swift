@@ -42,7 +42,7 @@ public struct SeugiTopBarView: View {
                     Button {
                         dismiss()
                     } label: {
-                        DesignSystemAsset.arrowLeftLine.swiftUIImage
+                        Image(icon: .arrowLeftLine)
                             .resizable()
                             .renderingMode(.template)
                             .seugiColor(.sub(.black))
@@ -67,7 +67,7 @@ public struct SeugiTopBarView: View {
                         Button {
                             button.action()
                         } label: {
-                            button.icon
+                            Image(icon: button.icon)
                                 .resizable()
                                 .renderingMode(.template)
                                 .seugiColor(.sub(.black))
@@ -88,7 +88,7 @@ public struct SeugiTopBarView: View {
         }
     }
     
-    public func button(_ icon: Image, action: @escaping () -> Void) -> SeugiTopBarView {
+    public func button(_ icon: SeugiIconography, action: @escaping () -> Void) -> SeugiTopBarView {
         let button = SeugiTopBarButton(icon: icon, action: action)
         return Self.init(title: title,
                   showShadow: showShadow,

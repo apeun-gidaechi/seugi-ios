@@ -12,14 +12,14 @@ public enum SeugiRoundedCircleImageType {
     case add
     case school
     case image
-    case fill(image: Image)
+    case fill(image: SeugiImage)
     
     var image: Image {
         switch self {
-        case .add: DesignSystemAsset.addLine.swiftUIImage
-        case .school: DesignSystemAsset.schoolFill.swiftUIImage
-        case .image: DesignSystemAsset.imageLine.swiftUIImage
-        case let .fill(image): image
+        case .add: Image(icon: .addLine)
+        case .school: Image(icon: .schoolFill)
+        case .image: Image(icon: .imageLine)
+        case let .fill(image): Image(image: image)
         }
     }
     

@@ -43,7 +43,7 @@ struct SeugiCheckboxStyle: ToggleStyle {
             configuration.isOn.toggle()
         } label: {
             HStack {
-                (configuration.isOn ? DesignSystemAsset.checkFill.swiftUIImage : DesignSystemAsset.checkLine.swiftUIImage)
+                Image(icon: configuration.isOn ? .checkFill : .checkLine)
                     .renderingMode(.template)
                     .resizable()
                     .frame(width: size.rawValue, height: size.rawValue)

@@ -22,7 +22,7 @@ public struct SeugiAvatar: View {
             .seugiColor(.primary(.p200))
             .frame(width: type.size, height: type.size)
             .overlay {
-                DesignSystemAsset.personFill.swiftUIImage
+                Image(icon: .personFill)
                     .resizable()
                     .renderingMode(.template)
                     .seugiColor(.primary(.p300))

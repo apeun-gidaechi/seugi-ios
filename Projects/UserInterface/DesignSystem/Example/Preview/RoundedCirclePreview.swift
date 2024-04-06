@@ -17,12 +17,12 @@ public struct RoundedCirclePreview: View {
                 SeugiRoundedCircleImage.large(type: .add)
                 SeugiRoundedCircleImage.large(type: .school)
                 SeugiRoundedCircleImage.large(type: .image)
-                SeugiRoundedCircleImage.large(type: .fill(image: DesignSystemAsset.studentActive.swiftUIImage))
+                SeugiRoundedCircleImage.large(type: .fill(image: .studentActive))
                 
                 SeugiRoundedCircleImage.small(type: .add)
                 SeugiRoundedCircleImage.small(type: .school)
                 SeugiRoundedCircleImage.small(type: .image)
-                SeugiRoundedCircleImage.small(type: .fill(image: DesignSystemAsset.studentActive.swiftUIImage))
+                SeugiRoundedCircleImage.small(type: .fill(image: .studentActive))
             }
         }
     }

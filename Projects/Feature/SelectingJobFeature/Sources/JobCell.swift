@@ -19,10 +19,10 @@ struct JobCell: View {
         VStack {
             Group {
                 if isActive {
-                    jobType.activeImage
+                    Image(image: jobType.activeImage)
                         .resizable()
                 } else {
-                    jobType.disableImage
+                    Image(image: jobType.disableImage)
                         .resizable()
                 }
             }

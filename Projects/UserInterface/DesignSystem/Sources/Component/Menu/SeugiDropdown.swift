@@ -40,7 +40,7 @@ public struct SeugiDropdown<T: Hashable & CustomStringConvertible>: View {
                     .seugiColor(.gray(.g500))
                     .font(.seugi(.subtitle2))
                 Spacer()
-                DesignSystemAsset.expandDownLine.swiftUIImage
+                Image(icon: .expandDownLine)
                     .resizable()
                     .renderingMode(.template)
                     .seugiColor(.gray(.g500))

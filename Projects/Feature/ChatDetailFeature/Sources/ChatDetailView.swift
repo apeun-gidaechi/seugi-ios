@@ -66,10 +66,10 @@ public struct ChatDetailView: View {
             .hideKeyboardWhenTap()
             .seugiTopBar("노영재")
             .showShadow()
-            .button(DesignSystemAsset.searchLine.swiftUIImage) {
+            .button(.searchLine) {
                 // handle searching
             }
-            .button(DesignSystemAsset.hamburgerHorizontalLine.swiftUIImage) {
+            .button(.hamburgerHorizontalLine) {
                 isDrawerOpen = true
             }
             .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
@@ -102,15 +102,15 @@ public struct ChatDetailView: View {
             Spacer()
             SeugiDivider(thickness: .thin)
             HStack(spacing: 16) {
-                makeImageButton(DesignSystemAsset.logoutLine.swiftUIImage) {
+                makeImageButton(.logoutLine) {
                     // handle
                 }
                 
                 Spacer()
-                makeImageButton(DesignSystemAsset.notificationFill.swiftUIImage) {
+                makeImageButton(.notificationFill) {
                     // handle
                 }
-                makeImageButton(DesignSystemAsset.settingFill.swiftUIImage) {
+                makeImageButton(.settingFill) {
                     // handle
                 }
             }
@@ -121,13 +121,13 @@ public struct ChatDetailView: View {
     
     @ViewBuilder
     private func makeImageButton(
-        _ image: Image,
+        _ icon: SeugiIconography,
         action: @escaping () -> Void
     ) -> some View {
         Button {
             action()
         } label: {
-            image
+            Image(icon: icon)
                 .resizable()
                 .renderingMode(.template)
                 .frame(width: 28, height: 28)

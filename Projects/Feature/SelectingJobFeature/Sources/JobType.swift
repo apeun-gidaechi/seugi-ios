@@ -14,17 +14,17 @@ enum JobType: String, CaseIterable {
     case student = "학생"
     case teacher = "선생님"
     
-    var activeImage: Image {
+    var activeImage: SeugiImage {
         switch self {
-        case .student: DesignSystemAsset.studentActive.swiftUIImage
-        case .teacher: DesignSystemAsset.teacherActive.swiftUIImage
+        case .student: .studentActive
+        case .teacher: .teacherActive
         }
     }
     
-    var disableImage: Image {
+    var disableImage: SeugiImage {
         switch self {
-        case .student: DesignSystemAsset.studentDisable.swiftUIImage
-        case .teacher: DesignSystemAsset.teacherDisable.swiftUIImage
+        case .student: .studentDisable
+        case .teacher: .teacherDisable
         }
     }
 }

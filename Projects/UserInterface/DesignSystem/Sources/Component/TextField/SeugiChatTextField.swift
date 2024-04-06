@@ -30,7 +30,7 @@ public struct SeugiChatTextField: View {
             Button {
                 addButtonTapped()
             } label: {
-                DesignSystemAsset.addFill.swiftUIImage
+                Image(icon: .addFill)
                     .resizable()
                     .renderingMode(.template)
                     .seugiColor(.gray(.g400))
@@ -48,7 +48,7 @@ public struct SeugiChatTextField: View {
             Button {
                 sendButtonTapped()
             } label: {
-                DesignSystemAsset.sendFill.swiftUIImage
+                Image(icon: .sendFill)
                     .resizable()
                     .renderingMode(.template)
                     .seugiColor(sendButtonColor)

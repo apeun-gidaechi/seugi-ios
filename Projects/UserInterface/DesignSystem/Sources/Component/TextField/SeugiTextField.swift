@@ -86,7 +86,7 @@ struct SeugiTextFieldStyle: TextFieldStyle {
                         switch type {
                         case .none(let hasXMark):
                             if hasXMark && !text.isEmpty {
-                                DesignSystemAsset.closeFill.swiftUIImage
+                                Image(icon: .closeFill)
                                     .renderingMode(.template)
                                     .seugiColor(.gray(.g500))
                                     .onTapGesture {
@@ -94,7 +94,7 @@ struct SeugiTextFieldStyle: TextFieldStyle {
                                     }
                             }
                         case .password:
-                            (isHide ? DesignSystemAsset.hideFill.swiftUIImage : DesignSystemAsset.showFill.swiftUIImage)
+                            Image(icon: isHide ? .hideFill : .showFill)
                                 .renderingMode(.template)
                                 .seugiColor(.gray(.g500))
                                 .onTapGesture {

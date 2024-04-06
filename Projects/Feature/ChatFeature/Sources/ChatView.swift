@@ -30,7 +30,7 @@ public struct ChatView: View {
         }
         .seugiTopBar("채팅")
         .hideBackButton()
-        .button(DesignSystemAsset.searchLine.swiftUIImage) {
+        .button(.searchLine) {
             //
         }
     }
