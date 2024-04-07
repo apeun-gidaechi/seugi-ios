@@ -57,6 +57,19 @@ public extension Target {
                     dependencies: dependencies)
     }
     
+    static func makeInterface(
+        target: ModulePaths.Feature,
+        dependencies: [TargetDependency]
+    ) -> Self {
+        .makeTarget(name: "\(target.rawValue)Interface",
+                    product: .framework,
+                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)Interface",
+                    infoPlist: .default,
+                    sources: ["Interface/**"],
+                    scripts: [.swiftLint],
+                    dependencies: dependencies)
+    }
+    
     static func makeService(
         target: ModulePaths.Service,
         dependencies: [TargetDependency]
