@@ -11,6 +11,6 @@ import ProjectDescriptionHelpers
 let project = Project.makeShared(
     target: .GlobalThirdPartyLibrary,
     targets: [
-        .makeShared(target: .GlobalThirdPartyLibrary, dependencies: [])
+        .shared(target: .GlobalThirdPartyLibrary, dependencies: [])
     ]
 )

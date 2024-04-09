@@ -26,7 +26,7 @@ public extension Project {
         packages: [Package] = [],
         targets: [Target] = []
     ) -> Self {
-        .makeProject(name: target.rawValue,
+        .makeProject(name: "\(target.rawValue)Feature",
                     product: .staticLibrary,
                     targets: targets)
     }
@@ -36,7 +36,7 @@ public extension Project {
         packages: [Package] = [],
         targets: [Target] = []
     ) -> Self {
-        .makeProject(name: target.rawValue,
+        .makeProject(name: "\(target.rawValue)Service",
                     product: .staticLibrary,
                     targets: targets)
     }
@@ -47,7 +47,7 @@ public extension Project {
         targets: [Target]
     ) -> Self {
         .makeProject(name: target.rawValue,
-                    product: .staticLibrary,
+                    product: .staticFramework,
                     targets: targets)
     }
     

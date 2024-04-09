@@ -2,13 +2,13 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .ChatFeature,
+    target: .Chat,
     targets: [
-        .makeFeature(target: .ChatFeature, dependencies: [
-            .feature(target: .BaseFeature)
+        .feature(target: .Chat, dependencies: [
+            .feature(target: .Base)
         ]),
-        .makeFeatureExample(target: .ChatFeature, dependencies: [
-            .feature(target: .ChatFeature)
+        .featureExample(target: .Chat, dependencies: [
+            .feature(target: .Chat)
         ])
     ]
 )

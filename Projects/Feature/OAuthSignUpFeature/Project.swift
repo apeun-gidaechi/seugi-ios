@@ -2,13 +2,13 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .OAuthSignUpFeature,
+    target: .OAuthSignUp,
     targets: [
-        .makeFeature(target: .OAuthSignUpFeature, dependencies: [
-            .feature(target: .BaseFeature)
+        .feature(target: .OAuthSignUp, dependencies: [
+            .feature(target: .Base)
         ]),
-        .makeFeatureExample(target: .OAuthSignUpFeature, dependencies: [
-            .feature(target: .OAuthSignUpFeature)
+        .featureExample(target: .OAuthSignUp, dependencies: [
+            .feature(target: .OAuthSignUp)
         ])
     ]
 )

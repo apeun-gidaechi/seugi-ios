@@ -2,19 +2,19 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .OnboardingFeature,
+    target: .Onboarding,
     targets: [
-        .makeFeature(target: .OnboardingFeature, dependencies: [
-            .feature(target: .BaseFeature),
-            .feature(target: .EmailSignInFeature),
-            .feature(target: .EmailSignUpFeature),
-            .feature(target: .LaunchScreenFeature),
-            .feature(target: .OAuthSignUpFeature),
-            .feature(target: .SelectingJobFeature),
-            .feature(target: .StartFeature)
+        .feature(target: .Onboarding, dependencies: [
+            .feature(target: .Base),
+            .feature(target: .EmailSignIn),
+            .feature(target: .EmailSignUp),
+            .feature(target: .LaunchScreen),
+            .feature(target: .OAuthSignUp),
+            .feature(target: .SelectingJob),
+            .feature(target: .Start)
         ]),
-        .makeFeatureExample(target: .OnboardingFeature, dependencies: [
-            .feature(target: .OnboardingFeature)
+        .featureExample(target: .Onboarding, dependencies: [
+            .feature(target: .Onboarding)
         ])
     ]
 )

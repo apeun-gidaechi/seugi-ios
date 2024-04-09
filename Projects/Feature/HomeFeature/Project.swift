@@ -2,13 +2,13 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .HomeFeature,
+    target: .Home,
     targets: [
-        .makeFeature(target: .HomeFeature, dependencies: [
-            .feature(target: .BaseFeature)
+        .feature(target: .Home, dependencies: [
+            .feature(target: .Base)
         ]),
-        .makeFeatureExample(target: .HomeFeature, dependencies: [
-            .feature(target: .HomeFeature)
+        .featureExample(target: .Home, dependencies: [
+            .feature(target: .Home)
         ])
     ]
 )

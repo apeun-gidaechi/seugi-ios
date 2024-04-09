@@ -2,10 +2,10 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeService(
-    target: .AuthService,
+    target: .Auth,
     targets: [
-        .makeService(target: .AuthService, dependencies: [
-            .service(target: .BaseService)
+        .service(target: .Auth, dependencies: [
+            .service(target: .Base)
         ])
     ]
 )

@@ -2,13 +2,13 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .JoinSuccessFeature,
+    target: .JoinSuccess,
     targets: [
-        .makeFeature(target: .JoinSuccessFeature, dependencies: [
-            .feature(target: .BaseFeature)
+        .feature(target: .JoinSuccess, dependencies: [
+            .feature(target: .Base)
         ]),
-        .makeFeatureExample(target: .JoinSuccessFeature, dependencies: [
-            .feature(target: .JoinSuccessFeature)
+        .featureExample(target: .JoinSuccess, dependencies: [
+            .feature(target: .JoinSuccess)
         ])
     ]
 )

@@ -2,13 +2,13 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .LaunchScreenFeature,
+    target: .LaunchScreen,
     targets: [
-        .makeFeature(target: .LaunchScreenFeature, dependencies: [
-            .feature(target: .BaseFeature)
+        .feature(target: .LaunchScreen, dependencies: [
+            .feature(target: .Base)
         ]),
-        .makeFeatureExample(target: .LaunchScreenFeature, dependencies: [
-            .feature(target: .LaunchScreenFeature)
+        .featureExample(target: .LaunchScreen, dependencies: [
+            .feature(target: .LaunchScreen)
         ])
     ]
 )

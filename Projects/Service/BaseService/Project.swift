@@ -2,9 +2,9 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeService(
-    target: .BaseService,
+    target: .Base,
     targets: [
-        .makeService(target: .BaseService, dependencies: [
+        .service(target: .Base, dependencies: [
             .shared(target: .GlobalThirdPartyLibrary)
         ]),
     ]

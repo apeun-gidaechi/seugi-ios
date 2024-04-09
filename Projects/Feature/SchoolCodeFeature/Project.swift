@@ -2,13 +2,13 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .SchoolCodeFeature,
+    target: .SchoolCode,
     targets: [
-        .makeFeature(target: .SchoolCodeFeature, dependencies: [
-            .feature(target: .BaseFeature)
+        .feature(target: .SchoolCode, dependencies: [
+            .feature(target: .Base)
         ]),
-        .makeFeatureExample(target: .SchoolCodeFeature, dependencies: [
-            .feature(target: .SchoolCodeFeature)
+        .featureExample(target: .SchoolCode, dependencies: [
+            .feature(target: .SchoolCode)
         ])
     ]
 )

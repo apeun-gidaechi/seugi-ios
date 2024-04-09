@@ -11,8 +11,8 @@ import ProjectDescriptionHelpers
 let project = Project.makeApp(
     target: .App,
     targets: [
-        .makeApp(target: .App, dependenceis: [
-            .feature(target: .RootFeature)
+        .app(target: .App, dependenceis: [
+            .feature(target: .Root)
         ], infoPlist: .file(path: "Support/Info.plist"))
     ]
 )

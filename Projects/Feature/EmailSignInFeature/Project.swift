@@ -2,13 +2,13 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .EmailSignInFeature,
+    target: .EmailSignIn,
     targets: [
-        .makeFeature(target: .EmailSignInFeature, dependencies: [
-            .feature(target: .BaseFeature)
+        .feature(target: .EmailSignIn, dependencies: [
+            .feature(target: .Base)
         ]),
-        .makeFeatureExample(target: .EmailSignInFeature, dependencies: [
-            .feature(target: .EmailSignInFeature)
+        .featureExample(target: .EmailSignIn, dependencies: [
+            .feature(target: .EmailSignIn)
         ])
     ]
 )
