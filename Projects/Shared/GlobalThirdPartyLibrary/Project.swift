@@ -7,10 +7,13 @@
 
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
 let project = Project.makeShared(
     target: .GlobalThirdPartyLibrary,
     targets: [
-        .shared(target: .GlobalThirdPartyLibrary, dependencies: [])
+        .shared(target: .GlobalThirdPartyLibrary, dependencies: [
+            .SPM.Swinject
+        ])
     ]
 )

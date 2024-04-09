@@ -9,6 +9,7 @@ let project = Project.makeFeature(
         ]),
         .featureExample(target: .EmailSignIn, dependencies: [
             .feature(target: .EmailSignIn)
-        ])
+        ]),
+        .featureInterface(target: .EmailSignIn, dependencies: [])
     ]
 )

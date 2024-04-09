@@ -9,6 +9,7 @@ let project = Project.makeFeature(
         ]),
         .featureExample(target: .Home, dependencies: [
             .feature(target: .Home)
-        ])
+        ]),
+        .featureInterface(target: .Home, dependencies: [])
     ]
 )

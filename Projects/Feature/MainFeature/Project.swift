@@ -5,15 +5,16 @@ let project = Project.makeFeature(
     target: .Main,
     targets: [
         .feature(target: .Main, dependencies: [
-            .feature(target: .Base),
-            .feature(target: .Home),
-            .feature(target: .Chat),
-            .feature(target: .ChatDetail),
-            .feature(target: .Room),
-            .feature(target: .CreateRoom)
+            .featureInterface(target: .Base),
+            .featureInterface(target: .Home),
+            .featureInterface(target: .Chat),
+            .featureInterface(target: .ChatDetail),
+            .featureInterface(target: .Room),
+            .featureInterface(target: .CreateRoom)
         ]),
         .featureExample(target: .Main, dependencies: [
             .feature(target: .Main)
-        ])
+        ]),
+        .featureInterface(target: .Main, dependencies: [])
     ]
 )

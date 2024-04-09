@@ -1,11 +1,11 @@
 import SwiftUI
 import BaseFeature
 import DesignSystem
-import HomeFeature
-import ChatFeature
-import ChatDetailFeature
-import RoomFeature
-import CreateRoomFeature
+import HomeFeatureInterface
+import ChatFeatureInterface
+import ChatDetailFeatureInterface
+import RoomFeatureInterface
+import CreateRoomFeatureInterface
 
 public struct MainView: View {
     @StateObject private var bottomNavigationController = BottomNavigationController()

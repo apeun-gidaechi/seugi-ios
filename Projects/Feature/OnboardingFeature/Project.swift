@@ -6,15 +6,16 @@ let project = Project.makeFeature(
     targets: [
         .feature(target: .Onboarding, dependencies: [
             .feature(target: .Base),
-            .feature(target: .EmailSignIn),
-            .feature(target: .EmailSignUp),
-            .feature(target: .LaunchScreen),
-            .feature(target: .OAuthSignUp),
-            .feature(target: .SelectingJob),
-            .feature(target: .Start)
+            .featureInterface(target: .EmailSignIn),
+            .featureInterface(target: .EmailSignUp),
+            .featureInterface(target: .LaunchScreen),
+            .featureInterface(target: .OAuthSignUp),
+            .featureInterface(target: .SelectingJob),
+            .featureInterface(target: .Start)
         ]),
         .featureExample(target: .Onboarding, dependencies: [
             .feature(target: .Onboarding)
-        ])
+        ]),
+        .featureInterface(target: .Onboarding, dependencies: [])
     ]
 )

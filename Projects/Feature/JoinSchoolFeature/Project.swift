@@ -6,11 +6,12 @@ let project = Project.makeFeature(
     targets: [
         .feature(target: .JoinSchool, dependencies: [
             .feature(target: .Base),
-            .feature(target: .SchoolCode),
-            .feature(target: .JoinSuccess)
+            .featureInterface(target: .SchoolCode),
+            .featureInterface(target: .JoinSuccess)
         ]),
         .featureExample(target: .JoinSchool, dependencies: [
             .feature(target: .JoinSchool)
-        ])
+        ]),
+        .featureInterface(target: .JoinSchool, dependencies: [])
     ]
 )

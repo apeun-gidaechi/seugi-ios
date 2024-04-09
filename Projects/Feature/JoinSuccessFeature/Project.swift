@@ -9,6 +9,7 @@ let project = Project.makeFeature(
         ]),
         .featureExample(target: .JoinSuccess, dependencies: [
             .feature(target: .JoinSuccess)
-        ])
+        ]),
+        .featureInterface(target: .JoinSuccess, dependencies: [])
     ]
 )

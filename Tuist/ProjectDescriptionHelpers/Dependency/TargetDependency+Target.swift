@@ -19,7 +19,7 @@ public extension TargetDependency {
         target: ModulePaths.Feature
     ) -> TargetDependency {
         .project(target: "\(target.rawValue)FeatureInterface",
-                 path: .relativeToDomain("\(target.rawValue)FeatureInterface"))
+                 path: .relativeToFeature("\(target.rawValue)Feature"))
     }
     
     static func domain(
@@ -33,7 +33,7 @@ public extension TargetDependency {
         target: ModulePaths.Domain
     ) -> TargetDependency {
         .project(target: "\(target.rawValue)DomainInterface",
-                 path: .relativeToDomain("\(target.rawValue)DomainInterface"))
+                 path: .relativeToDomain("\(target.rawValue)Domain"))
     }
     
     static func userInterface(

@@ -9,6 +9,7 @@ let project = Project.makeFeature(
         ]),
         .featureExample(target: .OAuthSignUp, dependencies: [
             .feature(target: .OAuthSignUp)
-        ])
+        ]),
+        .featureInterface(target: .OAuthSignUp, dependencies: [])
     ]
 )
