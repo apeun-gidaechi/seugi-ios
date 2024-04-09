@@ -16,7 +16,7 @@ public extension TargetDependency {
     }
     
     static func featureInterface(
-        target: ModulePaths.Domain
+        target: ModulePaths.Feature
     ) -> TargetDependency {
         .project(target: "\(target.rawValue)FeatureInterface",
                  path: .relativeToDomain("\(target.rawValue)FeatureInterface"))
