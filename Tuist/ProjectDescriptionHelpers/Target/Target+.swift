@@ -70,11 +70,11 @@ public extension Target {
                     dependencies: dependencies)
     }
     
-    static func service(
-        target: ModulePaths.Service,
+    static func domain(
+        target: ModulePaths.Domain,
         dependencies: [TargetDependency]
     ) -> Self {
-        .makeTarget(name: "\(target.rawValue)Service",
+        .makeTarget(name: "\(target.rawValue)Domain",
                     product: .staticLibrary,
                     bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)",
                     infoPlist: .default,
@@ -83,13 +83,13 @@ public extension Target {
                     dependencies: dependencies)
     }
     
-    static func serviceInterface(
-        target: ModulePaths.Service,
+    static func domainInterface(
+        target: ModulePaths.Domain,
         dependencies: [TargetDependency]
     ) -> Self {
-        .makeTarget(name: "\(target.rawValue)ServiceInterface",
+        .makeTarget(name: "\(target.rawValue)DomainInterface",
                     product: .framework,
-                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)serviceinterface",
+                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)domaininterface",
                     infoPlist: .default,
                     sources: ["Interface/**"],
                     scripts: [.swiftLint],

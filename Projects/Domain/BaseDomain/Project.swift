@@ -1,10 +1,10 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.makeService(
+let project = Project.makeDomain(
     target: .Base,
     targets: [
-        .service(target: .Base, dependencies: [
+        .domain(target: .Base, dependencies: [
             .shared(target: .GlobalThirdPartyLibrary)
         ]),
     ]

@@ -31,12 +31,12 @@ public extension Project {
                     targets: targets)
     }
     
-    static func makeService(
-        target: ModulePaths.Service,
+    static func makeDomain(
+        target: ModulePaths.Domain,
         packages: [Package] = [],
         targets: [Target] = []
     ) -> Self {
-        .makeProject(name: "\(target.rawValue)Service",
+        .makeProject(name: "\(target.rawValue)Domain",
                     product: .staticLibrary,
                     targets: targets)
     }

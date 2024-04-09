@@ -10,7 +10,7 @@ import Foundation
 public enum ModulePaths {
     case app(App)
     case feature(Feature)
-    case service(Service)
+    case service(Domain)
     case shared(Shared)
     case userInterface(UserInterface)
 }
@@ -51,7 +51,7 @@ public extension ModulePaths {
         case CreateRoom
     }
     
-    enum Service: String, CaseIterable {
+    enum Domain: String, CaseIterable {
         case Base
         case Auth
     }

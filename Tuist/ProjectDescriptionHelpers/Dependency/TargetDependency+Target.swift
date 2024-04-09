@@ -16,24 +16,24 @@ public extension TargetDependency {
     }
     
     static func featureInterface(
-        target: ModulePaths.Service
+        target: ModulePaths.Domain
     ) -> TargetDependency {
         .project(target: "\(target.rawValue)FeatureInterface",
-                 path: .relativeToSerivce("\(target.rawValue)FeatureInterface"))
+                 path: .relativeToDomain("\(target.rawValue)FeatureInterface"))
     }
     
-    static func service(
-        target: ModulePaths.Service
+    static func domain(
+        target: ModulePaths.Domain
     ) -> TargetDependency {
-        .project(target: "\(target.rawValue)Service",
-                 path: .relativeToSerivce("\(target.rawValue)Service"))
+        .project(target: "\(target.rawValue)Domain",
+                 path: .relativeToDomain("\(target.rawValue)Domain"))
     }
     
-    static func serviceInterface(
-        target: ModulePaths.Service
+    static func domainInterface(
+        target: ModulePaths.Domain
     ) -> TargetDependency {
-        .project(target: "\(target.rawValue)ServiceInterface",
-                 path: .relativeToSerivce("\(target.rawValue)ServiceInterface"))
+        .project(target: "\(target.rawValue)DomainInterface",
+                 path: .relativeToDomain("\(target.rawValue)DomainInterface"))
     }
     
     static func userInterface(
