@@ -1,24 +1,14 @@
-//
-//  OAuthSignUpView.swift
-//  Feature
-//
-//  Created by dgsw8th71 on 3/26/24.
-//  Copyright © 2024 seugi. All rights reserved.
-//
-
 import SwiftUI
 import DesignSystem
 import BaseFeature
 
 public struct OAuthSignUpView: View {
     
-    @ObservedObject private var vm = OAuthSignUpViewModel()
-    var navigateToRoot: () -> Void
+    @ObservedObject private var vm: OAuthSignUpViewModel
+    @EnvironmentObject private var router: Router
     
-    public init(
-        navigateToRoot: @escaping () -> Void
-    ) {
-        self.navigateToRoot = navigateToRoot
+    public init(vm: OAuthSignUpViewModel) {
+        self.vm = vm
     }
     
     public var body: some View {
@@ -29,7 +19,7 @@ public struct OAuthSignUpView: View {
             
             Spacer()
             Button {
-                navigateToRoot()
+                router.navigateToRoot()
             } label: {
                 Text("이미 계정이 있으신가요?")
                     .seugiColor(.primary(.p500))

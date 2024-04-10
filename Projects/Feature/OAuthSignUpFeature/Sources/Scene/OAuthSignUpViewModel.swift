@@ -11,4 +11,6 @@ import Foundation
 class OAuthSignUpViewModel: ObservableObject {
     
     @Published var name = ""
+    
+    init() {}
 }

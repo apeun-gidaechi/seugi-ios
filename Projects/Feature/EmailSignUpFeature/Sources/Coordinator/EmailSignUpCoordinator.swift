@@ -8,6 +8,8 @@ public struct EmailSignUpCoordinator: View {
     @InjectObject private var viewModel: EmailSignUpViewModel
     @Inject private var emailSignInFactory: any EmailSignInFactory
     
+    public init() {}
+    
     public var body: some View {
         EmailSignUpView(vm: viewModel)
             .navigationDestination(for: EmailSignUpDestination.self) {
