@@ -1,29 +1,13 @@
-//
-//  SelectingJob.swift
-//  Feature
-//
-//  Created by dgsw8th71 on 3/26/24.
-//  Copyright © 2024 seugi. All rights reserved.
-//
-
 import SwiftUI
 import DesignSystem
 import BaseFeature
 
 public struct SelectingJobView: View {
     
+    @EnvironmentObject private var router: Router
     @State private var selectedTab: JobType?
     
-    var navigateToEmailSignUp: () -> Void
-    var navigateToOAuthSignUp: () -> Void
-    
-    public init(
-        navigateToEmailSignUp: @escaping () -> Void,
-        navigateToOAuthSignUp: @escaping () -> Void
-    ) {
-        self.navigateToEmailSignUp = navigateToEmailSignUp
-        self.navigateToOAuthSignUp = navigateToOAuthSignUp
-    }
+    public init() {}
     
     public var body: some View {
         VStack {
@@ -46,7 +30,7 @@ public struct SelectingJobView: View {
             .padding(.horizontal, 16)
             Spacer()
             SeugiButton.large("계속하기", type: .primary) {
-                navigateToEmailSignUp()
+                router.navigate(to: SelectingJobDestination.emailSignUp)
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 16)

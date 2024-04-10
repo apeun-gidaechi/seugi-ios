@@ -17,6 +17,8 @@ public struct StartCoordinator: View {
     @Inject private var oAuthFactory: any OAuthSignUpFactory
     @Inject private var emailSignInFactory: any EmailSignInFactory
     
+    public init() {}
+    
     public var body: some View {
         StartView()
             .navigationDestination(for: StartDestination.self) {

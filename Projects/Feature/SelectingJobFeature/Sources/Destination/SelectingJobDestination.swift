@@ -1,0 +1,3 @@
+enum SelectingJobDestination {
+    case emailSignUp
+}
