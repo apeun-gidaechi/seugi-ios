@@ -7,5 +7,8 @@ public final class OAuthSignUpAssembly: Assembly {
         container.register((any OAuthSignUpFactory).self) { _ in
             OAuthSignUpFactoryImpl()
         }
+        container.register(OAuthSignUpViewModel.self) { _ in
+            OAuthSignUpViewModel()
+        }.inObjectScope(.container)
     }
 }

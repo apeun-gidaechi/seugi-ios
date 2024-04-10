@@ -1,12 +1,15 @@
 import SwiftUI
 import DesignSystem
 import BaseFeature
-import DIContainerInterface
 
 public struct OAuthSignUpView: View {
     
-    @InjectObject private var vm: OAuthSignUpViewModel
+    @ObservedObject private var vm: OAuthSignUpViewModel
     @EnvironmentObject private var router: Router
+    
+    public init(vm: OAuthSignUpViewModel) {
+        self.vm = vm
+    }
     
     public var body: some View {
         VStack(spacing: 16) {

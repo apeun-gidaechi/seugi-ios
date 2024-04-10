@@ -8,9 +8,9 @@
 
 import Foundation
 
-class OAuthSignUpViewModel: ObservableObject {
+public class OAuthSignUpViewModel: ObservableObject {
     
     @Published var name = ""
     
-    init() {}
+    public init() {}
 }

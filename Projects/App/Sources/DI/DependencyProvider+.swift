@@ -11,6 +11,7 @@ import MainFeature
 import OAuthSignUpFeature
 import OnboardingFeature
 import RoomFeature
+import RootFeature
 import SchoolCodeFeature
 import SelectingJobFeature
 import StartFeature
@@ -19,12 +20,18 @@ import Swinject
 extension DependencyProvider {
     func register() {
         _ = Assembler([
+            ChatDetailAssembly(),
+            ChatAssembly(),
             EmailSignInAssembly(),
             EmailSignUpAssembly(),
+            HomeAssembly(),
             JoinSchoolAssembly(),
             JoinSuccessAssembly(),
+            MainAssembly(),
             OAuthSignUpAssembly(),
             OnboardingAssembly(),
+            RoomAssembly(),
+            RootAssembly(),
             SchoolCodeAssembly(),
             SelectingJobAssembly(),
             StartAssembly()

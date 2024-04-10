@@ -7,5 +7,8 @@ public final class EmailSignInAssembly: Assembly {
         container.register((any EmailSignInFactory).self) { _ in
             EmailSignInFactoryImpl()
         }
+        container.register(EmailSignInViewModel.self) { _ in
+            EmailSignInViewModel()
+        }.inObjectScope(.container)
     }
 }

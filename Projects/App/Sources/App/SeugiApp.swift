@@ -6,6 +6,8 @@ import Swinject
 import StartFeatureInterface
 import StartFeature
 import DIContainerInterface
+import RootFeatureInterface
+import SwiftUIUtil
 
 @main
 struct SeugiApp: App {
@@ -17,8 +19,9 @@ struct SeugiApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RootView()
+            DependencyProvider.shared.container.resolve((any RootFactory).self)!.makeView().eraseToAnyView()
+                .environmentObject(AppState(appFlow: .authorized, mainFlow: .home))
+                .environmentObject(Router())
         }
     }
 }
-

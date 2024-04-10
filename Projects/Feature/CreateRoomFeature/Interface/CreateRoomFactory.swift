@@ -1,6 +1,6 @@
 import SwiftUI
 
-public protocol RootFactory {
+public protocol CreateRoomFactory {
     associatedtype ViewType: View
     func makeView() -> ViewType
 }

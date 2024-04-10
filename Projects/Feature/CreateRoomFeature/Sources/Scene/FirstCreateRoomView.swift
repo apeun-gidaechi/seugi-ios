@@ -4,13 +4,7 @@ import DesignSystem
 
 public struct FirstCreateRoomView: View {
     
-    private let navigateToSecondCreateRoom: () -> Void
-    
-    public init(
-        navigateToSecondCreateRoom: @escaping () -> Void
-    ) {
-        self.navigateToSecondCreateRoom = navigateToSecondCreateRoom
-    }
+    @EnvironmentObject private var router: Router
     
     public var body: some View {
         VStack(spacing: 0) {
@@ -31,7 +25,7 @@ public struct FirstCreateRoomView: View {
         .seugiTopBar("멤버 선택")
         .subView {
             SeugiButton.small("완료", type: .transparent) {
-                navigateToSecondCreateRoom()
+                router.navigate(to: CreateRoomDestination.secondCreateRoom)
             }
         }
     }
