@@ -1,6 +1,6 @@
 import SwiftUI
 import DesignSystem
-import BaseFeature
+import BaseFeatureInterface
 
 public struct SchoolCodeView: View {
     

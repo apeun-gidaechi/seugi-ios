@@ -2,7 +2,7 @@
 
 import SwiftUI
 import DesignSystem
-import BaseFeature
+import BaseFeatureInterface
 
 public struct JoinSuccessView: View {
     

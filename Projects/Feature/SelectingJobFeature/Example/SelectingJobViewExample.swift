@@ -1,6 +1,6 @@
 import SwiftUI
 import SelectingJobFeature
-import BaseFeature
+import BaseFeatureInterface
 
 @main
 struct SelectingJobViewExample: App {

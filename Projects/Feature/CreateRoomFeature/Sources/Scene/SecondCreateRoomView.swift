@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import BaseFeature
+import BaseFeatureInterface
 import DesignSystem
 
 public struct SecondCreateRoomView: View {

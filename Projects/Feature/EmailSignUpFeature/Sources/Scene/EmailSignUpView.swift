@@ -8,7 +8,7 @@
 
 import SwiftUI
 import DesignSystem
-import BaseFeature
+import BaseFeatureInterface
 
 public struct EmailSignUpView: View {
     

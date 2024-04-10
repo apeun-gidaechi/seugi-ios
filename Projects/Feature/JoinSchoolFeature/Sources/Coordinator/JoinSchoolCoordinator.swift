@@ -1,5 +1,5 @@
 import SwiftUI
-import BaseFeature
+import BaseFeatureInterface
 import SchoolCodeFeatureInterface
 import JoinSuccessFeatureInterface
 import DIContainerInterface

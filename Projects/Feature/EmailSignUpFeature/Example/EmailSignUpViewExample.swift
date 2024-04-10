@@ -1,6 +1,6 @@
 import SwiftUI
 import EmailSignUpFeature
-import BaseFeature
+import BaseFeatureInterface
 
 @main
 struct EmailSignUpViewExample: App {

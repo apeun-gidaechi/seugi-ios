@@ -1,6 +1,6 @@
 import SwiftUI
 import StartFeature
-import BaseFeature
+import BaseFeatureInterface
 import DesignSystem
 
 @main

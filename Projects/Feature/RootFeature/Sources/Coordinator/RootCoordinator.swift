@@ -1,5 +1,5 @@
 import SwiftUI
-import BaseFeature
+import BaseFeatureInterface
 import OnboardingFeatureInterface
 import JoinSchoolFeatureInterface
 import MainFeatureInterface

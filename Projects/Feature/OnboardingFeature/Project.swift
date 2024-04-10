@@ -5,7 +5,7 @@ let project = Project.makeFeature(
     target: .Onboarding,
     targets: [
         .feature(target: .Onboarding, dependencies: [
-            .feature(target: .Base),
+            .featureInterface(target: .Base),
             .featureInterface(target: .Onboarding),
             .featureInterface(target: .EmailSignIn),
             .featureInterface(target: .EmailSignUp),

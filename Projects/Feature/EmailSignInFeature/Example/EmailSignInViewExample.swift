@@ -1,6 +1,6 @@
 import SwiftUI
 import EmailSignInFeature
-import BaseFeature
+import BaseFeatureInterface
 import DesignSystem
 
 @main

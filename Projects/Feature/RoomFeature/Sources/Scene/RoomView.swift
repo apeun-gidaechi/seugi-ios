@@ -1,10 +1,12 @@
 import SwiftUI
-import BaseFeature
+import BaseFeatureInterface
 import DesignSystem
 
 public struct RoomView: View {
     
     @EnvironmentObject private var router: Router
+    
+    public init() {}
     
     public var body: some View {
         ScrollView {
