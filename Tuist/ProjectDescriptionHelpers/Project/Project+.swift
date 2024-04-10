@@ -60,4 +60,14 @@ public extension Project {
                     product: .staticFramework,
                     targets: targets)
     }
+    
+    static func makeDIContainer(
+        target: ModulePaths.DIContainer,
+        packages: [Package] = [],
+        targets: [Target] = []
+    ) -> Self {
+        .makeProject(name: target.rawValue,
+                    product: .staticLibrary,
+                    targets: targets)
+    }
 }

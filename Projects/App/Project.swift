@@ -13,10 +13,10 @@ let project = Project.makeApp(
     targets: [
         .app(
             target: .App,
-            dependenceis: [
-                .feature(target: .Root)
-            ]
-            + ModulePaths.Domain.allCases.map { TargetDependency.domain(target: $0) },
+            dependenceis:
+                ModulePaths.Feature.allCases.map { TargetDependency.feature(target: $0) }
+            + ModulePaths.Domain.allCases.map { TargetDependency.domain(target: $0) }
+            + [.dIContainer(target: .DIContainer)],
             infoPlist: .file(path: "Support/Info.plist")
         )
     ]

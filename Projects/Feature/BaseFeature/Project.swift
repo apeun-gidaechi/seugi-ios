@@ -7,7 +7,8 @@ let project = Project.makeFeature(
         .feature(target: .Base, dependencies: [
             .userInterface(target: .DesignSystem),
             .shared(target: .GlobalThirdPartyLibrary),
-            .shared(target: .SwiftUIUtil)
+            .shared(target: .SwiftUIUtil),
+            .dIContainerInterface(target: .DIContainer)
         ]),
         .featureInterface(target: .Base, dependencies: [])
     ]

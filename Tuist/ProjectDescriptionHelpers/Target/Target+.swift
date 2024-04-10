@@ -143,4 +143,30 @@ public extension Target {
                     scripts: [.swiftLint],
                     dependencies: dependencies)
     }
+    
+    static func dIContainer(
+        target: ModulePaths.DIContainer,
+        dependencies: [TargetDependency]
+    ) -> Self {
+        .makeTarget(name: target.rawValue,
+                    product: .staticLibrary,
+                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)",
+                    infoPlist: .default,
+                    sources: ["Sources/**"],
+                    scripts: [.swiftLint],
+                    dependencies: dependencies)
+    }
+    
+    static func dIContainerInterface(
+        target: ModulePaths.DIContainer,
+        dependencies: [TargetDependency]
+    ) -> Self {
+        .makeTarget(name: "\(target.rawValue)Interface",
+                    product: .framework,
+                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)",
+                    infoPlist: .default,
+                    sources: ["Interface/**"],
+                    scripts: [.swiftLint],
+                    dependencies: dependencies)
+    }
 }

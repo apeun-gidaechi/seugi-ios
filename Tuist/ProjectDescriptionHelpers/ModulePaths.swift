@@ -64,4 +64,8 @@ public extension ModulePaths {
     enum UserInterface: String, CaseIterable {
         case DesignSystem
     }
+    
+    enum DIContainer: String, CaseIterable {
+        case DIContainer
+    }
 }

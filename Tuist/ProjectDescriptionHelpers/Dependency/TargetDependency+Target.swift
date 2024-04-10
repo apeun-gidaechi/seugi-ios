@@ -49,4 +49,18 @@ public extension TargetDependency {
         .project(target: target.rawValue,
                  path: .relativeToShared(target.rawValue))
     }
+    
+    static func dIContainer(
+        target: ModulePaths.DIContainer
+    ) -> TargetDependency {
+        .project(target: "\(target.rawValue)",
+                 path: .dIContainer)
+    }
+    
+    static func dIContainerInterface(
+        target: ModulePaths.DIContainer
+    ) -> TargetDependency {
+        .project(target: "\(target.rawValue)Interface",
+                 path: .dIContainer)
+    }
 }

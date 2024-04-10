@@ -19,16 +19,7 @@ public struct StartView: View {
     
     @State private var isPresented = false
     
-    private var navigateToEmailSignIn: () -> Void
-    private var navigateToOAuthSignUp: () -> Void
-    
-    public init(
-        navigateToEmailSignIn: @escaping () -> Void,
-        navigateToOAuthSignUp: @escaping () -> Void
-    ) {
-        self.navigateToEmailSignIn = navigateToEmailSignIn
-        self.navigateToOAuthSignUp = navigateToOAuthSignUp
-    }
+    public init() {}
     
     public var body: some View {
         ZStack {
