@@ -9,13 +9,19 @@
 import SwiftUI
 import RoomFeatureInterface
 import DIContainerInterface
+import CreateRoomFeatureInterface
 
 struct RoomCoordinator: View {
     
+    @Inject private var createRoomFactory: any CreateRoomFactory
+    
     var body: some View {
         RoomView()
-            .navigationDestination(for: RoomDestination.self) { _ in
-                EmptyView()
+            .navigationDestination(for: RoomDestination.self) {
+                switch $0 {
+                case .createRoom: createRoomFactory.makeView().eraseToAnyView()
+                case .roomDetail: EmptyView()
+                }
             }
     }
 }

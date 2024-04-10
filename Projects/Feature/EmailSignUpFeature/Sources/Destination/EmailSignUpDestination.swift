@@ -1,3 +1,3 @@
-enum EmailSignUpDestination {
+enum EmailSignUpDestination: Hashable {
     case emailSignIn
 }

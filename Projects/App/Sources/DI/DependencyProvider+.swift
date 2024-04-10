@@ -1,6 +1,7 @@
 import DIContainerInterface
 import ChatDetailFeature
 import ChatFeature
+import CreateRoomFeature
 import EmailSignInFeature
 import EmailSignUpFeature
 import HomeFeature
@@ -22,6 +23,7 @@ extension DependencyProvider {
         _ = Assembler([
             ChatDetailAssembly(),
             ChatAssembly(),
+            CreateRoomAssembly(),
             EmailSignInAssembly(),
             EmailSignUpAssembly(),
             HomeAssembly(),

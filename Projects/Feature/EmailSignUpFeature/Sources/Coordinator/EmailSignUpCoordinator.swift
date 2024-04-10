@@ -2,6 +2,7 @@ import SwiftUI
 import EmailSignInFeatureInterface
 import EmailSignUpFeatureInterface
 import DIContainerInterface
+import SwiftUIUtil
 
 public struct EmailSignUpCoordinator: View {
     
