@@ -76,7 +76,7 @@ public extension Target {
     ) -> Self {
         .makeTarget(name: "\(target.rawValue)Domain",
                     product: .staticLibrary,
-                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)",
+                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)domain",
                     infoPlist: .default,
                     sources: ["Sources/**"],
                     scripts: [.swiftLint],
