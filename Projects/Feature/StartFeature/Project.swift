@@ -6,7 +6,9 @@ let project = Project.makeFeature(
     targets: [
         .feature(target: .Start, dependencies: [
             .feature(target: .Base),
-            .featureInterface(target: .Start)
+            .featureInterface(target: .Start),
+            .featureInterface(target: .OAuthSignUp),
+            .featureInterface(target: .EmailSignIn)
         ]),
         .featureExample(target: .Start, dependencies: [
             .feature(target: .Start)

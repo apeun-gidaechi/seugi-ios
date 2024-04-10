@@ -7,10 +7,23 @@
 //
 
 import SwiftUI
+import DIContainerInterface
+import OAuthSignUpFeatureInterface
+import EmailSignInFeatureInterface
+import SwiftUIUtil
 
 public struct StartCoordinator: View {
+    
+    @Inject private var oAuthFactory: any OAuthSignUpFactory
+    @Inject private var emailSignInFactory: any EmailSignInFactory
+    
     public var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        StartView()
+            .navigationDestination(for: StartDestination.self) {
+                switch $0 {
+                case .EmailSignIn: emailSignInFactory.makeView().eraseToAnyView()
+                case .OAuthSignUp: oAuthFactory.makeView().eraseToAnyView()
+                }
+            }
     }
 }
-
