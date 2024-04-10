@@ -1,11 +1,15 @@
 import Foundation
+import DesignSystem
 
 public final class AppState: ObservableObject {
-    @Published var appFlow: AppFlow
+    @Published public var appFlow: AppFlow
+    @Published public var mainFlow: SeugiBottomNavigationType
     
     init(
-        appFlow: AppFlow
+        appFlow: AppFlow,
+        mainFlow: SeugiBottomNavigationType
     ) {
         self.appFlow = appFlow
+        self.mainFlow = mainFlow
     }
 }
