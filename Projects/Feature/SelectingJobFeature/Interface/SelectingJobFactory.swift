@@ -1,6 +1,6 @@
 import SwiftUI
 
 public protocol SelectingJobFactory {
-    associatedtype ViewType
+    associatedtype ViewType: View
     func makeView() -> ViewType
 }

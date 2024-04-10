@@ -21,9 +21,9 @@ struct SeugiApp: App {
         WindowGroup {
             if let rootView = DependencyProvider.shared.container.resolve((any RootFactory).self) {
                 rootView.makeView().eraseToAnyView()
-                    .environmentObject(AppState(appFlow: .notFoundJoinedSchool, mainFlow: .home))
+                    .environmentObject(AppState(appFlow: .unAuthorized, mainFlow: .home))
                     .environmentObject(Router())
-            }   
+            }
         }
     }
 }
