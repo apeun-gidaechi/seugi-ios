@@ -26,17 +26,17 @@ public extension Project {
         packages: [Package] = [],
         targets: [Target] = []
     ) -> Self {
-        .makeProject(name: target.rawValue,
+        .makeProject(name: "\(target.rawValue)Feature",
                     product: .staticLibrary,
                     targets: targets)
     }
     
-    static func makeService(
-        target: ModulePaths.Service,
+    static func makeDomain(
+        target: ModulePaths.Domain,
         packages: [Package] = [],
         targets: [Target] = []
     ) -> Self {
-        .makeProject(name: target.rawValue,
+        .makeProject(name: "\(target.rawValue)Domain",
                     product: .staticLibrary,
                     targets: targets)
     }
@@ -47,7 +47,7 @@ public extension Project {
         targets: [Target]
     ) -> Self {
         .makeProject(name: target.rawValue,
-                    product: .staticLibrary,
+                    product: .staticFramework,
                     targets: targets)
     }
     
@@ -58,6 +58,16 @@ public extension Project {
     ) -> Self {
         .makeProject(name: target.rawValue,
                     product: .staticFramework,
+                    targets: targets)
+    }
+    
+    static func makeDIContainer(
+        target: ModulePaths.DIContainer,
+        packages: [Package] = [],
+        targets: [Target] = []
+    ) -> Self {
+        .makeProject(name: target.rawValue,
+                    product: .staticLibrary,
                     targets: targets)
     }
 }

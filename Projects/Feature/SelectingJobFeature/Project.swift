@@ -2,13 +2,14 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .SelectingJobFeature,
+    target: .SelectingJob,
     targets: [
-        .makeFeature(target: .SelectingJobFeature, dependencies: [
-            .feature(target: .BaseFeature)
+        .feature(target: .SelectingJob, dependencies: [
+            .feature(target: .Base)
         ]),
-        .makeFeatureExample(target: .SelectingJobFeature, dependencies: [
-            .feature(target: .SelectingJobFeature)
-        ])
+        .featureExample(target: .SelectingJob, dependencies: [
+            .feature(target: .SelectingJob)
+        ]),
+        .featureInterface(target: .SelectingJob, dependencies: [])
     ]
 )

@@ -8,8 +8,11 @@
 
 import SwiftUI
 import DesignSystem
+import BaseFeature
 
 public struct StartView: View {
+    
+    @EnvironmentObject private var router: Router
     
     @State private var offsetY1: CGFloat = 16
     @State private var opacity1 = 0.0
@@ -19,16 +22,7 @@ public struct StartView: View {
     
     @State private var isPresented = false
     
-    private var navigateToEmailSignIn: () -> Void
-    private var navigateToOAuthSignUp: () -> Void
-    
-    public init(
-        navigateToEmailSignIn: @escaping () -> Void,
-        navigateToOAuthSignUp: @escaping () -> Void
-    ) {
-        self.navigateToEmailSignIn = navigateToEmailSignIn
-        self.navigateToOAuthSignUp = navigateToOAuthSignUp
-    }
+    public init() {}
     
     public var body: some View {
         ZStack {
@@ -89,21 +83,19 @@ public struct StartView: View {
             VStack(spacing: 8) {
                 SeugiButton.large("이메일로 계속하기", type: .black) {
                     isPresented = false
-                    navigateToEmailSignIn()
+                    router.navigate(to: StartDestination.EmailSignIn)
                 }
                 .padding(.top, 20)
                 .padding(.horizontal, 20)
                 // TODO: change to OAuth button
                 SeugiButton.large("Google로 계속하기", type: .shadow) {
-                    // TODO: handle navigate to sign in view
                     isPresented = false
-                    navigateToOAuthSignUp()
+                    router.navigate(to: StartDestination.OAuthSignUp)
                 }
                 .padding(.horizontal, 20)
                 SeugiButton.large("Apple로 계속하기", type: .shadow) {
-                    // TODO: handle navigate to sign in view
                     isPresented = false
-                    navigateToOAuthSignUp()
+                    router.navigate(to: StartDestination.OAuthSignUp)
                 }
                 .padding(.horizontal, 20)
                 Spacer()

@@ -2,13 +2,14 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .EmailSignUpFeature,
+    target: .EmailSignUp,
     targets: [
-        .makeFeature(target: .EmailSignUpFeature, dependencies: [
-            .feature(target: .BaseFeature)
+        .feature(target: .EmailSignUp, dependencies: [
+            .feature(target: .Base)
         ]),
-        .makeFeatureExample(target: .EmailSignUpFeature, dependencies: [
-            .feature(target: .EmailSignUpFeature)
-        ])
+        .featureExample(target: .EmailSignUp, dependencies: [
+            .feature(target: .EmailSignUp)
+        ]),
+        .featureInterface(target: .EmailSignUp, dependencies: [])
     ]
 )

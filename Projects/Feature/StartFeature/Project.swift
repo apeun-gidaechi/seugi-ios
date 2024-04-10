@@ -2,13 +2,17 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .StartFeature,
+    target: .Start,
     targets: [
-        .makeFeature(target: .StartFeature, dependencies: [
-            .feature(target: .BaseFeature)
+        .feature(target: .Start, dependencies: [
+            .feature(target: .Base),
+            .featureInterface(target: .Start),
+            .featureInterface(target: .OAuthSignUp),
+            .featureInterface(target: .EmailSignIn)
         ]),
-        .makeFeatureExample(target: .StartFeature, dependencies: [
-            .feature(target: .StartFeature)
-        ])
+        .featureExample(target: .Start, dependencies: [
+            .feature(target: .Start)
+        ]),
+        .featureInterface(target: .Start, dependencies: [])
     ]
 )

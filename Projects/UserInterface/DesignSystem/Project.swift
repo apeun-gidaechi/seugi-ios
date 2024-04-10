@@ -11,10 +11,10 @@ import ProjectDescriptionHelpers
 let project = Project.makeUserInterface(
     target: .DesignSystem,
     targets: [
-        .makeUserInterface(target: .DesignSystem, dependencies: [
+        .userInterface(target: .DesignSystem, dependencies: [
             .shared(target: .SwiftUIUtil)
         ]),
-        .makeUserInterfaceExample(target: .DesignSystem, dependencies: [
+        .userInterfaceExample(target: .DesignSystem, dependencies: [
             .userInterface(target: .DesignSystem)
         ])
     ]

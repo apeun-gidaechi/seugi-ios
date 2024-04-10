@@ -6,8 +6,9 @@ import BaseFeature
 struct OAuthSignUpViewExample: App {
     var body: some Scene {
         WindowGroup {
-            OAuthSignUpView()
-                .environmentObject(NavigationController())
+            OAuthSignUpView(
+                navigateToRoot: {}
+            )
         }
     }
 }

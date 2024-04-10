@@ -11,8 +11,13 @@ import ProjectDescriptionHelpers
 let project = Project.makeApp(
     target: .App,
     targets: [
-        .makeApp(target: .App, dependenceis: [
-            .feature(target: .RootFeature)
-        ], infoPlist: .file(path: "Support/Info.plist"))
+        .app(
+            target: .App,
+            dependenceis:
+                ModulePaths.Feature.allCases.map { TargetDependency.feature(target: $0) }
+            + ModulePaths.Domain.allCases.map { TargetDependency.domain(target: $0) }
+            + [.dIContainer(target: .DIContainer)],
+            infoPlist: .file(path: "Support/Info.plist")
+        )
     ]
 )

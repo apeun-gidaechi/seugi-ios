@@ -2,15 +2,16 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .JoinSchoolFeature,
+    target: .JoinSchool,
     targets: [
-        .makeFeature(target: .JoinSchoolFeature, dependencies: [
-            .feature(target: .BaseFeature),
-            .feature(target: .SchoolCodeFeature),
-            .feature(target: .JoinSuccessFeature)
+        .feature(target: .JoinSchool, dependencies: [
+            .feature(target: .Base),
+            .featureInterface(target: .SchoolCode),
+            .featureInterface(target: .JoinSuccess)
         ]),
-        .makeFeatureExample(target: .JoinSchoolFeature, dependencies: [
-            .feature(target: .JoinSchoolFeature)
-        ])
+        .featureExample(target: .JoinSchool, dependencies: [
+            .feature(target: .JoinSchool)
+        ]),
+        .featureInterface(target: .JoinSchool, dependencies: [])
     ]
 )

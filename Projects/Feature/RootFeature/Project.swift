@@ -2,16 +2,17 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .RootFeature,
+    target: .Root,
     targets: [
-        .makeFeature(target: .RootFeature, dependencies: [
-            .feature(target: .BaseFeature),
-            .feature(target: .OnboardingFeature),
-            .feature(target: .JoinSchoolFeature),
-            .feature(target: .MainFeature)
+        .feature(target: .Root, dependencies: [
+            .feature(target: .Base),
+            .featureInterface(target: .Onboarding),
+            .featureInterface(target: .JoinSchool),
+            .featureInterface(target: .Main)
         ]),
-        .makeFeatureExample(target: .RootFeature, dependencies: [
-            .feature(target: .RootFeature)
-        ])
+        .featureExample(target: .Root, dependencies: [
+            .feature(target: .Root)
+        ]),
+        .featureInterface(target: .Root, dependencies: [])
     ]
 )

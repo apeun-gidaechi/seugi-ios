@@ -9,18 +9,21 @@ import ProjectDescription
 
 public extension ProjectDescription.Path {
     static func relativeToFeature(_ path: String) -> Self {
-        return .relativeToRoot("Projects/Feature/\(path)")
+        .relativeToRoot("Projects/Feature/\(path)")
     }
-    static func relativeToSerivce(_ path: String) -> Self {
-        return .relativeToRoot("Projects/Service/\(path)")
+    static func relativeToDomain(_ path: String) -> Self {
+        .relativeToRoot("Projects/Domain/\(path)")
     }
     static func relativeToShared(_ path: String) -> Self {
-        return .relativeToRoot("Projects/Shared/\(path)")
+        .relativeToRoot("Projects/Shared/\(path)")
     }
     static func relativeToUserInterface(_ path: String) -> Self {
-        return .relativeToRoot("Projects/UserInterface/\(path)")
+        .relativeToRoot("Projects/UserInterface/\(path)")
     }
     static var app: Self {
-        return .relativeToRoot("Projects/App")
+        .relativeToRoot("Projects/App")
+    }
+    static var dIContainer: Self {
+        .relativeToRoot("Projects/DIContainer")
     }
 }
