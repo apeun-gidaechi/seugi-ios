@@ -1,0 +1,3 @@
+enum EmailSignInDesination {
+    case emailSignUp
+}

@@ -6,8 +6,7 @@ import BaseFeature
 struct EmailSignUpViewExample: App {
     var body: some Scene {
         WindowGroup {
-            EmailSignUpView()
-                .environmentObject(NavigationController())
+            EmailSignUpView(vm: .init())
         }
     }
 }

@@ -9,10 +9,12 @@
 import DesignSystem
 import Foundation
 
-class EmailSignUpViewModel: ObservableObject {
+public class EmailSignUpViewModel: ObservableObject {
     
     @Published var name = ""
     @Published var email = ""
     @Published var password = ""
     @Published var passwordCheck = ""
+    
+    public init() {}
 }

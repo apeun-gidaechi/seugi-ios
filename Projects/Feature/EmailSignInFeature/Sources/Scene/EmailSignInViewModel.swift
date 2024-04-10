@@ -8,10 +8,12 @@
 
 import Foundation
 
-class EmailSignInViewModel: ObservableObject {
+public class EmailSignInViewModel: ObservableObject {
     
     @Published var email = ""
     @Published var password = ""
+    
+    public init() {}
     
     func signIn() {
         // TODO: handle sign in

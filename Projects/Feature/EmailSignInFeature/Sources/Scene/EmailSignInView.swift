@@ -12,13 +12,11 @@ import BaseFeature
 
 public struct EmailSignInView: View {
     
-    @ObservedObject private var vm = EmailSignInViewModel()
-    var navigateToSignUp: () -> Void
+    @ObservedObject private var vm: EmailSignInViewModel
+    @EnvironmentObject private var router: Router
     
-    public init(
-        navigateToSignUp: @escaping () -> Void
-    ) {
-        self.navigateToSignUp = navigateToSignUp
+    public init(vm: EmailSignInViewModel) {
+        self.vm = vm
     }
     
     public var body: some View {
@@ -32,7 +30,7 @@ public struct EmailSignInView: View {
                     .font(.body(.b1))
                     .seugiColor(.gray(.g600))
                 Button {
-                    navigateToSignUp()
+                    router.navigate(to: EmailSignInDesination.emailSignUp)
                 } label: {
                     Text("가입하기")
                         .font(.body(.b1))
