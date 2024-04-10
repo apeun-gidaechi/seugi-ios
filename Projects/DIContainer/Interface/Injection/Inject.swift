@@ -13,15 +13,3 @@ public struct Inject<T> {
     
     public init() {}
 }
-
-struct Meditor {
-    
-    let dependencyProvider: DependencyProvider
-    
-    init(
-        dependencyProvider: DependencyProvider
-    ) {
-        self.dependencyProvider = dependencyProvider
-    }
-    
-}
