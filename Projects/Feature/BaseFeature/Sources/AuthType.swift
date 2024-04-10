@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum AuthType {
+public enum AppFlow {
     case unAuthorized
     case notFoundJoinedSchool
     case authorized

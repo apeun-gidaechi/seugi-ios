@@ -1,10 +1,10 @@
 import Foundation
 
 public final class AppState: ObservableObject {
-    @Published var appFlow: AuthType
+    @Published var appFlow: AppFlow
     
     init(
-        appFlow: AuthType
+        appFlow: AppFlow
     ) {
         self.appFlow = appFlow
     }
