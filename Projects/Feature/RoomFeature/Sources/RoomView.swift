@@ -4,28 +4,19 @@ import DesignSystem
 
 public struct RoomView: View {
     
-    private var navigateToRoomDetail: () -> Void
-    private var navigateToCreateRoom: () -> Void
-    
-    public init(
-        navigateToRoomDetail: @escaping () -> Void,
-        navigateToCreateRoom: @escaping () -> Void
-    ) {
-        self.navigateToRoomDetail = navigateToRoomDetail
-        self.navigateToCreateRoom = navigateToCreateRoom
-    }
+    @EnvironmentObject private var router: Router
     
     public var body: some View {
         ScrollView {
             VStack(spacing: 0) {
                 Button {
-                    navigateToRoomDetail()
+                    router.navigate(to: RoomDestination.roomDetail)
                 } label: {
                     SeugiChatList(type: .people(memberCount: 10))
                 }
                 .applyAnimation()
                 Button {
-                    navigateToRoomDetail()
+                    router.navigate(to: RoomDestination.roomDetail)
                 } label: {
                     SeugiChatList(type: .people(memberCount: 4))
                 }
@@ -34,7 +25,7 @@ public struct RoomView: View {
         }
         .seugiTopBar("단체")
         .button(.addFill) {
-            navigateToCreateRoom()
+            router.navigate(to: RoomDestination.createRoom)
         }
         .button(.searchLine) {
             //

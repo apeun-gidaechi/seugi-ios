@@ -14,7 +14,8 @@ public struct MainCoordinator: View {
     @EnvironmentObject private var router: Router
     
     @Inject private var homeFactory: any HomeFactory
-    @Inject private var 
+    @Inject private var chatFactory: any ChatFactory
+    @Inject private var roomFactory: any RoomFactory
     
     public init() {}
     
@@ -28,15 +29,15 @@ public struct MainCoordinator: View {
     private var content: some View {
         ZStack {
             switch appState.mainFlow {
-            case .home: HomeView()
-            case .chat: ChatView()
-            case .room: RoomView()
+            case .home: homeFactory.makeView().eraseToAnyView()
+            case .chat: chatFactory.makeView().eraseToAnyView()
+            case .room: roomFactory.makeView().eraseToAnyView()
             case .notification: EmptyView()
             case .profile: EmptyView()
             }
             GeometryReader { reader in
                 ZStack(alignment: .bottom) {
-                    SeugiBottomNavigation(selectedTab: $bottomNavigationController.selectedTab)
+                    SeugiBottomNavigation(selectedTab: $appState.mainFlow)
                         .shadow(color: Color.black.opacity(0.04), radius: 12)
                     VStack {
                         Color.white
