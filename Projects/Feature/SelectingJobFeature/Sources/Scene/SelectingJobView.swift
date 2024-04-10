@@ -10,7 +10,7 @@ public struct SelectingJobView: View {
     public init() {}
     
     public var body: some View {
-        VStack {
+        VStack(spacing: 16) {
             Spacer()
             VStack {
                 Text("학생이신가요?\n아니면 선생님이신가요?")
@@ -29,6 +29,13 @@ public struct SelectingJobView: View {
             }
             .padding(.horizontal, 16)
             Spacer()
+            Button {
+                router.navigate(to: SelectingJobDestination.emailSignIn)
+            } label: {
+                Text("이미 계정이 있으신가요?")
+                    .seugiColor(.primary(.p500))
+                    .font(.body(.b1))
+            }
             SeugiButton.large("계속하기", type: .primary) {
                 router.navigate(to: SelectingJobDestination.emailSignUp)
             }
