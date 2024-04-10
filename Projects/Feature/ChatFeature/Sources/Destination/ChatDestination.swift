@@ -1,0 +1,3 @@
+enum ChatDestination {
+    case chatDetail
+}

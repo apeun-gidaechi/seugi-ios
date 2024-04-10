@@ -1,6 +1,6 @@
 import SwiftUI
 
 public protocol ChatDetailFactory {
-    associatedtype ViewType
+    associatedtype ViewType: View
     func makeView() -> ViewType
 }

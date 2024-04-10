@@ -11,9 +11,7 @@ struct ChatViewExample: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                ChatView {}
-            }
+            ChatView()
         }
     }
 }

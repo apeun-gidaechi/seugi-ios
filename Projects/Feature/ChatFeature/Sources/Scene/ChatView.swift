@@ -1,27 +1,24 @@
 import SwiftUI
 import DesignSystem
+import BaseFeature
 
 public struct ChatView: View {
     
-    var navigateToChatDetail: () -> Void
+    @EnvironmentObject private var router: Router
     
-    public init(
-        navigateToChatDetail: @escaping () -> Void
-    ) {
-        self.navigateToChatDetail = navigateToChatDetail
-    }
+    public init() {}
     
     public var body: some View {
         ScrollView {
             VStack(spacing: 0) {
                 Button {
-                    navigateToChatDetail()
+                    router.navigate(to: ChatDestination.chatDetail)
                 } label: {
                     SeugiChatList()
                 }
                 .applyAnimation()
                 Button {
-                    navigateToChatDetail()
+                    router.navigate(to: ChatDestination.chatDetail)
                 } label: {
                     SeugiChatList()
                 }
