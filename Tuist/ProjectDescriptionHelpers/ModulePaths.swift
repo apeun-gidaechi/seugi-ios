@@ -10,7 +10,7 @@ import Foundation
 public enum ModulePaths {
     case app(App)
     case feature(Feature)
-    case service(Domain)
+    case domain(Domain)
     case shared(Shared)
     case userInterface(UserInterface)
 }

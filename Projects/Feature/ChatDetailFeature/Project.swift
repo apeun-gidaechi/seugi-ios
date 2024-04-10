@@ -5,7 +5,8 @@ let project = Project.makeFeature(
     target: .ChatDetail,
     targets: [
         .feature(target: .ChatDetail, dependencies: [
-            .feature(target: .Base)
+            .featureInterface(target: .Base),
+            .featureInterface(target: .ChatDetail),
         ]),
         .featureExample(target: .ChatDetail, dependencies: [
             .feature(target: .ChatDetail)

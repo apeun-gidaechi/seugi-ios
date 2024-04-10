@@ -1,11 +1,13 @@
 import SwiftUI
 import RootFeature
-import BaseFeature
+import BaseFeatureInterface
 import DesignSystem
 import Swinject
 import StartFeatureInterface
 import StartFeature
 import DIContainerInterface
+import RootFeatureInterface
+import SwiftUIUtil
 
 @main
 struct SeugiApp: App {
@@ -17,8 +19,11 @@ struct SeugiApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RootView()
+            if let rootView = DependencyProvider.shared.container.resolve((any RootFactory).self) {
+                rootView.makeView().eraseToAnyView()
+                    .environmentObject(AppState(appFlow: .unAuthorized, mainFlow: .home))
+                    .environmentObject(Router())
+            }
         }
     }
 }
-

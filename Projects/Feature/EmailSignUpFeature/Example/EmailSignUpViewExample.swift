@@ -1,13 +1,12 @@
 import SwiftUI
 import EmailSignUpFeature
-import BaseFeature
+import BaseFeatureInterface
 
 @main
 struct EmailSignUpViewExample: App {
     var body: some Scene {
         WindowGroup {
-            EmailSignUpView()
-                .environmentObject(NavigationController())
+            EmailSignUpView(vm: .init())
         }
     }
 }

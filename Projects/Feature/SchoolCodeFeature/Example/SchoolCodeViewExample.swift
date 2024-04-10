@@ -1,13 +1,17 @@
 import SwiftUI
 import SchoolCodeFeature
+import DesignSystem
 
 @main
 struct SchoolCodeViewExample: App {
+    
+    init() {
+        Pretendard.register()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                SchoolCodeView {}
-            }
+            SchoolCodeView(vm: .init())
         }
     }
 }

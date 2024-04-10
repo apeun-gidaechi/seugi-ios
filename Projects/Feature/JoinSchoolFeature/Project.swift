@@ -5,7 +5,8 @@ let project = Project.makeFeature(
     target: .JoinSchool,
     targets: [
         .feature(target: .JoinSchool, dependencies: [
-            .feature(target: .Base),
+            .featureInterface(target: .Base),
+            .featureInterface(target: .JoinSchool),
             .featureInterface(target: .SchoolCode),
             .featureInterface(target: .JoinSuccess)
         ]),

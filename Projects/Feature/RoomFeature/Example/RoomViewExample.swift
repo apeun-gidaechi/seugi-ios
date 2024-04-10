@@ -5,15 +5,7 @@ import RoomFeature
 struct RoomViewExample: App {
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                RoomView(
-                    navigateToRoomDetail: {
-                        
-                    }, navigateToCreateRoom: {
-                        
-                    }
-                )
-            }
+            RoomView()
         }
     }
 }
