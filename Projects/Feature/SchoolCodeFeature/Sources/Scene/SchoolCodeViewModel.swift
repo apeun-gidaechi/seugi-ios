@@ -8,6 +8,8 @@
 
 import Foundation
 
-class JoinSchoolViewModel: ObservableObject {
+public class SchoolCodeViewModel: ObservableObject {
     @Published var code = ""
+    
+    public init() {}
 }

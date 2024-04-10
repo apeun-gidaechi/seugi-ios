@@ -1,24 +1,14 @@
-//
-//  JoinSchoolView.swift
-//  SchoolCodeFeature
-//
-//  Created by dgsw8th71 on 3/30/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
 import DesignSystem
+import BaseFeature
 
 public struct SchoolCodeView: View {
     
-    @ObservedObject private var vm = JoinSchoolViewModel()
+    @ObservedObject private var vm: SchoolCodeViewModel
+    @EnvironmentObject private var router: Router
     
-    private var navigateToJoinSuccess: () -> Void
-    
-    public init(
-        navigateToJoinSuccess: @escaping () -> Void
-    ) {
-        self.navigateToJoinSuccess = navigateToJoinSuccess
+    public init(vm: SchoolCodeViewModel) {
+        self.vm = vm
     }
     
     public var body: some View {
@@ -27,7 +17,7 @@ public struct SchoolCodeView: View {
                 .padding(.top, 16)
             Spacer()
             SeugiButton.large("계속하기", type: .primary) {
-                navigateToJoinSuccess()
+                router.navigate(to: SchoolCodeDestination.joinSuccess)
             }
             .padding(.bottom, 16)
         }
