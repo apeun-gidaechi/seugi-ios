@@ -79,10 +79,7 @@ public struct StartView: View {
                 }
                 .padding(.top, 20)
                 SeugiAppleSignInButton()
-                SeugiButton.large("Google로 계속하기", type: .shadow) {
-                    isPresented = false
-                    router.navigate(to: StartDestination.OAuthSignUp)
-                }
+                SeugiGoogleSignInButton()
                 Spacer()
             }
             .padding(.horizontal, 20)

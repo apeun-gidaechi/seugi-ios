@@ -51,9 +51,11 @@ public class AppleVC: UIViewController {
     }
     
     private func setUpLayout() {
-        button.snp.makeConstraints {
+        view.snp.makeConstraints {
             $0.height.equalTo(56)
-            $0.leading.trailing.equalTo(view)
+        }
+        button.snp.makeConstraints {
+            $0.edges.equalTo(view)
         }
         buttonLabel.view.snp.makeConstraints {
             $0.center.equalTo(button)
