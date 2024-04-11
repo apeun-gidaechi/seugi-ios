@@ -15,4 +15,6 @@ public enum SeugiImage: String {
     case studentDisable = "StudentDisable"
     case teacherActive = "TeacherActive"
     case teacherDisable = "TeacherDisable"
+    case google = "Google"
+    case apple = "Apple"
 }
