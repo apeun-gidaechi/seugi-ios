@@ -47,15 +47,15 @@ public class AppleVC: UIViewController {
     
     private func configureUI() {
         view.addSubview(button)
+        addChild(buttonLabel)
         button.addSubview(buttonLabel.view)
+        buttonLabel.didMove(toParent: self)
     }
     
     private func setUpLayout() {
-        view.snp.makeConstraints {
-            $0.height.equalTo(56)
-        }
         button.snp.makeConstraints {
-            $0.edges.equalTo(view)
+            $0.height.equalTo(56)
+            $0.leading.trailing.equalToSuperview()
         }
         buttonLabel.view.snp.makeConstraints {
             $0.center.equalTo(button)

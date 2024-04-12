@@ -79,7 +79,11 @@ public struct StartView: View {
                 }
                 .padding(.top, 20)
                 SeugiAppleSignInButton()
+                    .frame(height: 56)
+                    .frame(maxWidth: .infinity)
                 SeugiGoogleSignInButton()
+                    .frame(height: 56)
+                    .frame(maxWidth: .infinity)
                 Spacer()
             }
             .padding(.horizontal, 20)

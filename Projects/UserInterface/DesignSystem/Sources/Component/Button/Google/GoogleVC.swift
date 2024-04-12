@@ -11,7 +11,6 @@ struct GoogleSignInLabel: View {
         HStack(spacing: 8) {
             Image(image: .google)
                 .resizable()
-                .renderingMode(.template)
                 .frame(width: 20)
             Text("Google로 계속하기")
                 .font(.subtitle(.s2))
@@ -46,15 +45,15 @@ public class GoogleVC: UIViewController {
     
     private func configureUI() {
         view.addSubview(button)
+        addChild(buttonLabel)
         button.addSubview(buttonLabel.view)
+        buttonLabel.didMove(toParent: self)
     }
     
     private func setUpLayout() {
-        view.snp.makeConstraints {
-            $0.height.equalTo(56)
-        }
         button.snp.makeConstraints {
-            $0.edges.equalTo(view)
+            $0.height.equalTo(56)
+            $0.leading.trailing.equalToSuperview()
         }
         buttonLabel.view.snp.makeConstraints {
             $0.center.equalTo(button)
