@@ -85,7 +85,6 @@ extension AppleVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
     }
     
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        //로그인 성공
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             // You can create an account in your system.
@@ -109,7 +108,6 @@ extension AppleVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
             }
             print("email: \(email ?? "")")
         case let passwordCredential as ASPasswordCredential:
-            // Sign in using an existing iCloud Keychain credential.
             let username = passwordCredential.user
             let password = passwordCredential.password
             
@@ -121,7 +119,6 @@ extension AppleVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
     }
     
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        // 로그인 실패(유저의 취소도 포함)
         print("login failed - \(error.localizedDescription)")
     }
 }
