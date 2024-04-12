@@ -7,12 +7,14 @@
 
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
 let project = Project.makeUserInterface(
     target: .DesignSystem,
     targets: [
         .userInterface(target: .DesignSystem, dependencies: [
-            .shared(target: .SwiftUIUtil)
+            .shared(target: .SwiftUIUtil),
+            .SPM.Snapkit
         ]),
         .userInterfaceExample(target: .DesignSystem, dependencies: [
             .userInterface(target: .DesignSystem)

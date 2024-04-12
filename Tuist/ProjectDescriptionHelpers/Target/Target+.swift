@@ -13,7 +13,8 @@ public extension Target {
     static func app(
         target: ModulePaths.App,
         dependenceis: [TargetDependency] = [],
-        infoPlist: InfoPlist
+        infoPlist: InfoPlist,
+        entitlements: Entitlements? = nil
     ) -> Self {
         .makeTarget(name: target.rawValue,
                     product: .app,
@@ -21,6 +22,7 @@ public extension Target {
                     infoPlist: infoPlist,
                     sources: ["Sources/**"],
                     resources: ["Resources/**"],
+                    entitlements: entitlements,
                     scripts: [.swiftLint],
                     dependencies: dependenceis)
     }

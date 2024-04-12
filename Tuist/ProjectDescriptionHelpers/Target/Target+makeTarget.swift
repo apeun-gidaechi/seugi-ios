@@ -16,6 +16,7 @@ extension Target {
         infoPlist: InfoPlist,
         sources: SourceFilesList,
         resources: ResourceFileElements? = nil,
+        entitlements: Entitlements? = nil,
         scripts: [TargetScript] = [],
         dependencies: [TargetDependency]
     ) -> Self {
@@ -27,6 +28,7 @@ extension Target {
               infoPlist: infoPlist,
               sources: sources,
               resources: resources,
+              entitlements: entitlements,
               scripts: scripts,
               dependencies: dependencies,
               settings: .settings(

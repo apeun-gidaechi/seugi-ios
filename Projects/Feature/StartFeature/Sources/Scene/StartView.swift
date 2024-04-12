@@ -1,11 +1,3 @@
-//
-//  StartView.swift
-//  Seugi
-//
-//  Created by dgsw8th71 on 3/26/24.
-//  Copyright © 2024 seugi. All rights reserved.
-//
-
 import SwiftUI
 import DesignSystem
 import BaseFeatureInterface
@@ -86,20 +78,14 @@ public struct StartView: View {
                     router.navigate(to: StartDestination.EmailSignIn)
                 }
                 .padding(.top, 20)
-                .padding(.horizontal, 20)
-                // TODO: change to OAuth button
-                SeugiButton.large("Google로 계속하기", type: .shadow) {
-                    isPresented = false
-                    router.navigate(to: StartDestination.OAuthSignUp)
-                }
-                .padding(.horizontal, 20)
-                SeugiButton.large("Apple로 계속하기", type: .shadow) {
-                    isPresented = false
-                    router.navigate(to: StartDestination.OAuthSignUp)
-                }
-                .padding(.horizontal, 20)
+                SeugiAppleSignInButton()
+                    .frame(height: 56)
+                SeugiGoogleSignInButton()
+                    .frame(height: 56)
+                    .frame(maxWidth: .infinity)
                 Spacer()
             }
+            .padding(.horizontal, 20)
             .presentationDetents([.height(256)])
         }
     }
