@@ -38,15 +38,22 @@ public extension Project {
         }
         
         if include.contains(.Feature) {
-            targets.append(.feature(target: type, type: .Feature, dependencies: featureDependency))
+            targets.append(.feature(target: type, type: .Feature, dependencies: featureDependency + [
+                .feature(.Interface, for: type)
+            ]))
         }
         
         if include.contains(.Testing) {
-            targets.append(.feature(target: type, type: .Testing, dependencies: testingDependency))
+            targets.append(.feature(target: type, type: .Testing, dependencies: testingDependency + [
+                .feature(.Interface, for: type)
+            ]))
         }
         
         if include.contains(.Tests) {
-            targets.append(.feature(target: type, type: .Tests, dependencies: testsDependency))
+            targets.append(.feature(target: type, type: .Tests, dependencies: testsDependency + [
+                .feature(.Feature, for: type),
+                .feature(.Testing, for: type)
+            ]))
         }
         
         if include.contains(.Example) {
@@ -59,7 +66,9 @@ public extension Project {
                 ],
                 "UILaunchStoryboardName": .string("")
             ])
-            let target = Target.feature(target: type, type: .Example, infoPlist: infoPlist, dependencies: exampleDependency)
+            let target = Target.feature(target: type, type: .Example, infoPlist: infoPlist, dependencies: exampleDependency + [
+                .feature(.Feature, for: type)
+            ])
             
             targets.append(target)
         }
@@ -88,15 +97,22 @@ public extension Project {
         }
         
         if include.contains(.Feature) {
-            targets.append(.domain(target: type, type: .Feature, dependencies: featureDependency))
+            targets.append(.domain(target: type, type: .Feature, dependencies: featureDependency + [
+                .domain(.Interface, for: type)
+            ]))
         }
         
         if include.contains(.Testing) {
-            targets.append(.domain(target: type, type: .Testing, dependencies: testingDependency))
+            targets.append(.domain(target: type, type: .Testing, dependencies: testingDependency + [
+                .domain(.Interface, for: type)
+            ]))
         }
         
         if include.contains(.Tests) {
-            targets.append(.domain(target: type, type: .Tests, dependencies: testsDependency))
+            targets.append(.domain(target: type, type: .Tests, dependencies: testsDependency + [
+                .domain(.Feature, for: type),
+                .domain(.Testing, for: type)
+            ]))
         }
         
         return .makeProject(
@@ -123,7 +139,9 @@ public extension Project {
         }
         
         if include.contains(.Feature) {
-            targets.append(.shared(target: type, type: .Feature, dependencies: featureDependency))
+            targets.append(.shared(target: type, type: .Feature, dependencies: featureDependency + [
+                .shared(.Interface, for: type)
+            ]))
         }
         
         if include.contains(.Testing) {
