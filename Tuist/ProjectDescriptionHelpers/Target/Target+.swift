@@ -29,46 +29,16 @@ public extension Target {
     
     static func feature(
         target: ModulePaths.Feature,
+        type: MicroModule,
+        infoPlist: InfoPlist = .default,
         dependencies: [TargetDependency]
     ) -> Self {
-        .makeTarget(name: "\(target.rawValue)Feature",
+        .makeTarget(name: "\(target.rawValue)Feature\(type.rawValue)",
                     product: .staticLibrary,
-                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)feature",
-                    infoPlist: .default,
-                    sources: ["Sources/**"],
+                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)feature\(type.rawValue.lowercased())",
+                    infoPlist: infoPlist,
+                    sources: ["\(type.source)/**"],
                     scripts: [.swiftLint],
-                    dependencies: dependencies)
-    }
-    
-    static func featureInterface(
-        target: ModulePaths.Feature,
-        dependencies: [TargetDependency]
-    ) -> Self {
-        .makeTarget(name: "\(target.rawValue)FeatureInterface",
-                    product: .framework,
-                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)featureinterface",
-                    infoPlist: .default,
-                    sources: ["Interface/**"],
-                    scripts: [.swiftLint],
-                    dependencies: dependencies)
-    }
-    
-    static func featureExample(
-        target: ModulePaths.Feature,
-        dependencies: [TargetDependency] = []
-    ) -> Self {
-        .makeTarget(name: "\(target.rawValue)Example",
-                    product: .app,
-                    bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)Example",
-                    infoPlist: .extendingDefault(with: [
-                        "UIUserInterfaceStyle":"Light",
-                        "LSRequiresIPhoneOS":.boolean(true),
-                        "UIApplicationSceneManifest": [
-                            "UIApplicationSupportsMultipleScenes": .boolean(false)
-                        ],
-                        "UILaunchStoryboardName": .string("")
-                    ]),
-                    sources: ["Example/**"],
                     dependencies: dependencies)
     }
     

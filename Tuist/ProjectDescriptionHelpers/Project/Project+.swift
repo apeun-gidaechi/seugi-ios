@@ -15,7 +15,6 @@ public extension Project {
     ) -> Self {
         .makeProject(
             name: target.rawValue,
-            product: .app,
             packages: packages,
             targets: targets
         )
@@ -24,11 +23,50 @@ public extension Project {
     static func makeFeature(
         target: ModulePaths.Feature,
         packages: [Package] = [],
-        targets: [Target] = []
+        include: Set<MicroModule> = [],
+        interfaceDependency: [TargetDependency] = [],
+        featureDependency: [TargetDependency] = [],
+        testingDependency: [TargetDependency] = [],
+        testsDependency: [TargetDependency] = [],
+        exampleDependency: [TargetDependency] = []
     ) -> Self {
-        .makeProject(name: "\(target.rawValue)Feature",
-                    product: .staticLibrary,
-                    targets: targets)
+        var targets: [Target] = []
+        
+        if include.contains(.Interface) {
+            targets.append(.feature(target: target, type: .Interface, dependencies: interfaceDependency))
+        }
+        
+        if include.contains(.Feature) {
+            targets.append(.feature(target: target, type: .Feature, dependencies: featureDependency))
+        }
+        
+        if include.contains(.Testing) {
+            targets.append(.feature(target: target, type: .Testing, dependencies: testingDependency))
+        }
+        
+        if include.contains(.Tests) {
+            targets.append(.feature(target: target, type: .Tests, dependencies: testsDependency))
+        }
+        
+        if include.contains(.Example) {
+            
+            let infoPlist = InfoPlist.extendingDefault(with: [
+                "UIUserInterfaceStyle":"Light",
+                "LSRequiresIPhoneOS":.boolean(true),
+                "UIApplicationSceneManifest": [
+                    "UIApplicationSupportsMultipleScenes": .boolean(false)
+                ],
+                "UILaunchStoryboardName": .string("")
+            ])
+            let target = Target.feature(target: target, type: .Example, infoPlist: infoPlist, dependencies: exampleDependency)
+            
+            targets.append(target)
+        }
+        
+        return .makeProject(
+            name: "\(target.rawValue)Feature",
+            targets: targets
+        )
     }
     
     static func makeDomain(
@@ -37,7 +75,6 @@ public extension Project {
         targets: [Target] = []
     ) -> Self {
         .makeProject(name: "\(target.rawValue)Domain",
-                    product: .staticLibrary,
                     targets: targets)
     }
     
@@ -47,7 +84,6 @@ public extension Project {
         targets: [Target]
     ) -> Self {
         .makeProject(name: target.rawValue,
-                    product: .staticFramework,
                     targets: targets)
     }
     
@@ -57,7 +93,6 @@ public extension Project {
         targets: [Target] = []
     ) -> Self {
         .makeProject(name: target.rawValue,
-                    product: .staticFramework,
                     targets: targets)
     }
     
@@ -67,7 +102,6 @@ public extension Project {
         targets: [Target] = []
     ) -> Self {
         .makeProject(name: target.rawValue,
-                    product: .staticLibrary,
                     targets: targets)
     }
 }
