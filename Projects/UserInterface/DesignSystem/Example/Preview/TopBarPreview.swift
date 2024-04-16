@@ -13,7 +13,7 @@ struct TopBarPreview: View {
     var body: some View {
         ScrollView {
             Text("Hello, Seugi!")
-                .font(.seugi(.display1))
+                .font(.display(.d1))
         }
         .seugiTopBar("로그인")
         .showShadow()
