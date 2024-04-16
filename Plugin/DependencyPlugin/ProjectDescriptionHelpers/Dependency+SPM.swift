@@ -8,8 +8,6 @@ public extension TargetDependency.SPM {
     static let Swinject = TargetDependency.external(name: "Swinject")
     static let Snapkit = TargetDependency.external(name: "SnapKit")
     static let Flow = TargetDependency.external(name: "Flow")
-//    static let Alamofire = TargetDependency.external(name: "Alamofire")
-//    static let AlamofireImage = TargetDependency.external(name: "AlamofireImage")
-//    static let SkeletonUI = TargetDependency.external(name: "SkeletonUI")
-//    static let Lottie = TargetDependency.external(name: "Lottie")
+    static let Nuke = TargetDependency.external(name: "Nuke")
+    static let NukeUI = TargetDependency.external(name: "NukeUI")
 }
