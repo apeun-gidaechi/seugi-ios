@@ -10,14 +10,9 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let project = Project.makeUserInterface(
-    target: .DesignSystem,
-    targets: [
-        .userInterface(target: .DesignSystem, dependencies: [
-            .shared(target: .SwiftUIUtil),
-            .SPM.Snapkit
-        ]),
-        .userInterfaceExample(target: .DesignSystem, dependencies: [
-            .userInterface(target: .DesignSystem)
-        ])
+    type: .DesignSystem,
+    include: [.Feature, .Example],
+    featureDependency: [
+        .SPM.Snapkit
     ]
 )

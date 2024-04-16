@@ -3,7 +3,7 @@ import AuthenticationServices
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
 //        let appleIDProvider = ASAuthorizationAppleIDProvider()
 //        appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
 //            switch credentialState {
@@ -19,5 +19,4 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 //        }
         return true
     }
-    
 }
