@@ -23,7 +23,7 @@ struct SeugiBottomNavigationCell: View {
         let imageColor: Color = isSelected ? .seugi(.primary(.p500)) : .seugi(.gray(.g300))
         let textColor: Color = isSelected ? .seugi(.primary(.p500)) : .seugi(.gray(.g500))
         
-        VStack {
+        VStack(spacing: 0) {
             Image(icon: type.image)
                 .renderingMode(.template)
                 .resizable()

@@ -18,7 +18,7 @@ public struct ChatDetailView: View {
         ZStack {
             ScrollViewReader { scrollViewProxy in
                 ScrollView {
-                    LazyVStack {
+                    LazyVStack(spacing: 0) {
                         ChatItemDateView(date: "2024년 3월 21일 목요일").id(ChatType.chat(id: 1))
                         ChatItemView(author: "이강현", type: .other).id(ChatType.chat(id: 2))
                         ChatItemView(author: "이강현", type: .me).id(ChatType.chat(id: 3))
