@@ -5,7 +5,6 @@ let project = Project.makeFeature(
     type: .ChatDetail,
     include: [.Feature, .Example, .Interface],
     featureDependency: [
-        .feature(.Interface, for: .ChatDetail),
         .feature(.Interface, for: .Base)
     ]
 )
