@@ -57,7 +57,7 @@ public extension Target {
             product: type.product,
             bundleId: "com.\(env.name).\(target.rawValue.lowercased())domain\(type.rawValue.lowercased())",
             infoPlist: infoPlist,
-            sources: ["\(type.rawValue)/**"],
+            sources: ["\(type.source)/**"],
             scripts: [.swiftLint],
             dependencies: dependencies
         )
@@ -73,7 +73,7 @@ public extension Target {
             product: type.product,
             bundleId: "com.\(env.name).\(target.rawValue.lowercased())\(type.rawValue.lowercased())",
             infoPlist: .default,
-            sources: ["Sources/**"],
+            sources: ["\(type.source)/**"],
             scripts: [.swiftLint],
             dependencies: dependencies
         )
