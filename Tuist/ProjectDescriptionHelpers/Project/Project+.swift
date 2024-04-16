@@ -9,12 +9,11 @@ import ProjectDescription
 
 public extension Project {
     static func makeApp(
-        target: ModulePaths.App,
         packages: [Package] = [],
         targets: [Target] = []
     ) -> Self {
         .makeProject(
-            name: target.rawValue,
+            name: "Seugi",
             packages: packages,
             targets: targets
         )
@@ -126,7 +125,6 @@ public extension Project {
         packages: [Package] = [],
         include: Set<MicroModule>,
         additionalTarget: [Target] = [],
-        interfaceDependency: [TargetDependency] = [],
         featureDependency: [TargetDependency] = [],
         testingDependency: [TargetDependency] = [],
         testsDependency: [TargetDependency] = []
@@ -134,22 +132,21 @@ public extension Project {
         
         var targets = additionalTarget
         
-        if include.contains(.Interface) {
-            targets.append(.shared(target: type, type: .Interface, dependencies: interfaceDependency))
+        if include.contains(.Feature) {
+            targets.append(.shared(target: type, type: .Feature, dependencies: featureDependency))
         }
         
-        if include.contains(.Feature) {
-            targets.append(.shared(target: type, type: .Feature, dependencies: featureDependency + [
+        if include.contains(.Testing) {
+            targets.append(.shared(target: type, type: .Testing, dependencies: testingDependency + [
                 .shared(.Interface, for: type)
             ]))
         }
         
-        if include.contains(.Testing) {
-            targets.append(.shared(target: type, type: .Testing, dependencies: testingDependency))
-        }
-        
         if include.contains(.Tests) {
-            targets.append(.shared(target: type, type: .Tests, dependencies: testsDependency))
+            targets.append(.shared(target: type, type: .Tests, dependencies: testsDependency + [
+                .shared(.Feature, for: type),
+                .shared(.Testing, for: type)
+            ]))
         }
         
         return .makeProject(
@@ -163,7 +160,6 @@ public extension Project {
         packages: [Package] = [],
         include: Set<MicroModule>,
         additionalTarget: [Target] = [],
-        interfaceDependency: [TargetDependency] = [],
         featureDependency: [TargetDependency] = [],
         testingDependency: [TargetDependency] = [],
         testsDependency: [TargetDependency] = [],
@@ -171,24 +167,31 @@ public extension Project {
     ) -> Self {
         var targets = additionalTarget
         
-        if include.contains(.Interface) {
-            targets.append(.userInterface(target: type, type: .Interface, dependencies: interfaceDependency))
-        }
-        
         if include.contains(.Feature) {
-            targets.append(.userInterface(target: type, type: .Feature, dependencies: featureDependency))
+            targets.append(
+                .userInterface(
+                    target: type,
+                    type: .Feature,
+                    resources: ["Resources/**"],
+                    dependencies: featureDependency
+                )
+            )
         }
         
         if include.contains(.Testing) {
-            targets.append(.userInterface(target: type, type: .Testing, dependencies: testingDependency))
+            targets.append(.userInterface(target: type, type: .Testing, dependencies: testingDependency + [
+                .userInterface(.Interface, for: type)
+            ]))
         }
         
         if include.contains(.Tests) {
-            targets.append(.userInterface(target: type, type: .Tests, dependencies: testsDependency))
+            targets.append(.userInterface(target: type, type: .Tests, dependencies: testsDependency + [
+                .userInterface(.Feature, for: type),
+                .userInterface(.Testing, for: type)
+            ]))
         }
         
         if include.contains(.Example) {
-            
             let infoPlist = InfoPlist.extendingDefault(with: [
                 "UIUserInterfaceStyle":"Light",
                 "LSRequiresIPhoneOS":.boolean(true),
@@ -197,7 +200,14 @@ public extension Project {
                 ],
                 "UILaunchStoryboardName": .string("")
             ])
-            let target = Target.userInterface(target: type, type: .Example, infoPlist: infoPlist, dependencies: exampleDependency)
+            let target = Target.userInterface(
+                target: type,
+                type: .Example,
+                infoPlist: infoPlist,
+                dependencies: exampleDependency + [
+                    .userInterface(.Feature, for: type)
+                ]
+            )
             
             targets.append(target)
         }
@@ -222,19 +232,26 @@ public extension Project {
         var targets = additionalTarget
         
         if include.contains(.Interface) {
-            targets.append(.dIContainer(target: type, type: .Interface, dependencies: interfaceDependency))
+            targets.append(.dIContainer(target: type, type: .Interface, dependencies: []))
         }
         
         if include.contains(.Feature) {
-            targets.append(.dIContainer(target: type, type: .Feature, dependencies: featureDependency))
+            targets.append(.dIContainer(target: type, type: .Feature, dependencies: featureDependency + [
+                .dIContainer(.Interface, for: type)
+            ]))
         }
         
         if include.contains(.Testing) {
-            targets.append(.dIContainer(target: type, type: .Testing, dependencies: testingDependency))
+            targets.append(.dIContainer(target: type, type: .Testing, dependencies: testingDependency + [
+                .dIContainer(.Interface, for: type)
+            ]))
         }
         
         if include.contains(.Tests) {
-            targets.append(.dIContainer(target: type, type: .Tests, dependencies: testsDependency))
+            targets.append(.dIContainer(target: type, type: .Tests, dependencies: testsDependency + [
+                .dIContainer(.Feature, for: type),
+                .dIContainer(.Testing, for: type)
+            ]))
         }
         
         return .makeProject(

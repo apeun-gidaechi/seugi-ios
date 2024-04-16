@@ -13,8 +13,8 @@ public extension TargetDependency {
         for target: ModulePaths.Feature
     ) -> TargetDependency {
         .project(
-            target: "\(target)Feature\(module)",
-            path: .relativeToFeature("\(target)Feature\(module)")
+            target: "\(target.rawValue)Feature\(module.rawValue)",
+            path: .relativeToFeature("\(target.rawValue)Feature")
         )
     }
     
@@ -23,8 +23,8 @@ public extension TargetDependency {
         for target: ModulePaths.Domain
     ) -> TargetDependency {
         .project(
-            target: "\(target)Domain\(module)",
-            path: .relativeToDomain("\(target)Domain\(module)")
+            target: "\(target.rawValue)Domain\(module.rawValue)",
+            path: .relativeToDomain("\(target.rawValue)Domain")
         )
     }
     
@@ -33,8 +33,8 @@ public extension TargetDependency {
         for target: ModulePaths.UserInterface
     ) -> TargetDependency {
         .project(
-            target: "\(target)\(target)",
-            path: .relativeToUserInterface("\(target)\(module)")
+            target: "\(target.rawValue)\(module.rawValue)",
+            path: .relativeToUserInterface("\(target.rawValue)")
         )
     }
     
@@ -43,8 +43,8 @@ public extension TargetDependency {
         for target: ModulePaths.Shared
     ) -> TargetDependency {
         .project(
-            target: "\(target)\(module)",
-            path: .relativeToShared("\(target)\(module)")
+            target: "\(target.rawValue)\(module.rawValue)",
+            path: .relativeToShared("\(target.rawValue)")
         )
     }
     
@@ -53,7 +53,7 @@ public extension TargetDependency {
         for target: ModulePaths.DIContainer
     ) -> TargetDependency {
         .project(
-            target: "\(target)\(module)",
+            target: "\(target.rawValue)\(module.rawValue)",
             path: .dIContainer
         )
     }

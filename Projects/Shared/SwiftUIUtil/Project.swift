@@ -9,8 +9,6 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeShared(
-    target: .SwiftUIUtil,
-    targets: [
-        .shared(target: .SwiftUIUtil, dependencies: [])
-    ]
+    type: .SwiftUIUtil,
+    include: [.Feature]
 )

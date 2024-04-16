@@ -13,7 +13,7 @@ public extension MicroModule {
         switch self {
         case .Feature: .staticLibrary
         case .Interface: .framework
-        case .Tests: .staticLibrary
+        case .Tests: .unitTests
         case .Testing: .framework
         case .Example: .app
         }

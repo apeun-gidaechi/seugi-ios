@@ -2,16 +2,15 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .Base,
-    targets: [
-        .feature(target: .Base, dependencies: [
-            .featureInterface(target: .Base),
-        ]),
-        .featureInterface(target: .Base, dependencies: [
-            .userInterface(target: .DesignSystem),
-            .shared(target: .GlobalThirdPartyLibrary),
-            .shared(target: .SwiftUIUtil),
-            .dIContainerInterface(target: .DIContainer)
-        ])
+    type: .Base,
+    include: [.Feature, .Interface],
+    interfaceDependency: [
+        .userInterface(.Feature, for: .DesignSystem),
+        .shared(.Feature, for: .GlobalThirdPartyLibrary),
+        .shared(.Feature, for: .SwiftUIUtil),
+        .dIContainer(.Interface, for: .DIContainer)
+    ],
+    featureDependency: [
+        .feature(.Interface, for: .Base)
     ]
 )

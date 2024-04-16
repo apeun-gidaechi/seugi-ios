@@ -17,9 +17,9 @@ public extension Target {
         entitlements: Entitlements? = nil
     ) -> Self {
         .makeTarget(
-            name: target.rawValue,
+            name: "Seugi",
             product: .app,
-            bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)",
+            bundleId: "com.\(env.name)",
             infoPlist: infoPlist,
             sources: ["Sources/**"],
             resources: ["Resources/**"],
@@ -38,7 +38,7 @@ public extension Target {
         .makeTarget(
             name: "\(target.rawValue)Feature\(type.rawValue)",
             product: type.product,
-            bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)feature\(type.rawValue.lowercased())",
+            bundleId: "com.\(env.name).\(target.rawValue.lowercased())feature\(type.rawValue.lowercased())",
             infoPlist: infoPlist,
             sources: ["\(type.source)/**"],
             scripts: [.swiftLint],
@@ -55,7 +55,7 @@ public extension Target {
         .makeTarget(
             name: "\(target.rawValue)Domain\(type.rawValue)",
             product: type.product,
-            bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)domain\(type.rawValue.lowercased())",
+            bundleId: "com.\(env.name).\(target.rawValue.lowercased())domain\(type.rawValue.lowercased())",
             infoPlist: infoPlist,
             sources: ["\(type.rawValue)/**"],
             scripts: [.swiftLint],
@@ -70,8 +70,8 @@ public extension Target {
     ) -> Self {
         .makeTarget(
             name: "\(target.rawValue)\(type.rawValue)",
-            product: .staticFramework,
-            bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)",
+            product: type.product,
+            bundleId: "com.\(env.name).\(target.rawValue.lowercased())\(type.rawValue.lowercased())",
             infoPlist: .default,
             sources: ["Sources/**"],
             scripts: [.swiftLint],
@@ -89,7 +89,7 @@ public extension Target {
         .makeTarget(
             name: "\(target.rawValue)\(type.rawValue)",
             product: type.product,
-            bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)\(type.rawValue)",
+            bundleId: "com.\(env.name).\(target.rawValue.lowercased())\(type.rawValue.lowercased())",
             infoPlist: infoPlist,
             sources: ["\(type.source)/**"],
             resources: resources,
@@ -107,7 +107,7 @@ public extension Target {
         .makeTarget(
             name: "\(target.rawValue)\(type.rawValue)",
             product: type.product,
-            bundleId: "\(env.organizationName).\(env.name).\(target.rawValue)\(type.rawValue)",
+            bundleId: "com.\(env.name).\(target.rawValue.lowercased())\(type.rawValue.lowercased())",
             infoPlist: infoPlist,
             sources: ["\(type.source)/**"],
             scripts: [.swiftLint],
