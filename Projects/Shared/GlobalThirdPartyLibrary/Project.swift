@@ -10,10 +10,9 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let project = Project.makeShared(
-    target: .GlobalThirdPartyLibrary,
-    targets: [
-        .shared(target: .GlobalThirdPartyLibrary, dependencies: [
-            .SPM.Swinject
-        ])
+    type: .GlobalThirdPartyLibrary,
+    include: [.Feature],
+    featureDependency: [
+        .SPM.Swinject,
     ]
 )

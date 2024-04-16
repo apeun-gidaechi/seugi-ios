@@ -2,15 +2,9 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .EmailSignIn,
-    targets: [
-        .feature(target: .EmailSignIn, dependencies: [
-            .featureInterface(target: .Base),
-            .featureInterface(target: .EmailSignIn)
-        ]),
-        .featureExample(target: .EmailSignIn, dependencies: [
-            .feature(target: .EmailSignIn)
-        ]),
-        .featureInterface(target: .EmailSignIn, dependencies: [])
+    type: .EmailSignIn,
+    include: [.Feature, .Interface, .Example],
+    featureDependency: [
+        .feature(.Interface, for: .Base)
     ]
 )

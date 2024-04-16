@@ -2,14 +2,9 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .LaunchScreen,
-    targets: [
-        .feature(target: .LaunchScreen, dependencies: [
-            .featureInterface(target: .Base)
-        ]),
-        .featureExample(target: .LaunchScreen, dependencies: [
-            .feature(target: .LaunchScreen)
-        ]),
-        .featureInterface(target: .LaunchScreen, dependencies: [])
+    type: .LaunchScreen,
+    include: [.Feature, .Interface, .Example],
+    featureDependency: [
+        .feature(.Interface, for: .Base)
     ]
 )

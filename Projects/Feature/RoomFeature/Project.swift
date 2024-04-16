@@ -2,15 +2,9 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .Room,
-    targets: [
-        .feature(target: .Room, dependencies: [
-            .featureInterface(target: .Base),
-            .featureInterface(target: .Room)
-        ]),
-        .featureExample(target: .Room, dependencies: [
-            .feature(target: .Room)
-        ]),
-        .featureInterface(target: .Room, dependencies: [])
+    type: .Room,
+    include: [.Feature, .Interface, .Example],
+    featureDependency: [
+        .feature(.Interface, for: .Base)
     ]
 )

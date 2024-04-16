@@ -9,14 +9,13 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeApp(
-    target: .App,
     targets: [
         .app(
             target: .App,
             dependenceis:
-                ModulePaths.Feature.allCases.map { TargetDependency.feature(target: $0) }
-            + ModulePaths.Domain.allCases.map { TargetDependency.domain(target: $0) }
-            + [.dIContainer(target: .DIContainer)],
+                ModulePaths.Feature.allCases.map { TargetDependency.feature(.Feature, for: $0) }
+            + ModulePaths.Domain.allCases.map { TargetDependency.domain(.Feature, for: $0) }
+            + [.dIContainer(.Feature, for: .DIContainer)],
             infoPlist: .file(path: "Support/Info.plist"),
             entitlements: .file(path: "Support/App.entitlements")
         )

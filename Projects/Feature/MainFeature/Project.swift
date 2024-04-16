@@ -2,21 +2,14 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    target: .Main,
-    targets: [
-        .feature(target: .Main, dependencies: [
-            .featureInterface(target: .Base),
-            .featureInterface(target: .Main),
-            .featureInterface(target: .Base),
-            .featureInterface(target: .Home),
-            .featureInterface(target: .Chat),
-            .featureInterface(target: .ChatDetail),
-            .featureInterface(target: .Room),
-            .featureInterface(target: .CreateRoom)
-        ]),
-        .featureExample(target: .Main, dependencies: [
-            .feature(target: .Main)
-        ]),
-        .featureInterface(target: .Main, dependencies: [])
+    type: .Main,
+    include: [.Feature, .Interface, .Example],
+    featureDependency: [
+        .feature(.Interface, for: .Base),
+        .feature(.Interface, for: .Home),
+        .feature(.Interface, for: .Chat),
+        .feature(.Interface, for: .ChatDetail),
+        .feature(.Interface, for: .Room),
+        .feature(.Interface, for: .CreateRoom),
     ]
 )

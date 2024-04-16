@@ -1,8 +1,1 @@
-//
-//  Source.swift
-//  ProjectDescriptionHelpers
-//
-//  Created by dgsw8th71 on 4/10/24.
-//
-
-import Foundation
+let baseUrl = "http://144.24.87.9"
