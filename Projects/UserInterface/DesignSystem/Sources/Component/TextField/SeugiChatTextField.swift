@@ -59,6 +59,6 @@ public struct SeugiChatTextField: View {
         .frame(height: 56)
         .background(Color.seugi(.sub(.white)))
         .cornerRadius(12, corners: .allCorners)
-        .shadow(.ev(.ev1))
+        .shadow(.evBlack(.ev1))
     }
 }

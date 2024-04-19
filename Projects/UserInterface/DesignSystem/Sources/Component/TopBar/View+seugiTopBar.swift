@@ -84,7 +84,7 @@ public struct SeugiTopBarView: View {
                 .navigationBarBackButtonHidden()
         }
         .if(showShadow) {
-            $0.shadow(.ev(.ev1))
+            $0.shadow(.evBlack(.ev1))
         }
     }
     

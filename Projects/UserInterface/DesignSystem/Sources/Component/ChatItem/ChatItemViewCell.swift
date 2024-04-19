@@ -26,6 +26,6 @@ public struct ChatItemViewCell: View {
             .padding(12)
             .background(Color.seugi(type.backgroundColor))
             .cornerRadius(8, corners: type.corners)
-            .shadow(.ev(.ev1))
+            .shadow(.evBlack(.ev1))
     }
 }
