@@ -28,6 +28,7 @@ public struct SeugiRoundedCircleImage: View {
                 type.image
                     .resizable()
                     .frame(maxWidth: imageSize, maxHeight: imageSize)
+                    .stroke(size.roundedCorner, color: .seugi(.gray(.g400)), lineWidth: 2)
             default:
                 type.image
                     .resizable()

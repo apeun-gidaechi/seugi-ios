@@ -16,7 +16,7 @@ public struct MemberListPreview: View {
             VStack(spacing: 0) {
                 SeugiMemberList(type: .normal)
                 SeugiMemberList(type: .normal) {
-                    Image(icon: .checkFill)
+                    Image(icon: .checkLine)
                         .renderingMode(.template)
                         .seugiColor(.primary(.p500))
                 }
