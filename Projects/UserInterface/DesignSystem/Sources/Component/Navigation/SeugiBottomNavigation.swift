@@ -10,21 +10,22 @@ import SwiftUI
 import SwiftUIUtil
 
 public struct SeugiBottomNavigation: View {
-    @Binding var selectedTab: SeugiBottomNavigationType
+    @Binding var tabs: SeugiBottomNavigationData
     
-    public init(selectedTab: Binding<SeugiBottomNavigationType>) {
-        self._selectedTab = selectedTab
+    public init(
+        tabs: Binding<SeugiBottomNavigationData>
+    ) {
+        self._tabs = tabs
     }
     
     public var body: some View {
         HStack {
-            let mainViews = SeugiBottomNavigationType.allCases
-            ForEach(mainViews, id: \.self) { tab in
+            ForEach(tabs.cellData, id: \.self) { tab in
                 Spacer()
                 Button {
-                    selectedTab = tab
+                    tabs.selectedTab = tab.type
                 } label: {
-                    SeugiBottomNavigationCell(type: tab, isSelected: selectedTab == tab)
+                    SeugiBottomNavigationCell(cellData: tab, isSelected: tabs.selectedTab == tab.type)
                 }
                 .applyAnimation()
             }
@@ -33,7 +34,7 @@ public struct SeugiBottomNavigation: View {
         .padding(.vertical, 10)
         .background(Color.white)
         .cornerRadius(12, corners: .allCorners)
-        .onChange(of: selectedTab) { _ in
+        .onChange(of: tabs.selectedTab) { _ in
             let impactMed = UIImpactFeedbackGenerator(style: .rigid)
             impactMed.impactOccurred()
         }

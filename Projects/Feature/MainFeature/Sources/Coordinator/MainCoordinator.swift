@@ -28,7 +28,7 @@ public struct MainCoordinator: View {
     @ViewBuilder
     private var content: some View {
         ZStack {
-            switch appState.mainFlow {
+            switch appState.mainFlow.selectedTab {
             case .home: homeFactory.makeView().eraseToAnyView()
             case .chat: chatFactory.makeView().eraseToAnyView()
             case .room: roomFactory.makeView().eraseToAnyView()
@@ -37,7 +37,7 @@ public struct MainCoordinator: View {
             }
             GeometryReader { reader in
                 ZStack(alignment: .bottom) {
-                    SeugiBottomNavigation(selectedTab: $appState.mainFlow)
+                    SeugiBottomNavigation(tabs: $appState.mainFlow)
                         .shadow(color: Color.black.opacity(0.04), radius: 12)
                     VStack {
                         Color.white

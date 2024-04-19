@@ -1,20 +1,16 @@
-//
-//  TabbarCeil.swift
-//  App
-//
-//  Created by dgsw8th71 on 2/24/24.
-//  Copyright © 2024 b8nd. All rights reserved.
-//
-
+import SwiftUIUtil
 import SwiftUI
 
 struct SeugiBottomNavigationCell: View {
     
-    let type: SeugiBottomNavigationType
+    let cellData: SeugiBottomNavigationCellData
     let isSelected: Bool
     
-    init(type: SeugiBottomNavigationType, isSelected: Bool) {
-        self.type = type
+    init(
+        cellData: SeugiBottomNavigationCellData,
+        isSelected: Bool
+    ) {
+        self.cellData = cellData
         self.isSelected = isSelected
     }
     
@@ -24,13 +20,21 @@ struct SeugiBottomNavigationCell: View {
         let textColor: Color = isSelected ? .seugi(.primary(.p500)) : .seugi(.gray(.g500))
         
         VStack(spacing: 0) {
-            Image(icon: type.image)
+            Image(icon: cellData.type.image)
                 .renderingMode(.template)
                 .resizable()
                 .frame(width: 28, height: 28)
                 .padding(.top, 4)
                 .foregroundStyle(imageColor)
-            Text(type.text)
+                .overlay {
+                    if cellData.hasBadge {
+                        SeugiBadge(type: .normal)
+                            .toTop()
+                            .toTrailing()
+                            .offset(x: 4, y: -2)
+                    }
+                }
+            Text(cellData.type.text)
                 .font(.caption(.c2))
                 .foregroundStyle(textColor)
         }

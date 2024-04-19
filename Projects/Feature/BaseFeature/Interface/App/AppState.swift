@@ -3,11 +3,11 @@ import DesignSystem
 
 public final class AppState: ObservableObject {
     @Published public var appFlow: AppFlow
-    @Published public var mainFlow: SeugiBottomNavigationType
+    @Published public var mainFlow: SeugiBottomNavigationData
     
     public init(
         appFlow: AppFlow,
-        mainFlow: SeugiBottomNavigationType
+        mainFlow: SeugiBottomNavigationData
     ) {
         self.appFlow = appFlow
         self.mainFlow = mainFlow
