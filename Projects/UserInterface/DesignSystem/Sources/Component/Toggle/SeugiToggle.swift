@@ -43,7 +43,7 @@ struct SeugiCheckboxStyle: ToggleStyle {
             configuration.isOn.toggle()
         } label: {
             HStack {
-                Image(icon: configuration.isOn ? .checkFill : .checkLine)
+                Image(icon: configuration.isOn ? .checkCircleFill : .checkCircleLine)
                     .renderingMode(.template)
                     .resizable()
                     .frame(width: size.rawValue, height: size.rawValue)

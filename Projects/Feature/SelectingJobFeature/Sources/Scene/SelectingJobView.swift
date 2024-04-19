@@ -5,7 +5,7 @@ import BaseFeatureInterface
 public struct SelectingJobView: View {
     
     @EnvironmentObject private var router: Router
-    @State private var selectedTab: JobType?
+    @State private var selectedTab: JobType = .student
     
     public init() {}
     
@@ -22,7 +22,7 @@ public struct SelectingJobView: View {
                         Button {
                             selectedTab = tab
                         } label: {
-                            JobCell(jobType: tab, isActive: selectedTab == tab)
+                            JobCell(jobType: tab, isActive: tab == selectedTab)
                         }
                     }
                 }

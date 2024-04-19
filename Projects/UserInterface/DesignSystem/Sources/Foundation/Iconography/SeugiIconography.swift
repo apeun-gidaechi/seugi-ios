@@ -21,7 +21,8 @@ public enum SeugiIconography: String {
     
     case chatFill = "chat_fill"
     
-    case checkFill = "check_fill"
+    case checkCircleFill = "check_circle_fill"
+    case checkCircleLine = "check_circle_line"
     case checkLine = "check_line"
     
     case closeFill = "close_fill"

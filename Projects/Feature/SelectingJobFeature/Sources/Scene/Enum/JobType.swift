@@ -14,17 +14,10 @@ enum JobType: String, CaseIterable {
     case student = "학생"
     case teacher = "선생님"
     
-    var activeImage: SeugiImage {
+    var image: SeugiImage {
         switch self {
-        case .student: .studentActive
-        case .teacher: .teacherActive
-        }
-    }
-    
-    var disableImage: SeugiImage {
-        switch self {
-        case .student: .studentDisable
-        case .teacher: .teacherDisable
+        case .student: .student
+        case .teacher: .teacher
         }
     }
 }

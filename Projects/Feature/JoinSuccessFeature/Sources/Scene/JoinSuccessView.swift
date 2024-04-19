@@ -13,7 +13,7 @@ public struct JoinSuccessView: View {
             
             Spacer()
             VStack(spacing: 0) {
-                SeugiRoundedCircleImage.small(type: .fill(image: .studentActive))
+                SeugiRoundedCircleImage.small(type: .fill(image: .chicken))
                     .padding(.bottom, 16)
                 Text("대구 소프트웨어 마이스터 고등학교")
                     .font(.subtitle(.s1))
