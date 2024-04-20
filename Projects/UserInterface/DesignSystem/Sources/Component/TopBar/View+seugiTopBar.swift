@@ -80,11 +80,11 @@ public struct SeugiTopBarView: View {
             .padding(.horizontal, 16)
             .background(Color.seugi(.sub(.white)))
             .navigationBarBackButtonHidden()
+            .if(showShadow) {
+                $0.shadow(.evBlack(.ev1))
+            }
             content
                 .navigationBarBackButtonHidden()
-        }
-        .if(showShadow) {
-            $0.shadow(.evBlack(.ev1))
         }
     }
     

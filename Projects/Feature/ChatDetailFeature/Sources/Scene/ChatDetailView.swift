@@ -39,14 +39,14 @@ public struct ChatDetailView: View {
                         scrollViewProxy.scrollTo(ChatType.bottom)
                     }
                 }
+                .background(Color.seugi(.primary(.p050)))
             }
-            .background(Color.seugi(.primary(.p050)))
             GeometryReader { reader in
                 VStack {
                     Spacer()
                     Color.seugi(.primary(.p050))
                         .frame(maxWidth: .infinity)
-                        .frame(height: reader.safeAreaInsets.bottom + 56 - 12, alignment: .bottom)
+                        .frame(height: reader.safeAreaInsets.bottom + 56 - 12, alignment: .bottom) // 56: bottom nav height, 12: just margin
                 }
                 .ignoresSafeArea()
                 SeugiChatTextField("메세지 보내기", text: $text) {
@@ -63,21 +63,21 @@ public struct ChatDetailView: View {
                 .padding(.horizontal, 8)
                 .padding(.bottom, 8)
             }
-            .hideKeyboardWhenTap()
-            .seugiTopBar("노영재")
-            .showShadow()
-            .button(.searchLine) {
-                // handle searching
-            }
-            .button(.hamburgerHorizontalLine) {
-                isDrawerOpen = true
-            }
-            .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
-                drawerBody
-            }
-            .onChange(of: isDrawerOpen) { _ in
-                hideKeyboard()
-            }
+        }
+        .hideKeyboardWhenTap()
+        .seugiTopBar("노영재")
+        .showShadow()
+        .button(.searchLine) {
+            // handle searching
+        }
+        .button(.hamburgerHorizontalLine) {
+            isDrawerOpen = true
+        }
+        .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
+            drawerBody
+        }
+        .onChange(of: isDrawerOpen) { _ in
+            hideKeyboard()
         }
     }
     
