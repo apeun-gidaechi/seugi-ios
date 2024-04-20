@@ -61,6 +61,7 @@ public extension ModulePaths {
     enum Shared: String, CaseIterable {
         case GlobalThirdPartyLibrary
         case SwiftUIUtil
+        case SwiftUtil
     }
     
     enum UserInterface: String, CaseIterable {
