@@ -19,6 +19,8 @@ public struct ChatItemView: View {
             HStack(alignment: .top) {
                 if case .other = type {
                     SeugiAvatar(type: .medium)
+                } else if case .ai = type {
+                    SeugiAppIcon(type: .medium)
                 }
                 VStack(alignment: .leading, spacing: 4) {
                     if type.isLeft {

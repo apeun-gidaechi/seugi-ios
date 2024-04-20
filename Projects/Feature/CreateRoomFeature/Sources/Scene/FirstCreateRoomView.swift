@@ -33,7 +33,7 @@ public struct FirstCreateRoomView: View {
             .scrollOnOverflow(300)
             .frame(height: min(contentSize.height, 300))
             .frame(minHeight: 52)
-            .stroke(12, color: .seugi(.gray(.g300)))
+            .stroke(12, content: Color.seugi(.gray(.g300)))
             .padding(.horizontal, 16)
             ScrollView {
                 LazyVStack(spacing: 0) {
