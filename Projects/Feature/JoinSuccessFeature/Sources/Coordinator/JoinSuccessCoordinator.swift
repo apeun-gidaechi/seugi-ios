@@ -1,15 +1,19 @@
-//
-//  JoinSuccessCoordinator.swift
-//  JoinSuccessFeature
-//
-//  Created by dgsw8th71 on 4/10/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
+import SelectingJobFeatureInterface
+import JoinSuccessFeatureInterface
+import DIContainerInterface
+import SwiftUIUtil
 
 public struct JoinSuccessCoordinator: View {
+    
+    @Inject private var selectingJobFactory: any SelectingJobFactory
+    
     public var body: some View {
         JoinSuccessView()
+            .navigationDestination(for: JoinSuccessDestination.self) {
+                switch $0 {
+                case .selectingJob: selectingJobFactory.makeView().eraseToAnyView()
+                }
+            }
     }
 }

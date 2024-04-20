@@ -20,7 +20,9 @@ public struct SelectingJobView: View {
                 HStack {
                     ForEach(JobType.allCases, id: \.self) { tab in
                         Button {
-                            selectedTab = tab
+                            withAnimation {
+                                selectedTab = tab
+                            }
                         } label: {
                             JobCell(jobType: tab, isActive: tab == selectedTab)
                         }
@@ -37,11 +39,11 @@ public struct SelectingJobView: View {
                     .font(.body(.b1))
             }
             SeugiButton.large("계속하기", type: .primary) {
-                router.navigate(to: SelectingJobDestination.emailSignUp)
+                router.navigate(to: SelectingJobDestination.waitingJoin)
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 16)
         }
-        .seugiTopBar("회원가입")
+        .seugiTopBar("학교 가입")
     }
 }

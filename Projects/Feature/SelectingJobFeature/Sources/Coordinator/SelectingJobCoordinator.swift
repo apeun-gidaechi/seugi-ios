@@ -1,13 +1,13 @@
 import SwiftUI
-import EmailSignUpFeatureInterface
 import EmailSignInFeatureInterface
+import WaitingJoinFeatureInterface
 import DIContainerInterface
 import SwiftUIUtil
 
 public struct SelectingJobCoordinator: View {
     
-    @Inject private var emailSignUpFactory: any EmailSignUpFactory
     @Inject private var emailSignInFactory: any EmailSignInFactory
+    @Inject private var waitingJoinFactory: any WaitingJoinFactory
     
     public init() {}
     
@@ -15,7 +15,7 @@ public struct SelectingJobCoordinator: View {
         SelectingJobView()
             .navigationDestination(for: SelectingJobDestination.self) {
                 switch $0 {
-                case .emailSignUp: emailSignUpFactory.makeView().eraseToAnyView()
+                case .waitingJoin: waitingJoinFactory.makeView().eraseToAnyView()
                 case .emailSignIn: emailSignInFactory.makeView().eraseToAnyView()
                 }
             }

@@ -6,7 +6,6 @@ let project = Project.makeFeature(
     include: [.Feature, .Interface, .Example],
     featureDependency: [
         .feature(.Interface, for: .Base),
-        .feature(.Interface, for: .EmailSignIn),
-        .feature(.Interface, for: .EmailSignUp)
+        .feature(.Interface, for: .WaitingJoin)
     ]
 )

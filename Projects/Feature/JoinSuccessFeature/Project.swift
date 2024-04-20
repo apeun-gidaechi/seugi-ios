@@ -5,6 +5,7 @@ let project = Project.makeFeature(
     type: .JoinSuccess,
     include: [.Feature, .Interface, .Example],
     featureDependency: [
-        .feature(.Interface, for: .Base)
+        .feature(.Interface, for: .Base),
+        .feature(.Interface, for: .SelectingJob)
     ]
 )

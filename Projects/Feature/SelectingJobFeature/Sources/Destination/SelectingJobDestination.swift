@@ -1,4 +1,4 @@
 enum SelectingJobDestination {
-    case emailSignUp
+    case waitingJoin
     case emailSignIn
 }

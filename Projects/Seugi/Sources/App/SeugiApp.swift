@@ -23,7 +23,7 @@ struct SeugiApp: App {
                 rootView.makeView().eraseToAnyView()
                     .environmentObject(
                         AppState(
-                            appFlow: .authorized,
+                            appFlow: .notFoundJoinedSchool,
                             mainFlow: .init(
                                 cellData: [
                                     .init(type: .home, hasBadge: false),

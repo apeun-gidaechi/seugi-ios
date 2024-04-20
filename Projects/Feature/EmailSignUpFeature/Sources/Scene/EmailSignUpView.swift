@@ -37,7 +37,7 @@ public struct EmailSignUpView: View {
                     .font(.body(.b1))
             }
             SeugiButton.large("계속하기", type: .primary) {
-                // handle sign up
+                router.navigate(to: EmailSignUpDestination.emailVerification)
             }
             .padding(.bottom, 16)
         }

@@ -1,3 +1,3 @@
 enum EmailSignInDesination: Hashable {
-    case selectingJob
+    case emailSignUp
 }

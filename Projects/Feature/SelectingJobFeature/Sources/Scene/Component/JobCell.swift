@@ -30,6 +30,7 @@ struct JobCell: View {
                         .seugiColor(.primary(.p500))
                 }
             }
+            .frame(height: 24)
             .padding(.top, 17)
             Image(image: jobType.image)
                 .resizable()

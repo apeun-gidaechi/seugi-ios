@@ -3,8 +3,11 @@
 import SwiftUI
 import DesignSystem
 import BaseFeatureInterface
+import JoinSuccessFeatureInterface
 
 public struct JoinSuccessView: View {
+    
+    @EnvironmentObject private var router: Router
     
     public init() {}
     
@@ -25,12 +28,11 @@ public struct JoinSuccessView: View {
             
             Spacer()
             SeugiButton.large("계속하기", type: .primary) {
-                // TODO: handle join school
+                router.navigate(to: JoinSuccessDestination.selectingJob)
             }
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
         .seugiTopBar("학교 가입")
-        .hideBackButton()
     }
 }
