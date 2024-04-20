@@ -21,7 +21,7 @@ public struct SeugiToolTip: View {
     }
     
     public var body: some View {
-        VStack(alignment: type.alignment, spacing: 0) {
+        VStack(alignment: type.alignment, spacing: -1) {
             if direction == .top {
                 makeImage()
             }
