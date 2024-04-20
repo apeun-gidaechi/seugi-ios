@@ -18,13 +18,13 @@ public struct EmailVerificationView: View {
             SeugiCodeTextFieldForm(text: $viewModel.verificationCode, label: "인증코드", length: 6)
                 .padding(.top, 16)
             SeugiButton.small("인증 코드 전송", type: .primary) {}
+                .toTrailing()
             Spacer()
             SeugiButton.large("계속하기", type: .primary) {
             }
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
-        .seugiTopBar("학교 가입")
-        .hideBackButton()
+        .seugiTopBar("이메일 인증")
     }
 }

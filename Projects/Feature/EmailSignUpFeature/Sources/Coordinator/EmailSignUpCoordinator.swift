@@ -9,7 +9,7 @@ public struct EmailSignUpCoordinator: View {
     
     @InjectObject private var viewModel: EmailSignUpViewModel
     @Inject private var emailSignInFactory: any EmailSignInFactory
-//    @Inject private var emailVerificationFactory: any Email
+    @Inject private var emailVerificationFactory: any EmailVerificationFactory
     
     public init() {}
     
@@ -18,7 +18,7 @@ public struct EmailSignUpCoordinator: View {
             .navigationDestination(for: EmailSignUpDestination.self) {
                 switch $0 {
                 case .emailSignIn: emailSignInFactory.makeView().eraseToAnyView()
-                case .emailVerification:
+                case .emailVerification: emailVerificationFactory.makeView().eraseToAnyView()
                 }
             }
     }

@@ -4,6 +4,7 @@ import ChatFeature
 import CreateRoomFeature
 import EmailSignInFeature
 import EmailSignUpFeature
+import EmailVerificationFeature
 import HomeFeature
 import JoinSchoolFeature
 import JoinSuccessFeature
@@ -26,6 +27,7 @@ extension DependencyProvider {
             CreateRoomAssembly(),
             EmailSignInAssembly(),
             EmailSignUpAssembly(),
+            EmailVerificationAssembly(),
             HomeAssembly(),
             JoinSchoolAssembly(),
             JoinSuccessAssembly(),
