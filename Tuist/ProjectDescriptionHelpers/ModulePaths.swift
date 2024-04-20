@@ -31,16 +31,18 @@ public extension ModulePaths {
         // onboarding
         case Onboarding // root
         case EmailSignUp
+        case EmailVerification
         case EmailSignIn
         case LaunchScreen
         case OAuthSignUp
-        case SelectingJob
         case Start
         
         // join
         case JoinSchool // root
         case JoinSuccess
         case SchoolCode
+        case SelectingJob
+        case WaitingJoin
         
         // main
         case Main // root

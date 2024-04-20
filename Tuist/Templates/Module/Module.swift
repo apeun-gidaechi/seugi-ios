@@ -1,6 +1,6 @@
 import ProjectDescription
 
-private let layerAttribute = Template.Attribute.required("name")
+private let layerAttribute = Template.Attribute.required("layer")
 private let nameAttribute = Template.Attribute.required("name")
 
 private let template = Template(
@@ -11,7 +11,7 @@ private let template = Template(
     ],
     items: [
         .file(
-            path: "Projects/\(layerAttribute)/\(nameAttribute)\("\(layerAttribute)" == "Feature" || "\(layerAttribute)" == "Domain" ? "\(layerAttribute)" : "")/Project.swift",
+            path: "Projects/\(layerAttribute)/\(nameAttribute)\(layerAttribute)/Project.swift",
             templatePath: "Project.stencil"
         ),
     ]

@@ -30,7 +30,7 @@ public struct EmailSignInView: View {
                     .font(.body(.b1))
                     .seugiColor(.gray(.g600))
                 Button {
-                    router.navigate(to: EmailSignInDesination.selectingJob)
+                    router.navigateToRoot()
                 } label: {
                     Text("가입하기")
                         .font(.body(.b1))

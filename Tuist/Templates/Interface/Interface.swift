@@ -1,6 +1,6 @@
 import ProjectDescription
 
-private let layerAttribute = Template.Attribute.required("name")
+private let layerAttribute = Template.Attribute.required("layer")
 private let nameAttribute = Template.Attribute.required("name")
 
 private let template = Template(
