@@ -41,7 +41,7 @@ struct JobCell: View {
         .frame(maxWidth: .infinity)
         .background(Color.seugi(.gray(.g100)))
         .cornerRadius(12, corners: .allCorners)
-        .stroke(12, color: isActive ? .seugi(.primary(.p500)) : .seugi(.gray(.g300)), lineWidth: isActive ? 2 : 1)
+        .stroke(12, content: isActive ? Color.seugi(.primary(.p500)) : Color.seugi(.gray(.g300)), lineWidth: isActive ? 2 : 1)
         .if(isActive) {
             $0
                 .shadow(.evPrimary(.ev3))

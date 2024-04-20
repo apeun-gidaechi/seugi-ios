@@ -13,13 +13,13 @@ public extension View {
         clipShape(RoundedCornerShape(radius: radius, corners: corners))
     }
     
-    func stroke(_ radius: CGFloat, color: Color, lineWidth: CGFloat = 1) -> some View {
-        let roundedCorner = RoundedCornerShape(radius: radius, corners: .allCorners)
+    func stroke<Content>(_ radius: CGFloat, corners: UIRectCorner = .allCorners, content: Content, lineWidth: CGFloat = 1) -> some View where Content: ShapeStyle {
+        let roundedCorner = RoundedCornerShape(radius: radius, corners: corners)
         return self
             .clipShape(roundedCorner)
             .overlay {
                 roundedCorner
-                    .stroke(color, lineWidth: lineWidth)
+                    .stroke(content, lineWidth: lineWidth)
             }
     }
 }
