@@ -10,11 +10,13 @@ import SwiftUI
 
 public enum ChatItemViewCellType {
     case other
+    case ai
     case me
     
     var backgroundColor: Color.SeugiColorSystem {
         switch self {
         case .other: .sub(.white)
+        case .ai: .sub(.white)
         case .me: .primary(.p500)
         }
     }
@@ -22,6 +24,7 @@ public enum ChatItemViewCellType {
     var foregroundColor: Color.SeugiColorSystem {
         switch self {
         case .other: .sub(.black)
+        case .ai: .sub(.black)
         case .me: .sub(.white)
         }
     }
@@ -29,7 +32,19 @@ public enum ChatItemViewCellType {
     var corners: UIRectCorner {
         switch self {
         case .other: [.bottomLeft, .bottomRight, .topRight]
+        case .ai: [.bottomLeft, .bottomRight, .topRight]
         case .me: [.bottomLeft, .bottomRight, .topLeft]
+        }
+    }
+    
+    var isLeft: Bool {
+        switch self {
+        case .other:
+            true
+        case .ai:
+            true
+        case .me:
+            false
         }
     }
 }
