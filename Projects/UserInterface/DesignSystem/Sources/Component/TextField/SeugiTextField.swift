@@ -87,7 +87,9 @@ struct SeugiTextFieldStyle: TextFieldStyle {
                         case .none(let hasXMark):
                             if hasXMark && !text.isEmpty {
                                 Image(icon: .closeFill)
+                                    .resizable()
                                     .renderingMode(.template)
+                                    .frame(width: 28, height: 28)
                                     .seugiColor(.gray(.g500))
                                     .onTapGesture {
                                         onClickClose()
@@ -95,7 +97,9 @@ struct SeugiTextFieldStyle: TextFieldStyle {
                             }
                         case .password:
                             Image(icon: isHide ? .hideFill : .showFill)
+                                .resizable()
                                 .renderingMode(.template)
+                                .frame(width: 28, height: 28)
                                 .seugiColor(.gray(.g500))
                                 .onTapGesture {
                                     onClickHide()

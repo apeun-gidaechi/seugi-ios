@@ -9,12 +9,18 @@
 import Foundation
 
 public enum SeugiImage: String {
+    
+    case appIcon = "AppIcon"
+    
     case cloud1 = "Cloud1"
     case cloud2 = "Cloud2"
-    case studentActive = "StudentActive"
-    case studentDisable = "StudentDisable"
-    case teacherActive = "TeacherActive"
-    case teacherDisable = "TeacherDisable"
     case google = "Google"
     case apple = "Apple"
+    
+    case apple1 = "Apple1"
+    case chicken = "Chicken"
+    case school = "School"
+    case student = "Student"
+    case taco = "Taco"
+    case teacher = "Teacher"
 }

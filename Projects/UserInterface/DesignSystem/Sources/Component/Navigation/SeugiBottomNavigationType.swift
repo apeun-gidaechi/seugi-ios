@@ -1,12 +1,30 @@
-//
-//  BottomNavigationType.swift
-//  App
-//
-//  Created by dgsw8th71 on 2/25/24.
-//  Copyright © 2024 b8nd. All rights reserved.
-//
-
 import SwiftUI
+
+public struct SeugiBottomNavigationData: Hashable {
+    public var cellData: [SeugiBottomNavigationCellData]
+    public var selectedTab: SeugiBottomNavigationType
+    
+    public init(
+        cellData: [SeugiBottomNavigationCellData],
+        selectedTab: SeugiBottomNavigationType
+    ) {
+        self.cellData = cellData
+        self.selectedTab = selectedTab
+    }
+}
+
+public struct SeugiBottomNavigationCellData: Hashable {
+    public var type: SeugiBottomNavigationType
+    public var hasBadge: Bool
+    
+    public init(
+        type: SeugiBottomNavigationType,
+        hasBadge: Bool
+    ) {
+        self.type = type
+        self.hasBadge = hasBadge
+    }
+}
 
 public enum SeugiBottomNavigationType: CaseIterable {
     case home

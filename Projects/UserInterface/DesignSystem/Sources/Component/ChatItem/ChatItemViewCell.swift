@@ -1,11 +1,3 @@
-//
-//  ChatItemViewCell.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 3/28/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
 
 public struct ChatItemViewCell: View {
@@ -26,6 +18,9 @@ public struct ChatItemViewCell: View {
             .padding(12)
             .background(Color.seugi(type.backgroundColor))
             .cornerRadius(8, corners: type.corners)
-            .shadow(.ev(.ev1))
+            .shadow(.evBlack(.ev1))
+            .if(type == .ai) { view in
+                view.stroke(8, corners: type.corners, content: SeugiGradientSystem.primary, lineWidth: 1.5)
+            }
     }
 }

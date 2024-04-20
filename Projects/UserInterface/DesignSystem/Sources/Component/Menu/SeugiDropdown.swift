@@ -44,7 +44,7 @@ public struct SeugiDropdown<T: Hashable & CustomStringConvertible>: View {
                     .resizable()
                     .renderingMode(.template)
                     .seugiColor(.gray(.g500))
-                    .frame(width: 24, height: 24)
+                    .frame(width: 28, height: 28)
             }
         }
         .menuStyle(SeugiDropdownStyle())

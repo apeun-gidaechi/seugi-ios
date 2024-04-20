@@ -84,7 +84,7 @@ struct SeugiButtonStyle: ButtonStyle {
             }
             .foregroundStyle(isEnabled ? type.foregroundColor : type.disabledForegroundColor)
             .if(type == .shadow) {
-                $0.shadow(.ev(.ev1))
+                $0.shadow(.evBlack(.ev1))
             }
             .background(backgroundColor)
             .cornerRadius(12, corners: .allCorners)

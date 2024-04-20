@@ -12,10 +12,10 @@ struct FontPreview: View {
     var body: some View {
         ScrollView {
             VStack {
-                ForEach(Font.SeugiFontSystem.allCases, id: \.self) {
-                    Text("Hello, Seugi!")
-                        .font(.seugi($0))
-                }
+//                ForEach(Font.SeugiFontSystem.allCases, id: \.self) {
+//                    Text("Hello, Seugi!")
+//                        .font(.seugi($0))
+//                }
             }
         }
     }

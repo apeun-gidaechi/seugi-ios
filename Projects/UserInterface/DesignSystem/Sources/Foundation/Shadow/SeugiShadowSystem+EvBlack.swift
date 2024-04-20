@@ -9,14 +9,14 @@
 import SwiftUI
 
 public extension SeugiShadowSystem {
-    enum Ev: CaseIterable, SeugiShadowable {
+    enum EvBlack: CaseIterable, SeugiShadowable {
         case ev1
         case ev2
         case ev3
     }
 }
 
-extension SeugiShadowSystem.Ev {
+extension SeugiShadowSystem.EvBlack {
     
     var color: Color {
         switch self {

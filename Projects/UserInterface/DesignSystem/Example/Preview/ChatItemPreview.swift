@@ -20,6 +20,8 @@ public struct ChatItemPreview: View {
                 ChatItemView(author: "이강현", type: .other)
                 ChatItemView(author: "이강현", type: .me)
                 ChatItemView(author: "박재욱", type: .other)
+                ChatItemView(author: "AI", type: .ai)
+                ChatItemView(author: "AI", type: .ai)
             }
         }
     }
