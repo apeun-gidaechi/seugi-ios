@@ -11,15 +11,15 @@ public struct WaitingJoinView: View {
     public var body: some View {
         VStack(spacing: 16) {
             Spacer()
-            VStack {
-                Text("학생이신가요?\n아니면 선생님이신가요?")
+            VStack(spacing: 8) {
+                Image(image: .school)
+                    .resizable()
+                    .frame(width: 145, height: 145)
+                Text("대구소프트웨어마이스터고등학교")
                     .font(.subtitle(.s1))
-                    .toLeading()
-                    .padding(.leading, 4)
             }
-            .padding(.horizontal, 16)
             Spacer()
-            SeugiButton.large("계속하기", type: .gray) {}
+            SeugiButton.large("확인", type: .gray) {}
             .padding(.horizontal, 20)
             .padding(.bottom, 16)
         }
