@@ -13,7 +13,7 @@ extension Project {
             base: ["OTHER_LDFLAGS": .string("-ObjC"),
                    "ENABLE_USER_SCRIPT_SANDBOXING": .string("No")].merging(env.baseSetting),
             configurations: [
-                .debug(name: .debug),
+                .debug(name: .debug, xcconfig: .relativeToXCConfig("Config.xcconfig")),
                 .release(name: .release)
             ], defaultSettings: .recommended
         )

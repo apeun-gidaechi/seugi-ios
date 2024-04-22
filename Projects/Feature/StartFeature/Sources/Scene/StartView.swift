@@ -5,6 +5,7 @@ import BaseFeatureInterface
 public struct StartView: View {
     
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var appState: AppState
     
     @State private var offsetY1: CGFloat = 16
     @State private var opacity1 = 0.0
@@ -80,7 +81,7 @@ public struct StartView: View {
                 .padding(.top, 20)
                 SeugiAppleSignInButton()
                     .frame(height: 56)
-                SeugiGoogleSignInButton()
+                SeugiGoogleSignInButton(clientId: appState.googleClientId)
                     .frame(height: 56)
                     .frame(maxWidth: .infinity)
                 Spacer()

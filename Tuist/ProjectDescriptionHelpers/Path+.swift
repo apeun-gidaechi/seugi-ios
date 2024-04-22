@@ -26,4 +26,8 @@ public extension ProjectDescription.Path {
     static var dIContainer: Self {
         .relativeToRoot("Projects/DIContainer")
     }
+    
+    static func relativeToXCConfig(_ path: String) -> Self {
+        .relativeToRoot("XCConfig/\(path)")
+    }
 }

@@ -15,6 +15,7 @@ struct SeugiApp: App {
     init() {
         Pretendard.register()
         DependencyProvider.shared.register()
+        print(ServiceConfiguration.googleClientId)
     }
     
     var body: some Scene {
@@ -23,7 +24,7 @@ struct SeugiApp: App {
                 rootView.makeView().eraseToAnyView()
                     .environmentObject(
                         AppState(
-                            appFlow: .authorized,
+                            appFlow: .unAuthorized,
                             mainFlow: .init(
                                 cellData: [
                                     .init(type: .home, hasBadge: false),
@@ -33,7 +34,8 @@ struct SeugiApp: App {
                                     .init(type: .profile, hasBadge: false)
                                 ],
                                 selectedTab: .home
-                            )
+                            ),
+                            googleClientId: ServiceConfiguration.googleClientId
                         )
                     )
                     .environmentObject(Router())

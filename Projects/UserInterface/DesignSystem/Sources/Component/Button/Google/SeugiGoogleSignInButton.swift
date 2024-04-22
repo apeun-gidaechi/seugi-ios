@@ -10,10 +10,17 @@ import SwiftUI
 
 public struct SeugiGoogleSignInButton: UIViewControllerRepresentable {
     
-    public init() {}
+    private let clientId: String
+    
+    public init(
+        clientId: String
+    ) {
+        self.clientId = clientId
+    }
     
     public func makeUIViewController(context: Context) -> GoogleVC {
         let googleVC = GoogleVC()
+        googleVC.setClientId(clientId)
         return googleVC
     }
     

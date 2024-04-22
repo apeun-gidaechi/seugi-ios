@@ -2,6 +2,7 @@ import UIKit
 import SwiftUI
 import AuthenticationServices
 import SnapKit
+import GoogleSignIn
 
 struct GoogleSignInLabel: View {
     
@@ -24,6 +25,7 @@ struct GoogleSignInLabel: View {
 
 public class GoogleVC: UIViewController {
     
+    private var clientId: String!
     var buttonLabel: UIHostingController<GoogleSignInLabel>!
     var button: UIButton = {
         let b = UIButton()
@@ -32,6 +34,10 @@ public class GoogleVC: UIViewController {
         b.layer.borderWidth = 1.5
         return b
     }()
+    
+    func setClientId(_ str: String) {
+        self.clientId = str
+    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,5 +67,35 @@ public class GoogleVC: UIViewController {
     }
     
     private func setUpAddTarget() {
+        button.addTarget(self, action: #selector(googleSignIn), for: .touchUpInside)
+    }
+    
+    @objc
+    private func googleSignIn() {
+        let signInConfig = GIDConfiguration(clientID: clientId)
+        print("\(#function) - try google sign in")
+        GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
+            guard error == nil else { return }
+            guard let user else { return }
+            
+            let email = user.profile?.email
+            let name = user.profile?.name
+            
+            // 1. do를 통해 가져오기
+            user.authentication.do { authentication, error in
+                guard let authentication = authentication else { return }
+                let idToken       = authentication.idToken
+                let accessToken   = authentication.accessToken
+                let refreshToken  = authentication.refreshToken
+                let clientID      = authentication.clientID
+            }
+            
+            // 2. authentication에서 바로 가져오기
+            let idToken       = user.authentication.idToken
+            let accessToken   = user.authentication.accessToken
+            let refreshToken  = user.authentication.refreshToken
+            let clientID      = user.authentication.clientID
+            print(accessToken)
+        }
     }
 }

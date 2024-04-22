@@ -17,6 +17,7 @@ let project = Project.makeUserInterface(
         .SPM.Snapkit,
         .SPM.Nuke,
         .SPM.NukeUI,
-        .SPM.Flow
+        .SPM.Flow,
+        .SPM.GoogleSignIn
     ]
 )
