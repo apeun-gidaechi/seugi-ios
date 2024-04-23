@@ -15,7 +15,6 @@ struct SeugiApp: App {
     init() {
         Pretendard.register()
         DependencyProvider.shared.register()
-        print(ServiceConfiguration.googleClientId)
     }
     
     var body: some Scene {
