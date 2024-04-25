@@ -1,4 +1,4 @@
-public struct CreateGroupRequest: Encodable {
+public struct CreateChatRequest: Encodable {
     let workspaceId: String
     let roomName: String
     let chatRoomImg: String

@@ -1,3 +1,3 @@
 public protocol CreateGroupChatUseCase {
-    func callAsFunction(_ req: CreateGroupRequest) async throws -> Int
+    func callAsFunction(_ req: CreateChatRequest) async throws -> Int
 }

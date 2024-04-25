@@ -3,15 +3,15 @@ import Foundation
 import BaseDomainInterface
 import ChatDomainInterface
 
-enum ChatTarget {
-    case createGroup(_ req: CreateGroupRequest)
+enum GroupChatTarget {
+    case createGroup(_ req: CreateChatRequest)
     case getGroupChat(workspaceId: Int)
     case addJoined(_ req: AddJoinedRequest)
     case getJoined(roomId: Int)
     case outJoined(_ req: OutJoinedRequest)
 }
 
-extension ChatTarget: TargetType {
+extension GroupChatTarget: TargetType {
     var baseURL: URL {
         URL(string: baseUrl)!
     }

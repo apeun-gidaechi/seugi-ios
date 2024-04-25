@@ -1,4 +1,6 @@
 import DIContainerInterface
+
+// Feature
 import ChatDetailFeature
 import ChatFeature
 import CreateRoomFeature
@@ -18,11 +20,17 @@ import RootFeature
 import SchoolCodeFeature
 import SelectingJobFeature
 import StartFeature
+
+// Domain
+import ChatDomain
+
+// SPM
 import Swinject
 
 extension DependencyProvider {
     func register() {
         _ = Assembler([
+            // Feature
             ChatDetailAssembly(),
             ChatAssembly(),
             CreateRoomAssembly(),
@@ -40,7 +48,9 @@ extension DependencyProvider {
             RootAssembly(),
             SchoolCodeAssembly(),
             SelectingJobAssembly(),
-            StartAssembly()
+            StartAssembly(),
+            // Domain
+            ChatAssembly()
         ], container: container)
     }
 }

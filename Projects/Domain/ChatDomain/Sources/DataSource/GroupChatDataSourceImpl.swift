@@ -2,9 +2,9 @@ import ChatDomainInterface
 import BaseDomainInterface
 
 final class GroupChatDataSourceImpl: GroupChatDataSource, RemoteProtocol {
-    typealias Target = ChatTarget
+    typealias Target = GroupChatTarget
     
-    func createGroupChat(_ req: CreateGroupRequest) async throws -> Int {
+    func createGroupChat(_ req: CreateChatRequest) async throws -> Int {
         try await request(target: .createGroup(req))
             .map(BaseResponse<Int>.self, using: decoder).data
     }
