@@ -3,7 +3,7 @@ import Foundation
 /**
  자신이 속한 채팅방 모두 불러오기
  */
-public struct GroupChat {
+public struct Chat {
     let id: Int
     let type: String
     let chatName: String
