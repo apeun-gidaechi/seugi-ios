@@ -9,5 +9,8 @@ struct ChatAssembly: Assembly {
         container.register(GroupChatDataSource.self) { _ in
             GroupChatDataSourceImpl()
         }.inObjectScope(.container)
+        container.register(PersonalChatDataSource.self) { _ in
+            PersonalChatDataSourceImpl()
+        }.inObjectScope(.container)
     }
 }
