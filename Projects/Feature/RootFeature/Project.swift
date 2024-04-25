@@ -8,6 +8,7 @@ let project = Project.makeFeature(
         .feature(.Interface, for: .Base),
         .feature(.Interface, for: .Onboarding),
         .feature(.Interface, for: .JoinSchool),
-        .feature(.Interface, for: .Main)
+        .feature(.Interface, for: .Main),
+        .domain(.Interface, for: .Workspace)
     ]
 )
