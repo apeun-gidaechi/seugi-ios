@@ -4,12 +4,14 @@ import DIContainerInterface
 final class ChatRepositoryImpl: ChatRepository {
     
     var groupChatDataSource: any GroupChatDataSource
-    var peronslaChatDataSource: any PersonalChatDataSource
+    var personalChatDataSource: any PersonalChatDataSource
     
     public init(
-        groupChatDataSource: any GroupChatDataSource
+        groupChatDataSource: any GroupChatDataSource,
+        personalChatDataSource: any PersonalChatDataSource
     ) {
         self.groupChatDataSource = groupChatDataSource
+        self.personalChatDataSource = personalChatDataSource
     }
     
     func createGroupChat(_ req: CreateChatRequest) async throws -> Int {
@@ -33,10 +35,10 @@ final class ChatRepositoryImpl: ChatRepository {
     }
     
     func createPersonalChat(_ req: CreateChatRequest) async throws -> Int {
-        try await peronslaChatDataSource.createGroupChat(req)
+        try await personalChatDataSource.createGroupChat(req)
     }
     
     func getPersonalChat(workspaceId: Int) async throws -> [Chat] {
-        try await peronslaChatDataSource.getGroupChat(workspaceId: workspaceId)
+        try await personalChatDataSource.getGroupChat(workspaceId: workspaceId)
     }
 }
