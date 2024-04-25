@@ -11,4 +11,5 @@ public extension TargetDependency.SPM {
     static let Nuke = TargetDependency.external(name: "Nuke")
     static let NukeUI = TargetDependency.external(name: "NukeUI")
     static let GoogleSignIn = TargetDependency.external(name: "GoogleSignIn")
+    static let Moya = TargetDependency.external(name: "Moya")
 }

@@ -5,3 +5,4 @@ public protocol ChatRepository {
     func getJoined(roomId: Int) async throws -> Joined
     func outJoined(_ req: OutJoinedRequest) async throws
 }
+
