@@ -33,8 +33,7 @@ struct SeugiApp: App {
                                     .init(type: .profile, hasBadge: false)
                                 ],
                                 selectedTab: .home
-                            ),
-                            googleClientId: ServiceConfiguration.googleClientId
+                            )
                         )
                     )
                     .environmentObject(Router())

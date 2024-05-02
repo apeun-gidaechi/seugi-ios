@@ -25,7 +25,8 @@ struct GoogleSignInLabel: View {
 
 public class GoogleVC: UIViewController {
     
-    private var clientId: String!
+    var onSuccess: ((_ idToken: String) -> Void)!
+    var onFailure: (() -> Void)!
     var buttonLabel: UIHostingController<GoogleSignInLabel>!
     var button: UIButton = {
         let b = UIButton()
@@ -34,10 +35,6 @@ public class GoogleVC: UIViewController {
         b.layer.borderWidth = 1.5
         return b
     }()
-    
-    func setClientId(_ str: String) {
-        self.clientId = str
-    }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,24 +75,8 @@ public class GoogleVC: UIViewController {
             guard error == nil else { return }
             guard let user else { return }
             
-            let email = user.profile?.email
-            let name = user.profile?.name
-            
-            // 1. do를 통해 가져오기
-            user.authentication.do { authentication, error in
-                guard let authentication = authentication else { return }
-                let idToken       = authentication.idToken
-                let accessToken   = authentication.accessToken
-                let refreshToken  = authentication.refreshToken
-                let clientID      = authentication.clientID
-            }
-            
-            // 2. authentication에서 바로 가져오기
-            let idToken       = user.authentication.idToken
-            let accessToken   = user.authentication.accessToken
-            let refreshToken  = user.authentication.refreshToken
-            let clientID      = user.authentication.clientID
-            print(accessToken)
+            let idToken = user.authentication.idToken
+            self.onSuccess(idToken ?? "")
         }
     }
 }

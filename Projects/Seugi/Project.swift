@@ -19,5 +19,6 @@ let project = Project.makeApp(
             infoPlist: .file(path: "Support/Info.plist"),
             entitlements: .file(path: "Support/App.entitlements")
         )
-    ]
+    ], 
+    xcconfig: .relativeToXCConfig("Config.xcconfig")
 )

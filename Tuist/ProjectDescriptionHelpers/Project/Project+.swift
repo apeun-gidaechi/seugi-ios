@@ -10,11 +10,13 @@ import ProjectDescription
 public extension Project {
     static func makeApp(
         packages: [Package] = [],
-        targets: [Target] = []
+        targets: [Target] = [],
+        xcconfig: Path? = nil
     ) -> Self {
         .makeProject(
             name: "Seugi",
             packages: packages,
+            xcconfig: xcconfig, 
             targets: targets
         )
     }
