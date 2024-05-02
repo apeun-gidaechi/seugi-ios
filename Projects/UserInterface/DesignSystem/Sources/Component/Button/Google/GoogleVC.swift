@@ -25,8 +25,8 @@ struct GoogleSignInLabel: View {
 
 public class GoogleVC: UIViewController {
     
-    var onSuccess: ((_ idToken: String) -> Void)!
-    var onFailure: (() -> Void)!
+    var onSuccess: ((_ idToken: String) async -> Void)!
+    var onFailure: (() async -> Void)!
     var buttonLabel: UIHostingController<GoogleSignInLabel>!
     var button: UIButton = {
         let b = UIButton()
@@ -76,7 +76,9 @@ public class GoogleVC: UIViewController {
             guard let user else { return }
             
             let idToken = user.authentication.idToken
-            self.onSuccess(idToken ?? "")
+            Task {
+                await self.onSuccess(idToken ?? "")
+            }
         }
     }
 }
