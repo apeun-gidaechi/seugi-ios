@@ -1,4 +1,8 @@
-public struct GoogleSignInRequest: Encodable {
-    let code: String
-    let registrationId: String
+public struct OAuthSignInRequest: Encodable {
+    public let code: String
+    public let registrationId: String
+    public init(code: String, registrationId: String) {
+        self.code = code
+        self.registrationId = registrationId
+    }
 }

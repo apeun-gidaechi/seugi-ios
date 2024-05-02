@@ -1,6 +1,6 @@
 public protocol AuthDataSource {
-    func signIn(_ req: SignInRequest) async throws
+    func signIn(_ req: SignInRequest) async throws -> Token
     func signUp(_ req: SignUpRequest) async throws
-    func googleSignIn(_ req: GoogleSignInRequest) async throws
-//    func send(_ req:)
+    func sendEmailCode(email: String) async throws
+    func verifyEmailCode(code: String) async throws
 }

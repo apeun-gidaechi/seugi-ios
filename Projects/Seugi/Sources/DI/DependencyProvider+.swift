@@ -22,6 +22,7 @@ import SelectingJobFeature
 import StartFeature
 
 // Domain
+import AuthDomain
 import ChatDomain
 
 // SPM
@@ -31,6 +32,7 @@ extension DependencyProvider {
     func register() {
         _ = Assembler([
             // Feature
+            OAuthSignUpAssembly(),
             ChatDetailAssembly(),
             ChatAssembly(),
             CreateRoomAssembly(),
@@ -50,7 +52,8 @@ extension DependencyProvider {
             SelectingJobAssembly(),
             StartAssembly(),
             // Domain
-            ChatAssembly()
+            AuthDomainAssembly(),
+            ChatDomainAssembly()
         ], container: container)
     }
 }

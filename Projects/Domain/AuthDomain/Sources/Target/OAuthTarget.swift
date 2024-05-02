@@ -1,0 +1,36 @@
+import Foundation
+import Moya
+import BaseDomainInterface
+import AuthDomainInterface
+
+enum OAuthTarget {
+    case oauthSignIn(code: String, registrationId: String)
+}
+
+extension OAuthTarget: TargetType {
+    var baseURL: URL {
+        URL(string: baseUrl)!
+    }
+    
+    var path: String {
+        switch self {
+        case .oauthSignIn: "/member/oauth2"
+        }
+    }
+    
+    var method: Moya.Method {
+        switch self {
+        case .oauthSignIn: .get
+        }
+    }
+    
+    var task: Moya.Task {
+        switch self {
+        case .oauthSignIn(let code, let registrationId): .requestParameters(parameters: ["code": code, "registrationId": registrationId], encoding: URLEncoding.default)
+        }
+    }
+    
+    var headers: [String : String]? {
+        nil
+    }
+}
