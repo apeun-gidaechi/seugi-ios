@@ -1,6 +1,7 @@
 import SwiftUI
 import DesignSystem
 import BaseFeatureInterface
+import DIContainerInterface
 
 public struct StartView: View {
     
@@ -9,11 +10,11 @@ public struct StartView: View {
     
     @State private var offsetY1: CGFloat = 16
     @State private var opacity1 = 0.0
-    
     @State private var offsetY2: CGFloat = 16
     @State private var opacity2 = 0.0
-    
     @State private var isPresented = false
+    
+    @InjectObject private var viewModel: StartViewModel
     
     public init() {}
     
@@ -81,8 +82,8 @@ public struct StartView: View {
                 .padding(.top, 20)
                 SeugiAppleSignInButton()
                     .frame(height: 56)
-                SeugiGoogleSignInButton {
-                    
+                SeugiGoogleSignInButton { idToken in
+                    await viewModel.signInWithGoogle(idToken: idToken)
                 } onFailure: {
                     
                 }

@@ -1,14 +1,24 @@
 import Foundation
 import AuthDomainInterface
 import DIContainerInterface
+import BaseFeatureInterface
 
-@MainActor
-final class StartViewModel: ObservableObject {
+public final class StartViewModel: ObservableObject {
     
-//    @Inject private var googleSignInUseCase: any GoogleSignInRequest
+    @Inject private var oauthSignInUseCase: any OAuthSignInUseCase
+    @Published var signInWithGoogleFlow: FetchFlow<Token> = .Fetching
     
+    public init() {}
     
-    func signInWithGoogle(idToken: String) async {
-        
+    @MainActor
+    func signInWithGoogle(
+        idToken: String
+    ) async {
+        do {
+            let token = try await oauthSignInUseCase(.init(code: idToken, registrationId: "google"))
+            signInWithGoogleFlow = .Success(data: token)
+        } catch {
+            signInWithGoogleFlow = .Failure
+        }
     }
 }

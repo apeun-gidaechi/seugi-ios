@@ -7,5 +7,8 @@ public final class StartAssembly: Assembly {
         container.register((any StartFactory).self) { _ in
             StartFactoryImpl()
         }
+        container.register(StartViewModel.self) { _ in
+            StartViewModel()
+        }
     }
 }
