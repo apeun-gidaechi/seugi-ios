@@ -13,6 +13,6 @@ let project = Project.makeShared(
     type: .GlobalThirdPartyLibrary,
     include: [.Feature],
     featureDependency: [
-        .SPM.Swinject,
+        .SPM.Swinject
     ]
 )

@@ -20,14 +20,13 @@ public extension ProjectDescription.Path {
     static func relativeToUserInterface(_ path: String) -> Self {
         .relativeToRoot("Projects/UserInterface/\(path)")
     }
+    static func relativeToXCConfig(_ path: String) -> Self {
+        .relativeToRoot("XCConfig/\(path)")
+    }
     static var app: Self {
         .relativeToRoot("Projects/App")
     }
     static var dIContainer: Self {
         .relativeToRoot("Projects/DIContainer")
-    }
-    
-    static func relativeToXCConfig(_ path: String) -> Self {
-        .relativeToRoot("XCConfig/\(path)")
     }
 }

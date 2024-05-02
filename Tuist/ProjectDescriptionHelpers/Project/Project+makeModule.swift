@@ -7,13 +7,14 @@ extension Project {
     static func makeProject(
         name: String,
         packages: [Package] = [],
+        xcconfig: Path? = nil,
         targets: [Target] = []
     ) -> Project {
         let settings: Settings = .settings(
             base: ["OTHER_LDFLAGS": .string("-ObjC"),
                    "ENABLE_USER_SCRIPT_SANDBOXING": .string("No")].merging(env.baseSetting),
             configurations: [
-                .debug(name: .debug, xcconfig: .relativeToXCConfig("Config.xcconfig")),
+                .debug(name: .debug, xcconfig: xcconfig),
                 .release(name: .release)
             ], defaultSettings: .recommended
         )

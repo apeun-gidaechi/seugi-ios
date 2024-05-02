@@ -56,12 +56,15 @@ public extension ModulePaths {
     enum Domain: String, CaseIterable {
         case Base
         case Auth
+        case Workspace
+        case Chat
     }
     
     enum Shared: String, CaseIterable {
         case GlobalThirdPartyLibrary
         case SwiftUIUtil
         case SwiftUtil
+        case DateUtil
     }
     
     enum UserInterface: String, CaseIterable {

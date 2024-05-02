@@ -10,6 +10,7 @@ let project = Project.makeFeature(
         .shared(.Feature, for: .GlobalThirdPartyLibrary),
         .shared(.Feature, for: .SwiftUIUtil),
         .dIContainer(.Interface, for: .DIContainer),
+        .shared(.Feature, for: .DateUtil),
         .SPM.Flow,
         .SPM.Nuke
     ]

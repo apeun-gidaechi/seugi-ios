@@ -1,7 +1,16 @@
 public struct BaseResponse<Data: Decodable>: Decodable {
-    let status: Int
-    let success: Bool
-    let state: String
-    let message: String
-    let data: Data?
+    public let status: Int
+    public let success: Bool
+    public let state: String
+    public let message: String
+    public let data: Data
 }
+
+public struct BaseVoidResponse: Decodable {
+    public let status: Int
+    public let success: Bool
+    public let state: String
+    public let message: String
+}
+
+
