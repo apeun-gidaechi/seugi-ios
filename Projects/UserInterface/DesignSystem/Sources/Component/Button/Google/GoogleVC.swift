@@ -3,6 +3,7 @@ import SwiftUI
 import AuthenticationServices
 import SnapKit
 import GoogleSignIn
+import Secret
 
 struct GoogleSignInLabel: View {
     
@@ -69,7 +70,7 @@ public class GoogleVC: UIViewController {
     
     @objc
     private func googleSignIn() {
-        let signInConfig = GIDConfiguration(clientID: clientId)
+        let signInConfig = GIDConfiguration(clientID: Secret.clientId)
         print("\(#function) - try google sign in")
         GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
             guard error == nil else { return }

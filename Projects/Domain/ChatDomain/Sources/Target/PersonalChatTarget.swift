@@ -2,6 +2,7 @@ import Moya
 import Foundation
 import BaseDomainInterface
 import ChatDomainInterface
+import Secret
 
 enum PersonalChatTarget {
     case createPersonal(_ req: CreateChatRequest)
@@ -10,7 +11,7 @@ enum PersonalChatTarget {
 
 extension PersonalChatTarget: TargetType {
     var baseURL: URL {
-        URL(string: baseUrl)!
+        URL(string: Secret.baseURL)!
     }
     
     var path: String {

@@ -11,6 +11,7 @@ let project = Project.makeFeature(
         .shared(.Feature, for: .SwiftUIUtil),
         .dIContainer(.Interface, for: .DIContainer),
         .shared(.Feature, for: .DateUtil),
+        .shared(.Feature, for: .Secret),
         .SPM.Flow,
         .SPM.Nuke
     ]

@@ -9,6 +9,7 @@ let project = Project.makeDomain(
         .shared(.Feature, for: .GlobalThirdPartyLibrary),
         .dIContainer(.Interface, for: .DIContainer),
         .shared(.Feature, for: .DateUtil),
+        .shared(.Feature, for: .Secret),
         .SPM.Moya
     ]
 )

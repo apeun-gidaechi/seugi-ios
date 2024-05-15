@@ -18,6 +18,7 @@ let project = Project.makeUserInterface(
         .SPM.Nuke,
         .SPM.NukeUI,
         .SPM.Flow,
-        .SPM.GoogleSignIn
-    ]
+        .SPM.GoogleSignIn,
+        .shared(.Feature, for: .Secret)
+    ] + ModulePaths.Domain.allCases.map { .domain(.Interface, for: $0) }
 )

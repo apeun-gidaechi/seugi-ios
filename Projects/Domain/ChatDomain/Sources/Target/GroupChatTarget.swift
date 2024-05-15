@@ -2,6 +2,7 @@ import Moya
 import Foundation
 import BaseDomainInterface
 import ChatDomainInterface
+import Secret
 
 enum GroupChatTarget {
     case createGroup(_ req: CreateChatRequest)
@@ -13,7 +14,7 @@ enum GroupChatTarget {
 
 extension GroupChatTarget: TargetType {
     var baseURL: URL {
-        URL(string: baseUrl)!
+        URL(string: Secret.baseURL)!
     }
     
     var path: String {

@@ -1,6 +1,5 @@
 import SwiftUI
 import MainFeature
-import BaseFeature
 
 @main
 struct MainViewExample: App {

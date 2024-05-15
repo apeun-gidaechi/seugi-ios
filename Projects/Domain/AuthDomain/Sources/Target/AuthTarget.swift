@@ -2,6 +2,7 @@ import Foundation
 import Moya
 import BaseDomainInterface
 import AuthDomainInterface
+import Secret
 
 enum AuthTarget {
     case signIn(_ req: SignInRequest)
@@ -12,7 +13,7 @@ enum AuthTarget {
 
 extension AuthTarget: TargetType {
     var baseURL: URL {
-        URL(string: baseUrl)!
+        URL(string: Secret.baseURL)!
     }
     
     var path: String {

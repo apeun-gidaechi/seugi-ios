@@ -2,6 +2,7 @@ import Foundation
 import Moya
 import BaseDomainInterface
 import AuthDomainInterface
+import Secret
 
 enum OAuthTarget {
     case oauthSignIn(code: String, registrationId: String)
@@ -9,7 +10,7 @@ enum OAuthTarget {
 
 extension OAuthTarget: TargetType {
     var baseURL: URL {
-        URL(string: baseUrl)!
+        URL(string: Secret.baseURL)!
     }
     
     var path: String {

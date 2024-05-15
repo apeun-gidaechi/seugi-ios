@@ -3,13 +3,10 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-Secret.swift
-
-# Icon must end with two
-Icon
 
 Secret.swift
 *.xcconfig
+Secret.swift
 
 # Thumbnails
 ._*
