@@ -6,12 +6,13 @@ import MainFeatureInterface
 import DIContainerInterface
 import SwiftUIUtil
 
-public struct RootCoordinator: View {
+public struct RootView: View {
     
     @EnvironmentObject private var appState: AppState
     @Inject private var onboardingFactory: any OnboardingFactory
     @Inject private var joinSchoolFactory: any JoinSchoolFactory
     @Inject private var mainFactory: any MainFactory
+    @InjectObject private var viewModel: RootViewModel
     
     public init() {}
     

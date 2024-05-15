@@ -7,5 +7,8 @@ public final class RootAssembly: Assembly {
         container.register((any RootFactory).self) { _ in
             RootFactoryImpl()
         }
+        container.register(RootViewModel.self) { _ in
+            RootViewModel()
+        }
     }
 }
