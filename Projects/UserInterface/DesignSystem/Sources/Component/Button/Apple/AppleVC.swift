@@ -26,6 +26,8 @@ struct AppleSignInLabel: View {
 
 public class AppleVC: UIViewController {
     
+    var onSuccess: ((_ token: String) async -> Void)!
+    var onFailure: (() async -> Void)!
     var buttonLabel: UIHostingController<AppleSignInLabel>!
     var button: UIButton = {
         let b = UIButton()
@@ -96,23 +98,13 @@ extension AppleVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
                 let identityToken = appleIDCredential.identityToken,
                 let authCodeString = String(data: authorizationCode, encoding: .utf8),
                 let identifyTokenString = String(data: identityToken, encoding: .utf8) {
-                print("authorizationCode: \(authorizationCode)")
-                print("identityToken: \(identityToken)")
-                print("authCodeString: \(authCodeString)")
-                print("identifyTokenString: \(identifyTokenString)")
+//                print("authorizationCode: \(authorizationCode)")
+//                print("identityToken: \(identityToken)")
+//                print("authCodeString: \(authCodeString)")
+//                print("identifyTokenString: \(identifyTokenString)")
             }
             
-            print("useridentifier: \(userIdentifier)")
-            if let fullName {
-                print("fullName: \(fullName)")
-            }
-            print("email: \(email ?? "")")
-        case let passwordCredential as ASPasswordCredential:
-            let username = passwordCredential.user
-            let password = passwordCredential.password
-            
-            print("username: \(username)")
-            print("password: \(password)")
+//            print("useridentifier: \(userIdentifier)")
         default:
             break
         }

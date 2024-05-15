@@ -80,12 +80,16 @@ public struct StartView: View {
                     router.navigate(to: StartDestination.EmailSignIn)
                 }
                 .padding(.top, 20)
-                SeugiAppleSignInButton()
-                    .frame(height: 56)
+                SeugiAppleSignInButton {
+                    await viewModel.signInWithApple(token: $0)
+                } onFailure: {
+                    showSignInFailureDialog = true
+                }
+                .frame(height: 56)
                 SeugiGoogleSignInButton { idToken in
                     await viewModel.signInWithGoogle(idToken: idToken)
                 } onFailure: {
-                    
+                    showSignInFailureDialog = true
                 }
                 .frame(height: 56)
                 .frame(maxWidth: .infinity)
@@ -93,6 +97,10 @@ public struct StartView: View {
             }
             .padding(.horizontal, 20)
             .presentationDetents([.height(256)])
+        }
+        .eraseToAnyView()
+        .alert("로그인 실패", isPresented: $viewModel.showSignInFailureDialog) {
+            Button("닫기", role: .cancel) {}
         }
     }
 }
