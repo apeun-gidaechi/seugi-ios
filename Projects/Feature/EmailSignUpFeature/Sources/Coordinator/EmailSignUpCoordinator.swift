@@ -14,11 +14,11 @@ public struct EmailSignUpCoordinator: View {
     public init() {}
     
     public var body: some View {
-        EmailSignUpView(vm: viewModel)
+        EmailSignUpView(viewModel: viewModel)
             .navigationDestination(for: EmailSignUpDestination.self) {
                 switch $0 {
                 case .emailSignIn: emailSignInFactory.makeView().eraseToAnyView()
-                case .emailVerification: emailVerificationFactory.makeView().eraseToAnyView()
+                case .emailVerification(let name, let email, let password): emailVerificationFactory.makeView(name: name, email: email, password: password).eraseToAnyView()
                 }
             }
     }

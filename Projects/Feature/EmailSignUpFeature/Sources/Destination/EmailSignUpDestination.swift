@@ -1,4 +1,4 @@
 enum EmailSignUpDestination: Hashable {
     case emailSignIn
-    case emailVerification
+    case emailVerification(name: String, email: String, password: String)
 }

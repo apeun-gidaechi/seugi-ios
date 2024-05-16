@@ -10,6 +10,7 @@ import UserDefaultInterface
 public struct RootView: View {
     
     @StateObject private var appState: AppState
+    @StateObject private var router = Router()
     @Inject private var onboardingFactory: any OnboardingFactory
     @Inject private var joinSchoolFactory: any JoinSchoolFactory
     @Inject private var mainFactory: any MainFactory
@@ -31,15 +32,16 @@ public struct RootView: View {
     }
     
     public var body: some View {
-        Group {
+        VStack {
             switch appState.appFlow {
             case .unAuthorized: onboardingFactory.makeView().eraseToAnyView()
+                    .environmentObject(TimerManager())
             case .notFoundJoinedSchool: joinSchoolFactory.makeView().eraseToAnyView()
             case .authorized: mainFactory.makeView().eraseToAnyView()
             }
         }
         .environmentObject(appState)
-        .environmentObject(Router())
+        .environmentObject(router)
         .task {
             await appState.fetchWorkspaces()
         }

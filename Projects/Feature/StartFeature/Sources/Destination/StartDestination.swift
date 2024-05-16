@@ -1,4 +1,4 @@
-enum StartDestination {
+enum StartDestination: Hashable {
     case OAuthSignUp
     case EmailSignIn
 }

@@ -20,8 +20,8 @@ extension AuthTarget: TargetType {
         switch self {
         case .signIn: "/member/login"
         case .signUp: "/member/register"
-        case .sendEmailCode(let email): "/member/send?email=\(email)"
-        case .verifyEmailCode(let code): "/member/verify?code=\(code)"
+        case .sendEmailCode(let email): "/email/send"
+        case .verifyEmailCode(let code): "/email/verify"
         }
     }
     
@@ -38,13 +38,12 @@ extension AuthTarget: TargetType {
         switch self {
         case .signIn(let req): .requestJSONEncodable(req)
         case .signUp(let req): .requestJSONEncodable(req)
-        case .sendEmailCode(let email): .requestPlain
-        case .verifyEmailCode(let code): .requestPlain
+        case .sendEmailCode(let email): .requestParameters(parameters: ["email": email], encoding: URLEncoding.default)
+        case .verifyEmailCode(let code): .requestParameters(parameters: ["code": code], encoding: URLEncoding.default)
         }
     }
     
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         nil
     }
 }
-

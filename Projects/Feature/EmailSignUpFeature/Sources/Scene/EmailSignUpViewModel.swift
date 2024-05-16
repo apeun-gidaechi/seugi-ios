@@ -1,20 +1,19 @@
-//
-//  EmailSignUpViewModel.swift
-//  Feature
-//
-//  Created by dgsw8th71 on 3/26/24.
-//  Copyright © 2024 seugi. All rights reserved.
-//
-
 import DesignSystem
 import Foundation
+import DIContainerInterface
+import AuthDomainInterface
 
 public class EmailSignUpViewModel: ObservableObject {
     
-    @Published var name = ""
-    @Published var email = ""
-    @Published var password = ""
-    @Published var passwordCheck = ""
+    // MARK: - State
+    @Published var name = "1"
+    @Published var email = "hhhello0507@gmail.com"
+    @Published var password = "1"
+    @Published var passwordCheck = "1"
+    
+    var isInValidInput: Bool {
+        name.isEmpty || email.isEmpty || password.isEmpty || passwordCheck.isEmpty || password != passwordCheck
+    }
     
     public init() {}
 }
