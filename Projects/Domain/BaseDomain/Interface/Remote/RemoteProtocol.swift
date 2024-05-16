@@ -34,6 +34,7 @@ public extension RemoteProtocol {
         .init()
     }
     
+    @discardableResult
     func request(
         target: MoyaProvider<Target>.Target
     ) async throws -> Moya.Response {

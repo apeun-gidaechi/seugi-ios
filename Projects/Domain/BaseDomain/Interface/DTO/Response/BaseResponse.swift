@@ -12,5 +12,3 @@ public struct BaseVoidResponse: Decodable {
     public let state: String
     public let message: String
 }
-
-

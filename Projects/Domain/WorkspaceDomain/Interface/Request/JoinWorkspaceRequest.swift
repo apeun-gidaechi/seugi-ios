@@ -1,12 +1,12 @@
 public struct JoinWorkspaceRequest: Encodable {
     public let workspaceId: String
     public let workspaceCode: String
-    public let role: WorkspaceRoleRequest
+    public let role: WorkspaceRoleType
     
     public init(
         workspaceId: String,
         workspaceCode: String,
-        role: WorkspaceRoleRequest
+        role: WorkspaceRoleType
     ) {
         self.workspaceId = workspaceId
         self.workspaceCode = workspaceCode
@@ -14,7 +14,7 @@ public struct JoinWorkspaceRequest: Encodable {
     }
 }
 
-public enum WorkspaceRoleRequest: String, RawRepresentable, Encodable {
+public enum WorkspaceRoleType: String, RawRepresentable, Encodable {
     case STUDENT
     case TEACHER
 }
