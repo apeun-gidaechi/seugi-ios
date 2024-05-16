@@ -25,8 +25,7 @@ public extension RemoteProtocol {
     
     var provider: MoyaProvider<Target> {
         .init(
-//            session: Session(interceptor: RemoteInterceptor()),
-            plugins: [NetworkLoggerPlugin()]
+            session: Session(eventMonitors: [APIEventLogger()])
         )
     }
     
