@@ -13,6 +13,7 @@ let project = Project.makeFeature(
         .shared(.Feature, for: .DateUtil),
         .shared(.Feature, for: .Secret),
         .SPM.Flow,
-        .SPM.Nuke
+        .SPM.Nuke,
+        .domain(.Interface, for: .Workspace)
     ]
 )

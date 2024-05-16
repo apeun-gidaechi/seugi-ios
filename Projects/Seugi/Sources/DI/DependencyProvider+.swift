@@ -25,6 +25,9 @@ import StartFeature
 import AuthDomain
 import ChatDomain
 
+// Core
+import UserDefault
+
 // SPM
 import Swinject
 
@@ -53,7 +56,9 @@ extension DependencyProvider {
             StartAssembly(),
             // Domain
             AuthDomainAssembly(),
-            ChatDomainAssembly()
+            ChatDomainAssembly(),
+            // Core
+            KeyValueStoreAssembly()
         ], container: container)
     }
 }

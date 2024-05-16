@@ -261,4 +261,46 @@ public extension Project {
             targets: targets
         )
     }
+    
+    static func makeCore(
+        type: ModulePaths.Core,
+        packages: [Package] = [],
+        include: Set<MicroModule>,
+        additionalTarget: [Target] = [],
+        interfaceDependency: [TargetDependency] = [],
+        featureDependency: [TargetDependency] = [],
+        testingDependency: [TargetDependency] = [],
+        testsDependency: [TargetDependency] = []
+    ) -> Self {
+        
+        var targets = additionalTarget
+        
+        if include.contains(.Interface) {
+            targets.append(.core(target: type, type: .Interface, dependencies: interfaceDependency))
+        }
+        
+        if include.contains(.Feature) {
+            targets.append(.core(target: type, type: .Feature, dependencies: featureDependency + [
+                .core(.Interface, for: type)
+            ]))
+        }
+        
+        if include.contains(.Testing) {
+            targets.append(.core(target: type, type: .Testing, dependencies: testingDependency + [
+                .core(.Interface, for: type)
+            ]))
+        }
+        
+        if include.contains(.Tests) {
+            targets.append(.core(target: type, type: .Tests, dependencies: testsDependency + [
+                .core(.Feature, for: type),
+                .core(.Testing, for: type)
+            ]))
+        }
+        
+        return .makeProject(
+            name: "\(type.rawValue)",
+            targets: targets
+        )
+    }
 }

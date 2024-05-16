@@ -83,13 +83,13 @@ public struct StartView: View {
                 SeugiAppleSignInButton {
                     await viewModel.signInWithApple(token: $0)
                 } onFailure: {
-                    showSignInFailureDialog = true
+                    viewModel.showSignInFailureDialog = true
                 }
                 .frame(height: 56)
                 SeugiGoogleSignInButton { idToken in
                     await viewModel.signInWithGoogle(idToken: idToken)
                 } onFailure: {
-                    showSignInFailureDialog = true
+                    viewModel.showSignInFailureDialog = true
                 }
                 .frame(height: 56)
                 .frame(maxWidth: .infinity)

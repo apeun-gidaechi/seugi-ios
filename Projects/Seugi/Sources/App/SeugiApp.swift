@@ -21,22 +21,6 @@ struct SeugiApp: App {
         WindowGroup {
             if let rootView = DependencyProvider.shared.container.resolve((any RootFactory).self) {
                 rootView.makeView().eraseToAnyView()
-                    .environmentObject(
-                        AppState(
-                            appFlow: .unAuthorized,
-                            mainFlow: .init(
-                                cellData: [
-                                    .init(type: .home, hasBadge: false),
-                                    .init(type: .chat, hasBadge: false),
-                                    .init(type: .room, hasBadge: false),
-                                    .init(type: .notification, hasBadge: false),
-                                    .init(type: .profile, hasBadge: false)
-                                ],
-                                selectedTab: .home
-                            )
-                        )
-                    )
-                    .environmentObject(Router())
             }
         }
     }

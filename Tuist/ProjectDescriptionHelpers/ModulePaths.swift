@@ -60,6 +60,10 @@ public extension ModulePaths {
         case Chat
     }
     
+    enum Core: String, CaseIterable {
+        case UserDefault
+    }
+    
     enum Shared: String, CaseIterable {
         case GlobalThirdPartyLibrary
         case SwiftUIUtil

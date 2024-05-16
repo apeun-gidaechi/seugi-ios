@@ -6,7 +6,7 @@ import BaseFeatureInterface
 public final class StartViewModel: ObservableObject {
     
     @Inject private var oauthSignInUseCase: any OAuthSignInUseCase
-    @Published var signInFlow: FetchFlow<Token> = .Fetching
+    @Published var signInFlow: FetchFlow<Token> = .fetching
     @Published var showSignInFailureDialog = true
     
     public init() {}
@@ -17,9 +17,9 @@ public final class StartViewModel: ObservableObject {
     ) async {
         do {
             let token = try await oauthSignInUseCase(.init(code: idToken, registrationId: "google"))
-            signInFlow = .Success(data: token)
+            signInFlow = .success(data: token)
         } catch {
-            signInFlow = .Failure
+            signInFlow = .failure
             showSignInFailureDialog = true
         }
     }
@@ -30,9 +30,9 @@ public final class StartViewModel: ObservableObject {
     ) async {
         do {
             let token = try await oauthSignInUseCase(.init(code: token, registrationId: "apple"))
-            signInFlow = .Success(data: token)
+            signInFlow = .success(data: token)
         } catch {
-            signInFlow = .Failure
+            signInFlow = .failure
             showSignInFailureDialog = true
         }
     }

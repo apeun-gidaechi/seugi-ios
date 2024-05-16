@@ -63,6 +63,23 @@ public extension Target {
         )
     }
     
+    static func core(
+        target: ModulePaths.Core,
+        type: MicroModule,
+        infoPlist: InfoPlist = .default,
+        dependencies: [TargetDependency]
+    ) -> Self {
+        .makeTarget(
+            name: "\(target.rawValue)\(type.rawValue)",
+            product: type.product,
+            bundleId: "com.\(env.name).\(target.rawValue.lowercased())\(type.rawValue.lowercased())",
+            infoPlist: infoPlist,
+            sources: ["\(type.source)/**"],
+            scripts: [.swiftLint],
+            dependencies: dependencies
+        )
+    }
+    
     static func shared(
         target: ModulePaths.Shared,
         type: MicroModule,

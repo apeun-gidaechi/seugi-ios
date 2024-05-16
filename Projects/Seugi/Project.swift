@@ -15,6 +15,7 @@ let project = Project.makeApp(
             dependenceis:
                 ModulePaths.Feature.allCases.map { TargetDependency.feature(.Feature, for: $0) }
             + ModulePaths.Domain.allCases.map { TargetDependency.domain(.Feature, for: $0) }
+            + ModulePaths.Core.allCases.map { TargetDependency.core(.Feature, for: $0) }
             + [.dIContainer(.Feature, for: .DIContainer)],
             infoPlist: .file(path: "Support/Info.plist"),
             entitlements: .file(path: "Support/App.entitlements")

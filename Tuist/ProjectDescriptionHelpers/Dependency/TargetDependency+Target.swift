@@ -28,6 +28,16 @@ public extension TargetDependency {
         )
     }
     
+    static func core(
+        _ module: MicroModule,
+        for target: ModulePaths.Core
+    ) -> TargetDependency {
+        .project(
+            target: "\(target.rawValue)\(module.rawValue)",
+            path: .relativeToCore("\(target.rawValue)")
+        )
+    }
+    
     static func userInterface(
         _ module: MicroModule,
         for target: ModulePaths.UserInterface
