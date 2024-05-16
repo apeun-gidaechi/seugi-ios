@@ -20,26 +20,26 @@ public struct SeugiAvatar: View {
         if let url {
             LazyImage(url: .init(string: url)) { state in
                 if let image = state.image {
-                   image
-               } else if state.error != nil {
-                   Circle()
-                       .seugiColor(.gray(.g100))
-                       .frame(width: type.size, height: type.size)
-                       .overlay {
-                           Image(icon: .personFill)
-                               .resizable()
-                               .renderingMode(.template)
-                               .seugiColor(.gray(.g300))
-                               .frame(width: type.size / 2, height: type.size / 2)
-                       }
-               } else {
-                   Circle()
-                       .seugiColor(.gray(.g100))
-                       .frame(width: type.size, height: type.size)
-                       .shimmer()
-               }
+                    image
+                } else if state.error != nil {
+                    Circle()
+                        .seugiColor(.gray(.g100))
+                        .frame(width: type.size, height: type.size)
+                        .overlay {
+                            Image(icon: .personFill)
+                                .resizable()
+                                .renderingMode(.template)
+                                .seugiColor(.gray(.g300))
+                                .frame(width: type.size / 2, height: type.size / 2)
+                        }
+                } else {
+                    Circle()
+                        .seugiColor(.gray(.g100))
+                        .frame(width: type.size, height: type.size)
+                        .shimmer()
+                }
             }
-            .processors([.resize(width: type.size), .resize(height: type.size)])
+            .processors([.resize(size: .init(width: type.size, height: type.size), unit: .pixels)])
             .clipShape(Circle())
         } else {
             Circle()
