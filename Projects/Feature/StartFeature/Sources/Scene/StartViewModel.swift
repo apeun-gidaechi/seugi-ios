@@ -7,7 +7,7 @@ public final class StartViewModel: ObservableObject {
     
     @Inject private var oauthSignInUseCase: any OAuthSignInUseCase
     @Published var signInFlow: FetchFlow<Token> = .fetching
-    @Published var showSignInFailureDialog = true
+    @Published var showSignInFailureDialog = false
     
     public init() {}
     

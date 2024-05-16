@@ -24,6 +24,7 @@ import StartFeature
 // Domain
 import AuthDomain
 import ChatDomain
+import WorkspaceDomain
 
 // Core
 import UserDefault
@@ -57,6 +58,7 @@ extension DependencyProvider {
             // Domain
             AuthDomainAssembly(),
             ChatDomainAssembly(),
+            WorkspaceDomainAssembly(),
             // Core
             KeyValueStoreAssembly()
         ], container: container)

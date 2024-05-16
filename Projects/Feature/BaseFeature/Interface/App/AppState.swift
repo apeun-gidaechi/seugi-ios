@@ -11,6 +11,7 @@ public final class AppState: ObservableObject {
     @Inject private var keyValueStore: any KeyValueStore
     
     // MARK: - State
+    @Published public var isAppFlowFetching = true
     @Published public var appFlow: AppFlow = .unAuthorized
     @Published public var mainFlow: SeugiBottomNavigationData
     @Published public var workspaces: FetchFlow<[Workspace]> = .fetching
@@ -23,7 +24,6 @@ public final class AppState: ObservableObject {
         self.mainFlow = mainFlow
         accessToken = keyValueStore.load(key: .accessToken) ?? ""
         refreshToken = keyValueStore.load(key: .refreshToken) ?? ""
-        appFlow = accessToken.isEmpty ? .unAuthorized : .authorized
     }
     
     public func setAccessToken(with token: String) {
@@ -38,11 +38,17 @@ public final class AppState: ObservableObject {
     
     @MainActor
     public func fetchWorkspaces() async {
-        guard !accessToken.isEmpty else { return }
+        isAppFlowFetching = true
+        defer { isAppFlowFetching = false }
+        guard !accessToken.isEmpty else {
+            appFlow = .unAuthorized
+            return
+        }
         do {
             self.workspaces = .fetching
             let workspaces = try await getWorkspacesUseCase()
             self.workspaces = .success(data: workspaces)
+            appFlow = .authorized
         } catch {
             self.appFlow = .notFoundJoinedSchool
             self.workspaces = .failure

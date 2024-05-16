@@ -67,9 +67,9 @@ struct SeugiTextFieldStyle: TextFieldStyle {
         let strokeColor: Color = isFocused ? .seugi(.primary(.p500)) : .seugi(.gray(.g300))
         
         configuration
-            .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
-            .frame(maxWidth: .infinity)
+            .autocorrectionDisabled()
+            .textContentType(.init(rawValue: ""))
             .frame(height: 52)
             .background(Color.seugi(.sub(.white)))
             .padding(.horizontal, 16)

@@ -16,11 +16,13 @@ public struct SeugiTextFieldForm: View {
     private var label: String
     private var isForcedLabel: Bool
     
-    public init(_ hint: String, 
-                text: Binding<String>,
-                type: SeugiTextFieldType = .none(hasXMark: true),
-                label: String,
-                isForcedLabel: Bool = true) {
+    public init(
+        _ hint: String,
+        text: Binding<String>,
+        type: SeugiTextFieldType = .none(hasXMark: true),
+        label: String,
+        isForcedLabel: Bool = true
+    ) {
         self.hint = hint
         self._text = text
         self.type = type
@@ -34,9 +36,11 @@ public struct SeugiTextFieldForm: View {
                 Text(label)
                     .font(.subtitle(.s2))
                     .seugiColor(.sub(.black))
-                Text("*")
-                    .font(.subtitle(.s2))
-                    .seugiColor(.red(.r500))
+                if isForcedLabel {
+                    Text("*")
+                        .font(.subtitle(.s2))
+                        .seugiColor(.red(.r500))
+                }
             }
             .padding(.leading, 4)
             SeugiTextField(hint, text: $text, type: type)
