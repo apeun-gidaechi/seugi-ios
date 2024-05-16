@@ -27,6 +27,9 @@ public struct ChatDomainAssembly: Assembly {
         container.register(SearchPersonalChatUseCase.self) {
             SearchPersonalChatUseCaseImpl(chatRepository: $0.resolve(ChatRepository.self)!)
         }
+        container.register(SearchGroupChatUseCase.self) {
+            SearchGroupChatUseCaseImpl(chatRepository: $0.resolve(ChatRepository.self)!)
+        }
         
         // MARK: - Repository
         container.register(ChatRepository.self) {

@@ -10,6 +10,7 @@ enum GroupChatTarget {
     case addJoined(_ req: AddJoinedRequest)
     case getJoined(roomId: Int)
     case outJoined(_ req: OutJoinedRequest)
+    case searchGroupChat(workspaceId: Int, word: String)
 }
 
 extension GroupChatTarget: TargetType {
@@ -29,6 +30,8 @@ extension GroupChatTarget: TargetType {
             "/joined/\(roomId)"
         case .outJoined:
             "/joined/out"
+        case .searchGroupChat(let workspaceId, let word):
+            "/chat/group/search?workspace=\(workspaceId)&word=\(word)"
         }
     }
     
@@ -39,16 +42,18 @@ extension GroupChatTarget: TargetType {
         case .addJoined: .post
         case .getJoined: .get
         case .outJoined: .patch
+        case .searchGroupChat: .get
         }
     }
     
     var task: Moya.Task {
         switch self {
         case .createGroup(let req): .requestJSONEncodable(req)
-        case .getGroupChat(let workspaceId): .requestPlain
+        case .getGroupChat: .requestPlain
         case .addJoined(let req): .requestJSONEncodable(req)
-        case .getJoined(let roomId): .requestPlain
+        case .getJoined: .requestPlain
         case .outJoined(let req): .requestJSONEncodable(req)
+        case .searchGroupChat: .requestPlain
         }
     }
     

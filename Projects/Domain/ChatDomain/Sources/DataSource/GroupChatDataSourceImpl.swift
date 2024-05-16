@@ -28,4 +28,9 @@ final class GroupChatDataSourceImpl: GroupChatDataSource, RemoteProtocol {
         _ = try await request(target: .outJoined(req))
             .map(BaseVoidResponse.self, using: decoder)
     }
+    
+    func searchGroupChat(workspaceId: Int, word: String) async throws -> [Chat] {
+        try await request(target: .searchGroupChat(workspaceId: workspaceId, word: word))
+            .map(BaseResponse<[ChatResponse]>.self, using: decoder).data.map { $0.toDomain() }
+    }
 }

@@ -6,6 +6,7 @@ public protocol ChatRepository {
     func addJoined(_ req: AddJoinedRequest) async throws -> AddJoined
     func getJoined(roomId: Int) async throws -> Joined
     func outJoined(_ req: OutJoinedRequest) async throws
+    func searchGroupChat(workspaceId: Int, word: String) async throws -> [Chat]
     
     // MARK: - Personal Chat
     func createPersonalChat(_ req: CreateChatRequest) async throws -> Int
