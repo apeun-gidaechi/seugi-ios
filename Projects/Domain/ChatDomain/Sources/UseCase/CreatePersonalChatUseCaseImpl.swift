@@ -1,6 +1,6 @@
 import ChatDomainInterface
 
-final class CreateGroupUseCaseImpl: CreateGroupChatUseCase {
+final class CreatePersonalChatUseCaseImpl: CreatePersonalChatUseCase {
     
     private let chatRepository: any ChatRepository
     
@@ -9,6 +9,6 @@ final class CreateGroupUseCaseImpl: CreateGroupChatUseCase {
     }
     
     func callAsFunction(_ req: CreateChatRequest) async throws -> Int {
-        try await chatRepository.createGroupChat(req)
+        try await chatRepository.createPersonalChat(req)
     }
 }

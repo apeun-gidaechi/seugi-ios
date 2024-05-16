@@ -35,10 +35,14 @@ final class ChatRepositoryImpl: ChatRepository {
     }
     
     func createPersonalChat(_ req: CreateChatRequest) async throws -> Int {
-        try await personalChatDataSource.createGroupChat(req)
+        try await personalChatDataSource.createPersonalChat(req)
     }
     
     func getPersonalChat(workspaceId: Int) async throws -> [Chat] {
-        try await personalChatDataSource.getGroupChat(workspaceId: workspaceId)
+        try await personalChatDataSource.getPersonalChat(workspaceId: workspaceId)
+    }
+    
+    func searchPersonalChat(workspaceId: Int, word: String) async throws -> [Chat] {
+        try await personalChatDataSource.searchPersonalChat(workspaceId: workspaceId, word: word)
     }
 }

@@ -1,8 +1,5 @@
 import Foundation
 
-/**
- 자신이 속한 채팅방 모두 불러오기
- */
 public struct Chat {
     public let id: Int
     public let type: RoomType?
