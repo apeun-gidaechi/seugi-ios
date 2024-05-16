@@ -4,25 +4,36 @@ import BaseFeatureInterface
 
 public struct SchoolCodeView: View {
     
-    @ObservedObject private var vm: SchoolCodeViewModel
+    @EnvironmentObject private var joinWorkspaceManager: JoinWorkspaceManager
     @EnvironmentObject private var router: Router
     
-    public init(vm: SchoolCodeViewModel) {
-        self.vm = vm
-    }
+    public init() {}
     
     public var body: some View {
         VStack(spacing: 16) {
-            SeugiTextFieldForm("초대코드를 입력해 주세요", text: $vm.code, label: "초대코드")
+            SeugiCodeTextFieldForm(text: $joinWorkspaceManager.code, label: "초대코드", length: 6)
                 .padding(.top, 16)
             Spacer()
-            SeugiButton.large("계속하기", type: .primary) {
-                router.navigate(to: SchoolCodeDestination.joinSuccess)
+            SeugiButton.large("계속하기", type: .primary, isLoading: joinWorkspaceManager.isFetchingWorkspace) {
+                Task {
+                    await joinWorkspaceManager.fetchWorkspace()
+//                        router.navigate(to: SchoolCodeDestination.joinSuccess(workspace))
+//                    }
+                }
             }
+            .disabled(joinWorkspaceManager.isInValidInput)
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
         .seugiTopBar("학교 가입")
         .hideBackButton()
+        .alert("초대코드가 올바르지 않습니다", isPresented: $joinWorkspaceManager.showFetchFailureDialog) {
+            Button("닫기", role: .cancel) {}
+        } message: {
+            Text("다시 입력해주세요")
+        }
+//        .onChange(of: joinWorkspaceManager.workspace) {
+//            if
+//        }
     }
 }

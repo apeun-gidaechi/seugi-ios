@@ -47,7 +47,7 @@ extension WorkspaceTarget: TargetType {
         }
     }
     
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         nil
     }
 }

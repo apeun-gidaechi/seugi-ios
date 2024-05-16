@@ -1,4 +1,4 @@
-public struct Workspace: Equatable {
+public struct Workspace: Hashable {
     public let workspaceId: String
     public let workspaceName: String
     public let workspaceImageUrl: String

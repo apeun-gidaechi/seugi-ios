@@ -8,27 +8,31 @@ import JoinSuccessFeatureInterface
 public struct JoinSuccessView: View {
     
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var joinWorkspaceManager: JoinWorkspaceManager
     
     public init() {}
     
     public var body: some View {
         VStack(spacing: 16) {
-            
             Spacer()
             VStack(spacing: 0) {
-                SeugiRoundedCircleImage.small(type: .fill(image: .chicken))
-                    .padding(.bottom, 16)
-                Text("대구 소프트웨어 마이스터 고등학교")
-                    .font(.subtitle(.s1))
-                    .seugiColor(.sub(.black))
-                Text("학생 213명 선생님 32명")
-                    .font(.body(.b1))
-                    .seugiColor(.gray(.g600))
+                if case .success(let workspace) = joinWorkspaceManager.workspace {
+                    SeugiRoundedCircleAsyncImage.small(url: workspace.workspaceImageUrl)
+                        .padding(.bottom, 16)
+                    Text(workspace.workspaceName)
+                        .font(.subtitle(.s1))
+                        .seugiColor(.sub(.black))
+                    Text("학생 \(workspace.studentCount)명 선생님 \(workspace.teacherCount)명")
+                        .font(.body(.b1))
+                        .seugiColor(.gray(.g600))
+                }
             }
-            
             Spacer()
             SeugiButton.large("계속하기", type: .primary) {
-                router.navigate(to: JoinSuccessDestination.selectingJob)
+                Task {
+                    await joinWorkspaceManager.joinWorkspace()
+                }
+//                router.navigate(to: JoinSuccessDestination.selectingJob)
             }
             .padding(.bottom, 16)
         }
