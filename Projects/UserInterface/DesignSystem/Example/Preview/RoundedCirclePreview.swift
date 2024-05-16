@@ -23,6 +23,8 @@ public struct RoundedCirclePreview: View {
                 SeugiRoundedCircleImage.small(type: .school)
                 SeugiRoundedCircleImage.small(type: .image)
                 SeugiRoundedCircleImage.small(type: .fill(image: .taco))
+                SeugiRoundedCircleAsyncImage.large(url: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg")
+                SeugiRoundedCircleAsyncImage.small(url: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg")
             }
         }
     }

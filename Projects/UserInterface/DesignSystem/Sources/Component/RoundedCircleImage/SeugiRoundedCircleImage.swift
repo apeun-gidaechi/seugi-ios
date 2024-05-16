@@ -14,8 +14,10 @@ public struct SeugiRoundedCircleImage: View {
     var type: SeugiRoundedCircleImageType
     var size: SeugiRoundedCircleImageType.Size
     
-    private init(type: SeugiRoundedCircleImageType,
-                 size: SeugiRoundedCircleImageType.Size) {
+    private init(
+        type: SeugiRoundedCircleImageType,
+        size: SeugiRoundedCircleImageType.Size
+    ) {
         self.type = type
         self.size = size
     }
