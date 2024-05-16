@@ -27,11 +27,11 @@ extension OAuthTarget: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .oauthSignIn(let code, let registrationId): .requestParameters(parameters: ["code": code, "registrationId": registrationId], encoding: URLEncoding.default)
+        case .oauthSignIn(let code, let registrationId): .requestParameters(parameters: ["code": code, "provider": registrationId], encoding: URLEncoding.default)
         }
     }
     
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         nil
     }
 }

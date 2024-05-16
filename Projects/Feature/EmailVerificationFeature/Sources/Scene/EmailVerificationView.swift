@@ -30,6 +30,7 @@ public struct EmailVerificationView: View {
     public var body: some View {
         VStack(spacing: 8) {
             SeugiCodeTextFieldForm(text: $viewModel.verificationCode, label: "인증코드", length: 6)
+                .keyboardType(.numberPad)
                 .padding(.top, 16)
             if viewModel.isWaiting {
                 Text(convertSecondsToTime(timeInSeconds: timerManager.timeRemaining))

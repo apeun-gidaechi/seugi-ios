@@ -9,6 +9,7 @@ import UserDefaultInterface
 
 public struct RootView: View {
     
+    @StateObject private var timerManager = TimerManager()
     @StateObject private var appState: AppState
     @StateObject private var router = Router()
     @Inject private var onboardingFactory: any OnboardingFactory
@@ -35,7 +36,7 @@ public struct RootView: View {
         VStack {
             switch appState.appFlow {
             case .unAuthorized: onboardingFactory.makeView().eraseToAnyView()
-                    .environmentObject(TimerManager())
+                    .environmentObject(timerManager)
             case .notFoundJoinedSchool: joinSchoolFactory.makeView().eraseToAnyView()
             case .authorized: mainFactory.makeView().eraseToAnyView()
             }

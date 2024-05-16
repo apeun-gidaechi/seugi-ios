@@ -21,6 +21,7 @@ public final class StartViewModel: ObservableObject {
         } catch {
             signInFlow = .failure
             showSignInFailureDialog = true
+            print(error)
         }
     }
     
@@ -34,6 +35,7 @@ public final class StartViewModel: ObservableObject {
         } catch {
             signInFlow = .failure
             showSignInFailureDialog = true
+            print(error)
         }
     }
 }

@@ -70,7 +70,6 @@ public class AppleVC: UIViewController {
     
     @objc
     private func requestSignIn() {
-        print("\(#function) - try sign in..")
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -87,6 +86,7 @@ extension AppleVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
     }
     
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        var isFailure = true
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             // You can create an account in your system.
@@ -102,11 +102,20 @@ extension AppleVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
 //                print("identityToken: \(identityToken)")
 //                print("authCodeString: \(authCodeString)")
 //                print("identifyTokenString: \(identifyTokenString)")
+                isFailure = false
+                Task {
+                    await self.onSuccess(identifyTokenString)
+                }
+                return
             }
-            
 //            print("useridentifier: \(userIdentifier)")
         default:
             break
+        }
+        if isFailure {
+            Task {
+                await onFailure()
+            }
         }
     }
     
