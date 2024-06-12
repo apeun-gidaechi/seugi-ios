@@ -39,14 +39,15 @@ public struct RootView: View {
             case .unAuthorized: onboardingFactory.makeView().eraseToAnyView()
                     .environmentObject(timerManager)
             case .notFoundJoinedSchool: joinSchoolFactory.makeView().eraseToAnyView()
+                    .environmentObject(joinWorkspaceManager)
             case .authorized: mainFactory.makeView().eraseToAnyView()
             }
         }
-        .environmentObject(joinWorkspaceManager)
         .environmentObject(appState)
         .environmentObject(router)
         .task {
             await appState.fetchWorkspaces()
+            router.navigateToRoot()
         }
     }
 }

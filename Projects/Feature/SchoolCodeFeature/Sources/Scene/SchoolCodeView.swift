@@ -17,8 +17,6 @@ public struct SchoolCodeView: View {
             SeugiButton.large("계속하기", type: .primary, isLoading: joinWorkspaceManager.isFetchingWorkspace) {
                 Task {
                     await joinWorkspaceManager.fetchWorkspace()
-//                        router.navigate(to: SchoolCodeDestination.joinSuccess(workspace))
-//                    }
                 }
             }
             .disabled(joinWorkspaceManager.isInValidInput)
@@ -32,8 +30,10 @@ public struct SchoolCodeView: View {
         } message: {
             Text("다시 입력해주세요")
         }
-//        .onChange(of: joinWorkspaceManager.workspace) {
-//            if
-//        }
+        .onChange(of: joinWorkspaceManager.workspace) {
+            if case .success = $0 {
+                router.navigate(to: SchoolCodeDestination.joinSuccess)
+            }
+        }
     }
 }
