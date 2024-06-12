@@ -3,6 +3,7 @@ import DesignSystem
 import WorkspaceDomainInterface
 import DIContainerInterface
 import UserDefaultInterface
+import SwiftUI
 
 public final class AppState: ObservableObject {
     
@@ -41,16 +42,22 @@ public final class AppState: ObservableObject {
         isAppFlowFetching = true
         defer { isAppFlowFetching = false }
         guard !accessToken.isEmpty else {
-            appFlow = .unAuthorized
+            withAnimation {
+                appFlow = .unAuthorized
+            }
             return
         }
         do {
             self.workspaces = .fetching
             let workspaces = try await getWorkspacesUseCase()
             self.workspaces = .success(workspaces)
-            appFlow = .authorized
+            withAnimation {
+                appFlow = .authorized
+            }
         } catch {
-            self.appFlow = .notFoundJoinedSchool
+            withAnimation {
+                self.appFlow = .notFoundJoinedSchool
+            }
             self.workspaces = .failure
         }
     }

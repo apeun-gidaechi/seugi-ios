@@ -36,8 +36,8 @@ public struct EmailSignInView: View {
                     await viewModel.signIn { token in
                         appState.setAccessToken(with: String(token.accessToken.split(separator: " ")[1]))
                         appState.setRefreshToken(with: String(token.refreshToken.split(separator: " ")[1]))
-                        router.navigateToRoot()
                         await appState.fetchWorkspaces()
+                        router.navigateToRoot()
                     }
                 }
             }
