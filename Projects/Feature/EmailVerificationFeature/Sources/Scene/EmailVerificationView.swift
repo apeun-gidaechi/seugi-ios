@@ -59,6 +59,15 @@ public struct EmailVerificationView: View {
         }
         .padding(.horizontal, 20)
         .seugiTopBar("이메일 인증")
+        .alertWithAnyView("회원가입 실패", when: failureDialog(for: $viewModel.signUpFlow)) {
+            Button("확인", role: .cancel) {}
+        }
+        .alertWithAnyView("이메일 전송 실패", when: $viewModel.isSendEmailFailure) {
+            Button("닫기", role: .cancel) {}
+        }
+        .onChangeIdleFlow(of: viewModel.signUpFlow) {
+            router.navigateToRoot()
+        }
     }
     
     func convertSecondsToTime(timeInSeconds: Int) -> String {

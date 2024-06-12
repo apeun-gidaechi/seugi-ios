@@ -24,7 +24,6 @@ public class EmailSignInViewModel: ObservableObject {
         do {
             let request = SignInRequest(email: email, password: password)
             let token = try await signInUseCase(request)
-            print(token)
             await completion(token)
         } catch {
             showSignInFailureDialog = true

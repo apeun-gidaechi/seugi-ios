@@ -17,7 +17,7 @@ public final class StartViewModel: ObservableObject {
     ) async {
         do {
             let token = try await oauthSignInUseCase(.init(code: idToken, registrationId: "google"))
-            signInFlow = .success(data: token)
+            signInFlow = .success(token)
         } catch {
             signInFlow = .failure
             showSignInFailureDialog = true
@@ -31,7 +31,7 @@ public final class StartViewModel: ObservableObject {
     ) async {
         do {
             let token = try await oauthSignInUseCase(.init(code: token, registrationId: "apple"))
-            signInFlow = .success(data: token)
+            signInFlow = .success(token)
         } catch {
             signInFlow = .failure
             showSignInFailureDialog = true

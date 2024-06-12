@@ -47,7 +47,7 @@ public final class AppState: ObservableObject {
         do {
             self.workspaces = .fetching
             let workspaces = try await getWorkspacesUseCase()
-            self.workspaces = .success(data: workspaces)
+            self.workspaces = .success(workspaces)
             appFlow = .authorized
         } catch {
             self.appFlow = .notFoundJoinedSchool

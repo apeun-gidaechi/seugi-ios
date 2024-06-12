@@ -33,7 +33,7 @@ public final class JoinWorkspaceManager: ObservableObject {
         defer { isFetchingWorkspace = false }
         do {
             let workspace = try await getWorkspaceByCode(code: code)
-            self.workspace = .success(data: workspace)
+            self.workspace = .success(workspace)
         } catch {
             showFetchFailureDialog = true
         }

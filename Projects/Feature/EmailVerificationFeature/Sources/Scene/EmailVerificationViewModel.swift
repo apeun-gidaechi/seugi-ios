@@ -1,6 +1,8 @@
 import Foundation
+import BaseFeatureInterface
 import DIContainerInterface
 import AuthDomainInterface
+import SwiftUI
 
 public final class EmailVerificationViewModel: ObservableObject {
     
@@ -10,10 +12,15 @@ public final class EmailVerificationViewModel: ObservableObject {
     
     // MARK: - State
     @Published var verificationCode = ""
+    @Published var isWaiting = false
+    @Published var isSendEmailFailure = false
+    
+    // dialog
+    @Published var signUpFlow: IdleFlow<Bool> = .idle
+    
     public var name = ""
     public var email = ""
     public var password = ""
-    @Published var isWaiting = false
     
     var isInValidInput: Bool {
         verificationCode.count < 6
@@ -22,20 +29,21 @@ public final class EmailVerificationViewModel: ObservableObject {
     @MainActor
     func sendEmail() async {
         do {
-            try await sendEmailCodeUseCase(email: email)
             isWaiting = true
+            try await sendEmailCodeUseCase(email: email)
         } catch {
-            
+            isSendEmailFailure = true
         }
     }
     
     @MainActor
     func signUp() async {
         do {
-            let request = SignUpRequest(name: name, email: email, password: password, token: verificationCode)
+            let request = SignUpRequest(name: name, email: email, password: password, code: verificationCode)
             try await signUpUseCase(request)
+            signUpFlow = .success(true)
         } catch {
-            
+            signUpFlow = .failure
         }
     }
 }
