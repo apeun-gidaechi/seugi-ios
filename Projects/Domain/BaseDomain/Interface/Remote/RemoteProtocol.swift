@@ -14,10 +14,13 @@ public protocol RemoteProtocol {
     
     var provider: MoyaProvider<Target> { get }
     
+    var authProvider: MoyaProvider<Target> { get }
+    
     var decoder: JSONDecoder { get }
     
     func request(
-        target: MoyaProvider<Target>.Target
+        target: MoyaProvider<Target>.Target,
+        isAuthorization: Bool
     ) async throws -> Moya.Response
 }
 
@@ -29,16 +32,24 @@ public extension RemoteProtocol {
         )
     }
     
+    var authProvider: MoyaProvider<Target> {
+        .init(
+            session: Session(interceptor: AuthInterceptor(), eventMonitors: [APIEventLogger()])
+        )
+    }
+    
     var decoder: JSONDecoder {
         .init()
     }
     
     @discardableResult
     func request(
-        target: MoyaProvider<Target>.Target
+        target: MoyaProvider<Target>.Target,
+        isAuthorization: Bool = true
     ) async throws -> Moya.Response {
-        try await withUnsafeThrowingContinuation { continuation in
-            provider.request(target) { result in
+        let p = isAuthorization ? authProvider : provider
+        return try await withUnsafeThrowingContinuation { continuation in
+            p.request(target) { result in
                 switch result {
                 case let .success(data):
                     continuation.resume(returning: data)

@@ -10,7 +10,11 @@ public class APIEventLogger: EventMonitor {
             + "Method: " + (request.request?.httpMethod ?? "") + "\n"
             + "Headers: " + "\(request.request?.allHTTPHeaderFields ?? [:])" + "\n"
         )
-        print("Body: " + (request.request?.httpBody?.toPrettyPrintedString ?? ""))
+        if let str = request.request?.httpBody?.toPrettyPrintedString {
+            print("Body: \(str)")
+        } else {
+            print("Body: is not JSON")
+        }
     }
     
     public func request<Value>(_ request: DataRequest, didParseResponse response: DataResponse<Value, AFError>) {
