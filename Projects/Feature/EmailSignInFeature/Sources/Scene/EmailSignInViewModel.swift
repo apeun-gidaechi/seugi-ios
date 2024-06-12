@@ -16,6 +16,7 @@ public class EmailSignInViewModel: ObservableObject {
     
     public init() {}
     
+    @MainActor
     func signIn(
         completion: @escaping (_ token: Token) async -> Void
     ) async {
