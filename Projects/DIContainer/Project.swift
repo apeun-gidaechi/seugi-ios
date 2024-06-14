@@ -3,9 +3,7 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let project = Project.makeDIContainer(
-    type: .DIContainer,
-    include: [.Interface, .Feature],
-    interfaceDependency: [
+    dependency: [
         .SPM.Swinject
     ]
 )

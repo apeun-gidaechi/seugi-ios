@@ -11,15 +11,15 @@ import EnvironmentPlugin
 public extension Target {
     
     static func app(
-        target: ModulePaths.App,
+        type: ModulePaths.App,
         dependenceis: [TargetDependency] = [],
-        infoPlist: InfoPlist,
+        infoPlist: InfoPlist = .default,
         entitlements: Entitlements? = nil
     ) -> Self {
         .makeTarget(
-            name: "Seugi",
+            name: "Seugi-\(type.rawValue)",
             product: .app,
-            bundleId: "com.\(env.name)",
+            bundleId: "com.\(env.name).\(type.rawValue)",
             infoPlist: infoPlist,
             sources: ["Sources/**"],
             resources: ["Resources/**"],
@@ -30,51 +30,48 @@ public extension Target {
     }
     
     static func feature(
-        target: ModulePaths.Feature,
-        type: MicroModule,
+        of target: ModulePaths.Feature,
+        module: MicroFeatureModule,
         infoPlist: InfoPlist = .default,
         dependencies: [TargetDependency]
     ) -> Self {
         .makeTarget(
-            name: "\(target.rawValue)Feature\(type.rawValue)",
-            product: type.product,
-            bundleId: "com.\(env.name).\(target.rawValue.lowercased())feature\(type.rawValue.lowercased())",
+            name: "\(target.rawValue)Feature\(module.rawValue)",
+            product: module.product,
+            bundleId: "com.\(env.name).\(target.rawValue.lowercased())feature\(module.rawValue.lowercased())",
             infoPlist: infoPlist,
-            sources: ["\(type.source)/**"],
+            sources: ["\(module.source)/**"],
             scripts: [.swiftLint],
             dependencies: dependencies
         )
     }
     
     static func domain(
-        target: ModulePaths.Domain,
-        type: MicroModule,
         infoPlist: InfoPlist = .default,
-        dependencies: [TargetDependency]
+        dependencies: [TargetDependency] = []
     ) -> Self {
         .makeTarget(
-            name: "\(target.rawValue)Domain\(type.rawValue)",
-            product: type.product,
-            bundleId: "com.\(env.name).\(target.rawValue.lowercased())domain\(type.rawValue.lowercased())",
+            name: "Domain",
+            product: .framework,
+            bundleId: "com.\(env.name).domain",
             infoPlist: infoPlist,
-            sources: ["\(type.source)/**"],
+            sources: ["Sources/**"],
             scripts: [.swiftLint],
             dependencies: dependencies
         )
     }
     
-    static func core(
-        target: ModulePaths.Core,
-        type: MicroModule,
+    static func data(
+        target: ModulePaths.Data,
         infoPlist: InfoPlist = .default,
-        dependencies: [TargetDependency]
+        dependencies: [TargetDependency] = []
     ) -> Self {
         .makeTarget(
-            name: "\(target.rawValue)\(type.rawValue)",
-            product: type.product,
-            bundleId: "com.\(env.name).\(target.rawValue.lowercased())\(type.rawValue.lowercased())",
+            name: "\(target.rawValue)",
+            product: .staticLibrary,
+            bundleId: "com.\(env.name).\(target.rawValue.lowercased())",
             infoPlist: infoPlist,
-            sources: ["\(type.source)/**"],
+            sources: ["\(target.rawValue)/**"],
             scripts: [.swiftLint],
             dependencies: dependencies
         )
@@ -82,34 +79,31 @@ public extension Target {
     
     static func shared(
         target: ModulePaths.Shared,
-        type: MicroModule,
         infoPlist: InfoPlist = .default,
-        dependencies: [TargetDependency]
+        dependencies: [TargetDependency] = []
     ) -> Self {
         .makeTarget(
-            name: "\(target.rawValue)\(type.rawValue)",
-            product: type.product,
-            bundleId: "com.\(env.name).\(target.rawValue.lowercased())\(type.rawValue.lowercased())",
+            name: "\(target.rawValue)",
+            product: .framework,
+            bundleId: "com.\(env.name).\(target.rawValue.lowercased())",
             infoPlist: infoPlist,
-            sources: ["\(type.source)/**"],
+            sources: ["Sources/**"],
             scripts: [.swiftLint],
             dependencies: dependencies
         )
     }
     
-    static func userInterface(
-        target: ModulePaths.UserInterface,
-        type: MicroModule,
+    static func component(
         infoPlist: InfoPlist = .default,
         resources: ResourceFileElements? = nil,
         dependencies: [TargetDependency] = []
     ) -> Self {
         .makeTarget(
-            name: "\(target.rawValue)\(type.rawValue)",
-            product: type.product,
-            bundleId: "com.\(env.name).\(target.rawValue.lowercased())\(type.rawValue.lowercased())",
+            name: "Component",
+            product: .framework,
+            bundleId: "com.\(env.name).\(ModulePaths.Single.Component.rawValue.lowercased())",
             infoPlist: infoPlist,
-            sources: ["\(type.source)/**"],
+            sources: ["Sources/**"],
             resources: resources,
             scripts: [.swiftLint],
             dependencies: dependencies
@@ -117,17 +111,15 @@ public extension Target {
     }
     
     static func dIContainer(
-        target: ModulePaths.DIContainer,
-        type: MicroModule,
         infoPlist: InfoPlist = .default,
         dependencies: [TargetDependency]
     ) -> Self {
         .makeTarget(
-            name: "\(target.rawValue)\(type.rawValue)",
-            product: type.product,
-            bundleId: "com.\(env.name).\(target.rawValue.lowercased())\(type.rawValue.lowercased())",
+            name: "DIContainer",
+            product: .framework,
+            bundleId: "com.\(env.name).\(ModulePaths.Single.DIContainer.rawValue.lowercased())",
             infoPlist: infoPlist,
-            sources: ["\(type.source)/**"],
+            sources: ["Sources/**"],
             scripts: [.swiftLint],
             dependencies: dependencies
         )

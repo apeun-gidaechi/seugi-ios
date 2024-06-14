@@ -4,6 +4,6 @@ import EnvironmentPlugin
 let workspace = Workspace(
     name: "Seugi",
     projects: [
-        "Projects/Seugi"
+        "Projects/App/Seugi-iOS"
     ]
 )

@@ -1,7 +1,7 @@
 import SwiftUI
 import EmailSignInFeatureInterface
 import WaitingJoinFeatureInterface
-import DIContainerInterface
+import DIContainer
 import SwiftUIUtil
 
 public struct SelectingJobCoordinator: View {

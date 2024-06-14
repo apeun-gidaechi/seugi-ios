@@ -5,11 +5,10 @@ let project = Project.makeFeature(
     type: .Main,
     include: [.Feature, .Interface, .Example],
     featureDependency: [
-        .feature(.Interface, for: .Base),
-        .feature(.Interface, for: .Home),
-        .feature(.Interface, for: .Chat),
-        .feature(.Interface, for: .ChatDetail),
-        .feature(.Interface, for: .Room),
-        .feature(.Interface, for: .CreateRoom),
+        .feature(of: .Home),
+        .feature(of: .Chat),
+        .feature(of: .ChatDetail),
+        .feature(of: .Room),
+        .feature(of: .CreateRoom)
     ]
 )

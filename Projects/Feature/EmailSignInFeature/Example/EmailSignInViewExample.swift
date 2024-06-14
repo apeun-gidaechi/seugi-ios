@@ -1,7 +1,7 @@
 import SwiftUI
 import EmailSignInFeature
 import BaseFeatureInterface
-import DesignSystem
+import Component
 
 @main
 struct EmailSignInViewExample: App {

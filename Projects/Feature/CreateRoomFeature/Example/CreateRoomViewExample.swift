@@ -1,6 +1,6 @@
 import SwiftUI
 import CreateRoomFeature
-import DesignSystem
+import Component
 
 @main
 struct CreateRoomViewExample: App {

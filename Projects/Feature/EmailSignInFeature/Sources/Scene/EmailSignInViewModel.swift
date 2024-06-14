@@ -1,12 +1,12 @@
 import Foundation
-import AuthDomainInterface
-import DIContainerInterface
+import Domain
+import DIContainer
 import BaseFeatureInterface
 
 public class EmailSignInViewModel: ObservableObject {
     
     // MARK: - UseCase
-    @Inject private var signInUseCase: any SignInUseCase
+//    @Inject private var signInUseCase: any SignInUseCase
     
     // MARK: - State
     @Published var email = ""
@@ -23,9 +23,9 @@ public class EmailSignInViewModel: ObservableObject {
         isSignInFetching = true
         defer { isSignInFetching = false }
         do {
-            let request = SignInRequest(email: email, password: password)
-            let token = try await signInUseCase(request)
-            await completion(token)
+//            let request = SignInRequest(email: email, password: password)
+//            let token = try await signInUseCase(request)
+//            await completion(token)
         } catch {
             showSignInFailureDialog = true
         }

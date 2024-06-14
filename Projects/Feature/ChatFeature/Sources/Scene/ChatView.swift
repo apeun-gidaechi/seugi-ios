@@ -1,12 +1,18 @@
 import SwiftUI
-import DesignSystem
+import Component
 import BaseFeatureInterface
 
 public struct ChatView: View {
     
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var appState: AppState
+    @StateObject private var vm: ChatViewModel
     
-    public init() {}
+    public init(
+        vm: ChatViewModel
+    ) {
+        self._vm = StateObject(wrappedValue: vm)
+    }
     
     public var body: some View {
         ScrollView {
@@ -29,6 +35,10 @@ public struct ChatView: View {
         .hideBackButton()
         .button(.searchLine) {
             //
+        }
+        .task {
+//            guard let workspace = appState.selectedWorkspace else { return }
+//            await vm.fetchChats(workspaceId: workspace.workspaceId)
         }
     }
 }

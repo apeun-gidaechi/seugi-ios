@@ -1,5 +1,5 @@
 import SwiftUI
-import DesignSystem
+import Component
 import BaseFeatureInterface
 
 public struct SchoolCodeView: View {
@@ -30,10 +30,10 @@ public struct SchoolCodeView: View {
         } message: {
             Text("다시 입력해주세요")
         }
-        .onChange(of: joinWorkspaceManager.workspace) {
-            if case .success = $0 {
-                router.navigate(to: SchoolCodeDestination.joinSuccess)
-            }
-        }
+//        .onChange(of: joinWorkspaceManager.workspace) {
+//            if case .success = $0 {
+//                router.navigate(to: SchoolCodeDestination.joinSuccess)
+//            }
+//        }
     }
 }

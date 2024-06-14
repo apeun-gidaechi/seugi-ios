@@ -7,5 +7,8 @@ public final class ChatAssembly: Assembly {
         container.register((any ChatFactory).self) { _ in
             ChatFactoryImpl()
         }
+        container.register(ChatViewModel.self) { _ in
+            ChatViewModel()
+        }
     }
 }

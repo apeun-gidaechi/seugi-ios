@@ -3,9 +3,5 @@ import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
     type: .Room,
-    include: [.Feature, .Interface, .Example],
-    featureDependency: [
-        .feature(.Interface, for: .Base),
-        .domain(.Interface, for: .Chat)
-    ]
+    include: [.Feature, .Interface, .Example]
 )

@@ -8,7 +8,7 @@
 
 import SwiftUI
 import RoomFeatureInterface
-import DIContainerInterface
+import DIContainer
 import CreateRoomFeatureInterface
 
 struct RoomCoordinator: View {

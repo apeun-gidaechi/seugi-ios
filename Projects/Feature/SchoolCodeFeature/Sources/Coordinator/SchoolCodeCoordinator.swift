@@ -1,5 +1,5 @@
 import SwiftUI
-import DIContainerInterface
+import DIContainer
 import JoinSuccessFeatureInterface
 import SwiftUIUtil
 

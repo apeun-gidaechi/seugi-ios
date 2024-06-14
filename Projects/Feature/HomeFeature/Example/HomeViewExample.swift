@@ -1,6 +1,6 @@
 import SwiftUI
 import HomeFeature
-import DesignSystem
+import Component
 
 @main
 struct HomeViewExample: App {

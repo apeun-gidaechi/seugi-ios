@@ -4,8 +4,7 @@ import DependencyPlugin
 
 let project = Project.makeShared(
     type: .Secret,
-    include: [.Feature],
-    featureDependency: [
+    dependency: [
         .SPM.Swinject
     ]
 )

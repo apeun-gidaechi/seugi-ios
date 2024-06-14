@@ -10,9 +10,5 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let project = Project.makeShared(
-    type: .DateUtil,
-    include: [.Feature],
-    featureDependency: [
-        .SPM.Swinject
-    ]
+    type: .DateUtil
 )

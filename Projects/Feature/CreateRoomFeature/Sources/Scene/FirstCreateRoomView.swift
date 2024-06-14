@@ -1,6 +1,6 @@
 import SwiftUI
 import BaseFeatureInterface
-import DesignSystem
+import Component
 import Flow
 import SwiftUIUtil
 

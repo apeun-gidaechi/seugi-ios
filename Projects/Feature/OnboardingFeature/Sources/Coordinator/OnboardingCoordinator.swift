@@ -6,7 +6,7 @@ import EmailSignUpFeatureInterface
 import OAuthSignUpFeatureInterface
 import SelectingJobFeatureInterface
 import SwiftUIUtil
-import DIContainerInterface
+import DIContainer
 
 public struct OnboardingCoordinator: View {
     

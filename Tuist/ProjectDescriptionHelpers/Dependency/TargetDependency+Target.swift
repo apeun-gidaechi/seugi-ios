@@ -8,9 +8,16 @@
 import ProjectDescription
 
 public extension TargetDependency {
+    static var diContainer: TargetDependency {
+        .project(
+            target: ModulePaths.Single.DIContainer.rawValue,
+            path: .dIContainer
+        )
+    }
+    
     static func feature(
-        _ module: MicroModule,
-        for target: ModulePaths.Feature
+        of target: ModulePaths.Feature,
+        module: MicroFeatureModule = .Interface
     ) -> TargetDependency {
         .project(
             target: "\(target.rawValue)Feature\(module.rawValue)",
@@ -18,53 +25,35 @@ public extension TargetDependency {
         )
     }
     
-    static func domain(
-        _ module: MicroModule,
-        for target: ModulePaths.Domain
-    ) -> TargetDependency {
+    static var component: TargetDependency {
         .project(
-            target: "\(target.rawValue)Domain\(module.rawValue)",
-            path: .relativeToDomain("\(target.rawValue)Domain")
+            target: ModulePaths.Single.Component.rawValue,
+            path: .component
         )
     }
     
-    static func core(
-        _ module: MicroModule,
-        for target: ModulePaths.Core
-    ) -> TargetDependency {
+    static var domain: TargetDependency {
         .project(
-            target: "\(target.rawValue)\(module.rawValue)",
-            path: .relativeToCore("\(target.rawValue)")
+            target: ModulePaths.Single.Domain.rawValue,
+            path: .domain
         )
     }
     
-    static func userInterface(
-        _ module: MicroModule,
-        for target: ModulePaths.UserInterface
+    static func data(
+        of target: ModulePaths.Data
     ) -> TargetDependency {
         .project(
-            target: "\(target.rawValue)\(module.rawValue)",
-            path: .relativeToUserInterface("\(target.rawValue)")
+            target: "\(target.rawValue)",
+            path: .data
         )
     }
     
     static func shared(
-        _ module: MicroModule,
-        for target: ModulePaths.Shared
+        of target: ModulePaths.Shared
     ) -> TargetDependency {
         .project(
-            target: "\(target.rawValue)\(module.rawValue)",
-            path: .relativeToShared("\(target.rawValue)")
-        )
-    }
-    
-    static func dIContainer(
-        _ module: MicroModule,
-        for target: ModulePaths.DIContainer
-    ) -> TargetDependency {
-        .project(
-            target: "\(target.rawValue)\(module.rawValue)",
-            path: .dIContainer
+            target: target.rawValue,
+            path: .relativeToShared(target.rawValue)
         )
     }
 }

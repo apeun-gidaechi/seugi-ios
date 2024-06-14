@@ -1,4 +1,4 @@
-import WorkspaceDomainInterface
+import Domain
 
 enum SchoolCodeDestination: Hashable {
     case joinSuccess

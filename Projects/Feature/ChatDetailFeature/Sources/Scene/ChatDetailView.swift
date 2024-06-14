@@ -1,5 +1,5 @@
 import SwiftUI
-import DesignSystem
+import Component
 
 enum ChatType: Hashable {
     case chat(id: Int)

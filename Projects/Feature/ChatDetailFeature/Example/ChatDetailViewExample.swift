@@ -1,6 +1,6 @@
 import SwiftUI
 import ChatDetailFeature
-import DesignSystem
+import Component
 
 @main
 struct ChatDetailViewExample: App {

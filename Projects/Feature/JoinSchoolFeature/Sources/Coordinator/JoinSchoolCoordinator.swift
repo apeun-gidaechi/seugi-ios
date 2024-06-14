@@ -2,7 +2,7 @@ import SwiftUI
 import BaseFeatureInterface
 import SchoolCodeFeatureInterface
 import JoinSuccessFeatureInterface
-import DIContainerInterface
+import DIContainer
 import SwiftUIUtil
 
 public struct JoinSchoolCoordinator: View {

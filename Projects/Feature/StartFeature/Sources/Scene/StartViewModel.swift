@@ -1,12 +1,12 @@
 import Foundation
-import AuthDomainInterface
-import DIContainerInterface
+import Domain
+import DIContainer
 import BaseFeatureInterface
 
 public final class StartViewModel: ObservableObject {
     
-    @Inject private var oauthSignInUseCase: any OAuthSignInUseCase
-    @Published var signInFlow: FetchFlow<Token> = .fetching
+//    @Inject private var oauthSignInUseCase: any OAuthSignInUseCase
+//    @Published var signInFlow: FetchFlow<Token> = .fetching
     @Published var showSignInFailureDialog = false
     
     public init() {}
@@ -16,10 +16,10 @@ public final class StartViewModel: ObservableObject {
         idToken: String
     ) async {
         do {
-            let token = try await oauthSignInUseCase(.init(code: idToken, registrationId: "google"))
-            signInFlow = .success(token)
+//            let token = try await oauthSignInUseCase(.init(code: idToken, registrationId: "google"))
+//            signInFlow = .success(token)
         } catch {
-            signInFlow = .failure
+//            signInFlow = .failure
             showSignInFailureDialog = true
             print(error)
         }
@@ -30,10 +30,10 @@ public final class StartViewModel: ObservableObject {
         token: String
     ) async {
         do {
-            let token = try await oauthSignInUseCase(.init(code: token, registrationId: "apple"))
-            signInFlow = .success(token)
+//            let token = try await oauthSignInUseCase(.init(code: token, registrationId: "apple"))
+//            signInFlow = .success(token)
         } catch {
-            signInFlow = .failure
+//            signInFlow = .failure
             showSignInFailureDialog = true
             print(error)
         }

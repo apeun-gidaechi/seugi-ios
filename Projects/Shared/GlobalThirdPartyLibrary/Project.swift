@@ -11,8 +11,7 @@ import DependencyPlugin
 
 let project = Project.makeShared(
     type: .GlobalThirdPartyLibrary,
-    include: [.Feature],
-    featureDependency: [
+    dependency: [
         .SPM.Swinject
     ]
 )

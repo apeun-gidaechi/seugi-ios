@@ -1,7 +1,7 @@
 import SwiftUI
 import SelectingJobFeatureInterface
 import JoinSuccessFeatureInterface
-import DIContainerInterface
+import DIContainer
 import SwiftUIUtil
 
 public struct JoinSuccessCoordinator: View {

@@ -5,8 +5,6 @@ import OnboardingFeature
 struct OnboardingFeatureExample: App {
     
     var body: some Scene {
-        WindowGroup {
-            
-        }
+        WindowGroup {}
     }
 }

@@ -1,7 +1,6 @@
 import Foundation
-import DIContainerInterface
-import WorkspaceDomainInterface
-import UserDefaultInterface
+import DIContainer
+import Domain
 
 public final class RootViewModel: ObservableObject {
     

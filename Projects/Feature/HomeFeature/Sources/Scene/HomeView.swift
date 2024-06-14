@@ -1,5 +1,5 @@
 import SwiftUI
-import DesignSystem
+import Component
 
 public struct HomeView: View {
     

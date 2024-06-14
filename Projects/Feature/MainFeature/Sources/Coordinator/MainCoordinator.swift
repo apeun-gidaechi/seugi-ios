@@ -1,12 +1,12 @@
 import SwiftUI
 import BaseFeatureInterface
-import DesignSystem
+import Component
 import HomeFeatureInterface
 import ChatFeatureInterface
 import ChatDetailFeatureInterface
 import RoomFeatureInterface
 import CreateRoomFeatureInterface
-import DIContainerInterface
+import DIContainer
 
 public struct MainCoordinator: View {
     

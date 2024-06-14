@@ -8,28 +8,28 @@
 import ProjectDescription
 
 public extension ProjectDescription.Path {
+    static var dIContainer: Self {
+        .relativeToRoot("Projects/DIContainer")
+    }
+    static func app(_ path: String) -> Self {
+        .relativeToRoot("Projects/App/\(path)")
+    }
     static func relativeToFeature(_ path: String) -> Self {
         .relativeToRoot("Projects/Feature/\(path)")
     }
-    static func relativeToDomain(_ path: String) -> Self {
-        .relativeToRoot("Projects/Domain/\(path)")
+    static var component: Self {
+        .relativeToRoot("Projects/Component")
     }
-    static func relativeToCore(_ path: String) -> Self {
-        .relativeToRoot("Projects/Core/\(path)")
+    static var domain: Self {
+        .relativeToRoot("Projects/Domain")
+    }
+    static var data: Self {
+        .relativeToRoot("Projects/Data")
     }
     static func relativeToShared(_ path: String) -> Self {
         .relativeToRoot("Projects/Shared/\(path)")
     }
-    static func relativeToUserInterface(_ path: String) -> Self {
-        .relativeToRoot("Projects/UserInterface/\(path)")
-    }
     static func relativeToXCConfig(_ path: String) -> Self {
         .relativeToRoot("XCConfig/\(path)")
-    }
-    static var app: Self {
-        .relativeToRoot("Projects/App")
-    }
-    static var dIContainer: Self {
-        .relativeToRoot("Projects/DIContainer")
     }
 }

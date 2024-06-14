@@ -1,6 +1,6 @@
 import SwiftUI
 import WaitingJoinFeature
-import DesignSystem
+import Component
 
 @main
 struct WaitingJoinExample: App {

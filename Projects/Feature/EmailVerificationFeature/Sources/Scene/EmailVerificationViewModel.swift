@@ -1,14 +1,14 @@
 import Foundation
 import BaseFeatureInterface
-import DIContainerInterface
-import AuthDomainInterface
+import DIContainer
+import Domain
 import SwiftUI
 
 public final class EmailVerificationViewModel: ObservableObject {
     
     // MARK: - UseCase
-    @Inject private var sendEmailCodeUseCase: any SendEmailCodeUseCase
-    @Inject private var signUpUseCase: any SignUpUseCase
+//    @Inject private var sendEmailCodeUseCase: any SendEmailCodeUseCase
+//    @Inject private var signUpUseCase: any SignUpUseCase
     
     // MARK: - State
     @Published var verificationCode = ""
@@ -30,7 +30,7 @@ public final class EmailVerificationViewModel: ObservableObject {
     func sendEmail() async {
         do {
             isWaiting = true
-            try await sendEmailCodeUseCase(email: email)
+//            try await sendEmailCodeUseCase(email: email)
         } catch {
             isSendEmailFailure = true
         }
@@ -39,8 +39,8 @@ public final class EmailVerificationViewModel: ObservableObject {
     @MainActor
     func signUp() async {
         do {
-            let request = SignUpRequest(name: name, email: email, password: password, code: verificationCode)
-            try await signUpUseCase(request)
+//            let request = SignUpRequest(name: name, email: email, password: password, code: verificationCode)
+//            try await signUpUseCase(request)
             signUpFlow = .success(true)
         } catch {
             signUpFlow = .failure

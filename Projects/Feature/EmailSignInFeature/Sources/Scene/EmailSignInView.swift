@@ -1,5 +1,5 @@
 import SwiftUI
-import DesignSystem
+import Component
 import BaseFeatureInterface
 
 public struct EmailSignInView: View {

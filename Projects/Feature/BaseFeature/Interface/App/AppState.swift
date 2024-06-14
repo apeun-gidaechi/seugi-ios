@@ -1,21 +1,26 @@
 import Foundation
-import DesignSystem
-import WorkspaceDomainInterface
-import DIContainerInterface
-import UserDefaultInterface
+import Component
+import Domain
+import DIContainer
 import SwiftUI
 
 public final class AppState: ObservableObject {
     
     // MARK: - UseCase
-    @Inject private var getWorkspacesUseCase: GetWorkspacesUseCase
-    @Inject private var keyValueStore: any KeyValueStore
+//    @Inject private var getWorkspacesUseCase: GetWorkspacesUseCase
+    @Inject private var keyValueStore: KeyValueStore
     
     // MARK: - State
     @Published public var isAppFlowFetching = true
+    /* flow */
     @Published public var appFlow: AppFlow = .unAuthorized
     @Published public var mainFlow: SeugiBottomNavigationData
-    @Published public var workspaces: FetchFlow<[Workspace]> = .fetching
+    
+    /* workspace */
+//    @Published public var workspaces: FetchFlow<[Workspace]> = .fetching
+//    @Published public var selectedWorkspace: Workspace?
+    
+    /* token */
     @Published private(set) var accessToken = ""
     @Published private(set) var refreshToken = ""
     
@@ -48,9 +53,13 @@ public final class AppState: ObservableObject {
             return
         }
         do {
-            self.workspaces = .fetching
-            let workspaces = try await getWorkspacesUseCase()
-            self.workspaces = .success(workspaces)
+//            self.workspaces = .fetching
+//            let workspaces = try await getWorkspacesUseCase()
+//            self.workspaces = .success(workspaces)
+//            if let workspace = workspaces.first,
+//               selectedWorkspace == nil {
+//                selectedWorkspace = workspace
+//            }
             withAnimation {
                 appFlow = .authorized
             }
@@ -58,7 +67,7 @@ public final class AppState: ObservableObject {
             withAnimation {
                 self.appFlow = .notFoundJoinedSchool
             }
-            self.workspaces = .failure
+//            self.workspaces = .failure
         }
     }
 }

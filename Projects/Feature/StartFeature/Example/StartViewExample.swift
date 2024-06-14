@@ -1,7 +1,7 @@
 import SwiftUI
 import StartFeature
 import BaseFeatureInterface
-import DesignSystem
+import Component
 
 @main
 struct StartViewExample: App {

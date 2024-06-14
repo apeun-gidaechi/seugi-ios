@@ -8,7 +8,7 @@
 
 import Foundation
 import SwiftUI
-import DesignSystem
+import Component
 
 enum JobType: String, CaseIterable {
     case student = "학생"

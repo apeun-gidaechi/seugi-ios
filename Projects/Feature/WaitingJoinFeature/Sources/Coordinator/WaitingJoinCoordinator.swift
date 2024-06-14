@@ -1,6 +1,6 @@
 import SwiftUI
 import EmailSignInFeatureInterface
-import DIContainerInterface
+import DIContainer
 import SwiftUIUtil
 
 public struct WaitingJoinCoordinator: View {

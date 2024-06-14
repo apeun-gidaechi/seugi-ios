@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import DIContainerInterface
+import DIContainer
 import OAuthSignUpFeatureInterface
 import EmailSignInFeatureInterface
 import SwiftUIUtil

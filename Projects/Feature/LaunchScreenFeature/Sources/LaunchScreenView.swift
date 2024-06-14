@@ -7,14 +7,15 @@
 //
 
 import SwiftUI
-import DesignSystem
+import Component
 
 public struct LaunchScreenView: View {
     
     public init() {}
     
     public var body: some View {
-        SeugiAvatar(type: .extraLarge)
+        SeugiAppIcon(type: .extraLarge)
             .toCenter()
+            .seugiBackground(.sub(.white))
     }
 }

@@ -1,7 +1,7 @@
 import SwiftUI
 import EmailSignInFeatureInterface
 import EmailSignUpFeatureInterface
-import DIContainerInterface
+import DIContainer
 import EmailVerificationFeatureInterface
 import SwiftUIUtil
 

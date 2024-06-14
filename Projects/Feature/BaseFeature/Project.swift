@@ -4,16 +4,13 @@ import DependencyPlugin
 
 let project = Project.makeFeature(
     type: .Base,
-    include: [.Feature, .Interface],
+    include: [.Interface],
     interfaceDependency: [
-        .userInterface(.Feature, for: .DesignSystem),
-        .shared(.Feature, for: .GlobalThirdPartyLibrary),
-        .shared(.Feature, for: .SwiftUIUtil),
-        .dIContainer(.Interface, for: .DIContainer),
-        .shared(.Feature, for: .DateUtil),
-        .shared(.Feature, for: .Secret),
-        .SPM.Flow,
-        .SPM.Nuke,
-        .domain(.Interface, for: .Workspace)
+        .diContainer,
+        .component,
+        .shared(of: .GlobalThirdPartyLibrary),
+        .shared(of: .SwiftUIUtil),
+        .shared(of: .DateUtil),
+        .shared(of: .Secret)
     ]
 )

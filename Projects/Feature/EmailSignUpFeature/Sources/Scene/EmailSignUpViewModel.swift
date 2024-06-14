@@ -1,7 +1,7 @@
-import DesignSystem
+import Component
 import Foundation
-import DIContainerInterface
-import AuthDomainInterface
+import DIContainer
+import Domain
 
 public class EmailSignUpViewModel: ObservableObject {
     

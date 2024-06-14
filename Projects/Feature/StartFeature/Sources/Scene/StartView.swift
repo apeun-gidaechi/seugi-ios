@@ -1,7 +1,7 @@
 import SwiftUI
-import DesignSystem
+import Component
 import BaseFeatureInterface
-import DIContainerInterface
+import DIContainer
 
 public struct StartView: View {
     
@@ -102,11 +102,11 @@ public struct StartView: View {
         .alert("로그인 실패", isPresented: $viewModel.showSignInFailureDialog) {
             Button("닫기", role: .cancel) {}
         }
-        .onChange(of: viewModel.signInFlow) {
-            if case .success(let token) = $0 {
-                appState.setAccessToken(with: token.accessToken)
-                appState.setRefreshToken(with: token.refreshToken)
-            }
-        }
+//        .onChange(of: viewModel.signInFlow) {
+//            if case .success(let token) = $0 {
+//                appState.setAccessToken(with: token.accessToken)
+//                appState.setRefreshToken(with: token.refreshToken)
+//            }
+//        }
     }
 }

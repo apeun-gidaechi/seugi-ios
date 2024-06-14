@@ -10,42 +10,32 @@ import Foundation
 public enum ModulePaths {
     case app(App)
     case feature(Feature)
-    case domain(Domain)
+    case data(Data)
     case shared(Shared)
-    case userInterface(UserInterface)
 }
 
 public extension ModulePaths {
     
     enum App: String, CaseIterable {
-        case App
+        case iOS
     }
     
     enum Feature: String, CaseIterable {
-        // base
         case Base
-        
-        // root
         case Root
-        
-        // onboarding
-        case Onboarding // root
+        case Onboarding
         case EmailSignUp
         case EmailVerification
         case EmailSignIn
         case LaunchScreen
         case OAuthSignUp
         case Start
-        
-        // join
-        case JoinSchool // root
+        case JoinSchool
         case JoinSuccess
         case SchoolCode
         case SelectingJob
         case WaitingJoin
-        
-        // main
-        case Main // root
+        case Main
         case Home
         case Chat
         case ChatDetail
@@ -53,15 +43,10 @@ public extension ModulePaths {
         case CreateRoom
     }
     
-    enum Domain: String, CaseIterable {
-        case Base
-        case Auth
-        case Workspace
-        case Chat
-    }
-    
-    enum Core: String, CaseIterable {
-        case UserDefault
+    enum Data: String, CaseIterable {
+        case Core
+        case Network
+        case Local
     }
     
     enum Shared: String, CaseIterable {
@@ -72,11 +57,9 @@ public extension ModulePaths {
         case Secret
     }
     
-    enum UserInterface: String, CaseIterable {
-        case DesignSystem
-    }
-    
-    enum DIContainer: String, CaseIterable {
+    enum Single: String {
         case DIContainer
+        case Component
+        case Domain
     }
 }

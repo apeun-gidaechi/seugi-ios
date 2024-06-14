@@ -1,6 +1,6 @@
 import SwiftUI
 import SchoolCodeFeature
-import DesignSystem
+import Component
 
 @main
 struct SchoolCodeViewExample: App {

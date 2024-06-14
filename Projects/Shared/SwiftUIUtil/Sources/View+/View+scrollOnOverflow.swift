@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct OverflowContentViewModifier: ViewModifier {
-    @State private var contentOverflow: Bool = false
+    @State private var contentOverflow = false
     private let height: CGFloat?
     
     init(
