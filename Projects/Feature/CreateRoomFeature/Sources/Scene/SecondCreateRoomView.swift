@@ -13,6 +13,7 @@ import Component
 public struct SecondCreateRoomView: View {
     
     @State private var roomTitle = ""
+    @EnvironmentObject private var vm: CreateRoomViewModel
     
     public init() {}
     
