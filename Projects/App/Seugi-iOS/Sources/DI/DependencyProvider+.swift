@@ -24,8 +24,10 @@ import StartFeature
 // Domain
 import Domain
 
-// Core
+// Data
 import Core
+import Network
+import Local
 
 // SPM
 import Swinject
@@ -36,7 +38,7 @@ extension DependencyProvider {
             // Feature
             OAuthSignUpAssembly(),
             ChatDetailAssembly(),
-            ChatAssembly(),
+            ChatFeature.ChatAssembly(),
             CreateRoomAssembly(),
             EmailSignInAssembly(),
             EmailSignUpAssembly(),
@@ -49,12 +51,15 @@ extension DependencyProvider {
             MainAssembly(),
             OAuthSignUpAssembly(),
             OnboardingAssembly(),
-            RoomAssembly(),
             RootAssembly(),
             SchoolCodeAssembly(),
             SelectingJobAssembly(),
             StartAssembly(),
             // Domain
+            MemberAssembly(),
+            Network.ChatAssembly(),
+            WorkspaceAssembly(),
+            EmailAssembly(),
             // Core
             KeyValueStoreAssembly()
         ], container: container)

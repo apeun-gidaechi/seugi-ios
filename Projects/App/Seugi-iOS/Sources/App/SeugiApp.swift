@@ -12,6 +12,8 @@ import SwiftUIUtil
 @main
 struct SeugiApp: App {
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     init() {
         Pretendard.register()
         DependencyProvider.shared.register()
