@@ -2,11 +2,17 @@ import Foundation
 import Domain
 import DIContainer
 import BaseFeatureInterface
+import Combine
+import SwiftUI
 
-public class EmailSignInViewModel: ObservableObject {
+public class EmailSignInViewModel: BaseViewModel<EmailSignInViewModel.EmailSignInSubject> {
     
-    // MARK: - UseCase
-//    @Inject private var signInUseCase: any SignInUseCase
+    public enum EmailSignInSubject {
+        case signInSuccess(token: Token)
+    }
+    
+    // MARK: - Repo
+    @Inject private var memberRepo: MemberRepo
     
     // MARK: - State
     @Published var email = ""
@@ -14,20 +20,23 @@ public class EmailSignInViewModel: ObservableObject {
     @Published var isSignInFetching = false
     @Published var showSignInFailureDialog = false
     
-    public init() {}
+    public override init() {
+        super.init()
+    }
     
-    @MainActor
-    func signIn(
-        completion: @escaping (_ token: Token) async -> Void
-    ) async {
-        isSignInFetching = true
-        defer { isSignInFetching = false }
-        do {
-//            let request = SignInRequest(email: email, password: password)
-//            let token = try await signInUseCase(request)
-//            await completion(token)
-        } catch {
-            showSignInFailureDialog = true
+    // MARK: - Method
+    func signIn() {
+        sub(memberRepo.login(email: email, password: password)) {
+            self.isSignInFetching = true
+        } success: { res in
+            self.emit(.signInSuccess(token: res.data))
+        } failure: { error in
+            if case .http(let error) = error {
+                print(error)
+            }
+            self.showSignInFailureDialog = true
+        } finished: {
+            self.isSignInFetching = false
         }
     }
 }
