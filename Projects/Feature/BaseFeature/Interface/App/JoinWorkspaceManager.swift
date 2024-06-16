@@ -2,59 +2,51 @@ import Foundation
 import Domain
 import DIContainer
 
-public final class JoinWorkspaceManager: ObservableObject {
+public final class JoinWorkspaceManager: BaseViewModel<JoinWorkspaceManager.JoinWorkspaceSubject> {
     
-    // MARK: - UseCase
-//    @Inject private var joinWorkspaceUseCase: any JoinWorkspaceUseCase
-//    @Inject private var getWorkspaceByCode: any GetWorkspaceByCodeUseCase
+    public enum JoinWorkspaceSubject {}
+    
+    // MARK: - Repo
+    @Inject private var workspaceRepo: WorkspaceRepo
     
     // MARK: - State
-    /* dialog */
-    @Published public var showFetchFailureDialog = false
+    // workspace
+    @Published public var isFetchFailure = false
+    @Published var workspace: FetchFlow<Workspace> = .fetching
+    public var isFetchWorkspace: Bool {
+        workspace == .fetching
+    }
     
-    /* fetch flow */
-//    @Published public var workspace: FetchFlow<Workspace> = .fetching
-    @Published public var isFetchingWorkspace = false
+    // join
     @Published public var joinFlow: IdleFlow<Bool> = .idle
-    
-    /* state */
-//    @Published public var roleType = WorkspaceRoleType.STUDENT
+    @Published var roleType = WorkspaceRole.student
     @Published public var code = ""
-    
     public var isInValidInput: Bool {
         code.count < 6
     }
     
-    public init() {}
-    
-    @MainActor
-    public func fetchWorkspace() async {
-        isFetchingWorkspace = true
-        defer { isFetchingWorkspace = false }
-        do {
-//            let workspace = try await getWorkspaceByCode(code: code)
-//            self.workspace = .success(workspace)
-//            print(workspace)
-        } catch {
-            print(error)
-            showFetchFailureDialog = true
+    // MARK: - Method
+    public func fetchWorkspace() {
+        sub(workspaceRepo.getWorkspace(code: code)) {
+            self.workspace = .fetching
+        } success: { res in
+            self.workspace = .success(res.data)
+        } failure: { error in
+            self.isFetchFailure = true
+            self.workspace = .failure(error)
         }
     }
     
-    @MainActor
-    public func joinWorkspace() async {
-        joinFlow = .fetching
-//        guard case .success(let workspace) = workspace else {
-//            joinFlow = .idle
-//            return
-//        }
-        do {
-//            let request = JoinWorkspaceRequest(workspaceId: workspace.workspaceId, workspaceCode: code, role: roleType)
-//            try await joinWorkspaceUseCase(request)
-            joinFlow = .success(true)
-        } catch {
-            print(error)
-            joinFlow = .failure
+    public func joinWorkspace() {
+        guard case .success(let w) = workspace else {
+            return
+        }
+        sub(workspaceRepo.joinWorkspace(workspaceId: w.workspaceId, workspaceCode: code, role: roleType)) {
+            self.joinFlow = .fetching
+        } success: { _ in
+            self.joinFlow = .success(true)
+        } failure: { error in
+            self.joinFlow = .failure(error)
         }
     }
 }
