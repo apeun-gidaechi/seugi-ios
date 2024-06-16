@@ -1,4 +1,4 @@
-import PublicInit
+import SwiftBok
 import Foundation
 
 @PublicInit

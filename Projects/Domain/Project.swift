@@ -7,6 +7,6 @@ let project = Project.makeDomain(
         .shared(of: .SwiftUtil),
         .shared(of: .GlobalThirdPartyLibrary),
         .SPM.Flow,
-        .SPM.PublicInit
+        .SPM.SwiftBok
     ]
 )

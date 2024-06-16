@@ -14,14 +14,14 @@ let project = Project.makeShared(
         .shared(target: .DateUtil),
         .shared(target: .GlobalThirdPartyLibrary, dependencies: [
             .SPM.Swinject,
-            .SPM.PublicInit
+            .SPM.SwiftBok
         ]),
         .shared(target: .Secret, dependencies: [
             .SPM.Swinject
         ]),
         .shared(target: .SwiftUIUtil),
         .shared(target: .SwiftUtil, dependencies: [
-            .SPM.PublicInit
+            .SPM.SwiftBok
         ])
     ]
 )

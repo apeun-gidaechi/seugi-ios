@@ -1,4 +1,4 @@
-import PublicInit
+import SwiftBok
 
 @PublicInit
 public struct Base<Data: Entity>: Entity {

@@ -13,5 +13,5 @@ public extension TargetDependency.SPM {
     static let GoogleSignIn = TargetDependency.external(name: "GoogleSignIn")
     static let Moya = TargetDependency.external(name: "Moya")
     static let CombineMoya = TargetDependency.external(name: "CombineMoya")
-    static let PublicInit = TargetDependency.external(name: "PublicInit")
+    static let SwiftBok = TargetDependency.external(name: "SwiftBok")
 }

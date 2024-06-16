@@ -1,4 +1,4 @@
-import PublicInit
+import SwiftBok
 
 @PublicInit
 public struct RetrieveMember: Entity, Equatable {

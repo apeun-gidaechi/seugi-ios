@@ -1,5 +1,5 @@
 import Foundation
-import PublicInit
+import SwiftBok
 
 @PublicInit
 public struct Message: Entity {
