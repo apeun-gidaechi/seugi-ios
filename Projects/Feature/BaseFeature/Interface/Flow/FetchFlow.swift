@@ -62,3 +62,33 @@ public enum FetchFlow<Data: Equatable>: Equatable {
         }
     }
 }
+
+public extension View {
+    
+    func onChangeFetchFlow<T: Equatable>(
+        of value: FetchFlow<T>,
+        success: @escaping () -> Void
+    ) -> some View {
+        self
+            .onChange(of: value) {
+                if case .success = $0 {
+                    success()
+                }
+            }
+    }
+    
+    func onChangeFetchFlow<T: Equatable>(
+        of value: FetchFlow<T>,
+        success: @escaping () -> Void,
+        failure: @escaping () -> Void
+    ) -> some View {
+        self
+            .onChange(of: value) {
+                if case .success = $0 {
+                    success()
+                } else if case .failure = $0 {
+                    failure()
+                }
+            }
+    }
+}
