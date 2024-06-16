@@ -39,7 +39,6 @@ public extension ModulePaths {
         case Home
         case Chat
         case ChatDetail
-        case Room
         case CreateRoom
     }
     

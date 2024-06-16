@@ -58,13 +58,16 @@ public extension Project {
         var targets = additionalTarget
         
         if include.contains(.Interface) {
-            targets.append(.feature(of: type, module: .Interface, dependencies: interfaceDependency))
+            targets.append(.feature(of: type, module: .Interface, dependencies: interfaceDependency + [
+                .domain
+            ] + (type == .Base ? [] : [
+                .feature(of: .Base)
+            ])))
         }
         
         if include.contains(.Feature) {
             targets.append(.feature(of: type, module: .Feature, dependencies: featureDependency + [
-                .feature(of: type, module: .Interface),
-                .feature(of: .Base)
+                .feature(of: type, module: .Interface)
             ]))
         }
         
@@ -88,7 +91,7 @@ public extension Project {
                 "UIApplicationSceneManifest": [
                     "UIApplicationSupportsMultipleScenes": .boolean(false)
                 ],
-                "UILaunchStoryboardName": .string("")
+                "UILaunchStoryboardName": .string("LaunchScreen.storyboard")
             ])
             let target = Target.feature(of: type, module: .Example, infoPlist: infoPlist, dependencies: exampleDependency + [
                 .feature(of: type, module: .Feature)
