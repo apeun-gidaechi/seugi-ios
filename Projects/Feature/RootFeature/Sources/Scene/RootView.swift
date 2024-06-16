@@ -11,7 +11,7 @@ import LaunchScreenFeatureInterface
 public struct RootView: View {
     
     @StateObject private var timerManager = TimerManager()
-    @StateObject private var appState: AppState
+    @StateObject private var appState = AppState()
     @StateObject private var router = Router()
     @StateObject private var joinWorkspaceManager = JoinWorkspaceManager()
     @Inject private var onboardingFactory: any OnboardingFactory
@@ -21,30 +21,19 @@ public struct RootView: View {
     @InjectObject private var viewModel: RootViewModel
     @State private var opacity = 1.0
     
-    public init() {
-        self._appState = StateObject(wrappedValue: .init(
-            mainFlow: .init(
-                cellData: [
-                    .init(type: .home, hasBadge: false),
-                    .init(type: .chat, hasBadge: false),
-                    .init(type: .room, hasBadge: false),
-                    .init(type: .notification, hasBadge: false),
-                    .init(type: .profile, hasBadge: false)
-                ],
-                selectedTab: .home
-            )
-        ))
-    }
+    public init() {}
     
     public var body: some View {
         ZStack {
-            VStack {
-                switch appState.appFlow {
-                case .unAuthorized: onboardingFactory.makeView().eraseToAnyView()
-                        .environmentObject(timerManager)
-                case .notFoundJoinedSchool: joinSchoolFactory.makeView().eraseToAnyView()
-                        .environmentObject(joinWorkspaceManager)
-                case .authorized: mainFactory.makeView().eraseToAnyView()
+            if opacity == 0 {
+                VStack {
+                    switch appState.appFlow {
+                    case .unAuthorized: onboardingFactory.makeView().eraseToAnyView()
+                            .environmentObject(timerManager)
+                    case .notFoundJoinedSchool: joinSchoolFactory.makeView().eraseToAnyView()
+                            .environmentObject(joinWorkspaceManager)
+                    case .authorized: mainFactory.makeView().eraseToAnyView()
+                    }
                 }
             }
             launchScreenFactorry.makeView().eraseToAnyView()
@@ -52,13 +41,18 @@ public struct RootView: View {
         }
         .environmentObject(appState)
         .environmentObject(router)
-        .task {
-            await appState.fetchWorkspaces()
-            router.navigateToRoot()
-            sleep(2)
-            withAnimation {
-                opacity = 0
+        .onAppear {
+            appState.subscribe { [self] subject in
+                switch subject {
+                case .fetchWorkspaceSuccess:
+                    router.navigateToRoot()
+                    sleep(2)
+                    withAnimation {
+                        opacity = 0
+                    }
+                }
             }
+            appState.fetchWorkspaces()
         }
     }
 }

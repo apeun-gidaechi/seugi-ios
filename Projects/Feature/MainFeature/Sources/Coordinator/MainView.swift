@@ -4,18 +4,17 @@ import Component
 import HomeFeatureInterface
 import ChatFeatureInterface
 import ChatDetailFeatureInterface
-import RoomFeatureInterface
 import CreateRoomFeatureInterface
 import DIContainer
 
-public struct MainCoordinator: View {
+public struct MainView: View {
     
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
     
     @Inject private var homeFactory: any HomeFactory
     @Inject private var chatFactory: any ChatFactory
-    @Inject private var roomFactory: any RoomFactory
+    @InjectObject private var chatViewModel: ChatViewModel
     
     public init() {}
     
@@ -30,8 +29,8 @@ public struct MainCoordinator: View {
         ZStack {
             switch appState.mainFlow.selectedTab {
             case .home: homeFactory.makeView().eraseToAnyView()
-            case .chat: chatFactory.makeView().eraseToAnyView()
-            case .room: roomFactory.makeView().eraseToAnyView()
+            case .chat: chatFactory.makeView(roomType: .personal).eraseToAnyView()
+            case .room: chatFactory.makeView(roomType: .group).eraseToAnyView()
             case .notification: EmptyView()
             case .profile: EmptyView()
             }
@@ -49,6 +48,11 @@ public struct MainCoordinator: View {
                     .ignoresSafeArea()
                 }
             }
+        }
+        .environmentObject(chatViewModel)
+        .onAppear {
+            guard let workspace = appState.selectedWorkspace else { return }
+            chatViewModel.fetchChats(workspaceId: workspace.workspaceId)
         }
     }
 }
