@@ -1,21 +1,17 @@
-//
-//  SeugiChatList.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 3/27/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
+import Domain
 
 public struct SeugiChatList: View {
     
-    private let type: SeugiChatListType
+    private let type: RoomType
+    private let room: Room
     
     public init(
-        type: SeugiChatListType = .chat
+        type: RoomType = .personal,
+        room: Room
     ) {
         self.type = type
+        self.room = room
     }
     
     public var body: some View {
@@ -23,11 +19,11 @@ public struct SeugiChatList: View {
             SeugiAvatar(type: .large)
             VStack(alignment: .leading, spacing: 2) {
                 HStack(alignment: .bottom, spacing: 4) {
-                    Text("노영재")
+                    Text(room.chatName)
                         .font(.subtitle(.s2))
                         .seugiColor(.sub(.black))
-                    if case .people(let memberCount) = type {
-                        Text("\(memberCount)")
+                    if case .group = type {
+                        Text(String(room.joinUserId.count))
                             .font(.body(.b2))
                             .seugiColor(.gray(.g500))
                     }
@@ -41,9 +37,9 @@ public struct SeugiChatList: View {
                 Text("12:39")
                     .font(.body(.b2))
                     .seugiColor(.gray(.g500))
-                if case .people(let memberCount) = type,
-                   memberCount > 0 {
-                    SeugiBadge(type: .number(memberCount))
+                if case .group = type,
+                   room.joinUserId.count > 0 {
+                    SeugiBadge(type: .number(room.joinUserId.count))
                 }
             }
         }
