@@ -26,8 +26,8 @@ struct GoogleSignInLabel: View {
 
 public class GoogleVC: UIViewController {
     
-    var onSuccess: ((_ idToken: String) async -> Void)!
-    var onFailure: (() async -> Void)!
+    var onSuccess: ((_ idToken: String) -> Void)!
+    var onFailure: (() -> Void)!
     var buttonLabel: UIHostingController<GoogleSignInLabel>!
     var button: UIButton = {
         let b = UIButton()
@@ -40,7 +40,7 @@ public class GoogleVC: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         buttonLabel = UIHostingController(rootView: .init {
-            //
+            self.googleSignIn()
         })
         configureUI()
         setUpLayout()
@@ -71,15 +71,12 @@ public class GoogleVC: UIViewController {
     @objc
     private func googleSignIn() {
         let signInConfig = GIDConfiguration(clientID: Secret.clientId)
-        print("\(#function) - try google sign in")
         GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
             guard error == nil else { return }
             guard let user else { return }
             
             let idToken = user.authentication.idToken
-            Task {
-                await self.onSuccess(idToken ?? "")
-            }
+            self.onSuccess(idToken ?? "")
         }
     }
 }

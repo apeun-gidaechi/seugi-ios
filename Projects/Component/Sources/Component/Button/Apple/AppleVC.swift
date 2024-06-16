@@ -26,8 +26,8 @@ struct AppleSignInLabel: View {
 
 public class AppleVC: UIViewController {
     
-    var onSuccess: ((_ token: String) async -> Void)!
-    var onFailure: (() async -> Void)!
+    var onSuccess: ((_ token: String) -> Void)!
+    var onFailure: (() -> Void)!
     var buttonLabel: UIHostingController<AppleSignInLabel>!
     var button: UIButton = {
         let b = UIButton()
@@ -103,9 +103,7 @@ extension AppleVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
 //                print("authCodeString: \(authCodeString)")
 //                print("identifyTokenString: \(identifyTokenString)")
                 isFailure = false
-                Task {
-                    await self.onSuccess(identifyTokenString)
-                }
+                onSuccess(identifyTokenString)
                 return
             }
 //            print("useridentifier: \(userIdentifier)")
@@ -113,9 +111,7 @@ extension AppleVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
             break
         }
         if isFailure {
-            Task {
-                await onFailure()
-            }
+            onFailure()
         }
     }
     

@@ -2,12 +2,12 @@ import SwiftUI
 
 public struct SeugiAppleSignInButton: UIViewControllerRepresentable {
     
-    private let onSuccess: (_ token: String) async -> Void
-    private let onFailure: () async -> Void
+    private let onSuccess: (_ token: String) -> Void
+    private let onFailure: () -> Void
     
     public init(
-        onSuccess: @escaping (_: String) async -> Void,
-        onFailure: @escaping () async -> Void
+        onSuccess: @escaping (_: String) -> Void,
+        onFailure: @escaping () -> Void
     ) {
         self.onSuccess = onSuccess
         self.onFailure = onFailure
