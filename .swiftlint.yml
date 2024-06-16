@@ -21,6 +21,9 @@ disabled_rules:
 - valid_ibinspectable
 - attributes
 - type_name
+- force_unwrapping
+- implicitly_unwrapped_optional
+- large_tuple
 
 opt_in_rules:
 - empty_count
@@ -33,7 +36,6 @@ opt_in_rules:
 - enum_case_associated_values_count
 - fatal_error_message
 - first_where
-- force_unwrapping
 - implicitly_unwrapped_optional
 - last_where
 - legacy_random
