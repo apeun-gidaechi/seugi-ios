@@ -6,10 +6,10 @@ import Domain
 public class EmailSignUpViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var name = "1"
-    @Published var email = "hhhello0507@gmail.com"
-    @Published var password = "1"
-    @Published var passwordCheck = "1"
+    @Published var name = ""
+    @Published var email = ""
+    @Published var password = ""
+    @Published var passwordCheck = ""
     
     var isInValidInput: Bool {
         name.isEmpty || email.isEmpty || password.isEmpty || passwordCheck.isEmpty || password != passwordCheck
