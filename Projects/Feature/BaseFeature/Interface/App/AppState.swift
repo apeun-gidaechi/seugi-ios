@@ -85,8 +85,14 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
             }
         } failure: { [self] error in
             withAnimation {
-                appFlow = .notFoundJoinedSchool // - notFoundJoinedSchool
-                workspaces = .failure(error)
+                if case .http(let error) = error {
+                    if error.status == 401 {
+                        appFlow = .unAuthorized // - unAuthorized
+                    }
+                } else {
+                    appFlow = .notFoundJoinedSchool // - notFoundJoinedSchool
+                    workspaces = .failure(error)
+                }
             }
         } finished: { [self] in
             isAppFlowFetching = false
