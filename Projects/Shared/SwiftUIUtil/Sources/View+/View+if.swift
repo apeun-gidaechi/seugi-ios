@@ -22,10 +22,10 @@ public extension View {
     }
     
     @ViewBuilder
-    func ifElse<Content: View>(
+    func `if`<Content: View>(
         _ condition: Bool,
-        true trueTransform: (Self) -> Content,
-        false falseTransform: (Self) -> Content
+        then trueTransform: (Self) -> Content,
+        else falseTransform: (Self) -> Content
     ) -> some View {
         if condition {
             trueTransform(self)
