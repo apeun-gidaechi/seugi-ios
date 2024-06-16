@@ -1,7 +1,7 @@
 import Foundation
 import Domain
 
-final class UserDefaultsKeyValueStore: KeyValueStore {
+final class UserDefaultsKeyValueStore: KeyValueRepo {
     private let userDefaults: UserDefaults
 
     init(userDefaults: UserDefaults) {
