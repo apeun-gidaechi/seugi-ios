@@ -33,6 +33,7 @@ public struct SeugiCodeTextField: View {
                 .labelsHidden()
                 .textFieldStyle(SeugiCodeTextFieldStyle(isFocused: isFocused))
                 .focused($isFocused)
+                .autocorrectionDisabled()
             HStack {
                 ForEach(0..<length, id: \.self) { idx in
                     let char = text.getOrNil(idx: idx) ?? ""

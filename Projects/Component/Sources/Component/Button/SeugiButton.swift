@@ -33,7 +33,6 @@ public struct SeugiButton: View {
             callback()
         } label: {
             Text(!isLoading ? text : "")
-            //                .buttonStyle(SeugiButtonStyle(type: type, size: size))
                 .overlay {
                     if isLoading {
                         ProgressView()

@@ -10,7 +10,7 @@ import SwiftUI
 
 public struct SeugiCategory: View {
     
-    public typealias AsyncAction = () async -> Void
+    public typealias AsyncAction = () -> Void
     
     private static let categoryHeight: CGFloat = 34
     
@@ -34,9 +34,7 @@ public struct SeugiCategory: View {
         let backgroundColor: Color = isSelected ? .seugi(.primary(.p500)) : .seugi(.gray(.g100))
         
         Button {
-            Task {
-                await action()
-            }
+            action()
         } label: {
             Text(text)
                 .font(.subtitle(.s2))
