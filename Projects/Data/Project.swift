@@ -13,10 +13,13 @@ let project = Project.makeData(
             .diContainer
         ]),
         .data(target: .Network, dependencies: [
-            .shared(of: .GlobalThirdPartyLibrary),
             .SPM.Moya,
+            .SPM.CombineMoya,
             .domain,
-            .diContainer
+            .diContainer,
+            .shared(of: .SwiftUtil),
+            .shared(of: .GlobalThirdPartyLibrary),
+            .shared(of: .DateUtil)
         ])
     ]
 )
