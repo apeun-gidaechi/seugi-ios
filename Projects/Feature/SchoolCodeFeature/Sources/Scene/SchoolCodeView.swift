@@ -14,10 +14,8 @@ public struct SchoolCodeView: View {
             SeugiCodeTextFieldForm(text: $joinWorkspaceManager.code, label: "초대코드", length: 6)
                 .padding(.top, 16)
             Spacer()
-            SeugiButton.large("계속하기", type: .primary, isLoading: joinWorkspaceManager.isFetchingWorkspace) {
-                Task {
-                    await joinWorkspaceManager.fetchWorkspace()
-                }
+            SeugiButton.large("계속하기", type: .primary, isLoading: joinWorkspaceManager.isFetchWorkspace) {
+                joinWorkspaceManager.fetchWorkspace()
             }
             .disabled(joinWorkspaceManager.isInValidInput)
             .padding(.bottom, 16)
@@ -25,7 +23,7 @@ public struct SchoolCodeView: View {
         .padding(.horizontal, 20)
         .seugiTopBar("학교 가입")
         .hideBackButton()
-        .alert("초대코드가 올바르지 않습니다", isPresented: $joinWorkspaceManager.showFetchFailureDialog) {
+        .alert("초대코드가 올바르지 않습니다", isPresented: $joinWorkspaceManager.isFetchFailure) {
             Button("닫기", role: .cancel) {}
         } message: {
             Text("다시 입력해주세요")
