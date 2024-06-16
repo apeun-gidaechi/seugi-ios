@@ -1,8 +1,11 @@
 import SwiftUI
 import ChatFeatureInterface
+import Domain
 
 final class ChatFactoryImpl: ChatFactory {
-    func makeView() -> some View {
-        ChatCoordinator()
+    func makeView(roomType: RoomType) -> some View {
+        ChatCoordinator(
+            roomType: roomType
+        )
     }
 }

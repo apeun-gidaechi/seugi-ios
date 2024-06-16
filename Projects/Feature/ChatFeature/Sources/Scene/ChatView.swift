@@ -1,44 +1,60 @@
 import SwiftUI
 import Component
 import BaseFeatureInterface
+import ChatFeatureInterface
+import Domain
 
 public struct ChatView: View {
     
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
-    @StateObject private var vm: ChatViewModel
+    @EnvironmentObject private var vm: ChatViewModel
     
-    public init(
-        vm: ChatViewModel
-    ) {
-        self._vm = StateObject(wrappedValue: vm)
+    private let roomType: RoomType
+    
+    public init(roomType: RoomType) {
+        self.roomType = roomType
+    }
+    
+    private var rooms: FetchFlow<[Room]> {
+        roomType == .personal ? vm.personalRooms : vm.groupRooms
     }
     
     public var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                Button {
-                    router.navigate(to: ChatDestination.chatDetail)
-                } label: {
-                    SeugiChatList()
+                rooms.makeView {
+                    ProgressView()
+                } success: { rooms in
+                    ForEach(rooms, id: \.id) { room in
+                        Button {
+                            router.navigate(to: ChatDestination.chatDetail)
+                        } label: {
+                            SeugiChatList(type: roomType, room: room)
+                        }
+                        .applyAnimation()
+                    }
+                } failure: { _ in
+                    Text("-")
                 }
-                .applyAnimation()
-                Button {
-                    router.navigate(to: ChatDestination.chatDetail)
-                } label: {
-                    SeugiChatList()
-                }
-                .applyAnimation()
             }
         }
-        .seugiTopBar("채팅")
+        .seugiTopBar(roomType == .personal ? "채팅" : "그룹")
         .hideBackButton()
-        .button(.searchLine) {
-            //
-        }
-        .task {
-//            guard let workspace = appState.selectedWorkspace else { return }
-//            await vm.fetchChats(workspaceId: workspace.workspaceId)
+        .if(roomType == .personal) {
+            $0
+                .button(.searchLine) {
+                    //
+                }
+        } else: {
+            $0
+                .button(.addFill) {
+                    router.navigate(to: ChatDestination.createRoom)
+                }
+                .button(.searchLine) {
+                    //
+                }
+                .hideBackButton()
         }
     }
 }
