@@ -1,13 +1,13 @@
 import Moya
 
-enum WorkspaceEndpoint: SeugiEndpoint {
+public enum WorkspaceEndpoint: SeugiEndpoint {
     case getWorkspaces
     case getWorkspaceCode(workspaceId: String)
     case getWorkspace(code: String)
     case joinWorkspace(_ req: JoinWorkspaceReq)
 }
 
-extension WorkspaceEndpoint {
+public extension WorkspaceEndpoint {
     
     static let provider = MoyaProvider<WorkspaceEndpoint>(session: session)
     static let authProvider = MoyaProvider<WorkspaceEndpoint>(session: authSession)

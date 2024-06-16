@@ -2,78 +2,53 @@ import Domain
 import Combine
 import SwiftUtil
 
-final class ChatService: Service, ChatRepo {
-    typealias Target = ChatEndpoint
+final class ChatService: Service<ChatEndpoint>, ChatRepo {
     
     func addMemberGroup(chatRoomId: String?, chatMemberUsers: [Int]) -> APIResult<BaseVoid> {
-        request(.addMemberGroup(.init(chatRoomId: chatRoomId, chatMemberUsers: chatMemberUsers)))
-            .map { $0.toEntity() }
-            .asResult()
+        performRequest(.addMemberGroup(.init(chatRoomId: chatRoomId, chatMemberUsers: chatMemberUsers)))
     }
     
     func kickMemberGroup(chatRoomId: String?, chatMemberUsers: [Int]) -> APIResult<BaseVoid> {
-        request(.kickMemberGroup(.init(chatRoomId: chatRoomId, chatMemberUsers: chatMemberUsers)))
-            .map { $0.toEntity() }
-            .asResult()
+        performRequest(.kickMemberGroup(.init(chatRoomId: chatRoomId, chatMemberUsers: chatMemberUsers)))
     }
     
     func tossMemberGroup(chatRoomId: String?, chatMemberUsers: [Int]) -> APIResult<BaseVoid> {
-        request(.tossMemberGroup(.init(chatRoomId: chatRoomId, chatMemberUsers: chatMemberUsers)))
-            .map { $0.toEntity() }
-            .asResult()
+        performRequest(.tossMemberGroup(.init(chatRoomId: chatRoomId, chatMemberUsers: chatMemberUsers)))
     }
     
     func createGroup(roomName: String, workspaceId: String, joinUsers: [Int], chatRoomImg: String) -> APIResult<Base<String>> {
-        request(.createGroup(.init(roomName: roomName, workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: chatRoomImg)), res: BaseRes<String>.self)
-            .map { $0.toEntity() }
-            .asResult()
+        performRequest(.createGroup(.init(roomName: roomName, workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: chatRoomImg)), res: String.self)
     }
     
     func searchGroup(workspaceId: String, word: String) -> APIResult<Base<[Room]>> {
-        request(.searchGroupByWord(workspaceId: workspaceId, word: word), res: BaseRes<[RoomRes]>.self)
-            .map { $0.toEntity() }
-            .asResult()
+        performRequest(.searchGroupByWord(workspaceId: workspaceId, word: word), res: [RoomRes].self)
     }
     
     func searchGroup(roomId: String) -> APIResult<Base<Room>> {
-        request(.searchGroupById(roomId: roomId), res: BaseRes<RoomRes>.self)
-            .map { $0.toEntity() }
-            .asResult()
+        performRequest(.searchGroupById(roomId: roomId), res: RoomRes.self)
     }
     
     func searchGroup(workspaceId: String) -> APIResult<Base<[Room]>> {
-        request(.searchGroup(workspaceId: workspaceId), res: BaseRes<[RoomRes]>.self)
-            .map { $0.toEntity() }
-            .asResult()
+        performRequest(.searchGroup(workspaceId: workspaceId), res: [RoomRes].self)
     }
     
     func leftGroup(roomId: String) -> APIResult<BaseVoid> {
-        request(.leftGroup(roomId: roomId))
-            .map { $0.toEntity() }
-            .asResult()
+        performRequest(.leftGroup(roomId: roomId))
     }
     
     func createPersonal(roomName: String, workspaceId: String, joinUsers: [Int], chatRoomImg: String) -> APIResult<Base<String>> {
-        request(.createPersonal(.init(roomName: roomName, workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: chatRoomImg)), res: BaseRes<String>.self)
-            .map { $0.toEntity() }
-            .asResult()
+        performRequest(.createPersonal(.init(roomName: roomName, workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: chatRoomImg)), res: String.self)
     }
     
     func searchPersonal(workspaceId: String, word: String) -> APIResult<Base<[Room]>> {
-        request(.searchPersonalByWord(workspaceId: workspaceId, word: word), res: BaseRes<[RoomRes]>.self)
-            .map { $0.toEntity() }
-            .asResult()
+        performRequest(.searchPersonalByWord(workspaceId: workspaceId, word: word), res: [RoomRes].self)
     }
     
     func searchPersonal(roomId: String) -> APIResult<Base<Room>> {
-        request(.searchPersonalById(roomId: roomId), res: BaseRes<RoomRes>.self)
-            .map { $0.toEntity() }
-            .asResult()
+        performRequest(.searchPersonalById(roomId: roomId), res: RoomRes.self)
     }
     
     func searchPersonal(workspaceId: String) -> APIResult<Base<[Room]>> {
-        request(.searchPersonal(workspaceId: workspaceId), res: BaseRes<[RoomRes]>.self)
-            .map { $0.toEntity() }
-            .asResult()
+        performRequest(.searchPersonal(workspaceId: workspaceId), res: [RoomRes].self)
     }
 }

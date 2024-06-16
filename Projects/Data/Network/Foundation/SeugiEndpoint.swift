@@ -2,7 +2,7 @@ import Moya
 import Foundation
 import Secret
 
-protocol SeugiEndpoint: TargetType {
+public protocol SeugiEndpoint: TargetType {
     associatedtype Target: SeugiEndpoint
     var host: String { get }
     var route: (Moya.Method, String, Moya.Task) { get }
@@ -11,12 +11,12 @@ protocol SeugiEndpoint: TargetType {
     static var authProvider: MoyaProvider<Target> { get }
 }
 
-enum Authorization {
+public enum Authorization {
     case authorization
     case none
 }
 
-extension SeugiEndpoint {
+public extension SeugiEndpoint {
     static var session: Session {
         Session(eventMonitors: [APIEventLogger()])
     }

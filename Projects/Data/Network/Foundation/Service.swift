@@ -6,31 +6,19 @@ import Combine
 import Domain
 import Secret
 
-protocol Service {
-    associatedtype Target: SeugiEndpoint
-    var decoder: JSONDecoder { get }
+public class Service<Target: SeugiEndpoint> {
+    
+    var decoder = JSONDecoder()
     
     func request<T: Decodable>(
         _ target: Target.Target,
         res: T.Type
-    ) -> AnyPublisher<T, APIError>
-}
-
-extension Service {
-    
-    var decoder: JSONDecoder {
-        .init()
-    }
-    
-    func request<T: Decodable>(
-        _ target: Target.Target,
-        res: T.Type = BaseVoidRes.self
     ) -> AnyPublisher<T, APIError> {
         return (target.authorization == .authorization ? Target.authProvider : Target.provider)
             .requestPublisher(target)
             .filterSuccessfulStatusCodes() // 200..<300
             .tryMap { result in // map response
-                guard let value = try? decoder.decode(T.self, from: result.data) else {
+                guard let value = try? self.decoder.decode(T.self, from: result.data) else {
                     throw APIError.unknown
                 }
                 return value
@@ -40,12 +28,29 @@ extension Service {
                       let data = error.response?.data else {
                     return APIError.unknown
                 }
-                guard let error = try? decoder.decode(BaseVoidRes.self, from: data) else {
+                guard let error = try? self.decoder.decode(BaseVoidRes.self, from: data) else {
                     return APIError.unknown
                 }
                 return APIError.http(error.toEntity())
             }
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
+    }
+    
+    func performRequest<T: Decodable & EntityMappable>(
+        _ target: Target.Target,
+        res: T.Type
+    ) -> APIResult<Base<T.Entity>> {
+        return request(target, res: BaseRes<T>.self)
+            .map { $0.toEntity() }
+            .asResult()
+    }
+    
+    func performRequest(
+        _ target: Target.Target
+    ) -> APIResult<BaseVoid> {
+        return request(target, res: BaseVoidRes.self)
+            .map { $0.toEntity() }
+            .asResult()
     }
 }
