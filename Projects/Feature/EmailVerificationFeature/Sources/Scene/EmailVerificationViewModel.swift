@@ -4,46 +4,50 @@ import DIContainer
 import Domain
 import SwiftUI
 
-public final class EmailVerificationViewModel: ObservableObject {
+public final class EmailVerificationViewModel: BaseViewModel<EmailVerificationViewModel.EmailVerificationSubject> {
     
-    // MARK: - UseCase
-//    @Inject private var sendEmailCodeUseCase: any SendEmailCodeUseCase
-//    @Inject private var signUpUseCase: any SignUpUseCase
+    public enum EmailVerificationSubject {}
+    
+    // MARK: - Repo
+    @Inject private var emailRepo: EmailRepo
+    @Inject private var memberRepo: MemberRepo
     
     // MARK: - State
     @Published var verificationCode = ""
     @Published var isWaiting = false
-    @Published var isSendEmailFailure = false
-    
-    // dialog
+    @Published var sendEmailFlow: IdleFlow<Bool> = .idle
     @Published var signUpFlow: IdleFlow<Bool> = .idle
+    var isFetchSignUp: Bool { signUpFlow == .fetching }
     
-    public var name = ""
-    public var email = ""
-    public var password = ""
+    var name = ""
+    var email = ""
+    var password = ""
     
     var isInValidInput: Bool {
         verificationCode.count < 6
     }
     
-    @MainActor
-    func sendEmail() async {
-        do {
+    func sendEmail() {
+        sub(emailRepo.send(email: email)) { [self] in
             isWaiting = true
-//            try await sendEmailCodeUseCase(email: email)
-        } catch {
-            isSendEmailFailure = true
+            sendEmailFlow = .fetching
+        } success: { res in
+            print(res)
+            self.sendEmailFlow = .success()
+        } failure: { error in
+            print(error)
+            self.sendEmailFlow = .failure(error)
         }
     }
     
-    @MainActor
-    func signUp() async {
-        do {
-//            let request = SignUpRequest(name: name, email: email, password: password, code: verificationCode)
-//            try await signUpUseCase(request)
-            signUpFlow = .success(true)
-        } catch {
-            signUpFlow = .failure
+    func signUp() {
+        sub(memberRepo.register(name: name, email: email, password: password, code: verificationCode)) {
+            self.signUpFlow = .fetching
+        } success: { _ in
+            self.signUpFlow = .success()
+        } failure: { error in
+            print(error)
+            self.signUpFlow = .failure(error)
         }
     }
 }

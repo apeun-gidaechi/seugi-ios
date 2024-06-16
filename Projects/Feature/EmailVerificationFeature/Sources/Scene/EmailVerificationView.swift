@@ -32,27 +32,11 @@ public struct EmailVerificationView: View {
             SeugiCodeTextFieldForm(text: $viewModel.verificationCode, label: "인증코드", length: 6)
                 .keyboardType(.numberPad)
                 .padding(.top, 16)
-            if viewModel.isWaiting {
-                Text(convertSecondsToTime(timeInSeconds: timerManager.timeRemaining))
-                    .font(.body(.b2))
-                    .seugiColor(.gray(.g600))
-                    .toTrailing()
-            } else {
-                SeugiButton.small("인증 코드 전송", type: .primary) {
-                    timerManager.startTimer {
-                        viewModel.isWaiting = false
-                    }
-                    Task {
-                        await viewModel.sendEmail()
-                    }
-                }
+            emailSend()
                 .toTrailing()
-            }
             Spacer()
-            SeugiButton.large("계속하기", type: .primary) {
-                Task {
-                    await viewModel.signUp()
-                }
+            SeugiButton.large("계속하기", type: .primary, isLoading: viewModel.isFetchSignUp) {
+                viewModel.signUp()
             }
             .disabled(viewModel.isInValidInput)
             .padding(.bottom, 16)
@@ -60,9 +44,15 @@ public struct EmailVerificationView: View {
         .padding(.horizontal, 20)
         .seugiTopBar("이메일 인증")
         .alertWithAnyView("회원가입 실패", when: failureDialog(for: $viewModel.signUpFlow)) {
-            Button("확인", role: .cancel) {}
+            Button("닫기", role: .cancel) {}
+        } message: {
+            if let text = viewModel.signUpFlow.httpError?.message {
+                Text(text)
+            } else {
+                Text("잠시 후 다시 시도해 주세요")
+            }
         }
-        .alertWithAnyView("이메일 전송 실패", when: $viewModel.isSendEmailFailure) {
+        .alertWithAnyView("이메일 전송 실패", when: failureDialog(for: $viewModel.sendEmailFlow)) {
             Button("닫기", role: .cancel) {}
         }
         .onChangeIdleFlow(of: viewModel.signUpFlow) {
@@ -74,5 +64,23 @@ public struct EmailVerificationView: View {
         let minutes = timeInSeconds / 60
         let seconds = timeInSeconds % 60
         return String(format: "%02i분 %02i초 남음", minutes, seconds)
+    }
+}
+
+extension EmailVerificationView {
+    @ViewBuilder
+    private func emailSend() -> some View {
+        if viewModel.isWaiting {
+            Text(convertSecondsToTime(timeInSeconds: timerManager.timeRemaining))
+                .font(.body(.b2))
+                .seugiColor(.gray(.g600))
+        } else {
+            SeugiButton.small("인증 코드 전송", type: .primary) {
+                timerManager.startTimer {
+                    viewModel.isWaiting = false
+                }
+                viewModel.sendEmail()
+            }
+        }
     }
 }

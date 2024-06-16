@@ -1,3 +1,1 @@
-public enum EmailVerificationDestination {
-    
-}
+public enum EmailVerificationDestination {}
