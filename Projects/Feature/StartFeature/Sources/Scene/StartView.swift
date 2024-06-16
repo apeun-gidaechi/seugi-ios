@@ -80,16 +80,16 @@ public struct StartView: View {
                     router.navigate(to: StartDestination.EmailSignIn)
                 }
                 .padding(.top, 20)
-                SeugiAppleSignInButton {
-                    await viewModel.signInWithApple(token: $0)
+                SeugiAppleSignInButton { token in
+                    viewModel.signIn(token: token, provider: .apple)
                 } onFailure: {
-                    viewModel.showSignInFailureDialog = true
+                    viewModel.isSignInFailure = true
                 }
                 .frame(height: 56)
-                SeugiGoogleSignInButton { idToken in
-                    await viewModel.signInWithGoogle(idToken: idToken)
+                SeugiGoogleSignInButton { token in
+                    viewModel.signIn(token: token, provider: .google)
                 } onFailure: {
-                    viewModel.showSignInFailureDialog = true
+                    viewModel.isSignInFailure = true
                 }
                 .frame(height: 56)
                 .frame(maxWidth: .infinity)
@@ -99,14 +99,18 @@ public struct StartView: View {
             .presentationDetents([.height(256)])
         }
         .eraseToAnyView()
-        .alert("로그인 실패", isPresented: $viewModel.showSignInFailureDialog) {
+        .alert("로그인 실패", isPresented: $viewModel.isSignInFailure) {
             Button("닫기", role: .cancel) {}
+        } message: {
+            Text("잠시 후 다시 시도해 주세요")
         }
-//        .onChange(of: viewModel.signInFlow) {
-//            if case .success(let token) = $0 {
-//                appState.setAccessToken(with: token.accessToken)
-//                appState.setRefreshToken(with: token.refreshToken)
-//            }
-//        }
+        .onAppear {
+            viewModel.subscribe { subject in
+                switch subject {
+                case .signInSuccess(let token):
+                    appState.token = token
+                }
+            }
+        }
     }
 }
