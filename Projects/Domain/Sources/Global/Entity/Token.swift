@@ -1,7 +1,7 @@
 import PublicInit
 
 @PublicInit
-public struct Token {
+public struct Token: Entity {
     public let accessToken: String
     public let refreshToken: String
 }
