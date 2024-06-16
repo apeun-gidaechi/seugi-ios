@@ -1,10 +1,11 @@
 import SwiftBok
 
 @PublicInit
+@PublicMembers
 public struct RetrieveMember: Entity, Equatable {
-    let id: Int
-    let email: String
-    let birth: String
-    let name: String
-    let picture: String
+    public let id: Int
+    public let email: String
+    public let birth: String
+    public let name: String
+    public let picture: String
 }

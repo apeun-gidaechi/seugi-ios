@@ -2,6 +2,7 @@ import Foundation
 import SwiftBok
 
 @PublicInit
+@PublicMembers
 public struct Message: Entity {
     public let id: String?
     public let chatRoomId: String

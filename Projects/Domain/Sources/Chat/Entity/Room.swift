@@ -2,6 +2,7 @@ import SwiftBok
 import Foundation
 
 @PublicInit
+@PublicMembers
 public struct Room: Entity, Equatable {
     public static func == (lhs: Room, rhs: Room) -> Bool {
         lhs.id == rhs.id
