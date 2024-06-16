@@ -1,6 +1,23 @@
 import Foundation
 
 public extension Date {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let text = try container.decode(String.self)
+        
+        if let date = DateFormatter.localDateTime.date(from: text) {
+            self = date
+        }
+        
+        if let date = DateFormatter.localDate.date(from: text) {
+            self = date
+        }
+        
+        self = .now
+    }
+}
+
+public extension Date {
     var timeAgo: String {
         let currentDate = Date()
         let calendar = Calendar.current
