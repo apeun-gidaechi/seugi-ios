@@ -30,9 +30,7 @@ public struct JoinSuccessView: View {
             }
             Spacer()
             SeugiButton.large("계속하기", type: .primary) {
-                Task {
-                    await joinWorkspaceManager.joinWorkspace()
-                }
+                joinWorkspaceManager.joinWorkspace()
             }
             .padding(.bottom, 16)
         }
