@@ -1,10 +1,51 @@
 import SwiftUI
+import Domain
 
 public enum IdleFlow<Data: Equatable>: Equatable {
-    case success(_ data: Data)
+    case success(_ data: Data = true)
     case idle
-    case failure
+    case failure(_ error: APIError)
     case fetching
+    
+    public var isSuccess: Bool {
+        if case .success = self {
+            true
+        } else {
+            false
+        }
+    }
+    
+    public var isFailure: Bool {
+        if case .failure = self {
+            true
+        } else {
+            false
+        }
+    }
+    
+    public var data: Data? {
+        if case .success(let data) = self {
+            data
+        } else {
+            nil
+        }
+    }
+    
+    public var error: APIError? {
+        if case .failure(let error) = self {
+            error
+        } else {
+            nil
+        }
+    }
+    
+    public var httpError: BaseVoid? {
+        if case .http(let baseVoid) = error {
+            baseVoid
+        } else {
+            nil
+        }
+    }
 }
 
 public func successDialog(for flow: Binding<IdleFlow<Bool>>) -> Binding<Bool> {
@@ -17,7 +58,7 @@ public func successDialog(for flow: Binding<IdleFlow<Bool>>) -> Binding<Bool> {
 
 public func failureDialog(for flow: Binding<IdleFlow<Bool>>) -> Binding<Bool> {
     Binding {
-        flow.wrappedValue == .failure
+        flow.wrappedValue.isFailure
     } set: { _ in
         flow.wrappedValue = .idle
     }

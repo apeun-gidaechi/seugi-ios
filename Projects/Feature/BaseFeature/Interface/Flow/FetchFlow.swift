@@ -1,7 +1,64 @@
 import SwiftUI
+import Domain
 
 public enum FetchFlow<Data: Equatable>: Equatable {
     case success(_ data: Data)
-    case failure
+    case failure(_ error: APIError = .unknown)
     case fetching
+    
+    public var isSuccess: Bool {
+        if case .success = self {
+            true
+        } else {
+            false
+        }
+    }
+    
+    public var isFailure: Bool {
+        if case .failure = self {
+            true
+        } else {
+            false
+        }
+    }
+    
+    public var data: Data? {
+        if case .success(let data) = self {
+            data
+        } else {
+            nil
+        }
+    }
+    
+    public var error: APIError? {
+        if case .failure(let error) = self {
+            error
+        } else {
+            nil
+        }
+    }
+    
+    public var httpError: BaseVoid? {
+        if case .http(let baseVoid) = error {
+            baseVoid
+        } else {
+            nil
+        }
+    }
+    
+    @ViewBuilder
+    public func makeView(
+        @ViewBuilder fetching: @escaping () -> some View,
+        @ViewBuilder success: @escaping (Data) -> some View,
+        @ViewBuilder failure: @escaping (APIError) -> some View
+    ) -> some View {
+        switch self {
+        case .success(let data):
+            success(data)
+        case .failure(let error):
+            failure(error)
+        case .fetching:
+            fetching()
+        }
+    }
 }

@@ -13,7 +13,6 @@ public final class Router: ObservableObject {
     public init() {}
 
     public func navigate(to destination: any Hashable) {
-        print("navigate - \(destination)")
         navPath.append(destination)
     }
 
