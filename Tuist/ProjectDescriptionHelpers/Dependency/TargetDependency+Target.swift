@@ -53,7 +53,7 @@ public extension TargetDependency {
     ) -> TargetDependency {
         .project(
             target: target.rawValue,
-            path: .relativeToShared(target.rawValue)
+            path: .shared
         )
     }
 }

@@ -38,7 +38,7 @@ public struct SeugiChatList: View {
                     .font(.body(.b2))
                     .seugiColor(.gray(.g500))
                 if case .group = type,
-                   room.joinUserId.count > 0 {
+                   !room.joinUserId.isEmpty {
                     SeugiBadge(type: .number(room.joinUserId.count))
                 }
             }

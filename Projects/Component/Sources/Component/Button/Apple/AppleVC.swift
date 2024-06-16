@@ -2,6 +2,7 @@ import UIKit
 import SwiftUI
 import AuthenticationServices
 import SnapKit
+import Flow
 
 struct AppleSignInLabel: View {
     
@@ -89,24 +90,12 @@ extension AppleVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
         var isFailure = true
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            // You can create an account in your system.
-            let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
-            
-            if  let authorizationCode = appleIDCredential.authorizationCode,
-                let identityToken = appleIDCredential.identityToken,
-                let authCodeString = String(data: authorizationCode, encoding: .utf8),
-                let identifyTokenString = String(data: identityToken, encoding: .utf8) {
-//                print("authorizationCode: \(authorizationCode)")
-//                print("identityToken: \(identityToken)")
-//                print("authCodeString: \(authCodeString)")
-//                print("identifyTokenString: \(identifyTokenString)")
+            if let identityToken = appleIDCredential.identityToken,
+               let identifyTokenString = String(data: identityToken, encoding: .utf8) {
                 isFailure = false
                 onSuccess(identifyTokenString)
                 return
             }
-//            print("useridentifier: \(userIdentifier)")
         default:
             break
         }

@@ -26,8 +26,8 @@ public extension ProjectDescription.Path {
     static var data: Self {
         .relativeToRoot("Projects/Data")
     }
-    static func relativeToShared(_ path: String) -> Self {
-        .relativeToRoot("Projects/Shared/\(path)")
+    static var shared: Self {
+        .relativeToRoot("Projects/Shared")
     }
     static func relativeToXCConfig(_ path: String) -> Self {
         .relativeToRoot("XCConfig/\(path)")

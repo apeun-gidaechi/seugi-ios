@@ -19,7 +19,7 @@ public extension Target {
         .makeTarget(
             name: "Seugi-\(type.rawValue)",
             product: .app,
-            bundleId: "com.\(env.name).\(type.rawValue)",
+            bundleId: "com.\(env.name)",
             infoPlist: infoPlist,
             sources: ["Sources/**"],
             resources: ["Resources/**"],
@@ -73,7 +73,10 @@ public extension Target {
             infoPlist: infoPlist,
             sources: ["\(target.rawValue)/**"],
             scripts: [.swiftLint],
-            dependencies: dependencies
+            dependencies: dependencies + [
+                .domain,
+                .diContainer
+            ]
         )
     }
     
@@ -87,7 +90,7 @@ public extension Target {
             product: .framework,
             bundleId: "com.\(env.name).\(target.rawValue.lowercased())",
             infoPlist: infoPlist,
-            sources: ["Sources/**"],
+            sources: ["\(target.rawValue)/**"],
             scripts: [.swiftLint],
             dependencies: dependencies
         )

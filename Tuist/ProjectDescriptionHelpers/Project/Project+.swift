@@ -111,16 +111,13 @@ public extension Project {
      공통 공유 모듈
      */
     static func makeShared(
-        type: ModulePaths.Shared,
         packages: [Package] = [],
-        dependency: [TargetDependency] = []
+        targets: [Target] = []
     ) -> Self {
         return .makeProject(
-            name: type.rawValue,
+            name: "Shared",
             packages: packages,
-            targets: [
-                .shared(target: type, dependencies: dependency)
-            ]
+            targets: targets
         )
     }
     
