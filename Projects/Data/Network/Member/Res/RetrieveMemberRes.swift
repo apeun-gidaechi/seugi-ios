@@ -1,6 +1,6 @@
 import Domain
 
-struct RetrieveMemberRes: Decodable, EntityMappable {
+struct RetrieveMemberRes: SeugiResponse {
     let id: Int
     let email: String
     let birth: String

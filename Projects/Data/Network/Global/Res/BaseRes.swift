@@ -1,7 +1,7 @@
 import SwiftUtil
 import Domain
 
-struct BaseRes<Data: Decodable & EntityMappable>: Decodable, EntityMappable {
+struct BaseRes<Data: SeugiResponse>: SeugiResponse {
     let status: Int
     let success: Bool
     let state: String
@@ -19,7 +19,7 @@ struct BaseRes<Data: Decodable & EntityMappable>: Decodable, EntityMappable {
     }
 }
 
-struct BaseVoidRes: Decodable {
+struct BaseVoidRes: SeugiResponse {
     let status: Int
     let success: Bool
     let state: String

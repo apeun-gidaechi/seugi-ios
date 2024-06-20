@@ -29,3 +29,5 @@ extension Array: EntityMappable where Element: EntityMappable {
         map { $0.toEntity() }
     }
 }
+
+typealias SeugiResponse = Decodable & EntityMappable
