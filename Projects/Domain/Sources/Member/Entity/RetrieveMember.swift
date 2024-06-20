@@ -1,7 +1,7 @@
 import SwiftBok
 
-@PublicInit
-@PublicMembers
+@Init()
+@Members()
 public struct RetrieveMember: Entity, Equatable {
     public let id: Int
     public let email: String

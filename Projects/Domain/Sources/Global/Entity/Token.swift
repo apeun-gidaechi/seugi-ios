@@ -1,7 +1,7 @@
 import SwiftBok
 
-@PublicInit
-@PublicMembers
+@Init()
+@Members()
 public struct Token: Entity {
     public let accessToken: String
     public let refreshToken: String

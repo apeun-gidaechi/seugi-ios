@@ -1,8 +1,8 @@
 import Foundation
 import SwiftBok
 
-@PublicInit
-@PublicMembers
+@Init()
+@Members()
 public struct Message: Entity {
     public let id: String?
     public let chatRoomId: String

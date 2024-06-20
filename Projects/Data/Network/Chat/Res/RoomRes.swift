@@ -13,6 +13,9 @@ struct RoomRes: Decodable, EntityMappable {
     var createdAt: Date
     let chatStatusEnum: ChatStatusEnum
     let joinUserId: [RetrieveMemberRes]
+    let lastMessage: String
+    let lastMessageTimestamp: Date
+    let notReadCnt: Int
     
     func toEntity() -> Room {
         Room(

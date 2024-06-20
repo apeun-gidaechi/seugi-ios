@@ -1,7 +1,7 @@
 import SwiftBok
 
-@PublicInit
-@PublicMembers
+@Init()
+@Members()
 public struct Emoji: Entity {
     public let emojiId: Int?
     public let userId: [Int]

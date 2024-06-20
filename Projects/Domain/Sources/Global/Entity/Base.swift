@@ -1,7 +1,7 @@
 import SwiftBok
 
-@PublicInit
-@PublicMembers
+@Init()
+@Members()
 public struct Base<Data: Entity>: Entity {
     public let status: Int
     public let success: Bool
@@ -10,8 +10,8 @@ public struct Base<Data: Entity>: Entity {
     public let data: Data
 }
 
-@PublicInit
-@PublicMembers
+@Init()
+@Members()
 public struct BaseVoid: Entity, Equatable {
     public let status: Int
     public let success: Bool

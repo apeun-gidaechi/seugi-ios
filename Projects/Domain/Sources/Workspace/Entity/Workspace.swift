@@ -1,7 +1,7 @@
 import SwiftBok
 
-@PublicInit
-@PublicMembers
+@Init()
+@Members()
 public struct Workspace: Entity, Equatable {
     public let workspaceId: String
     public let workspaceName: String

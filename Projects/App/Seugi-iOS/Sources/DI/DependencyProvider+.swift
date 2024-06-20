@@ -15,7 +15,6 @@ import LaunchScreenFeature
 import MainFeature
 import OAuthSignUpFeature
 import OnboardingFeature
-import RoomFeature
 import RootFeature
 import SchoolCodeFeature
 import SelectingJobFeature
