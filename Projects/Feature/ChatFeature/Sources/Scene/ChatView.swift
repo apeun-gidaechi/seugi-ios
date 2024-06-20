@@ -6,9 +6,14 @@ import Domain
 
 public struct ChatView: View {
     
+    // MARK: - Object
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var vm: ChatViewModel
+    
+    // MARK: - State
+    @State private var isSearching = false
+    @FocusState private var searchFocus: Bool
     
     private let roomType: RoomType
     
@@ -24,7 +29,7 @@ public struct ChatView: View {
         ScrollView {
             VStack(spacing: 0) {
                 rooms.makeView {
-                    ProgressView()
+                    EmptyView()
                 } success: { rooms in
                     ForEach(rooms, id: \.id) { room in
                         Button {
@@ -38,23 +43,41 @@ public struct ChatView: View {
                     Text("-")
                 }
             }
+            .frame(maxWidth: .infinity)
+            .background(.clear)
         }
-        .seugiTopBar(roomType == .personal ? "채팅" : "그룹")
-        .hideBackButton()
-        .if(roomType == .personal) {
-            $0
+        .hideKeyboardWhenTap()
+        .refreshable {
+            if let selectedWorkspace = appState.selectedWorkspace {
+                vm.fetchChats(workspaceId: selectedWorkspace.workspaceId)
+            }
+        }
+        .seugiTopBar(roomType == .personal ? "채팅" : "그룹") {
+            withAnimation {
+                isSearching = false
+            }
+        }
+        .hideTitle(isSearching)
+        .subView {
+            if isSearching {
+                TextField("채팅방 검색", text: .constant(""))
+                    .focused($searchFocus)
+            }
+        }
+        .if(!isSearching) { view in
+            view.hideBackButton()
                 .button(.searchLine) {
-                    //
+                    withAnimation {
+                        isSearching = true
+                        searchFocus = true
+                    }
                 }
-        } else: {
-            $0
-                .button(.addFill) {
-                    router.navigate(to: ChatDestination.createRoom)
+                .if(roomType != .personal) { view in
+                    view.button(.addFill) {
+                        router.navigate(to: ChatDestination.createRoom)
+                    }
+                    .hideBackButton()
                 }
-                .button(.searchLine) {
-                    //
-                }
-                .hideBackButton()
         }
     }
 }

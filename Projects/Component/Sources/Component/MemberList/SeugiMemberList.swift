@@ -1,23 +1,19 @@
-//
-//  SeugiMemberList.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 3/28/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
+import Domain
 
 public struct SeugiMemberList<Content>: View where Content: View {
     
-    private var type: SeugiMemberListType
-    private var content: () -> Content
+    private let type: SeugiMemberListType
+    private let member: RetrieveProfile
+    private let content: () -> Content
     
     public init(
         type: SeugiMemberListType = .normal,
+        member: RetrieveProfile,
         @ViewBuilder content: @escaping () -> Content = { EmptyView() }
     ) {
         self.type = type
+        self.member = member
         self.content = content
     }
     
@@ -37,7 +33,7 @@ public struct SeugiMemberList<Content>: View where Content: View {
                     .font(.subtitle(.s2))
                     .seugiColor(.primary(.p400))
             } else {
-                Text("노영재")
+                Text("\(member.nick)")
                     .font(.subtitle(.s2))
                     .seugiColor(.sub(.black))
             }

@@ -49,6 +49,7 @@ public struct MainView: View {
                 }
             }
         }
+        .ignoresSafeArea(.keyboard)
         .environmentObject(chatViewModel)
         .onAppear {
             guard let workspace = appState.selectedWorkspace else { return }

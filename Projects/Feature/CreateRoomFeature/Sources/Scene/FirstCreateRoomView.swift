@@ -16,20 +16,30 @@ public struct FirstCreateRoomView: View {
     public var body: some View {
         VStack(spacing: 0) {
             selectMember()
-            ScrollView {
-                LazyVStack(spacing: 0) {
-                    ForEach(0..<10, id: \.self) { _ in
-                        Button {} label: {
-                            SeugiMemberList {
-                                SeugiToggle(isOn: .constant(true), type: .checkbox(size: .large))
+            vm.members.makeView {
+                ProgressView()
+                Spacer()
+            } success: { members in
+                ScrollView {
+                    LazyVStack(spacing: 0) {
+                        ForEach(members, id: \.memberId) { member in
+                            Button {
+                                //
+                            } label: {
+                                SeugiMemberList(member: member) {
+                                    SeugiToggle(isOn: .constant(true), type: .checkbox(size: .large))
+                                }
                             }
+                            .applyAnimation()
                         }
-                        .applyAnimation()
                     }
                 }
+                .scrollIndicators(.hidden)
+                Spacer()
+            } failure: { _ in
+                Text("불러오기 실패")
+                    .font(.body(.b1))
             }
-            .scrollIndicators(.hidden)
-            Spacer()
         }
         .seugiTopBar("멤버 선택")
         .subView {
