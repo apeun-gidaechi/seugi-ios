@@ -4,28 +4,9 @@ import Foundation
 public class APIEventLogger: EventMonitor {
     
     public func requestDidFinish(_ request: Request) {
-        print("🛰 NETWORK Reqeust LOG")
-        print(
-            "URL: " + (request.request?.url?.absoluteString ?? "") + "\n"
-            + "Method: " + (request.request?.httpMethod ?? "") + "\n"
-            + "Headers: " + "\(request.request?.allHTTPHeaderFields ?? [:])" + "\n"
-        )
-        if let str = request.request?.httpBody?.toPrettyPrintedString {
-            print("Body: \(str)")
-        } else {
-            print("Body: is not JSON")
-        }
+        
     }
     
-    public func request<Value>(_ request: DataRequest, didParseResponse response: DataResponse<Value, AFError>) {
-        print("🛰 NETWORK Response LOG")
-        print(
-            "URL: " + (request.request?.url?.absoluteString ?? "") + "\n"
-            + "Result: " + "\(response.result)" + "\n"
-            + "StatusCode: " + "\(response.response?.statusCode ?? 0)" + "\n"
-            + "Data: \(response.data?.toPrettyPrintedString ?? "")"
-        )
-    }
 }
 
 public extension Data {

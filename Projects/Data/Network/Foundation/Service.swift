@@ -8,12 +8,13 @@ import Secret
 
 public class Service<Target: SeugiEndpoint> {
     
-    var decoder = JSONDecoder()
+    private let decoder = JSONDecoder()
     
     func request<T: Decodable>(
         _ target: Target.Target,
         res: T.Type
     ) -> AnyPublisher<T, APIError> {
+        self.requestLog(target: target)
         return (target.authorization == .authorization ? Target.authProvider : Target.provider)
             .requestPublisher(target)
             .filterSuccessfulStatusCodes() // 200..<300
@@ -21,6 +22,7 @@ public class Service<Target: SeugiEndpoint> {
                 guard let value = try? self.decoder.decode(T.self, from: result.data) else {
                     throw APIError.unknown
                 }
+                self.responeLog(target: target, response: result)
                 return value
             }
             .mapError { error in // map error
@@ -52,5 +54,22 @@ public class Service<Target: SeugiEndpoint> {
         return request(target, res: BaseVoidRes.self)
             .map { $0.toEntity() }
             .asResult()
+    }
+    
+    private func requestLog(target: Target.Target) {
+        print("🛰 NETWORK Reqeust LOG")
+        print(
+            "URL: \(target.host)/\(target.path)" + "\n"
+            + "Method: \(target.method.rawValue)"
+        )
+    }
+    
+    private func responeLog(target: Target.Target, response: Moya.Response) {
+        print("🛰 NETWORK Response LOG")
+        print(
+            "URL: \(target.host)/\(target.path)" + "\n"
+            + "StatusCode: " + "\(response.response?.statusCode ?? 0)" + "\n"
+            + "Data: \(response.data.toPrettyPrintedString ?? "")"
+        )
     }
 }

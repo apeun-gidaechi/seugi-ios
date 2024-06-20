@@ -84,6 +84,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
                 appFlow = .authorized // - authorized
             }
         } failure: { [self] error in
+            print(error)
             withAnimation {
                 if case .http(let error) = error {
                     if error.status == 401 {

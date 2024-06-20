@@ -21,6 +21,7 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
         } success: { res in
             self.personalRooms = .success(res.data)
         } failure: { error in
+            print(error)
             self.personalRooms = .failure(error)
         }
         sub(chatRepo.searchGroup(workspaceId: workspaceId)) {
@@ -28,6 +29,7 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
         } success: { res in
             self.groupRooms = .success(res.data)
         } failure: { error in
+            print(error)
             self.groupRooms = .failure(error)
         }
     }
