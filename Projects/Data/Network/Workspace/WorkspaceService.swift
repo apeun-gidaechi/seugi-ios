@@ -17,4 +17,8 @@ public final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
     public func joinWorkspace(workspaceId: String, workspaceCode: String, role: WorkspaceRole) -> APIResult<BaseVoid> {
         performRequest(.joinWorkspace(.init(workspaceId: workspaceId, workspaceCode: workspaceCode, role: role)))
     }
+    
+    public func getMembers(workspaceId: String) -> APIResult<Base<[RetrieveProfile]>> {
+        performRequest(.getMembers(workspaceId: workspaceId), res: [RetrieveProfileRes].self)
+    }
 }

@@ -1,6 +1,6 @@
 import Domain
 
-struct WorkspaceRes: Decodable, EntityMappable {
+struct WorkspaceRes: SeugiResponse {
     let workspaceId: String
     let workspaceName: String
     let workspaceImageUrl: String
