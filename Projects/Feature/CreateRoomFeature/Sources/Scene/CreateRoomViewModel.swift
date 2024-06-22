@@ -24,4 +24,18 @@ public final class CreateRoomViewModel: BaseViewModel<CreateRoomViewModel.Create
             self.members = .failure($0)
         }
     }
+    
+    func selectMember(member: RetrieveProfile, selected: Bool) {
+        if !selected {
+            selectedMembers.append(member)
+        } else {
+            removeMember(member: member)
+        }
+    }
+    
+    func removeMember(member: RetrieveProfile) {
+        selectedMembers = selectedMembers.filter {
+            $0.member.id != member.member.id
+        }
+    }
 }

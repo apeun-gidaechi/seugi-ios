@@ -17,6 +17,7 @@ public struct FirstCreateRoomView: View {
         VStack(spacing: 0) {
             selectMember()
             vm.members.makeView {
+                Spacer()
                 ProgressView()
                 Spacer()
             } success: { members in
@@ -28,15 +29,10 @@ public struct FirstCreateRoomView: View {
                             }
                             SeugiMemberList(member: member) {
                                 SeugiToggle(isOn: .constant(selected), type: .checkbox(size: .large))
+                                    .disabled(true)
                             }
                             .button {
-                                if !selected {
-                                    vm.selectedMembers.append(member)
-                                } else {
-                                    vm.selectedMembers = vm.selectedMembers.filter {
-                                        $0.member.id != member.member.id
-                                    }
-                                }
+                                vm.selectMember(member: member, selected: selected)
                             }
                             .applyAnimation()
                         }
@@ -65,26 +61,40 @@ public struct FirstCreateRoomView: View {
     @ViewBuilder
     private func selectMember() -> some View {
         HStack {
-            HFlow(itemSpacing: 4, rowSpacing: 4) {
-                ForEach(vm.selectedMembers, id: \.member.id) { member in
-                    SeugiSelectingMember(member: member) {}
+            if vm.selectedMembers.isEmpty {
+                Text("멤버를 선택해 주세요")
+                    .font(.body(.b2))
+                    .seugiColor(.gray(.g500))
+                    .padding(.leading, 8)
+            } else {
+                HFlow(itemSpacing: 4, rowSpacing: 4) {
+                    ForEach(vm.selectedMembers, id: \.member.id) { member in
+                        SeugiSelectingMember(member: member) {
+                            vm.removeMember(member: member)
+                        }
+                    }
                 }
             }
             Spacer()
         }
         .frame(maxWidth: .infinity)
         .padding(4)
-        .overlay(
-            GeometryReader { geo in
-                Color.clear.onAppear {
-                    contentSize = geo.size
+        .onReadSize { size in
+            // count <= 1 일때 애니메이션 이상해서 조건으로 분기함
+            if vm.selectedMembers.count > 1 {
+                withAnimation {
+                    contentSize = size
                 }
+            } else {
+                contentSize = size
             }
-        )
+        }
         .scrollOnOverflow(300)
         .frame(height: min(contentSize.height, 300))
         .frame(minHeight: 52)
         .stroke(12, content: Color.seugi(.gray(.g300)))
         .padding(.horizontal, 16)
+        .padding(.bottom, 8)
+        .seugiBackground(.sub(.white))
     }
 }
