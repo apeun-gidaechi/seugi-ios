@@ -13,6 +13,7 @@ public final class CreateRoomViewModel: BaseViewModel<CreateRoomViewModel.Create
     // MARK: - State
     @Published var isFetchMembers = false
     @Published var members: FetchFlow<[RetrieveProfile]> = .fetching
+    @Published var selectedMembers: [RetrieveProfile] = []
     
     func fetchWorkspaceMembers(workspaceId: String) {
         sub(workspaceRepo.getMembers(workspaceId: workspaceId)) {

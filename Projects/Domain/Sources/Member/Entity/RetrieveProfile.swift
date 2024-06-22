@@ -3,7 +3,7 @@ import SwiftBok
 @Init()
 @Members()
 public struct RetrieveProfile: Entity {
-    public let memberId: Int
+    public let member: RetrieveMember
     public let workspaceId: String
     public let status: String
     public let nick: String

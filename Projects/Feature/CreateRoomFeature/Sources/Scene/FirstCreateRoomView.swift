@@ -22,7 +22,7 @@ public struct FirstCreateRoomView: View {
             } success: { members in
                 ScrollView {
                     LazyVStack(spacing: 0) {
-                        ForEach(members, id: \.memberId) { member in
+                        ForEach(members, id: \.member.id) { member in
                             Button {
                                 //
                             } label: {
@@ -41,14 +41,16 @@ public struct FirstCreateRoomView: View {
                     .font(.body(.b1))
             }
         }
+        .onAppear {
+            if let selectedWorkspace = appState.selectedWorkspace {
+                vm.fetchWorkspaceMembers(workspaceId: selectedWorkspace.workspaceId)
+            }
+        }
         .seugiTopBar("멤버 선택")
         .subView {
             SeugiButton.small("완료", type: .transparent) {
                 router.navigate(to: CreateRoomDestination.secondCreateRoom)
             }
-        }
-        .onChange(of: contentSize.height) {
-            print($0)
         }
     }
     
@@ -56,8 +58,8 @@ public struct FirstCreateRoomView: View {
     private func selectMember() -> some View {
         HStack {
             HFlow(itemSpacing: 4, rowSpacing: 4) {
-                ForEach(0..<30, id: \.self) { _ in
-                    SeugiSelectingMember {}
+                ForEach(vm.selectedMembers, id: \.member.id) { member in
+                    SeugiSelectingMember(member: member) {}
                 }
             }
             Spacer()

@@ -1,7 +1,7 @@
 import Domain
 
 struct RetrieveProfileRes: SeugiResponse {
-    let memberId: Int
+    let member: RetrieveMemberRes
     let workspaceId: String
     let status: String
     let nick: String
@@ -13,7 +13,7 @@ struct RetrieveProfileRes: SeugiResponse {
     
     func toEntity() -> RetrieveProfile {
         RetrieveProfile(
-            memberId: memberId,
+            member: member.toEntity(),
             workspaceId: workspaceId,
             status: status,
             nick: nick,

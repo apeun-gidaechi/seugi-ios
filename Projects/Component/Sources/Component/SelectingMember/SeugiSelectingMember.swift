@@ -1,19 +1,23 @@
 import SwiftUI
 import SwiftUIUtil
+import Domain
 
 public struct SeugiSelectingMember: View {
     
     private let action: () -> Void
+    private let member: RetrieveProfile
     
     public init(
+        member: RetrieveProfile,
         action: @escaping () -> Void
     ) {
         self.action = action
+        self.member = member
     }
     
     public var body: some View {
         HStack(spacing: 4) {
-            Text("노영재 1세")
+            Text(member.member.name)
                 .font(.body(.b2))
                 .seugiColor(.gray(.g600))
             Button {
