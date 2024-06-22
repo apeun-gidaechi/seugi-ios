@@ -16,7 +16,17 @@
 - Clean Architecture
 
 ## 🏃‍♂️ Run Project
+
+### Files
+- Add `./XCConfig/Config.xcconfig`
+- Add `./Projects/App/Seugi-iOS/Resources/GoogleService-Info.plist`
+
+### Project
+- Tusit version: 3.35.1
+- [Use mise to install](https://docs.tuist.io/guide/introduction/installation)
+
+
 ```bash
-tuist install
-make generate
+mise exec -- tuist fetch
+make
 ```
