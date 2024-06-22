@@ -18,10 +18,11 @@ public class Service<Target: SeugiEndpoint> {
             .requestPublisher(target)
             .filterSuccessfulStatusCodes() // 200..<300
             .tryMap { result in // map response
+                self.responeLog(target: target, response: result)
                 guard let value = try? self.decoder.decode(T.self, from: result.data) else {
+                    print("❌ Decoding Error")
                     throw APIError.unknown
                 }
-                self.responeLog(target: target, response: result)
                 return value
             }
             .mapError { error in // map error
