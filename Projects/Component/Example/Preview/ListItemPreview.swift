@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import DesignSystem
+import Component
 
 struct ListItemPreview: View {
     @State var isOn = false

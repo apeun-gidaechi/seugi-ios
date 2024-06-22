@@ -48,7 +48,7 @@ public extension Target {
     }
     
     static func domain(
-        name: String = "Domain",
+        name: String = ModulePaths.Single.Domain.rawValue,
         infoPlist: InfoPlist = .default,
         product: Product = .framework,
         sources: SourceFilesList = ["Sources/**"],
@@ -101,16 +101,19 @@ public extension Target {
     }
     
     static func component(
+        name: String = ModulePaths.Single.Component.rawValue,
         infoPlist: InfoPlist = .default,
+        product: Product = .framework,
+        sources: SourceFilesList = ["Sources/**"],
         resources: ResourceFileElements? = nil,
         dependencies: [TargetDependency] = []
     ) -> Self {
         .makeTarget(
-            name: "Component",
-            product: .framework,
-            bundleId: "com.\(env.name).\(ModulePaths.Single.Component.rawValue.lowercased())",
+            name: name,
+            product: product,
+            bundleId: "com.\(env.name).\(name.lowercased())",
             infoPlist: infoPlist,
-            sources: ["Sources/**"],
+            sources: sources,
             resources: resources,
             scripts: [.swiftLint],
             dependencies: dependencies
@@ -122,7 +125,7 @@ public extension Target {
         dependencies: [TargetDependency]
     ) -> Self {
         .makeTarget(
-            name: "DIContainer",
+            name: ModulePaths.Single.DIContainer.rawValue,
             product: .framework,
             bundleId: "com.\(env.name).\(ModulePaths.Single.DIContainer.rawValue.lowercased())",
             infoPlist: infoPlist,

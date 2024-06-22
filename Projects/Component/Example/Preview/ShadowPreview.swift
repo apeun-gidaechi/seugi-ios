@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import DesignSystem
+import Component
 
 struct ShadowPreview: View {
     var body: some View {

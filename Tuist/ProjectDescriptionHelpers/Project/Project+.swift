@@ -143,6 +143,15 @@ public extension Project {
                     infoPlist: infoPlist,
                     resources: resources,
                     dependencies: dependency
+                ),
+                .component(
+                    name: ModulePaths.Single.Component.rawValue + "Example",
+                    product: .app,
+                    sources: ["Example/**"],
+                    dependencies: [
+                        .component,
+                        .domainTesting
+                    ]
                 )
             ]
         )

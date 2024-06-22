@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import DesignSystem
+import Component
 
 struct BottomNavigationPreview: View {
     @State private var tabs = SeugiBottomNavigationData(

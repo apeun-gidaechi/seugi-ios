@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import DesignSystem
+import Component
 
 public struct RoundedCirclePreview: View {
     

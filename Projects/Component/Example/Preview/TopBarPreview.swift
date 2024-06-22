@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import DesignSystem
+import Component
 
 struct TopBarPreview: View {
     var body: some View {

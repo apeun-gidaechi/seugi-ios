@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import DesignSystem
+import Component
 
 struct CategoryPreview: View {
     var body: some View {

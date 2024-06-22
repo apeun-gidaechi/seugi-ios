@@ -1,5 +1,5 @@
 import SwiftUI
-import DesignSystem
+import Component
 
 struct ToolTipPreview: View {
     var body: some View {

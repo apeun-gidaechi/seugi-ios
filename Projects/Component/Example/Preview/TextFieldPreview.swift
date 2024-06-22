@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import DesignSystem
+import Component
 
 struct TextFieldPreview: View {
     @State var tf1 = ""

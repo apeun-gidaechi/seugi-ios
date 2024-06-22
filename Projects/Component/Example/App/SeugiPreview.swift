@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import DesignSystem
+import Component
 
 enum SeugiPreview: String, CaseIterable {
     case color = "Color"
