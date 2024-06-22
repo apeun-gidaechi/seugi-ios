@@ -13,17 +13,13 @@ struct OverflowContentViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         GeometryReader { geometry in
             content
-            .background(
-                GeometryReader { contentGeometry in
-                    Color.clear.onAppear {
-                        if let height {
-                            contentOverflow = contentGeometry.size.height > height
-                        } else {
-                            contentOverflow = contentGeometry.size.height > geometry.size.height
-                        }
+                .onReadSize {
+                    if let height {
+                        contentOverflow = $0.height > height
+                    } else {
+                        contentOverflow = $0.height > geometry.size.height
                     }
                 }
-            )
             .wrappedInScrollView(when: contentOverflow)
         }
     }
