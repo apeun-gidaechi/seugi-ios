@@ -27,10 +27,12 @@ public class Service<Target: SeugiEndpoint> {
             }
             .mapError { error in // map error
                 guard let error = error as? MoyaError,
-                      let data = error.response?.data else {
+                      let response = error.response else {
+                    print("❌ Unknown Error")
                     return APIError.unknown
                 }
-                guard let error = try? self.decoder.decode(BaseVoidRes.self, from: data) else {
+                self.responeLog(target: target, response: response)
+                guard let error = try? self.decoder.decode(BaseVoidRes.self, from: response.data) else {
                     return APIError.unknown
                 }
                 return APIError.http(error.toEntity())
