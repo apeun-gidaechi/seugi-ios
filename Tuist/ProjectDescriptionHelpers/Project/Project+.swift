@@ -146,6 +146,7 @@ public extension Project {
                 ),
                 .component(
                     name: ModulePaths.Single.Component.rawValue + "Example",
+                    infoPlist: .file(path: "Support/Info.plist"),
                     product: .app,
                     sources: ["Example/**"],
                     dependencies: [

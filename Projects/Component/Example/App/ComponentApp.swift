@@ -2,7 +2,7 @@ import SwiftUI
 import Component
 
 @main
-struct DesignSystemApp: App {
+struct ComponentApp: App {
     
     init() {
         Pretendard.register()

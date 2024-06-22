@@ -58,9 +58,8 @@ enum SeugiPreview: String, CaseIterable {
             List(Self.allCases, id: \.self) { preview in
                 NavigationLink {
                     preview.view
-                    //                        .navigationTitle(preview.rawValue)
                 } label: {
-                    Text("\(preview.rawValue) Preview")
+                    Text(preview.rawValue)
                 }
             }
         }
