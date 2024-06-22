@@ -23,11 +23,19 @@ public struct FirstCreateRoomView: View {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         ForEach(members, id: \.member.id) { member in
-                            Button {
-                                //
-                            } label: {
-                                SeugiMemberList(member: member) {
-                                    SeugiToggle(isOn: .constant(true), type: .checkbox(size: .large))
+                            let selected = vm.selectedMembers.contains {
+                                $0.member.id == member.member.id
+                            }
+                            SeugiMemberList(member: member) {
+                                SeugiToggle(isOn: .constant(selected), type: .checkbox(size: .large))
+                            }
+                            .button {
+                                if !selected {
+                                    vm.selectedMembers.append(member)
+                                } else {
+                                    vm.selectedMembers = vm.selectedMembers.filter {
+                                        $0.member.id != member.member.id
+                                    }
                                 }
                             }
                             .applyAnimation()

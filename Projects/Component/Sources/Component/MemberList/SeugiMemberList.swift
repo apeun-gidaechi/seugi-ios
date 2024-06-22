@@ -33,7 +33,7 @@ public struct SeugiMemberList<Content>: View where Content: View {
                     .font(.subtitle(.s2))
                     .seugiColor(.primary(.p400))
             } else {
-                Text("\(member.nick)")
+                Text("\(member.member.name)")
                     .font(.subtitle(.s2))
                     .seugiColor(.sub(.black))
             }
@@ -41,5 +41,6 @@ public struct SeugiMemberList<Content>: View where Content: View {
             content()
         }
         .padding(16)
+        .background()
     }
 }
