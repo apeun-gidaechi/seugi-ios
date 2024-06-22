@@ -16,13 +16,14 @@ public extension Target {
         infoPlist: InfoPlist = .default,
         entitlements: Entitlements? = nil
     ) -> Self {
-        .makeTarget(
-            name: "Seugi-\(type.rawValue)",
+        let name = "Seugi-\(type.rawValue)"
+        return Target.makeTarget(
+            name: name,
             product: .app,
             bundleId: "com.\(env.name)",
             infoPlist: infoPlist,
-            sources: ["Sources/**"],
-            resources: ["Resources/**"],
+            sources: ["\(name)/Sources/**"],
+            resources: ["\(name)/Resources/**"],
             entitlements: entitlements,
             scripts: [.swiftLint],
             dependencies: dependenceis

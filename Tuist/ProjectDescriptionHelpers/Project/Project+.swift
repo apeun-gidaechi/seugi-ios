@@ -15,7 +15,8 @@ public extension Project {
     static func makeDIContainer(
         packages: [Package] = [],
         infoPlist: InfoPlist = .default,
-        dependency: [TargetDependency] = []
+        dependency: [TargetDependency] = [],
+        xcconfig: Path? = nil
     ) -> Self {
         .makeProject(
             name: ModulePaths.Single.DIContainer.rawValue,
@@ -53,7 +54,8 @@ public extension Project {
         featureDependency: [TargetDependency] = [],
         testingDependency: [TargetDependency] = [],
         testsDependency: [TargetDependency] = [],
-        exampleDependency: [TargetDependency] = []
+        exampleDependency: [TargetDependency] = [],
+        xcconfig: Path? = nil
     ) -> Self {
         var targets = additionalTarget
         
@@ -112,11 +114,13 @@ public extension Project {
      */
     static func makeShared(
         packages: [Package] = [],
-        targets: [Target] = []
+        targets: [Target] = [],
+        xcconfig: Path? = nil
     ) -> Self {
         return .makeProject(
             name: "Shared",
             packages: packages,
+            xcconfig: xcconfig,
             targets: targets
         )
     }
@@ -128,7 +132,8 @@ public extension Project {
         packages: [Package] = [],
         infoPlist: InfoPlist = .default,
         resources: ResourceFileElements? = nil,
-        dependency: [TargetDependency] = []
+        dependency: [TargetDependency] = [],
+        xcconfig: Path? = nil
     ) -> Self {
         .makeProject(
             name: ModulePaths.Single.Component.rawValue,
@@ -146,7 +151,8 @@ public extension Project {
     static func makeDomain(
         packages: [Package] = [],
         infoPlist: InfoPlist = .default,
-        dependency: [TargetDependency] = []
+        dependency: [TargetDependency] = [],
+        xcconfig: Path? = nil
     ) -> Self {
         .makeProject(
             name: ModulePaths.Single.Domain.rawValue,
@@ -162,11 +168,13 @@ public extension Project {
     
     static func makeData(
         packages: [Package] = [],
-        targets: [Target] = []
+        targets: [Target] = [],
+        xcconfig: Path? = nil
     ) -> Self {
         .makeProject(
             name: "Data",
             packages: packages,
+            xcconfig: xcconfig,
             targets: targets
         )
     }

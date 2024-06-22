@@ -10,7 +10,6 @@ let project = Project.makeFeature(
         .component,
         .shared(of: .GlobalThirdPartyLibrary),
         .shared(of: .SwiftUIUtil),
-        .shared(of: .DateUtil),
-        .shared(of: .Secret)
+        .shared(of: .DateUtil)
     ]
 )

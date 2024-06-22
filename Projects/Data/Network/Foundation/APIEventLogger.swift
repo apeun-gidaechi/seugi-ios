@@ -1,14 +1,6 @@
 import Alamofire
 import Foundation
 
-public class APIEventLogger: EventMonitor {
-    
-    public func requestDidFinish(_ request: Request) {
-        
-    }
-    
-}
-
 public extension Data {
     var toPrettyPrintedString: String? {
         guard let object = try? JSONSerialization.jsonObject(with: self, options: []),

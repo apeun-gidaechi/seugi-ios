@@ -16,12 +16,10 @@ let project = Project.makeShared(
             .SPM.Swinject,
             .SPM.SwiftBok
         ]),
-        .shared(target: .Secret, dependencies: [
-            .SPM.Swinject
-        ]),
         .shared(target: .SwiftUIUtil),
-        .shared(target: .SwiftUtil, dependencies: [
+        .shared(target: .SwiftUtil,dependencies: [
             .SPM.SwiftBok
         ])
-    ]
+    ],
+    xcconfig: .relativeToXCConfig("Config.xcconfig")
 )

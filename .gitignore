@@ -4,9 +4,8 @@
 .AppleDouble
 .LSOverride
 
-Secret.swift
+GoogleService-Info.plist
 *.xcconfig
-Secret.swift
 
 # Thumbnails
 ._*

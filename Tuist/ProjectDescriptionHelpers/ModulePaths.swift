@@ -53,7 +53,7 @@ public extension ModulePaths {
         case SwiftUIUtil
         case SwiftUtil
         case DateUtil
-        case Secret
+        case Config
     }
     
     enum Single: String {

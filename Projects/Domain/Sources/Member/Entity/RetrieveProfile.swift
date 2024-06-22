@@ -12,5 +12,4 @@ public struct RetrieveProfile: Entity {
     public let phone: String
     public let wire: String
     public let location: String
-    
 }

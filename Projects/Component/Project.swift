@@ -18,7 +18,7 @@ let project = Project.makeComponent(
         .SPM.Flow,
         .SPM.GoogleSignIn,
         .domain,
-        .shared(of: .Secret),
         .shared(of: .SwiftUIUtil)
-    ]
+    ],
+    xcconfig: .relativeToXCConfig("Config.xcconfig")
 )

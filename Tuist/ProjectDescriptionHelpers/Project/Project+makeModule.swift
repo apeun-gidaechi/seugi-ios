@@ -12,7 +12,7 @@ extension Project {
     ) -> Project {
         let settings: Settings = .settings(
             base: ["OTHER_LDFLAGS": .string("-ObjC"),
-                   "ENABLE_USER_SCRIPT_SANDBOXING": .string("No")].merging(env.baseSetting),
+                   "ENABLE_USER_SCRIPT_SANDBOXING": .string("No")],
             configurations: [
                 .debug(name: .debug, xcconfig: xcconfig),
                 .release(name: .release)

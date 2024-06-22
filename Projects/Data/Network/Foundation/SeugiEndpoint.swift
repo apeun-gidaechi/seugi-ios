@@ -1,6 +1,6 @@
 import Moya
 import Foundation
-import Secret
+import Config
 
 public protocol SeugiEndpoint: TargetType {
     associatedtype Target: SeugiEndpoint
@@ -18,13 +18,14 @@ public enum Authorization {
 
 public extension SeugiEndpoint {
     static var session: Session {
-        Session(eventMonitors: [APIEventLogger()])
+        Session()
     }
     static var authSession: Session {
-        Session(interceptor: AuthInterceptor(), eventMonitors: [APIEventLogger()])
+        Session(interceptor: AuthInterceptor())
     }
     var baseURL: URL {
-        URL(string: Secret.baseURL)!
+        let baseUrl = Bundle.main.object(forInfoDictionaryKey: "BaseUrl") as? String ?? ""
+        return URL(string: baseUrl)!
             .appendingPathComponent(host)
     }
     

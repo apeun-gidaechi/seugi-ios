@@ -32,7 +32,6 @@ extension Target {
               scripts: scripts,
               dependencies: dependencies,
               settings: .settings(
-                base: env.baseSetting,
                 configurations: [
                     .debug(name: .debug),
                     .release(name: .release)

@@ -13,5 +13,6 @@ let project = Project.makeData(
             .shared(of: .GlobalThirdPartyLibrary),
             .shared(of: .DateUtil)
         ])
-    ]
+    ],
+    xcconfig: .relativeToXCConfig("Config.xcconfig")
 )

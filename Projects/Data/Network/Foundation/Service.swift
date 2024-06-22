@@ -4,7 +4,6 @@ import Moya
 import CombineMoya
 import Combine
 import Domain
-import Secret
 
 public class Service<Target: SeugiEndpoint> {
     
