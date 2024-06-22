@@ -48,15 +48,18 @@ public extension Target {
     }
     
     static func domain(
+        name: String = "Domain",
         infoPlist: InfoPlist = .default,
+        product: Product = .framework,
+        sources: SourceFilesList = ["Sources/**"],
         dependencies: [TargetDependency] = []
     ) -> Self {
         .makeTarget(
-            name: "Domain",
-            product: .framework,
-            bundleId: "com.\(env.name).domain",
+            name: name,
+            product: product,
+            bundleId: "com.\(env.name).\(name.lowercased())",
             infoPlist: infoPlist,
-            sources: ["Sources/**"],
+            sources: sources,
             scripts: [.swiftLint],
             dependencies: dependencies
         )

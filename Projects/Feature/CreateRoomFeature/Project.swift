@@ -3,5 +3,8 @@ import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
     type: .CreateRoom,
-    include: [.Feature, .Interface, .Example]
+    include: [.Feature, .Interface, .Example],
+    exampleDependency: [
+        .domainTesting
+    ]
 )

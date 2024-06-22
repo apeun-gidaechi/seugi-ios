@@ -161,6 +161,11 @@ public extension Project {
                 .domain(
                     infoPlist: infoPlist,
                     dependencies: dependency
+                ),
+                .domain(
+                    name: "DomainTesting",
+                    product: .framework,
+                    sources: ["Testing/**"]
                 )
             ]
         )

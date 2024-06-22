@@ -39,6 +39,13 @@ public extension TargetDependency {
         )
     }
     
+    static var domainTesting: TargetDependency {
+        .project(
+            target: "\(ModulePaths.Single.Domain.rawValue)Testing",
+            path: .domain
+        )
+    }
+    
     static func data(
         of target: ModulePaths.Data
     ) -> TargetDependency {
