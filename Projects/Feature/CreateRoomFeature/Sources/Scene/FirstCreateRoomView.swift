@@ -53,8 +53,13 @@ public struct FirstCreateRoomView: View {
         .seugiTopBar("멤버 선택")
         .subView {
             SeugiButton.small("완료", type: .transparent) {
-                router.navigate(to: CreateRoomDestination.secondCreateRoom)
+                if vm.selectedMembers.count > 1 {
+                    router.navigate(to: CreateRoomDestination.secondCreateRoom)
+                } else {
+//                    
+                }
             }
+            .disabled(vm.selectedMembers.isEmpty)
         }
     }
     

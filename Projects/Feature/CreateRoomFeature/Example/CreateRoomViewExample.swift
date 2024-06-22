@@ -18,20 +18,31 @@ struct CreateRoomViewExample: App {
         container.register(KeyValueRepo.self) { _ in
             FakeKeyValueRepo()
         }
+        container.register(ChatRepo.self) { _ in
+            FakeChatRepo()
+        }
     }
     
     @StateObject private var appState = AppState()
     @StateObject private var vm = CreateRoomViewModel()
+    @StateObject private var router = Router()
     
     var body: some Scene {
         WindowGroup {
-            FirstCreateRoomView()
-                .environmentObject(Router())
-                .environmentObject(appState)
-                .environmentObject(vm)
-                .onAppear {
-                    appState.selectedWorkspace = .mock()
-                }
+            NavigationStack(path: $router.navPath) {
+                FirstCreateRoomView()
+                    .navigationDestination(for: CreateRoomDestination.self) {
+                        switch $0 {
+                        case .secondCreateRoom: SecondCreateRoomView()
+                        }
+                    }
+            }
+            .environmentObject(router)
+            .environmentObject(appState)
+            .environmentObject(vm)
+            .onAppear {
+                appState.selectedWorkspace = .mock()
+            }
         }
     }
 }

@@ -1,32 +1,38 @@
-//
-//  SecondCreateRoomView.swift
-//  CreateRoomFeature
-//
-//  Created by dgsw8th71 on 4/4/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
 import BaseFeatureInterface
 import Component
+import Domain
 
 public struct SecondCreateRoomView: View {
     
-    @State private var roomTitle = ""
+    @EnvironmentObject private var router: Router
     @EnvironmentObject private var vm: CreateRoomViewModel
+    @EnvironmentObject private var appState: AppState
     
     public init() {}
     
+    private var firstMember: RetrieveProfile {
+        vm.selectedMembers.first!
+    }
+    
     public var body: some View {
-        VStack(spacing: 0) {
-            SeugiTextField("노영재 1세 외 3명", text: $roomTitle)
-                .padding(.horizontal, 20)
+        VStack(spacing: 4) {
+            Text("채팅방 이름")
+                .toLeading()
+                .font(.subtitle(.s2))
+                .seugiColor(.sub(.black))
+                .padding(.top, 6)
+                .padding(.leading, 4)
+            SeugiTextField("\(firstMember.member.name) 외 \(vm.selectedMembers.count - 1)명", text: $vm.roomName)
             Spacer()
         }
+        .padding(.horizontal, 20)
         .seugiTopBar("")
         .subView {
-            SeugiButton.small("완료", type: .transparent) {
-                // handle navigate to CreateRoom-2
+            SeugiButton.small("완료", type: .transparent, isLoading: vm.fetchCreate) {
+                if let selectedWorkspace = appState.selectedWorkspace {
+                    vm.createRoom(workspaceId: selectedWorkspace.workspaceId)
+                }
             }
         }
     }

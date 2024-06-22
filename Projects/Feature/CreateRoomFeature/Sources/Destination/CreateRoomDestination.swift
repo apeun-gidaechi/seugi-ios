@@ -1,3 +1,3 @@
-enum CreateRoomDestination {
+public enum CreateRoomDestination {
     case secondCreateRoom
 }
