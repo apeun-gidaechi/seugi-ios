@@ -28,6 +28,7 @@ enum SeugiPreview: String, CaseIterable {
     case chatItem = "ChatItem"
     case roundedCircle = "RoundedCircle"
     case toolTip = "ToolTip"
+    case roomImage = "RoomImage"
     
     var view: some View {
         Group {
@@ -50,6 +51,7 @@ enum SeugiPreview: String, CaseIterable {
             case .chatItem: ChatItemPreview()
             case .roundedCircle: RoundedCirclePreview()
             case .toolTip: ToolTipPreview()
+            case .roomImage: RoomImagePreview()
             }
         }
     }

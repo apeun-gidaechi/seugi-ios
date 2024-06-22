@@ -1,6 +1,6 @@
 import SwiftUI
 
-public enum SeugiAvatarType: CaseIterable {
+public enum SeugiRoomImageType: CaseIterable {
     case extraSmall
     case small
     case medium

@@ -3,17 +3,31 @@ import Nuke
 import NukeUI
 import SwiftUIUtil
 
-public struct SeugiAvatar: View {
+public struct SeugiRoomImage: View {
     
     var url: String?
-    var type: SeugiAvatarType
+    var type: SeugiRoomImageType
+    let label: String
     
     public init(
         _ url: String? = nil,
-        type: SeugiAvatarType
+        type: SeugiRoomImageType,
+        label: String
     ) {
         self.url = url
         self.type = type
+        self.label = label
+    }
+    
+    private var labelFont: Font {
+        switch type {
+        case .extraSmall: .caption(.c2)
+        case .small: .caption(.c1)
+        case .medium: .body(.b1)
+        case .large: .subtitle(.s1)
+        case .extraLarge: .title(.t1)
+        case .xxl: .display(.d1)
+        }
     }
     
     public var body: some View {
@@ -47,11 +61,9 @@ public struct SeugiAvatar: View {
             .seugiColor(.primary(.p200))
             .frame(width: type.size, height: type.size)
             .overlay {
-                Image(icon: .personFill)
-                    .resizable()
-                    .renderingMode(.template)
-                    .seugiColor(.primary(.p300))
-                    .frame(width: type.size / 2, height: type.size / 2)
+                Text(label)
+                    .font(labelFont)
+                    .seugiColor(.primary(.p700))
             }
     }
 }
