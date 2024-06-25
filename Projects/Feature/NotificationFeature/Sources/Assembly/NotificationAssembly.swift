@@ -1,0 +1,11 @@
+import Swinject
+import NotificationFeatureInterface
+
+public final class NotificationAssembly: Assembly {
+    public init() {}
+    public func assemble(container: Container) {
+        container.register((any NotificationFactory).self) { _ in
+            NotificationFactoryImpl()
+        }
+    }
+}

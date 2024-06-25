@@ -5,6 +5,8 @@ import HomeFeatureInterface
 import ChatFeatureInterface
 import ChatDetailFeatureInterface
 import CreateRoomFeatureInterface
+import NotificationFeatureInterface
+import ProfileFeatureInterface
 import DIContainer
 
 public struct MainView: View {
@@ -14,6 +16,8 @@ public struct MainView: View {
     
     @Inject private var homeFactory: any HomeFactory
     @Inject private var chatFactory: any ChatFactory
+    @Inject private var notificationFactory: any NotificationFactory
+    @Inject private var profileFactory: any ProfileFactory
     @InjectObject private var chatViewModel: ChatViewModel
     
     public init() {}
@@ -31,8 +35,8 @@ public struct MainView: View {
             case .home: homeFactory.makeView().eraseToAnyView()
             case .chat: chatFactory.makeView(roomType: .personal).eraseToAnyView()
             case .room: chatFactory.makeView(roomType: .group).eraseToAnyView()
-            case .notification: EmptyView()
-            case .profile: EmptyView()
+            case .notification: notificationFactory.makeView().eraseToAnyView()
+            case .profile: profileFactory.makeView().eraseToAnyView()
             }
             GeometryReader { reader in
                 ZStack(alignment: .bottom) {
