@@ -10,6 +10,7 @@ import SwiftUI
 
 public enum SeugiIconography: String {
     
+    case addEmoji = "add_emoji"
     case addFill = "add_fill"
     case addLine = "add_line"
     case addRingLine = "add_ring_line"
@@ -19,6 +20,9 @@ public enum SeugiIconography: String {
     case arrowRightLine = "arrow_right_line"
     case arrowUpLine = "arrow_up_line"
     
+    case bookFill = "book_fill"
+    
+    case calendarLine = "calendar_line"
     case chatFill = "chat_fill"
     
     case checkCircleFill = "check_circle_fill"
@@ -66,4 +70,8 @@ public enum SeugiIconography: String {
     case sendFill = "send_fill"
     
     case settingFill = "setting_fill"
+    
+    case utensilsLine = "utensils_line"
+    
+    case writeLine = "write_line"
 }

@@ -48,4 +48,20 @@ public extension View {
             Spacer()
         }
     }
+    
+    func toHorizontal() -> some View {
+        HStack {
+            Spacer()
+            self
+            Spacer()
+        }
+    }
+    
+    func toVertical() -> some View {
+        VStack {
+            Spacer()
+            self
+            Spacer()
+        }
+    }
 }

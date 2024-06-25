@@ -1,11 +1,3 @@
-//
-//  SeugiTopbar.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 3/23/24.
-//  Copyright © 2024 seugi. All rights reserved.
-//
-
 import SwiftUI
 
 public struct SeugiTopBarView: View {
@@ -17,6 +9,7 @@ public struct SeugiTopBarView: View {
     private let showShadow: Bool
     private let showBackButton: Bool
     private let showTitle: Bool
+    private let background: Color
     private let subView: AnyView?
     private let buttons: [SeugiTopBarButton]
     private let onBackAction: (() -> Void)?
@@ -27,6 +20,7 @@ public struct SeugiTopBarView: View {
         showShadow: Bool,
         showBackButton: Bool,
         showTitle: Bool,
+        background: Color,
         subView: AnyView? = nil,
         buttons: [SeugiTopBarButton],
         onBackAction: (() -> Void)?,
@@ -36,6 +30,7 @@ public struct SeugiTopBarView: View {
         self.showShadow = showShadow
         self.showBackButton = showBackButton
         self.showTitle = showTitle
+        self.background = background
         self.subView = subView
         self.buttons = buttons
         self.onBackAction = onBackAction
@@ -91,7 +86,7 @@ public struct SeugiTopBarView: View {
             }
             .frame(height: 54)
             .padding(.horizontal, 16)
-            .background(Color.seugi(.sub(.white)))
+            .background(background)
             .navigationBarBackButtonHidden()
             .if(showShadow) {
                 $0.shadow(.evBlack(.ev1))
@@ -107,6 +102,7 @@ public struct SeugiTopBarView: View {
                          showShadow: showShadow,
                          showBackButton: showBackButton,
                          showTitle: showTitle,
+                         background: background,
                          subView: subView,
                          buttons: buttons + [button],
                          onBackAction: onBackAction,
@@ -119,6 +115,7 @@ public struct SeugiTopBarView: View {
                   showShadow: condition,
                   showBackButton: showBackButton,
                   showTitle: showTitle,
+                  background: background,
                   subView: subView,
                   buttons: buttons,
                   onBackAction: onBackAction,
@@ -131,6 +128,7 @@ public struct SeugiTopBarView: View {
                   showShadow: showShadow,
                   showBackButton: showBackButton,
                   showTitle: showTitle,
+                  background: background,
                   subView: AnyView(content()),
                   buttons: buttons,
                   onBackAction: onBackAction,
@@ -143,6 +141,7 @@ public struct SeugiTopBarView: View {
                   showShadow: showShadow,
                   showBackButton: !condition,
                   showTitle: showTitle,
+                  background: background,
                   subView: subView,
                   buttons: buttons,
                   onBackAction: onBackAction,
@@ -155,6 +154,7 @@ public struct SeugiTopBarView: View {
                   showShadow: showShadow,
                   showBackButton: showBackButton,
                   showTitle: !condition,
+                  background: background,
                   subView: subView,
                   buttons: buttons,
                   onBackAction: onBackAction,
@@ -164,12 +164,17 @@ public struct SeugiTopBarView: View {
 }
 
 public extension View {
-    func seugiTopBar(_ title: String, onBackAction: (() -> Void)? = nil) -> SeugiTopBarView {
+    func seugiTopBar(
+        _ title: String,
+        background: Color = Color.seugi(.sub(.white)),
+        onBackAction: (() -> Void)? = nil
+    ) -> SeugiTopBarView {
         SeugiTopBarView(
             title: title,
             showShadow: false,
             showBackButton: true,
             showTitle: true,
+            background: background,
             buttons: [],
             onBackAction: onBackAction,
             content: AnyView(self)
