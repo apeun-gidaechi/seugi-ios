@@ -40,6 +40,8 @@ public extension ModulePaths {
         case Chat
         case ChatDetail
         case CreateRoom
+        case Notification
+        case Profile
     }
     
     enum Data: String, CaseIterable {

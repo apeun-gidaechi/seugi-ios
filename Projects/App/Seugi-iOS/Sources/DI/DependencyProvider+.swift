@@ -19,6 +19,8 @@ import RootFeature
 import SchoolCodeFeature
 import SelectingJobFeature
 import StartFeature
+import NotificationFeature
+import ProfileFeature
 
 // Domain
 import Domain
@@ -54,6 +56,8 @@ extension DependencyProvider {
             SchoolCodeAssembly(),
             SelectingJobAssembly(),
             StartAssembly(),
+            NotificationAssembly(),
+            ProfileAssembly(),
             // Domain
             MemberAssembly(),
             Network.ChatAssembly(),
