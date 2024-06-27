@@ -1,8 +1,6 @@
 import ProjectDescription
 import EnvironmentPlugin
 
-
-
 extension Project {
     static func makeProject(
         name: String,
@@ -45,7 +43,12 @@ extension Scheme {
                 configuration: target,
                 options: .options(coverage: true, codeCoverageTargets: ["\(name)"])
             ),
-            runAction: .runAction(configuration: target),
+            runAction: .runAction(
+                configuration: target,
+                arguments: .init(launchArguments: [
+                    .init(name: "IDEPreferLogStreaming", isEnabled: true)
+                ])
+            ),
             archiveAction: .archiveAction(configuration: target),
             profileAction: .profileAction(configuration: target),
             analyzeAction: .analyzeAction(configuration: target)
