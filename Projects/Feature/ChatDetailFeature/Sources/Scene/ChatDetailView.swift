@@ -23,17 +23,17 @@ public struct ChatDetailView: View {
             ScrollViewReader { scrollViewProxy in
                 ScrollView {
                     LazyVStack(spacing: 0) {
-                        ChatItemDateView(date: "2024년 3월 21일 목요일").id(ChatType.chat(id: 1))
-                        ChatItemView(author: "이강현", type: .other).id(ChatType.chat(id: 2))
-                        ChatItemView(author: "이강현", type: .me).id(ChatType.chat(id: 3))
-                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 4))
-                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 5))
-                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 6))
-                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 7))
-                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 8))
-                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 9))
-                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 10))
-                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 11))
+//                        ChatItemDateView(date: "2024년 3월 21일 목요일").id(ChatType.chat(id: 1))
+//                        ChatItemView(author: "이강현", type: .other).id(ChatType.chat(id: 2))
+//                        ChatItemView(author: "이강현", type: .me).id(ChatType.chat(id: 3))
+//                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 4))
+//                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 5))
+//                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 6))
+//                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 7))
+//                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 8))
+//                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 9))
+//                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 10))
+//                        ChatItemView(author: "박재욱", type: .other).id(ChatType.chat(id: 11))
                         Color.clear
                             .frame(height: 52)
                             .id(ChatType.bottom)
@@ -83,6 +83,9 @@ public struct ChatDetailView: View {
         .onChange(of: isDrawerOpen) { _ in
             hideKeyboard()
         }
+        .onAppear {
+            viewModel.fetchMessages()
+        }
     }
     
     @ViewBuilder
@@ -96,7 +99,7 @@ public struct ChatDetailView: View {
             SeugiDivider(thickness: .thin)
             ScrollView {
                 LazyVStack(spacing: 0) {
-//                    SeugiMemberList(type: .invitation, member: <#T##RetrieveProfile#>)
+//                    SeugiMemberList(type: .invitation, member: T##RetrieveProfile)
 //                    ForEach(0..<30, id: \.self) {
 //                        SeugiMemberList(type: .normal)
 //                            .id($0)
