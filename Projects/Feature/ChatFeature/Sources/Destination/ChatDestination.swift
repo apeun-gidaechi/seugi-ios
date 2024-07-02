@@ -1,4 +1,4 @@
-enum ChatDestination {
-    case chatDetail
+enum ChatDestination: Hashable {
+    case chatDetail(roomId: String)
     case createRoom
 }

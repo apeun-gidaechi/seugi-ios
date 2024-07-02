@@ -10,13 +10,15 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
     @Inject private var messageRepo: MessageRepo
     @Inject private var chatRepo: ChatRepo
     
-    private let roomId: String
+    @Published var messages: FetchFlow<[Message]> = .fetching
     
-    public init(roomId: String) {
-        self.roomId = roomId
-    }
-    
-    func fetchMessages() {
-        messageRepo.getMessages(roomId: roomId, page: <#T##Int#>, size: <#T##Int#>)
+    func fetchMessages(roomId: String) {
+        sub(messageRepo.getMessages(roomId: roomId, page: 0, size: 50)) {
+            self.messages = .fetching
+        } success: { res in
+            self.messages = .success(res.data.messages)
+        } failure: { error in
+            print("❌", error)
+        }
     }
 }

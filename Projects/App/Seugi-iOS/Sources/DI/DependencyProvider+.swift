@@ -63,6 +63,7 @@ extension DependencyProvider {
             Network.ChatAssembly(),
             WorkspaceAssembly(),
             EmailAssembly(),
+            MessageAssembly(),
             // Core
             KeyValueStoreAssembly()
         ], container: container)

@@ -16,13 +16,18 @@ public struct ChatDetailView: View {
     @State private var isDrawerOpen = false
     @State private var scrollViewProxy: ScrollViewProxy?
     
-    public init() {}
+    private let roomId: String
+    
+    public init(roomId: String) {
+        self.roomId = roomId
+    }
     
     public var body: some View {
         ZStack {
             ScrollViewReader { scrollViewProxy in
                 ScrollView {
                     LazyVStack(spacing: 0) {
+                        
 //                        ChatItemDateView(date: "2024년 3월 21일 목요일").id(ChatType.chat(id: 1))
 //                        ChatItemView(author: "이강현", type: .other).id(ChatType.chat(id: 2))
 //                        ChatItemView(author: "이강현", type: .me).id(ChatType.chat(id: 3))
@@ -84,7 +89,7 @@ public struct ChatDetailView: View {
             hideKeyboard()
         }
         .onAppear {
-            viewModel.fetchMessages()
+            viewModel.fetchMessages(roomId: roomId)
         }
     }
     

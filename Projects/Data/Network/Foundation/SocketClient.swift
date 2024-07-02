@@ -309,7 +309,7 @@ public class StompClient: NSObject, SRWebSocketDelegate {
                     })
                 }
             }
-        } else if command.count == 0 {
+        } else if command.isEmpty {
             // Pong from the server
 //            socket?.send(StompCommands.commandPing)
             try? socket?.send(string: StompCommands.commandPing)

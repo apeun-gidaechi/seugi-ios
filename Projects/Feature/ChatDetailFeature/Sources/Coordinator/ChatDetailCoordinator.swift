@@ -9,7 +9,14 @@
 import SwiftUI
 
 struct ChatDetailCoordinator: View {
+    
+    private let roomId: String
+    
+    init(roomId: String) {
+        self.roomId = roomId
+    }
+    
     var body: some View {
-        ChatDetailView()
+        ChatDetailView(roomId: roomId)
     }
 }
