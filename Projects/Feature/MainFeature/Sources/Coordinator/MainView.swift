@@ -15,7 +15,7 @@ public struct MainView: View {
     @EnvironmentObject private var router: Router
     
     @Inject private var emptyHomeFactory: any EmptyHomeFactory
-    
+    @Inject private var progressHomeFactory: any ProgressHomeFactory
     @Inject private var homeFactory: any HomeFactory
     @Inject private var chatFactory: any ChatFactory
     @Inject private var notificationFactory: any NotificationFactory
@@ -58,7 +58,9 @@ public struct MainView: View {
     @ViewBuilder
     private var content: some View {
         ZStack {
-            if isWorkspaceEmpty {
+            if appState.workspaces == .fetching {
+                progressHomeFactory.makeView().eraseToAnyView()
+            } else if isWorkspaceEmpty {
                 emptyHomeFactory.makeView().eraseToAnyView()
             } else {
                 switch appState.selectedMainTab {
@@ -69,24 +71,36 @@ public struct MainView: View {
                 case .profile: profileFactory.makeView().eraseToAnyView()
                 }
             }
-            GeometryReader { reader in
-                ZStack(alignment: .bottom) {
-                    SeugiBottomNavigation(selectedTab: $appState.selectedMainTab, tabs: tabs)
-                        .shadow(color: Color.black.opacity(0.04), radius: 12)
-                    VStack {
-                        Spacer()
-                        Color.white
-                            .frame(height: reader.safeAreaInsets.bottom, alignment: .bottom)
+            if appState.workspaces != .fetching {
+                GeometryReader { reader in
+                    ZStack(alignment: .bottom) {
+                        SeugiBottomNavigation(selectedTab: $appState.selectedMainTab, tabs: tabs)
+                            .shadow(color: Color.black.opacity(0.04), radius: 12)
+                        VStack {
+                            Spacer()
+                            Color.white
+                                .frame(height: reader.safeAreaInsets.bottom, alignment: .bottom)
+                        }
+                        .ignoresSafeArea()
                     }
-                    .ignoresSafeArea()
                 }
             }
         }
         .ignoresSafeArea(.keyboard)
         .environmentObject(chatViewModel)
         .onAppear {
-            guard let workspace = appState.selectedWorkspace else { return }
-            chatViewModel.fetchChats(workspaceId: workspace.workspaceId)
+            fetchChats()
+            appState.subscribe { subject in
+                switch subject {
+                case .workspaceFetched:
+                    fetchChats()
+                }
+            }
         }
+    }
+    
+    private func fetchChats() {
+        guard let workspace = appState.selectedWorkspace else { return }
+        chatViewModel.fetchChats(workspaceId: workspace.workspaceId)
     }
 }

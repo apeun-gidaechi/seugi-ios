@@ -58,13 +58,17 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
         sub(workspaceRepo.getWorkspaces()) {
             self.workspaces = .fetching
         } success: { [self] workspaces in
-            self.workspaces = .success(workspaces.data)
-            if let workspace = workspaces.data.first,
-               selectedWorkspace == nil {
-                selectedWorkspace = workspace
+            withAnimation {
+                self.workspaces = .success(workspaces.data)
+                if let workspace = workspaces.data.first,
+                   selectedWorkspace == nil {
+                    selectedWorkspace = workspace
+                }
             }
         } failure: { [self] error in
-            workspaces = .failure(error)
+            withAnimation {
+                workspaces = .failure(error)
+            }
         } finished: { [self] in
             emit(.workspaceFetched)
         }

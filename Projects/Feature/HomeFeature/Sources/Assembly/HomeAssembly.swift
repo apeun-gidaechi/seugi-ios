@@ -10,5 +10,8 @@ public final class HomeAssembly: Assembly {
         container.register((any EmptyHomeFactory).self) { _ in
             EmptyHomeFactoryImpl()
         }
+        container.register((any ProgressHomeFactory).self) { _ in
+            ProgressHomeFactoryImpl()
+        }
     }
 }

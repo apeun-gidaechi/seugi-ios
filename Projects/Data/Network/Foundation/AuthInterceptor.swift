@@ -54,10 +54,12 @@ public final class AuthInterceptor: RequestInterceptor {
             .sink { [self] result in
                 switch result {
                 case .success(let res):
+                    print("✅ Refresh Success")
                     keyValueStore.save(key: .accessToken, value: res.data)
                     completion(.retry)
                 case .failure(let error):
                     failureReissue()
+                    print("❌ Refresh Failure")
                     completion(.doNotRetryWithError(error))
                 case .fetching:
                     break
