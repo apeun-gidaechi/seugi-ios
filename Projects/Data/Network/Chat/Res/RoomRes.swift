@@ -10,11 +10,11 @@ struct RoomRes: Decodable, EntityMappable {
     let roomAdmin: Int
     let chatName: String
     let chatRoomImg: String
-    var createdAt: Date
+    var createdAt: String
     let chatStatusEnum: ChatStatusEnum
     let joinUserId: [RetrieveMemberRes]
     let lastMessage: String
-    let lastMessageTimestamp: Date
+    let lastMessageTimestamp: String
     let notReadCnt: Int
     
     func toEntity() -> Room {
@@ -25,7 +25,7 @@ struct RoomRes: Decodable, EntityMappable {
             roomAdmin: roomAdmin,
             chatName: chatName,
             chatRoomImg: chatRoomImg,
-            createdAt: createdAt,
+            createdAt: createdAt.localDateTime,
             chatStatusEnum: chatStatusEnum,
             joinUserId: joinUserId.map { $0.toEntity() }
         )

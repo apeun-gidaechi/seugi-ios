@@ -28,13 +28,13 @@ public struct SeugiChatList: View {
                             .seugiColor(.gray(.g500))
                     }
                 }
-                Text("나 사실...")
+                Text("나 사실...") // TODO: Dummy
                     .font(.body(.b2))
                     .seugiColor(.gray(.g600))
             }
             Spacer()
             VStack(spacing: 4) {
-                Text("12:39")
+                Text("12:39") // TODO: Dummy
                     .font(.body(.b2))
                     .seugiColor(.gray(.g500))
                 if case .group = type,

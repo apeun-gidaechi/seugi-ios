@@ -46,5 +46,8 @@ public struct SecondCreateRoomView: View {
             }
             .disabled(vm.roomName.isEmpty)
         }
+        .alertWithAnyView("채팅방 만들기 실패", when: $vm.createFailure) {
+            Button("확인") {}
+        }
     }
 }

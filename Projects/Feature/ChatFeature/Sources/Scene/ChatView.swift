@@ -29,7 +29,7 @@ public struct ChatView: View {
         ScrollView {
             VStack(spacing: 0) {
                 rooms.makeView {
-                    EmptyView()
+                    ProgressView()
                 } success: { rooms in
                     ForEach(rooms, id: \.id) { room in
                         Button {
@@ -40,7 +40,7 @@ public struct ChatView: View {
                         .applyAnimation()
                     }
                 } failure: { _ in
-                    Text("-")
+                    Text("불러오기 실패")
                 }
             }
             .frame(maxWidth: .infinity)

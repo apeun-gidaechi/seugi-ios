@@ -24,6 +24,7 @@ public final class CreateRoomViewModel: BaseViewModel<CreateRoomViewModel.Create
     func fetchWorkspaceMembers(workspaceId: String) {
         sub(workspaceRepo.getMembers(workspaceId: workspaceId)) {
             self.isFetchMembers = true
+            self.members = .fetching
         } success: {
             self.members = .success($0.data)
         } failure: {
