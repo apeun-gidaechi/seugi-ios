@@ -1,0 +1,7 @@
+import SwiftUI
+
+public struct {{name}}View: View {
+    var body: some View {
+        EmptyView()
+    }
+}

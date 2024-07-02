@@ -1,0 +1,11 @@
+import Swinject
+import {{name}}FeatureInterface
+
+public final class {{name}}Assembly: Assembly {
+    public init() {}
+    public func assemble(container: Container) {
+        container.register((any {{name}}Factory).self) { _ in
+            {{name}}FactoryImpl()
+        }
+    }
+}
