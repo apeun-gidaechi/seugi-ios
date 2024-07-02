@@ -2,7 +2,9 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let dependencies = Dependencies(
-    carthage: [],
+    carthage: [
+        .github(path: "https://github.com/facebookincubator/SocketRocket", requirement: .exact("0.7.0"))
+    ],
     swiftPackageManager: .init(
         [
             .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.0"),

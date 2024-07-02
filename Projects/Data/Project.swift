@@ -9,6 +9,7 @@ let project = Project.makeData(
         .data(target: .Network, dependencies: [
             .SPM.Moya,
             .SPM.CombineMoya,
+            .Carthage.SocketRocket,
             .shared(of: .SwiftUtil),
             .shared(of: .GlobalThirdPartyLibrary),
             .shared(of: .DateUtil)
