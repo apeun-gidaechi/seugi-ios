@@ -8,6 +8,7 @@ struct CreateRoomCoordinator: View {
             .navigationDestination(for: CreateRoomDestination.self) {
                 switch $0 {
                 case .secondCreateRoom: SecondCreateRoomView()
+                        .environmentObject(createRoomViewModel)
                 }
             }
             .environmentObject(createRoomViewModel)

@@ -58,7 +58,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
         sub(workspaceRepo.getWorkspaces()) {
             self.workspaces = .fetching
         } success: { [self] workspaces in
-            self.workspaces = .success(/*workspaces.data*/[])
+            self.workspaces = .success(workspaces.data)
             if let workspace = workspaces.data.first,
                selectedWorkspace == nil {
                 selectedWorkspace = workspace
