@@ -1,7 +1,7 @@
 import Domain
 import Foundation
 
-struct MessageRes: Decodable {
+struct MessageRes: SeugiResponse {
     let id: String?
     let chatRoomId: String
     let type: String
@@ -15,4 +15,22 @@ struct MessageRes: Decodable {
     let timestamp: Date?
     let read: [Int]
     let messageStatus: String
+    
+    func toEntity() -> Message {
+        Message(
+            id: id,
+            chatRoomId: chatRoomId,
+            type: .init(rawValue: type),
+            userId: userId,
+            message: message,
+            eventList: eventList,
+            emoticon: emoticon,
+            emojiList: emojiList.map { $0.toEntity() },
+            mention: mention,
+            mentionAll: mentionAll,
+            timestamp: timestamp,
+            read: read,
+            messageStatus: .init(rawValue: messageStatus)
+        )
+    }
 }

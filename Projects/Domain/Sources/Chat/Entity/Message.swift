@@ -6,7 +6,7 @@ import SwiftBok
 public struct Message: Entity {
     public let id: String?
     public let chatRoomId: String
-    public let type: `Type`
+    public let type: `Type`?
     public let userId: Int
     public let message: String
     public let eventList: [Int]?
@@ -16,5 +16,5 @@ public struct Message: Entity {
     public let mentionAll: Bool
     public let timestamp: Date?
     public let read: [Int]
-    public let messageStatus: ChatStatusEnum
+    public let messageStatus: ChatStatusEnum?
 }

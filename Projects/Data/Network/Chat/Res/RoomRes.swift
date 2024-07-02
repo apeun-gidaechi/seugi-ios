@@ -3,7 +3,7 @@ import Domain
 import SwiftUtil
 import DateUtil
 
-struct RoomRes: Decodable, EntityMappable {
+struct RoomRes: SeugiResponse {
     let id: String
     let workspaceId: String
     let type: RoomType

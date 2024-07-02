@@ -1,5 +1,7 @@
 import SwiftUI
 import Component
+import BaseFeatureInterface
+import DIContainer
 
 enum ChatType: Hashable {
     case chat(id: Int)
@@ -7,6 +9,8 @@ enum ChatType: Hashable {
 }
 
 public struct ChatDetailView: View {
+    
+    @InjectObject private var viewModel: ChatDetailViewModel
     
     @State private var text = ""
     @State private var isDrawerOpen = false
