@@ -4,6 +4,7 @@ public struct SeugiTopBarView: View {
     
     @State private var isTextField = false
     @Namespace private var animation
+    @Environment(\.dismiss) private var dismiss
     
     private let title: String
     private let showShadow: Bool
@@ -38,61 +39,65 @@ public struct SeugiTopBarView: View {
     }
     
     public var body: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 0) {
-                if showBackButton || isTextField {
-                    Button {
-                        if let onBackAction {
-                            onBackAction()
-                        }
-                    } label: {
-                        Image(icon: .arrowLeftLine)
-                            .resizable()
-                            .renderingMode(.template)
-                            .seugiColor(.sub(.black))
-                            .frame(width: 28, height: 28)
-                    }
-                    .matchedGeometryEffect(id: "backbutton", in: animation)
-                }
-                
-                if showTitle {
-                    Text(title)
-                        .font(.subtitle(.s1))
-                        .seugiColor(.sub(.black))
-                        .if(showBackButton) {
-                            $0.padding(.leading, 16)
-                        }
-                        .matchedGeometryEffect(id: "title", in: animation)
-                }
-                
-                Spacer()
-                
-                subView
-            
-                HStack(spacing: 16) {
-                    ForEach(buttons.indices, id: \.self) { idx in
-                        let button = buttons[idx]
+        ZStack {
+            background.ignoresSafeArea()
+            VStack(spacing: 0) {
+                HStack(spacing: 0) {
+                    if showBackButton || isTextField {
                         Button {
-                            button.action()
+                            if let onBackAction {
+                                onBackAction()
+                            } else {
+                                dismiss()
+                            }
                         } label: {
-                            Image(icon: button.icon)
+                            Image(icon: .arrowLeftLine)
                                 .resizable()
                                 .renderingMode(.template)
                                 .seugiColor(.sub(.black))
                                 .frame(width: 28, height: 28)
                         }
+                        .matchedGeometryEffect(id: "backbutton", in: animation)
+                    }
+                    
+                    if showTitle {
+                        Text(title)
+                            .font(.subtitle(.s1))
+                            .seugiColor(.sub(.black))
+                            .if(showBackButton) {
+                                $0.padding(.leading, 16)
+                            }
+                            .matchedGeometryEffect(id: "title", in: animation)
+                    }
+                    
+                    Spacer()
+                    
+                    subView
+                    
+                    HStack(spacing: 16) {
+                        ForEach(buttons.indices, id: \.self) { idx in
+                            let button = buttons[idx]
+                            Button {
+                                button.action()
+                            } label: {
+                                Image(icon: button.icon)
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .seugiColor(.sub(.black))
+                                    .frame(width: 28, height: 28)
+                            }
+                        }
                     }
                 }
-            }
-            .frame(height: 54)
-            .padding(.horizontal, 16)
-            .background(background)
-            .navigationBarBackButtonHidden()
-            .if(showShadow) {
-                $0.shadow(.evBlack(.ev1))
-            }
-            content
+                .frame(height: 54)
+                .padding(.horizontal, 16)
                 .navigationBarBackButtonHidden()
+                .if(showShadow) {
+                    $0.shadow(.evBlack(.ev1))
+                }
+                content
+                    .navigationBarBackButtonHidden()
+            }
         }
     }
     

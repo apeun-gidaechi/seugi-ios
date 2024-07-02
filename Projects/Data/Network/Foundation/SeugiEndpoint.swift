@@ -1,6 +1,5 @@
 import Moya
 import Foundation
-import Config
 
 public protocol SeugiEndpoint: TargetType {
     associatedtype Target: SeugiEndpoint
