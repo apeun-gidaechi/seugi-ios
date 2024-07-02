@@ -1,8 +1,11 @@
 import SwiftUI
 import Component
 import SwiftUIUtil
+import BaseFeatureInterface
 
 public struct HomeView: View {
+    
+    @EnvironmentObject private var appState: AppState
     
     public init() {}
     

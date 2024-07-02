@@ -51,10 +51,12 @@ public struct EmailSignInView: View {
                     let accessToken = String(token.accessToken.split(separator: " ")[1])
                     let refreshToken = String(token.refreshToken.split(separator: " ")[1])
                     print(accessToken, refreshToken)
-                    appState.accessToken = accessToken
-                    appState.refreshToken = refreshToken
-                    appState.fetchWorkspaces()
-                    router.navigateToRoot()
+                    withAnimation {
+                        appState.accessToken = accessToken
+                        appState.refreshToken = refreshToken
+                        appState.fetchWorkspaces()
+                        router.navigateToRoot()
+                    }
                 }
             }
         }

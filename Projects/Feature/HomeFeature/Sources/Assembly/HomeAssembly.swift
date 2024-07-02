@@ -7,5 +7,8 @@ public final class HomeAssembly: Assembly {
         container.register((any HomeFactory).self) { _ in
             HomeFactoryImpl()
         }
+        container.register((any EmptyHomeFactory).self) { _ in
+            EmptyHomeFactoryImpl()
+        }
     }
 }

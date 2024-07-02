@@ -26,25 +26,23 @@ public struct RootView: View {
     public var body: some View {
         ZStack {
             if opacity == 0 {
-                VStack {
-                    switch appState.appFlow {
-                    case .unAuthorized: onboardingFactory.makeView().eraseToAnyView()
-                            .environmentObject(timerManager)
-                    case .notFoundJoinedSchool: joinSchoolFactory.makeView().eraseToAnyView()
-                            .environmentObject(joinWorkspaceManager)
-                    case .authorized: mainFactory.makeView().eraseToAnyView()
-                    }
+                if appState.accessToken.isEmpty {
+                    onboardingFactory.makeView().eraseToAnyView()
+                        .environmentObject(timerManager)
+                } else {
+                    mainFactory.makeView().eraseToAnyView()
                 }
             }
             launchScreenFactorry.makeView().eraseToAnyView()
                 .opacity(opacity)
         }
+        .environmentObject(joinWorkspaceManager)
         .environmentObject(appState)
         .environmentObject(router)
         .onAppear {
             appState.subscribe { [self] subject in
                 switch subject {
-                case .fetchWorkspaceSuccess:
+                case .workspaceFetched:
                     router.navigateToRoot()
                     sleep(2)
                     withAnimation {
