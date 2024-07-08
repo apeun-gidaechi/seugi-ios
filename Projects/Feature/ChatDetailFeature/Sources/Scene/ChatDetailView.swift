@@ -53,7 +53,7 @@ public struct ChatDetailView: View {
             BottomTextField()
         }
         .hideKeyboardWhenTap()
-        .seugiTopBar("노영재")
+        .seugiTopBar(room.chatName)
         .showShadow()
         .button(.searchLine) {
             // handle searching
@@ -82,7 +82,7 @@ public struct ChatDetailView: View {
                     .frame(height: reader.safeAreaInsets.bottom + 56 - 12, alignment: .bottom) // 56: bottom nav height, 12: just margin
             }
             .ignoresSafeArea()
-            SeugiChatTextField("메세지 보내기", text: $viewModel.text) {
+            SeugiChatTextField("메세지 보내기", text: $viewModel.message) {
                 // handle tapped icon
             } sendButtonTapped: {
                 viewModel.sendMessage(room: room)

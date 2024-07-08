@@ -54,6 +54,7 @@ public struct SeugiChatTextField: View {
                     .seugiColor(sendButtonColor)
                     .frame(width: 32, height: 32)
             }
+            .disabled(text.isEmpty)
         }
         .padding(.horizontal, 8)
         .frame(height: 56)

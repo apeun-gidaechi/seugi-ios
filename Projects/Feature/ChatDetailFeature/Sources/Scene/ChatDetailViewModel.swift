@@ -16,7 +16,7 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
     // MARK: - State
     @Published var messages: FetchFlow<[Message]> = .fetching
     @Published private var page = 0
-    @Published var text = ""
+    @Published var message = ""
     
     var groupedMessages: [[Message]] {
         (messages.data ?? []).group
@@ -36,10 +36,11 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
         stompMessageRepo.sendMessage(
             roomId: room.id,
             type: .message,
-            message: text,
+            message: message,
             mention: nil,
             mentionAll: nil,
             emoticon: nil
         )
+        message = ""
     }
 }
