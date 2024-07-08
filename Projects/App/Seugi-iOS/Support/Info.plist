@@ -78,6 +78,8 @@
 	<string>Light</string>
 	<key>BaseUrl</key>
 	<string>${BASE_URL}</string>
+	<key>WssBaseUrl</key>
+	<string>${WSS_BASE_URL}</string>
 	<key>GoogleClientId</key>
 	<string>${GOOGLE_CLIENT_ID}</string>
 	<key>ReversedGoogleClientId</key>

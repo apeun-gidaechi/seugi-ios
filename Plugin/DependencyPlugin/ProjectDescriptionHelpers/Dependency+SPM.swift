@@ -14,4 +14,5 @@ public extension TargetDependency.SPM {
     static let Moya = TargetDependency.external(name: "Moya")
     static let CombineMoya = TargetDependency.external(name: "CombineMoya")
     static let SwiftBok = TargetDependency.external(name: "SwiftBok")
+    static let ApeunStompKit = TargetDependency.external(name: "ApeunStompKit")
 }

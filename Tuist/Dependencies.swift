@@ -2,9 +2,6 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let dependencies = Dependencies(
-    carthage: [
-        .github(path: "https://github.com/facebookincubator/SocketRocket", requirement: .exact("0.7.0"))
-    ],
     swiftPackageManager: .init(
         [
             .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.0"),
@@ -13,7 +10,8 @@ let dependencies = Dependencies(
             .remote(url: "https://github.com/kean/Nuke.git", requirement: .exact("12.5")),
             .remote(url: "https://github.com/google/GoogleSignIn-iOS.git", requirement: .exact("6.1.0")),
             .remote(url: "https://github.com/moya/Moya.git", requirement: .exact("15.0.3")),
-            .remote(url: "https://github.com/bestswlkh0310/SwiftBok", requirement: .exact("1.2.0"))
+            .remote(url: "https://github.com/bestswlkh0310/SwiftBok", requirement: .exact("1.2.0")),
+            .remote(url: "https://github.com/apeun-gidaechi/apeun-stomp-kit", requirement: .exact("1.1.0"))
         ]
     ),
     platforms: [.iOS]

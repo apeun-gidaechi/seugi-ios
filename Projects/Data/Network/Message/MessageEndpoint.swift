@@ -1,10 +1,10 @@
 import Moya
 
-enum MessageEndpoint: SeugiEndpoint {
+public enum MessageEndpoint: SeugiEndpoint {
     case getMessages(roomId: String, page: Int, size: Int)
 }
 
-extension MessageEndpoint {
+public extension MessageEndpoint {
     
     static let provider = MoyaProvider<MessageEndpoint>(session: session)
     static let authProvider = MoyaProvider<MessageEndpoint>(session: authSession)
