@@ -17,11 +17,11 @@ public struct ChatItemPreview: View {
         ScrollView {
             VStack(spacing: 0) {
                 ChatItemDateView(date: "2024년 3월 21일 목요일")
-                ChatItemView(author: "이강현", type: .other)
-                ChatItemView(author: "이강현", type: .me)
-                ChatItemView(author: "박재욱", type: .other)
-                ChatItemView(author: "AI", type: .ai)
-                ChatItemView(author: "AI", type: .ai)
+                ChatItemView(author: "이강현", messages: [.mock(), .mock()], type: .other)
+                ChatItemView(author: "이강현", messages: [.mock(), .mock()], type: .me)
+                ChatItemView(author: "박재욱", messages: [.mock(), .mock()], type: .other)
+                ChatItemView(author: "AI", messages: [.mock(), .mock()], type: .ai)
+                ChatItemView(author: "AI", messages: [.mock(), .mock()], type: .ai)
             }
         }
     }

@@ -22,7 +22,7 @@ public struct ChatCoordinator: View {
         )
         .navigationDestination(for: ChatDestination.self) {
             switch $0 {
-            case .chatDetail(let roomId): chatDetailFactory.makeView(roomId: roomId).eraseToAnyView()
+            case .chatDetail(let room): chatDetailFactory.makeView(room: room).eraseToAnyView()
             case .createRoom: createChatFactory.makeView().eraseToAnyView()
             }
         }

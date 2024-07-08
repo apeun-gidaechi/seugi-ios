@@ -1,4 +1,6 @@
+import Domain
+
 enum ChatDestination: Hashable {
-    case chatDetail(roomId: String)
+    case chatDetail(room: Room)
     case createRoom
 }

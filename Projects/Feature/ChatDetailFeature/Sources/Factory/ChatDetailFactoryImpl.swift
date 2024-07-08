@@ -1,8 +1,9 @@
 import SwiftUI
 import ChatDetailFeatureInterface
+import Domain
 
 final class ChatDetailFactoryImpl: ChatDetailFactory {
-    func makeView(roomId: String) -> some View {
-        ChatDetailCoordinator(roomId: roomId)
+    func makeView(room: Room) -> some View {
+        ChatDetailCoordinator(room: room)
     }
 }

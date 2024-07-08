@@ -2,6 +2,7 @@ import SwiftUI
 import Component
 import BaseFeatureInterface
 import DIContainer
+import Domain
 
 enum ChatType: Hashable {
     case chat(id: Int)
@@ -16,10 +17,10 @@ public struct ChatDetailView: View {
     @State private var isDrawerOpen = false
     @State private var scrollViewProxy: ScrollViewProxy?
     
-    private let roomId: String
+    private let room: Room
     
-    public init(roomId: String) {
-        self.roomId = roomId
+    public init(room: Room) {
+        self.room = room
     }
     
     public var body: some View {
@@ -69,7 +70,7 @@ public struct ChatDetailView: View {
             hideKeyboard()
         }
         .onAppear {
-            viewModel.fetchMessages(roomId: roomId)
+            viewModel.fetchMessages(roomId: room.id)
         }
     }
     

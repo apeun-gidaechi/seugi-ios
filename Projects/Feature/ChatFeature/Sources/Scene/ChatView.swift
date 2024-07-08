@@ -33,7 +33,7 @@ public struct ChatView: View {
                 } success: { rooms in
                     ForEach(rooms, id: \.id) { room in
                         Button {
-                            router.navigate(to: ChatDestination.chatDetail(roomId: room.id))
+                            router.navigate(to: ChatDestination.chatDetail(room: room))
                         } label: {
                             SeugiChatList(type: roomType, room: room)
                         }

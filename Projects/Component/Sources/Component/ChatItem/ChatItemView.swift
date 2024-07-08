@@ -1,13 +1,19 @@
 import SwiftUI
+import Domain
 
 public struct ChatItemView: View {
     
-    var author: String
-    var type: ChatItemViewCellType
+    private let author: String
+    private let messages: [Message]
+    private let type: ChatItemViewCellType
     
-    public init(author: String, 
-                type: ChatItemViewCellType) {
+    public init(
+        author: String,
+        messages: [Message],
+        type: ChatItemViewCellType
+    ) {
         self.author = author
+        self.messages = messages
         self.type = type
     }
     
@@ -29,24 +35,27 @@ public struct ChatItemView: View {
                             .seugiColor(.gray(.g600))
                     }
                     VStack(alignment: type.isLeft ? .leading : .trailing, spacing: 8) {
-                        ChatItemViewCell(text: "iOS 정말 재미있어요!", type: type)
-                        ChatItemViewCell(text: "iOS 정말 재미있어요!", type: type)
-                        // 마지막 뷰 일때
-                        HStack(alignment: .bottom) {
-                            if type.isLeft {
-                                ChatItemViewCell(text: "iOS 정말 재미있어요!", type: type)
-                            }
-                            VStack(alignment: type.isLeft ? .leading : .trailing, spacing: 0) {
-                                Text("1")
-                                    .seugiColor(.gray(.g600))
-                                    .font(.caption(.c1))
-                                Text("오후 7:44")
-                                    .seugiColor(.gray(.g600))
-                                    .font(.caption(.c2))
-                            }
-                            if !type.isLeft {
-                                ChatItemViewCell(text: "iOS 정말 재미있어요!", type: type)
-                            }
+                        ForEach(Array(messages.enumerated()), id: \.element.id) { idx, message in
+                            ChatItemViewCell(text: "iOS 정말 재미있어요!", type: type)
+                                // 마지막 뷰 일때
+                                .if(idx == messages.count - 1) { view in    
+                                    HStack(alignment: .bottom) {
+                                        if type.isLeft {
+                                            ChatItemViewCell(text: "iOS 정말 재미있어요!", type: type)
+                                        }
+                                        VStack(alignment: type.isLeft ? .leading : .trailing, spacing: 0) {
+                                            Text("1")
+                                                .seugiColor(.gray(.g600))
+                                                .font(.caption(.c1))
+                                            Text("오후 7:44")
+                                                .seugiColor(.gray(.g600))
+                                                .font(.caption(.c2))
+                                        }
+                                        if !type.isLeft {
+                                            ChatItemViewCell(text: "iOS 정말 재미있어요!", type: type)
+                                        }
+                                    }
+                                }
                         }
                     }
                 }

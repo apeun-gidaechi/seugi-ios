@@ -1,22 +1,15 @@
-//
-//  ChatDetailCoordiantor.swift
-//  ChatDetailFeature
-//
-//  Created by dgsw8th71 on 4/10/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
+import Domain
 
 struct ChatDetailCoordinator: View {
     
-    private let roomId: String
+    private let room: Room
     
-    init(roomId: String) {
-        self.roomId = roomId
+    init(room: Room) {
+        self.room = room
     }
     
     var body: some View {
-        ChatDetailView(roomId: roomId)
+        ChatDetailView(room: room)
     }
 }

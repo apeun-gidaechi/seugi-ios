@@ -10,20 +10,18 @@ import SwiftUI
 import Component
 
 struct BottomNavigationPreview: View {
-    @State private var tabs = SeugiBottomNavigationData(
-        cellData: [
-            .init(type: .home, hasBadge: true),
-            .init(type: .chat, hasBadge: true),
-            .init(type: .room, hasBadge: false),
-            .init(type: .notification, hasBadge: false),
-            .init(type: .profile, hasBadge: false)
-        ],
-        selectedTab: .home
-    )
+    private var tabs: [SeugiBottomNavigationCellData] = [
+        .init(type: .home, hasBadge: true),
+        .init(type: .chat, hasBadge: true),
+        .init(type: .room, hasBadge: false),
+        .init(type: .notification, hasBadge: false),
+        .init(type: .profile, hasBadge: false)
+    ]
+    
     var body: some View {
         ScrollView {
             VStack {
-                SeugiBottomNavigation(tabs: $tabs)
+                SeugiBottomNavigation(selectedTab: .constant(.chat), tabs: tabs)
             }
         }
     }
