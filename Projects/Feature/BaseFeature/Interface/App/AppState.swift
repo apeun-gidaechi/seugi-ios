@@ -51,6 +51,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
     }
     
     public func fetchWorkspaces() {
+        print("💎 try to fetch workspace")
         guard !accessToken.isEmpty else {
             emit(.workspaceFetched)
             return
@@ -70,6 +71,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
                 workspaces = .failure(error)
             }
         } finished: { [self] in
+            print("💎 workspace fetched")
             emit(.workspaceFetched)
         }
     }

@@ -10,6 +10,7 @@ public final class StompManager: BaseViewModel<StompManager.StompManagerSubject>
 
 public extension StompManager {
     func subscribe() {
+        print("💎 StompManager.subscribe")
         stompRepo.openSocket()
         stompRepo.subConnect()
             .sink { _ in

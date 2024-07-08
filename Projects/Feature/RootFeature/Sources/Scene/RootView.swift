@@ -37,10 +37,10 @@ public struct RootView: View {
             launchScreenFactorry.makeView().eraseToAnyView()
                 .opacity(opacity)
         }
-        .environmentObject(joinWorkspaceManager)
-        .environmentObject(appState)
         .environmentObject(router)
+        .environmentObject(appState)
         .environmentObject(stompManager)
+        .environmentObject(joinWorkspaceManager)
         .onAppear {
             appState.subscribe { [self] subject in
                 switch subject {

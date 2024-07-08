@@ -11,10 +11,12 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
     @Inject private var messageRepo: MessageRepo
     @Inject private var chatRepo: ChatRepo
     @Inject private var stompRepo: StompRepo
+    @Inject private var stompMessageRepo: StompMessageRepo
     
     // MARK: - State
     @Published var messages: FetchFlow<[Message]> = .fetching
     @Published private var page = 0
+    @Published var text = ""
     
     var groupedMessages: [[Message]] {
         (messages.data ?? []).group
@@ -30,7 +32,14 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
         }
     }
     
-    func sendMessage(message: String) {
-        
+    func sendMessage(room: Room) {
+        stompMessageRepo.sendMessage(
+            roomId: room.id,
+            type: .message,
+            message: text,
+            mention: nil,
+            mentionAll: nil,
+            emoticon: nil
+        )
     }
 }

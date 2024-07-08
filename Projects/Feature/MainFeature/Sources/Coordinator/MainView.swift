@@ -94,18 +94,14 @@ public struct MainView: View {
         .ignoresSafeArea(.keyboard)
         .environmentObject(chatViewModel)
         .onAppear {
+            print("💎 MainView.body.onAppear")
             fetchChats()
-            appState.subscribe { subject in
-                switch subject {
-                case .workspaceFetched: // workspace fetch 됐을 때
-                    fetchChats()
-                    stompManager.subscribe()
-                }
-            }
+            stompManager.subscribe()
         }
     }
     
     private func fetchChats() {
+        print("어머")
         guard let workspace = appState.selectedWorkspace else { return }
         chatViewModel.fetchChats(workspaceId: workspace.workspaceId)
     }

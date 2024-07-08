@@ -13,7 +13,6 @@ public struct ChatDetailView: View {
     
     @InjectObject private var viewModel: ChatDetailViewModel
     
-    @State private var text = ""
     @State private var isDrawerOpen = false
     @State private var scrollViewProxy: ScrollViewProxy?
     
@@ -83,10 +82,10 @@ public struct ChatDetailView: View {
                     .frame(height: reader.safeAreaInsets.bottom + 56 - 12, alignment: .bottom) // 56: bottom nav height, 12: just margin
             }
             .ignoresSafeArea()
-            SeugiChatTextField("메세지 보내기", text: $text) {
-                // handle more
+            SeugiChatTextField("메세지 보내기", text: $viewModel.text) {
+                // handle tapped icon
             } sendButtonTapped: {
-                // handle send message
+                viewModel.sendMessage(room: room)
                 if let scrollViewProxy {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         scrollViewProxy.scrollTo(ChatType.bottom)
