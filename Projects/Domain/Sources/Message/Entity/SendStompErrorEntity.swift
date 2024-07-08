@@ -2,7 +2,7 @@ import SwiftBok
 
 @Init()
 @Members()
-public struct StompSendError: Entity {
+public struct SendStompErrorEntity: Entity {
     public let description: String
     public let message: String?
 }

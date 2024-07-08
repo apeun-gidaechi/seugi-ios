@@ -2,9 +2,7 @@ import Domain
 import ApeunStompKit
 import Combine
 
-public final class MessageService: Service<MessageEndpoint> {
-   
-}
+public final class MessageService: Service<MessageEndpoint> {}
 
 // MARK: - HTTP Protocol
 extension MessageService: MessageRepo {
@@ -31,8 +29,10 @@ extension MessageService: StompRepo {
         stomp.subSendReceipt()
     }
     
-    public func subSendError() -> AnyPublisher<StompSendError, Never> {
+    public func subSendError() -> AnyPublisher<SendStompErrorEntity, Never> {
         stomp.subSendError()
+            .map { $0.toEntity() }
+            .eraseToAnyPublisher()
     }
     
     public func subPing() -> AnyPublisher<Void, Never> {
@@ -48,5 +48,7 @@ extension MessageService: StompMessageRepo {
     
     public func subGetMessage(roomId: String) -> AnyPublisher<GetMessage, StompError> {
         stomp.subBody(destination: "/exchange/chat.exchange/room.\(roomId)", res: GetMessageRes.self)
+            .map { $0.toEntity() }
+            .eraseToAnyPublisher()
     }
 }
