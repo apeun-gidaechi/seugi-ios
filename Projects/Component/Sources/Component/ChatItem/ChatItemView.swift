@@ -7,15 +7,18 @@ public struct ChatItemView: View {
     private let author: RetrieveMember
     private let messages: [Message]
     private let type: ChatItemViewCellType
+    private let joinedUserCount: Int
     
     public init(
         author: RetrieveMember,
         messages: [Message],
-        type: ChatItemViewCellType
+        type: ChatItemViewCellType,
+        joinedUserCount: Int
     ) {
         self.author = author
         self.messages = messages
         self.type = type
+        self.joinedUserCount = joinedUserCount
     }
     
     public var body: some View {
@@ -45,9 +48,12 @@ public struct ChatItemView: View {
                                             view
                                         }
                                         VStack(alignment: type.isLeft ? .leading : .trailing, spacing: 0) {
-                                            Text("1")
-                                                .seugiColor(.gray(.g600))
-                                                .font(.caption(.c1))
+                                            let unreadUserCount = joinedUserCount - message.read.count
+                                            if unreadUserCount > 0 {
+                                                Text("\(unreadUserCount)")
+                                                    .seugiColor(.gray(.g600))
+                                                    .font(.caption(.c1))
+                                            }
                                             Text(message.timestamp?.localeHHSS ?? "")
                                                 .seugiColor(.gray(.g600))
                                                 .font(.caption(.c2))

@@ -33,7 +33,7 @@ public struct ChatDetailView: View {
                         LazyVStack(spacing: 0) {
                             ForEach(viewModel.groupedMessages, id: \.first?.id) { message in
                                 if let author = room.findUserById(id: message.first?.userId ?? 0) {
-                                    ChatItemView(author: author, messages: message, type: .other)
+                                    ChatItemView(author: author, messages: message, type: .other, joinedUserCount: room.joinUserId.count)
                                 }
                             }
                             Color.clear

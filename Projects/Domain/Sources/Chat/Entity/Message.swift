@@ -19,8 +19,6 @@ public struct Message: Entity {
     public let messageStatus: ChatStatusEnum?
 }
 
-
-
 public extension [Message] {
     var group: [[Message]] {
         var result: [[Message]] = []
