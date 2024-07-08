@@ -11,7 +11,7 @@ let dependencies = Dependencies(
             .remote(url: "https://github.com/google/GoogleSignIn-iOS.git", requirement: .exact("6.1.0")),
             .remote(url: "https://github.com/moya/Moya.git", requirement: .exact("15.0.3")),
             .remote(url: "https://github.com/bestswlkh0310/SwiftBok", requirement: .exact("1.2.0")),
-            .remote(url: "https://github.com/apeun-gidaechi/apeun-stomp-kit", requirement: .exact("1.2.5"))
+            .remote(url: "https://github.com/apeun-gidaechi/apeun-stomp-kit", requirement: .exact("1.2.7"))
         ]
     ),
     platforms: [.iOS]
