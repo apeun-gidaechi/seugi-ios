@@ -22,5 +22,21 @@ public extension StompManager {
                     .store(in: &self.subscriptions)
             }
             .store(in: &subscriptions)
+        stompRepo.subDisconnect()
+            .sink { _ in
+                print("🤩 STOMP disConnected")
+            }
+            .store(in: &subscriptions)
+        stompRepo.subSendError()
+            .sink { error in
+                print("🤩 STOMP error")
+                dump(error)
+            }
+            .store(in: &subscriptions)
+        stompRepo.subSendReciept()
+            .sink { recieptId in
+                print("🤩 STOMP recieptId \(recieptId)")
+            }
+            .store(in: &subscriptions)
     }
 }

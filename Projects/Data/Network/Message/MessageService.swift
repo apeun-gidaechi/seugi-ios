@@ -2,7 +2,9 @@ import Domain
 import ApeunStompKit
 import Combine
 
-public final class MessageService: Service<MessageEndpoint> {}
+public final class MessageService: Service<MessageEndpoint> {
+    private let stomp = ApeunStompService.shared.stomp
+}
 
 // MARK: - HTTP Protocol
 extension MessageService: MessageRepo {

@@ -1,16 +1,24 @@
 import ApeunStompKit
 import Foundation
 import Domain
-//
-//enum ApeunStompService {
-    
-    let wssBaseUrl = Bundle.main.object(forInfoDictionaryKey: "WssBaseUrl") as? String ?? ""
+import DIContainer
 
-    let url = URL(string: wssBaseUrl)!
-    let stomp = ApeunStomp(request: .init(url: url))
-//
-//}
-//
-//public extension ApeunStompService {
-//
-//}
+private let wssBaseUrl = Bundle.main.object(forInfoDictionaryKey: "WssBaseUrl") as? String ?? ""
+private let url = URL(string: "\(wssBaseUrl)/stomp/chat")!
+
+public final class ApeunStompService {
+    
+    @Inject private var keyValueRepo: KeyValueRepo
+    
+    private init() {
+        print(url)
+    }
+    private(set) lazy var stomp = ApeunStomp(request: .init(url: url), connectionHeaders: [
+        "Authorization": "Bearer \(keyValueRepo.load(key: .accessToken) ?? "")",
+        StompCommands.commandHeaderHeartBeat.rawValue: "0,10000"
+    ])
+}
+
+public extension ApeunStompService {
+    static let shared = ApeunStompService()
+}
