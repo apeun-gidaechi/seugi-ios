@@ -55,4 +55,12 @@ public extension Date {
         }
         return datesInWeek.reversed()
     }
+    
+    var localeHHSS: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "a hh:mm"
+        let dateString = dateFormatter.string(from: self)
+        return dateString
+    }
 }

@@ -32,8 +32,9 @@ public struct ChatDetailView: View {
                     ScrollView {
                         LazyVStack(spacing: 0) {
                             ForEach(viewModel.groupedMessages, id: \.first?.id) { message in
-                                let author = room.findUserById(id: message.first?.userId ?? 0)
-                                ChatItemView(author: author?.name ?? "", messages: message, type: .other)
+                                if let author = room.findUserById(id: message.first?.userId ?? 0) {
+                                    ChatItemView(author: author, messages: message, type: .other)
+                                }
                             }
                             Color.clear
                                 .frame(height: 52)

@@ -14,11 +14,15 @@ public extension String {
     var localDateTime: Date? {
         var str = self
         str.replace("T", with: " ")
-        return DateFormatter.localDateTime.date(from: str)
+        let date = DateFormatter.localDateTime.date(from: str)
+        // 9시간 (9 * 60 * 60 초) 더하기
+        return date?.addingTimeInterval(9 * 60 * 60)
     }
     
     var localDate: Date? {
-        return DateFormatter.localDate.date(from: self)
+        // 9시간 (9 * 60 * 60 초) 더하기
+        let date = DateFormatter.localDate.date(from: self)
+        return date?.addingTimeInterval(9 * 60 * 60)
     }
 }
 

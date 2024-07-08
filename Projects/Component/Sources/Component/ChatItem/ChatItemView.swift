@@ -1,14 +1,15 @@
 import SwiftUI
 import Domain
+import DateUtil
 
 public struct ChatItemView: View {
     
-    private let author: String
+    private let author: RetrieveMember
     private let messages: [Message]
     private let type: ChatItemViewCellType
     
     public init(
-        author: String,
+        author: RetrieveMember,
         messages: [Message],
         type: ChatItemViewCellType
     ) {
@@ -24,13 +25,13 @@ public struct ChatItemView: View {
             }
             HStack(alignment: .top) {
                 if case .other = type {
-                    SeugiAvatar(type: .medium)
+                    SeugiAvatar(author.picture, type: .medium)
                 } else if case .ai = type {
                     SeugiAppIcon(type: .medium)
                 }
                 VStack(alignment: .leading, spacing: 4) {
                     if type.isLeft {
-                        Text(author)
+                        Text(author.name)
                             .font(.body(.b1))
                             .seugiColor(.gray(.g600))
                     }
@@ -47,7 +48,7 @@ public struct ChatItemView: View {
                                             Text("1")
                                                 .seugiColor(.gray(.g600))
                                                 .font(.caption(.c1))
-                                            Text("오후 7:44")
+                                            Text(message.timestamp?.localeHHSS ?? "")
                                                 .seugiColor(.gray(.g600))
                                                 .font(.caption(.c2))
                                         }
