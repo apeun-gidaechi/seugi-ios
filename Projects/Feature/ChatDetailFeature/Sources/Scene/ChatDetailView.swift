@@ -27,15 +27,14 @@ public struct ChatDetailView: View {
         ZStack {
             viewModel.messages.makeView {
                 ProgressView()
-            } success: { messages in
+            } success: { _ in
                 ScrollViewReader { scrollViewProxy in
                     ScrollView {
                         LazyVStack(spacing: 0) {
-                            ForEach(messages, id: \.id) { message in
-                                ChatItemView(author: message.message, type: .other)
+                            ForEach(viewModel.groupedMessages, id: \.first?.id) { message in
+                                let author = room.findUserById(id: message.first?.userId ?? 0)
+                                ChatItemView(author: author?.name ?? "", messages: message, type: .other)
                             }
-    //                        ChatItemDateView(date: "2024년 3월 21일 목요일").id(ChatType.chat(id: 1))
-    //                        ChatItemView(author: "이강현", type: .other).id(ChatType.chat(id: 2))
                             Color.clear
                                 .frame(height: 52)
                                 .id(ChatType.bottom)
@@ -47,12 +46,11 @@ public struct ChatDetailView: View {
                     }
                     .background(Color.seugi(.primary(.p050)))
                 }
-            } failure: { error in
+            } failure: { _ in
                 Text("-")
             }
 
             BottomTextField()
-            
         }
         .hideKeyboardWhenTap()
         .seugiTopBar("노영재")

@@ -48,7 +48,7 @@ public final class AuthInterceptor: RequestInterceptor {
             return
         }
         
-        print("✅ Try refresh")
+        print("✅ Try refresh with token - \(refreshToken)")
         
         memberRepo.refresh(token: refreshToken)
             .sink { [self] result in

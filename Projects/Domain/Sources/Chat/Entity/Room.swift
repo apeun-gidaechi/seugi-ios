@@ -18,3 +18,11 @@ public struct Room: Entity, Hashable {
     public let chatStatusEnum: ChatStatusEnum
     public let joinUserId: [RetrieveMember]
 }
+
+public extension Room {
+    func findUserById(id: Int) -> RetrieveMember? {
+        self.joinUserId.first {
+            $0.id == id
+        }
+    }
+}

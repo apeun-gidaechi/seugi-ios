@@ -36,12 +36,12 @@ public struct ChatItemView: View {
                     }
                     VStack(alignment: type.isLeft ? .leading : .trailing, spacing: 8) {
                         ForEach(Array(messages.enumerated()), id: \.element.id) { idx, message in
-                            ChatItemViewCell(text: "iOS 정말 재미있어요!", type: type)
-                                // 마지막 뷰 일때
-                                .if(idx == messages.count - 1) { view in    
+                            // 마지막 뷰 일때
+                            ChatItemViewCell(text: message.message, type: type)
+                                .if(idx == messages.count - 1) { view in
                                     HStack(alignment: .bottom) {
                                         if type.isLeft {
-                                            ChatItemViewCell(text: "iOS 정말 재미있어요!", type: type)
+                                            view
                                         }
                                         VStack(alignment: type.isLeft ? .leading : .trailing, spacing: 0) {
                                             Text("1")
@@ -52,7 +52,7 @@ public struct ChatItemView: View {
                                                 .font(.caption(.c2))
                                         }
                                         if !type.isLeft {
-                                            ChatItemViewCell(text: "iOS 정말 재미있어요!", type: type)
+                                            view
                                         }
                                     }
                                 }
