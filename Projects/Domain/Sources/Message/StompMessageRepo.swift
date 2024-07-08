@@ -3,5 +3,5 @@ import ApeunStompKit
 
 public protocol StompMessageRepo {
     func sendMessage(roomId: String, type: MessageType, message: String, mention: [Int]?, mentionAll: Bool?, emoticon: String?)
-    func subGetMessage() -> AnyPublisher<GetMessage, StompError>
+    func subGetMessage(roomId: String) -> AnyPublisher<GetMessage, StompError>
 }

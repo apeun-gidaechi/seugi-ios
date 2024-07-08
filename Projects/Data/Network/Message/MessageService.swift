@@ -1,54 +1,52 @@
 import Domain
+import ApeunStompKit
+import Combine
 
 public final class MessageService: Service<MessageEndpoint> {
    
 }
 
+// MARK: - HTTP Protocol
 extension MessageService: MessageRepo {
     public func getMessages(roomId: String, page: Int, size: Int) -> APIResult<Base<GetMessage>> {
         performRequest(.getMessages(roomId: roomId, page: page, size: size), res: GetMessageRes.self)
     }
 }
 
+// MARK: - Stomp Protocol
 extension MessageService: StompRepo {
     public func openSocket() {
         stomp.openSocket()
     }
     
     public func subDisconnect() -> AnyPublisher<Void, Never> {
-        <#code#>
+        stomp.subDisconnect()
     }
     
     public func subConnect() -> AnyPublisher<Void, Never> {
-        <#code#>
+        stomp.subConnect()
     }
     
     public func subSendReciept() -> AnyPublisher<String, Never> {
-        <#code#>
+        stomp.subSendReceipt()
     }
     
-    public func subSendError() -> AnyPublisher<Domain.StompSendError, Never> {
-        <#code#>
+    public func subSendError() -> AnyPublisher<StompSendError, Never> {
+        stomp.subSendError()
     }
     
     public func subPing() -> AnyPublisher<Void, Never> {
-        <#code#>
+        stomp.subPing()
+    }
+}
+
+extension MessageService: StompMessageRepo {
+    public func sendMessage(roomId: String, type: MessageType, message: String, mention: [Int]?, mentionAll: Bool?, emoticon: String?) {
+        let req = SendMessageReq(roomId: roomId, type: type, message: message, mention: mention, mentionAll: mentionAll, emoticon: emoticon)
+        stomp.sendJSONForDict(dict: req, to: "/pub/chat.message")
     }
     
-    
-//    func openSocket() {
-//        stomp.openSocket()
-//    }
-//    
-//    func sendMessage(roomId: String, type: MessageType, message: String, mention: [Int]?, mentionAll: Bool?, emoticon: String?) {
-//        let req = SendMessageReq(
-//            roomId: roomId,
-//            type: type,
-//            message: message,
-//            mention: mention,
-//            mentionAll: mentionAll,
-//            emoticon: emoticon
-//        )
-//        stomp.sendJSONForDict(dict: req, to: "/exchange/chat.exchange/room.\(roomId)")
-//    }
+    public func subGetMessage(roomId: String) -> AnyPublisher<GetMessage, StompError> {
+        stomp.subBody(destination: "/exchange/chat.exchange/room.\(roomId)", res: GetMessageRes.self)
+    }
 }
