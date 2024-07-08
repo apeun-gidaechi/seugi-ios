@@ -8,11 +8,15 @@ import CreateRoomFeatureInterface
 import NotificationFeatureInterface
 import ProfileFeatureInterface
 import DIContainer
+import Domain
+import Combine
 
 public struct MainView: View {
     
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var stompManager: StompManager
+    @State private var subscriptions = Set<AnyCancellable>()
     
     @Inject private var emptyHomeFactory: any EmptyHomeFactory
     @Inject private var progressHomeFactory: any ProgressHomeFactory
@@ -20,6 +24,7 @@ public struct MainView: View {
     @Inject private var chatFactory: any ChatFactory
     @Inject private var notificationFactory: any NotificationFactory
     @Inject private var profileFactory: any ProfileFactory
+    @Inject private var stompRepo: any StompRepo
 
     @InjectObject private var chatViewModel: ChatViewModel
     
@@ -92,8 +97,9 @@ public struct MainView: View {
             fetchChats()
             appState.subscribe { subject in
                 switch subject {
-                case .workspaceFetched:
+                case .workspaceFetched: // workspace fetch 됐을 때
                     fetchChats()
+                    stompManager.subscribe()
                 }
             }
         }

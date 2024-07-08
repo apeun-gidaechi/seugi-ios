@@ -13,6 +13,7 @@ public struct RootView: View {
     @StateObject private var timerManager = TimerManager()
     @StateObject private var appState = AppState()
     @StateObject private var router = Router()
+    @StateObject private var stompManager = StompManager()
     @StateObject private var joinWorkspaceManager = JoinWorkspaceManager()
     @Inject private var onboardingFactory: any OnboardingFactory
     @Inject private var joinSchoolFactory: any JoinSchoolFactory
@@ -39,6 +40,7 @@ public struct RootView: View {
         .environmentObject(joinWorkspaceManager)
         .environmentObject(appState)
         .environmentObject(router)
+        .environmentObject(stompManager)
         .onAppear {
             appState.subscribe { [self] subject in
                 switch subject {
