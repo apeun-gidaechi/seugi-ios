@@ -13,7 +13,7 @@ public struct Room: Entity, Equatable {
     public let type: RoomType
     public let roomAdmin: Int
     public let chatName: String
-    public let chatRoomImg: String
+    public let chatRoomImg: String?
     public let createdAt: Date?
     public let chatStatusEnum: ChatStatusEnum
     public let joinUserId: [RetrieveMember]
