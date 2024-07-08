@@ -64,7 +64,8 @@ public class Service<Target: SeugiEndpoint> {
     private func requestLog(target: Target.Target) {
         print("🛰 NETWORK Reqeust LOG")
         print(
-            "URL: \(target.host)/\(target.path)" + "\n"
+            "URL: \(target.host)/\(target.path)\n"
+            + "Header: \(target.headers ?? [:])\n"
             + "Method: \(target.method.rawValue)"
         )
     }

@@ -16,7 +16,7 @@ public extension MessageEndpoint {
     var route: (Moya.Method, String, Moya.Task) {
         switch self {
         case .getMessages(let roomId, let page, let size):
-                .get - "search/\(roomId)?page=\(page)&size=\(size)" - .requestPlain
+                .get - "search/\(roomId)" - ["page": page, "size": size].toURLParameters()
         }
     }
 }

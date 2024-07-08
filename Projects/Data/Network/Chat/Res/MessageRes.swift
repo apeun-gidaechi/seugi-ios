@@ -12,7 +12,7 @@ struct MessageRes: SeugiResponse {
     let emojiList: [EmojiRes]
     let mention: [Int]
     let mentionAll: Bool
-    let timestamp: Date?
+    let timestamp: String
     let read: [Int]
     let messageStatus: String
     
@@ -28,7 +28,7 @@ struct MessageRes: SeugiResponse {
             emojiList: emojiList.map { $0.toEntity() },
             mention: mention,
             mentionAll: mentionAll,
-            timestamp: timestamp,
+            timestamp: timestamp.localDateTime,
             read: read,
             messageStatus: .init(rawValue: messageStatus)
         )

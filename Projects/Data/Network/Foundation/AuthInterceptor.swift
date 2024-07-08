@@ -16,13 +16,13 @@ public final class AuthInterceptor: RequestInterceptor {
     public init() {}
     
     public func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Swift.Result<URLRequest, Error>) -> Void) {
-        print("✅ Set token")
+        
         var modifiedRequest = urlRequest
         guard let accessToken: String = keyValueStore.load(key: .accessToken) else {
             completion(.success(urlRequest))
             return
         }
-        
+        print("✅ Set token \(accessToken)")
         modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         completion(.success(modifiedRequest))
     }
