@@ -5,7 +5,10 @@ import BaseFeatureInterface
 
 public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDetailSubject> {
     
-    public enum ChatDetailSubject {}
+    public enum ChatDetailSubject {
+        case messageLoaded
+        case messagesFetched
+    }
     
     // MARK: - Repo
     @Inject private var messageRepo: MessageRepo
@@ -32,10 +35,11 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
                 case .finished:
                     break
                 }
-            } receiveValue: { res in
-                if var messages = self.messages.data {
+            } receiveValue: { [self] res in
+                if var messages = messages.data {
                     messages.append(res)
                     self.messages = .success(messages)
+                    emit(.messageLoaded)
                 }
             }
             .store(in: &subscriptions)
@@ -50,6 +54,7 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
             self.messages = .fetching
         } success: { res in
             self.messages = .success(res.data.messages)
+            self.emit(.messagesFetched)
         } failure: { error in
             print("❌", error)
         }

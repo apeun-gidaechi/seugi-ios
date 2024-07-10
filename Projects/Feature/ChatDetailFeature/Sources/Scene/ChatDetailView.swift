@@ -41,7 +41,7 @@ public struct ChatDetailView: View {
                         }
                         .onAppear {
                             self.scrollViewProxy = scrollViewProxy
-                            scrollViewProxy.scrollTo(ChatType.bottom)
+                            scrollViewProxy.scrollTo(ChatType.bottom, anchor: .bottom)
                         }
                     }
                     .background(Color.seugi(.primary(.p050)))
@@ -70,6 +70,14 @@ public struct ChatDetailView: View {
         .onAppear {
             viewModel.fetchMessages(roomId: room.id)
             viewModel.subscribe(roomId: room.id)
+            viewModel.subscribe { subject in
+                switch subject {
+                case .messageLoaded:
+                    scrollToBottom()
+                case .messagesFetched:
+                    scrollToBottom()
+                }
+            }
         }
         .onDisappear {
             viewModel.unsubscribe(roomId: room.id)
@@ -92,7 +100,7 @@ public struct ChatDetailView: View {
                 viewModel.sendMessage(room: room)
                 if let scrollViewProxy {
                     withAnimation(.easeInOut(duration: 0.5)) {
-                        scrollViewProxy.scrollTo(ChatType.bottom)
+                        scrollToBottom()
                     }
                 }
             }
@@ -154,5 +162,9 @@ public struct ChatDetailView: View {
                 .frame(width: 28, height: 28)
                 .seugiColor(.gray(.g600))
         }
+    }
+    
+    private func scrollToBottom() {
+        scrollViewProxy?.scrollTo(ChatType.bottom)
     }
 }
