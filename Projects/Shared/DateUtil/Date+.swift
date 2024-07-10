@@ -57,10 +57,37 @@ public extension Date {
     }
     
     var localeHHSS: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "a hh:mm"
-        let dateString = dateFormatter.string(from: self)
-        return dateString
-    }
+           let dateFormatter = DateFormatter()
+           let calendar = Calendar.current
+           let now = Date()
+
+           // 어제 날짜 계산
+           let startOfToday = calendar.startOfDay(for: now)
+           let startOfYesterday = calendar.date(byAdding: .day, value: -1, to: startOfToday)!
+           
+           // 작년 날짜 계산
+           let startOfThisYear = calendar.date(from: calendar.dateComponents([.year], from: now))!
+           let startOfLastYear = calendar.date(byAdding: .year, value: -1, to: startOfThisYear)!
+
+           if self >= startOfToday {
+               // 오늘 날짜
+               dateFormatter.locale = Locale(identifier: "ko_KR")
+               dateFormatter.dateFormat = "a hh:mm"
+           } else if self >= startOfYesterday {
+               // 어제 날짜
+               dateFormatter.locale = Locale(identifier: "ko_KR")
+               dateFormatter.dateFormat = "M월 d일"
+           } else if self >= startOfLastYear {
+               // 올해 날짜
+               dateFormatter.locale = Locale(identifier: "ko_KR")
+               dateFormatter.dateFormat = "M월 d일"
+           } else {
+               // 작년 및 그 이전 날짜
+               dateFormatter.locale = Locale(identifier: "ko_KR")
+               dateFormatter.dateFormat = "y년 M월 d일"
+           }
+
+           let dateString = dateFormatter.string(from: self)
+           return dateString
+       }
 }
