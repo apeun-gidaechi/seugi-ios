@@ -33,7 +33,10 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
                     break
                 }
             } receiveValue: { res in
-                print(res)
+                if var messages = self.messages.data {
+                    messages.append(res)
+                    self.messages = .success(messages)
+                }
             }
             .store(in: &subscriptions)
     }

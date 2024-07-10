@@ -48,8 +48,8 @@ extension MessageService: StompMessageRepo {
         stomp.sendJSONForDict(dict: req, to: "/pub/chat.message")
     }
     
-    public func subGetMessage(roomId: String) -> AnyPublisher<GetMessage, StompError> {
-        stomp.subBody(destination: "/exchange/chat.exchange/room.\(roomId)", res: GetMessageRes.self)
+    public func subGetMessage(roomId: String) -> AnyPublisher<Message, StompError> {
+        stomp.subBody(destination: "/exchange/chat.exchange/room.\(roomId)", res: MessageRes.self)
             .map { $0.toEntity() }
             .eraseToAnyPublisher()
     }
