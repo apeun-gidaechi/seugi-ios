@@ -6,6 +6,7 @@ public final class StompManager: BaseViewModel<StompManager.StompManagerSubject>
     public enum StompManagerSubject {}
     
     @Inject private var stompRepo: any StompRepo
+    @Inject private var stompMessageRep: StompMessageRepo
 }
 
 public extension StompManager {
@@ -20,6 +21,7 @@ public extension StompManager {
                         print("🤩 STOMP ping")
                     }
                     .store(in: &self.subscriptions)
+                
             }
             .store(in: &subscriptions)
         stompRepo.subDisconnect()

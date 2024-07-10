@@ -58,9 +58,10 @@ public final class AuthInterceptor: RequestInterceptor {
                     keyValueStore.save(key: .accessToken, value: res.data)
                     completion(.retry)
                 case .failure(let error):
+                    print(error)
                     failureReissue()
                     print("❌ Refresh Failure")
-                    completion(.doNotRetryWithError(error))
+                    completion(.doNotRetryWithError(APIError.refreshFailure))
                 case .fetching:
                     break
                 }
@@ -69,8 +70,8 @@ public final class AuthInterceptor: RequestInterceptor {
     }
     
     private func failureReissue() {
-//        keyValueStore.delete(key: .accessToken)
-//        keyValueStore.delete(key: .refreshToken)
+        keyValueStore.delete(key: .accessToken)
+        keyValueStore.delete(key: .refreshToken)
     }
     
     deinit {

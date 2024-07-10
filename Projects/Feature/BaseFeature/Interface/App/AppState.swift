@@ -67,6 +67,10 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
                 }
             }
         } failure: { [self] error in
+            if case .refreshFailure = error {
+                accessToken = ""
+                refreshToken = ""
+            }
             withAnimation {
                 workspaces = .failure(error)
             }

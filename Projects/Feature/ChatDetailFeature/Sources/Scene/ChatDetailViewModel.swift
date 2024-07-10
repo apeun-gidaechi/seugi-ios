@@ -22,6 +22,22 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
         (messages.data ?? []).group
     }
     
+    // MARK: - Method
+    func subscribe(roomId: String) {
+        stompMessageRepo.subGetMessage(roomId: roomId)
+            .sink { result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .finished:
+                    break
+                }
+            } receiveValue: { res in
+                print(res)
+            }
+            .store(in: &subscriptions)
+    }
+    
     func fetchMessages(roomId: String) {
         sub(messageRepo.getMessages(roomId: roomId, page: page, size: 50)) {
             self.messages = .fetching

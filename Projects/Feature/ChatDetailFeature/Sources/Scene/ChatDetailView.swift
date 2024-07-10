@@ -69,6 +69,7 @@ public struct ChatDetailView: View {
         }
         .onAppear {
             viewModel.fetchMessages(roomId: room.id)
+            viewModel.subscribe(roomId: room.id)
         }
     }
     
