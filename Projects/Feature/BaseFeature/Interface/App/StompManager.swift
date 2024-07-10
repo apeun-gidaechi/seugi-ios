@@ -21,7 +21,6 @@ public extension StompManager {
                         print("🤩 STOMP ping")
                     }
                     .store(in: &self.subscriptions)
-                
             }
             .store(in: &subscriptions)
         stompRepo.subDisconnect()

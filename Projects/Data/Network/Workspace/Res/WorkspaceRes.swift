@@ -4,16 +4,20 @@ struct WorkspaceRes: SeugiResponse {
     let workspaceId: String
     let workspaceName: String
     let workspaceImageUrl: String
-    let studentCount: Int
-    let teacherCount: Int
+    let workspaceAdmin: Int
+    let middleAdmin: [Int]
+    let teacher: [Int]
+    let student: [Int]
     
     func toEntity() -> Workspace {
         Workspace(
             workspaceId: workspaceId,
             workspaceName: workspaceName,
             workspaceImageUrl: workspaceImageUrl,
-            studentCount: studentCount,
-            teacherCount: teacherCount
+            workspaceAdmin: workspaceAdmin,
+            middleAdmin: middleAdmin,
+            teacher: teacher,
+            student: student
         )
     }
 }
