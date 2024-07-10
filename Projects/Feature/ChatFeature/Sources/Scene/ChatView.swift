@@ -79,5 +79,13 @@ public struct ChatView: View {
                     .hideBackButton()
                 }
         }
+        .onAppear {
+            vm.subscribe { subject in
+                switch subject {
+                case .refreshFailure:
+                    appState.clearToken()
+                }
+            }
+        }
     }
 }

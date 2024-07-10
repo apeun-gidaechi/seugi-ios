@@ -34,6 +34,11 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
         }
     }
     
+    public func clearToken() {
+        accessToken = ""
+        refreshToken = ""
+    }
+    
     public override init() {
         super.init()
         accessToken = keyValueRepo.load(key: .accessToken) ?? ""

@@ -5,7 +5,9 @@ import DIContainer
 
 public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
     
-    public enum ChatSubject {}
+    public enum ChatSubject {
+        case refreshFailure
+    }
     
     // MARK: - Repo
     @Inject private var chatRepo: ChatRepo
@@ -23,6 +25,7 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
         } failure: { error in
             print(error)
             self.personalRooms = .failure(error)
+            self.emit(.refreshFailure)
         }
         sub(chatRepo.searchGroup(workspaceId: workspaceId)) {
             self.groupRooms = .fetching
@@ -31,6 +34,7 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
         } failure: { error in
             print(error)
             self.groupRooms = .failure(error)
+            self.emit(.refreshFailure)
         }
     }
 }
