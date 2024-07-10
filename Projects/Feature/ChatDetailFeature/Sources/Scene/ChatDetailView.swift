@@ -49,7 +49,6 @@ public struct ChatDetailView: View {
             } failure: { _ in
                 Text("-")
             }
-
             BottomTextField()
         }
         .hideKeyboardWhenTap()
@@ -98,7 +97,7 @@ public struct ChatDetailView: View {
                 // handle tapped icon
             } sendButtonTapped: {
                 viewModel.sendMessage(room: room)
-                if let scrollViewProxy {
+                if scrollViewProxy != nil {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         scrollToBottom()
                     }

@@ -72,7 +72,13 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
                 }
             }
         } failure: { [self] error in
+            print("failruererqer")
+            print(error)
             if case .refreshFailure = error {
+                accessToken = ""
+                refreshToken = ""
+            } else if case .http(let res) = error,
+                      res.state == "FORBIDDEN" {
                 accessToken = ""
                 refreshToken = ""
             }
