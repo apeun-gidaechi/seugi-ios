@@ -53,4 +53,8 @@ extension MessageService: StompMessageRepo {
             .map { $0.toEntity() }
             .eraseToAnyPublisher()
     }
+    
+    public func unsubGetMessage(roomId: String) {
+        stomp.unsubscribe(destination: "/exchange/chat.exchange/room.\(roomId)")
+    }
 }

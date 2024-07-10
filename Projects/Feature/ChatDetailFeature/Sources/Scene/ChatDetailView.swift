@@ -71,6 +71,9 @@ public struct ChatDetailView: View {
             viewModel.fetchMessages(roomId: room.id)
             viewModel.subscribe(roomId: room.id)
         }
+        .onDisappear {
+            viewModel.unsubscribe(roomId: room.id)
+        }
     }
     
     @ViewBuilder

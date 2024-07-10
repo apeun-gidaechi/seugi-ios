@@ -38,6 +38,10 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
             .store(in: &subscriptions)
     }
     
+    func unsubscribe(roomId: String) {
+        stompMessageRepo.unsubGetMessage(roomId: roomId)
+    }
+    
     func fetchMessages(roomId: String) {
         sub(messageRepo.getMessages(roomId: roomId, page: page, size: 50)) {
             self.messages = .fetching
