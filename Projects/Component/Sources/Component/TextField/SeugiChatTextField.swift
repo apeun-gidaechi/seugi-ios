@@ -40,6 +40,7 @@ public struct SeugiChatTextField: View {
                 .autocorrectionDisabled()
                 .font(.subtitle(.s2))
                 .textInputAutocapitalization(.never)
+                .textContentType(.init(rawValue: ""))
                 .frame(maxWidth: .infinity)
                 .frame(height: 32)
                 .seugiColor(.sub(.black))

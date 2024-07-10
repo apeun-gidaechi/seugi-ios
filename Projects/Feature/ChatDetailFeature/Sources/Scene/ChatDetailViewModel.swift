@@ -53,7 +53,8 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
         sub(messageRepo.getMessages(roomId: roomId, page: page, size: 50)) {
             self.messages = .fetching
         } success: { res in
-            self.messages = .success(res.data.messages)
+            let messages = res.data.messages
+            self.messages = .success(messages)
             self.emit(.messagesFetched)
         } failure: { error in
             print("❌", error)
