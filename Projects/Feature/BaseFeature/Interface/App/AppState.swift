@@ -13,6 +13,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
     // MARK: - Repo
     @Inject private var keyValueRepo: KeyValueRepo
     @Inject private var workspaceRepo: WorkspaceRepo
+    @Inject private var profileRepo: ProfileRepo
     
     // MARK: - State
     @Published public var selectedMainTab = SeugiBottomNavigationType.home
@@ -34,6 +35,10 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
         }
     }
     
+    /* my info */
+    @Published public var profile: FetchFlow<RetrieveProfile> = .fetching
+    
+    // MARK: - Method
     public func clearToken() {
         accessToken = ""
         refreshToken = ""
@@ -88,6 +93,16 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
         } finished: { [self] in
             print("💎 workspace fetched")
             emit(.workspaceFetched)
+        }
+    }
+    
+    public func fetchMyInfo() {
+        sub(memberRepo.myInfo()) {
+            self.profile = .fetching
+        } success: { member in
+            self.member = .success(member.data)
+        } failure: { error in
+            self.member = .failure(error)
         }
     }
 }

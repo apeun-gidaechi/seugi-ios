@@ -111,9 +111,11 @@ public struct MainView: View {
         }
     }
     
+    // TODO: Devide methods with viewModel -
     private func fetchAll() {
         fetchChats()
         fetchNotices()
+        fetchMyInfo()
     }
     
     private func fetchChats() {
@@ -126,5 +128,9 @@ public struct MainView: View {
         print("MainView.fetchNotices - 어머 공지 불러왕용")
         guard let workspace = appState.selectedWorkspace else { return }
         notificationViewModel.fetchNotices(workspaceId: workspace.workspaceId)
+    }
+    
+    private func fetchMyInfo() {
+        appState.fetchMyInfo()
     }
 }

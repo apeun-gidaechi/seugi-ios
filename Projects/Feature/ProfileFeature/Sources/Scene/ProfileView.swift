@@ -1,14 +1,24 @@
 import SwiftUI
 import Component
+import Domain
+import BaseFeatureInterface
 
 public struct ProfileView: View {
+    
+    @EnvironmentObject private var appState: AppState
+    
+    private var member: RetrieveMember? {
+        appState.member.data
+    }
+    
     public init() {}
+    
     public var body: some View {
         ScrollView {
             VStack(spacing: 8) {
                 HStack(spacing: 10) {
                     SeugiAvatar(type: .medium)
-                    Text("노영재")
+                    Text(member?.name ?? "")
                         .font(.subtitle(.s2))
                         .seugiColor(.sub(.black))
                     Spacer()
