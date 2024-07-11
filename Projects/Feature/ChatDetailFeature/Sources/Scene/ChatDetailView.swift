@@ -162,7 +162,7 @@ public struct ChatDetailView: View {
                 LazyVStack(spacing: 0) {
                     SeugiMemberList(type: .invitation)
                     ForEach(room.joinUserId, id: \.id) {
-                        SeugiMemberList(type: .normal(member: $0))
+                        SeugiMemberList(type: .normal(member: $0, isAdmin: room.roomAdmin == $0.id))
                     }
                 }
             }

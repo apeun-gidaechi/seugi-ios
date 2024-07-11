@@ -26,10 +26,19 @@ public struct SeugiMemberList<Content>: View where Content: View {
                 SeugiAvatar(type: .large)
             }
             switch type {
-            case .normal(let member):
-                Text("\(member.name)")
-                    .font(.subtitle(.s2))
-                    .seugiColor(.sub(.black))
+            case .normal(let member, let isAdmin):
+                HStack(spacing: 4) {
+                    Text("\(member.name)")
+                        .font(.subtitle(.s2))
+                        .seugiColor(.sub(.black))
+                    if isAdmin {
+                        Image(icon: .crownFill)
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 24, height: 24)
+                            .seugiColor(.yellow(.y500))
+                    }
+                }
             case .invitation:
                 Text("멤버 초대하기")
                     .font(.subtitle(.s2))
