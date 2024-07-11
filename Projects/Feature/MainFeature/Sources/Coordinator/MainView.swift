@@ -91,7 +91,7 @@ public struct MainView: View {
                 }
             }
         }
-        .ignoresSafeArea(.keyboard)
+//        .ignoresSafeArea(.keyboard)
         .environmentObject(chatViewModel)
         .onAppear {
             appState.subscribe { subject in

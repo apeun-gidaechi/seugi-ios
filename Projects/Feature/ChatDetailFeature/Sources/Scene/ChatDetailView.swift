@@ -113,6 +113,13 @@ public struct ChatDetailView: View {
             .toBottom()
             .padding(.horizontal, 8)
             .padding(.bottom, 8)
+            .onTapGesture {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    withAnimation {
+                        scrollToBottom()
+                    }
+                }
+            }
         }
     }
     
