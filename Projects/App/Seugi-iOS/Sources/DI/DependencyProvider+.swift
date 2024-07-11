@@ -64,6 +64,7 @@ extension DependencyProvider {
             WorkspaceAssembly(),
             EmailAssembly(),
             MessageAssembly(),
+            NoticeAssembly(),
             // Core
             KeyValueStoreAssembly()
         ], container: container)

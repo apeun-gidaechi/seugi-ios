@@ -1,3 +1,4 @@
+import Foundation
 import SwiftBok
 
 @Init()
@@ -9,6 +10,6 @@ public struct Notice: Entity {
     public let title: String
     public let content: String
     public let emoji: [String]
-    public let creationDate: String
-    public let lastModifiedDate: String
+    public let creationDate: Date?
+    public let lastModifiedDate: Date?
 }
