@@ -41,7 +41,7 @@ public struct ChatDetailView: View {
                                     }
                                     ChatItemDetailView(text: text)
                                 } else {
-                                    let isFirst = idx == 0 || messages[idx - 1].userId != message.userId
+                                    let isFirst = idx == 0 || (messages[idx - 1].userId != message.userId) || ![.message, .deleteMessage].contains(messages[idx - 1].type)
                                     let isLast = idx == messages.count - 1 || messages[idx + 1].userId != message.userId
                                     let author = room.findUserById(id: message.userId) ?? .init(
                                         id: message.userId,
