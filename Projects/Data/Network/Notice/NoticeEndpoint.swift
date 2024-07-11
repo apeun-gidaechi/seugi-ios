@@ -9,7 +9,6 @@ public extension NoticeEndpoint {
     static let provider = MoyaProvider<NoticeEndpoint>(session: session)
     static let authProvider = MoyaProvider<NoticeEndpoint>(session: authSession)
     
-    
     var host: String {
         "notice"
     }

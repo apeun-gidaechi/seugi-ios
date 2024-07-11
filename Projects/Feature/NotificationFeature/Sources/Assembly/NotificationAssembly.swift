@@ -7,5 +7,8 @@ public final class NotificationAssembly: Assembly {
         container.register((any NotificationFactory).self) { _ in
             NotificationFactoryImpl()
         }
+        container.register(NotificationViewModel.self) { _ in
+            NotificationViewModel()
+        }
     }
 }

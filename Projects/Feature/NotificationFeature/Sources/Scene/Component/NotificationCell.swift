@@ -1,11 +1,20 @@
 import SwiftUI
 import Component
+import Domain
+import DateUtil
 
 struct NotificationCell: View {
+    
+    private let notice: Notice
+    
+    init(notice: Notice) {
+        self.notice = notice
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("박유현 · 5월 3일 수요일")
+                Text("\(notice.userName) · \(notice.creationDate?.localeMMDDEEEE ?? "")")
                     .seugiColor(.gray(.g600))
                     .font(.body(.b2))
                 Spacer()
@@ -16,11 +25,11 @@ struct NotificationCell: View {
                     .frame(width: 24, height: 24)
             }
             VStack(alignment: .leading, spacing: 0) {
-                Text("교내 체육대회 안내")
+                Text(notice.title)
                     .multilineTextAlignment(.leading)
                     .seugiColor(.sub(.black))
                     .font(.subtitle(.s2))
-                Text("5월말 체육대회 합니다. 깔쌈하게 준비해오십시오")
+                Text(notice.content)
                     .font(.body(.b2))
                     .multilineTextAlignment(.leading)
                     .seugiColor(.sub(.black))
@@ -40,8 +49,4 @@ struct NotificationCell: View {
         .cornerRadius(8)
         .shadow(.evBlack(.ev1))
     }
-}
-
-#Preview {
-    NotificationCell()
 }

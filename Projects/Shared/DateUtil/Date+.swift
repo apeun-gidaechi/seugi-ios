@@ -90,4 +90,18 @@ public extension Date {
            let dateString = dateFormatter.string(from: self)
            return dateString
        }
+    
+    var localeMMDDEEEE: String {
+
+        // DateFormatter를 생성하고 원하는 형식으로 설정합니다.
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "M월 d일 EEEE"
+
+        // 날짜를 문자열로 변환합니다.
+        let formattedDate = dateFormatter.string(from: self)
+
+        // 변환된 날짜를 출력합니다.
+        return formattedDate
+    }
 }

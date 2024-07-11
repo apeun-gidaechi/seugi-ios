@@ -7,6 +7,7 @@ import ChatDetailFeatureInterface
 import CreateRoomFeatureInterface
 import NotificationFeatureInterface
 import ProfileFeatureInterface
+import NotificationFeatureInterface
 import DIContainer
 import Domain
 import Combine
@@ -18,6 +19,7 @@ public struct MainView: View {
     @EnvironmentObject private var stompManager: StompManager
     @State private var subscriptions = Set<AnyCancellable>()
     
+    // MARK: - Factory
     @Inject private var emptyHomeFactory: any EmptyHomeFactory
     @Inject private var progressHomeFactory: any ProgressHomeFactory
     @Inject private var homeFactory: any HomeFactory
@@ -26,7 +28,9 @@ public struct MainView: View {
     @Inject private var profileFactory: any ProfileFactory
     @Inject private var stompRepo: any StompRepo
 
+    // MARK: - ViewModel
     @InjectObject private var chatViewModel: ChatViewModel
+    @InjectObject private var notificationViewModel: NotificationViewModel
     
     public init() {}
     
@@ -91,8 +95,8 @@ public struct MainView: View {
                 }
             }
         }
-//        .ignoresSafeArea(.keyboard)
         .environmentObject(chatViewModel)
+        .environmentObject(notificationViewModel)
         .onAppear {
             appState.subscribe { subject in
                 switch subject {
@@ -107,8 +111,14 @@ public struct MainView: View {
     }
     
     private func fetchChats() {
-        print("어머")
+        print("MainView.fetchChats - 어머 채팅 불러왕용")
         guard let workspace = appState.selectedWorkspace else { return }
         chatViewModel.fetchChats(workspaceId: workspace.workspaceId)
+    }
+    
+    private func fetchNotices() {
+        print("MainView.fetchNotices - 어머 공지 불러왕용")
+        guard let workspace = appState.selectedWorkspace else { return }
+        notificationViewModel.fetchNotices(workspaceId: workspace.workspaceId)
     }
 }
