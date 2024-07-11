@@ -4,9 +4,12 @@ import BaseFeatureInterface
 import DIContainer
 import Domain
 
+let pagingInterval = 50
+
 enum ChatType: Hashable {
     case chat(id: Int)
     case bottom
+    case top
 }
 
 public struct ChatDetailView: View {
@@ -30,6 +33,18 @@ public struct ChatDetailView: View {
                 ScrollViewReader { scrollViewProxy in
                     ScrollView {
                         LazyVStack(spacing: 0) {
+                            Color.clear
+                                .frame(height: 1)
+                                .id(ChatType.top)
+                                .onAppear {
+                                    let messages = viewModel.messages.data ?? []
+//                                    messages.count - 1 / pagingInterval
+//                                    guard let index = data.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
+//                                      
+//                                      if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (data.count - 1) / pagingInterval {
+//                                          await viewModel.fetchNextCommunities()
+//                                      }
+                                }
                             ForEach(Array(messages.enumerated()), id: \.element.id) { idx, message in
                                 if message.type == .enter {
                                     let userId = message.eventList?.first ?? -1
