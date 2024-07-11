@@ -160,11 +160,10 @@ public struct ChatDetailView: View {
             SeugiDivider(thickness: .thin)
             ScrollView {
                 LazyVStack(spacing: 0) {
-//                    SeugiMemberList(type: .invitation, member: T##RetrieveProfile)
-//                    ForEach(0..<30, id: \.self) {
-//                        SeugiMemberList(type: .normal)
-//                            .id($0)
-//                    }
+                    SeugiMemberList(type: .invitation)
+                    ForEach(room.joinUserId, id: \.id) {
+                        SeugiMemberList(type: .normal(member: $0))
+                    }
                 }
             }
             Spacer()

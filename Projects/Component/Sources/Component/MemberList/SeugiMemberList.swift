@@ -4,16 +4,13 @@ import Domain
 public struct SeugiMemberList<Content>: View where Content: View {
     
     private let type: SeugiMemberListType
-    private let member: RetrieveProfile
     private let content: () -> Content
     
     public init(
-        type: SeugiMemberListType = .normal,
-        member: RetrieveProfile,
+        type: SeugiMemberListType,
         @ViewBuilder content: @escaping () -> Content = { EmptyView() }
     ) {
         self.type = type
-        self.member = member
         self.content = content
     }
     
@@ -28,14 +25,15 @@ public struct SeugiMemberList<Content>: View where Content: View {
             } else {
                 SeugiAvatar(type: .large)
             }
-            if case .invitation = type {
+            switch type {
+            case .normal(let member):
+                Text("\(member.name)")
+                    .font(.subtitle(.s2))
+                    .seugiColor(.sub(.black))
+            case .invitation:
                 Text("멤버 초대하기")
                     .font(.subtitle(.s2))
                     .seugiColor(.primary(.p400))
-            } else {
-                Text("\(member.member.name)")
-                    .font(.subtitle(.s2))
-                    .seugiColor(.sub(.black))
             }
             Spacer()
             content()

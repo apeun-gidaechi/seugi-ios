@@ -27,7 +27,7 @@ public struct FirstCreateRoomView: View {
                             let selected = vm.selectedMembers.contains {
                                 $0.member.id == member.member.id
                             }
-                            SeugiMemberList(member: member) {
+                            SeugiMemberList(type: .normal(member: member.member)) {
                                 SeugiToggle(isOn: .constant(selected), type: .checkbox(size: .large))
                                     .disabled(true)
                             }
