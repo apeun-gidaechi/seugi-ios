@@ -49,5 +49,13 @@ public struct SecondCreateRoomView: View {
         .alertWithAnyView("채팅방 만들기 실패", when: $vm.createFailure) {
             Button("확인") {}
         }
+        .onAppear {
+            vm.subscribe { subject in
+                switch subject {
+                case .createSuccess:
+                    router.navigateToRoot()
+                }
+            }
+        }
     }
 }

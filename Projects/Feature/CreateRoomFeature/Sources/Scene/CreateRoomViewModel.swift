@@ -48,7 +48,7 @@ public final class CreateRoomViewModel: BaseViewModel<CreateRoomViewModel.Create
     
     func createRoom(workspaceId: String) {
         if selectedMembers.count == 1 {
-            // create Personal Chat
+            // TODO: create Personal Chat
             return
         }
         
