@@ -95,19 +95,25 @@ public struct MainView: View {
                 }
             }
         }
+        .ignoresSafeArea(.keyboard)
         .environmentObject(chatViewModel)
         .environmentObject(notificationViewModel)
         .onAppear {
             appState.subscribe { subject in
                 switch subject {
                 case .workspaceFetched:
-                    fetchChats()
+                    fetchAll()
                 }
             }
             print("💎 MainView.body.onAppear")
-            fetchChats()
+            fetchAll()
             stompManager.subscribe()
         }
+    }
+    
+    private func fetchAll() {
+        fetchChats()
+        fetchNotices()
     }
     
     private func fetchChats() {

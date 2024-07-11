@@ -25,12 +25,21 @@ public struct ChatView: View {
         roomType == .personal ? vm.personalRooms : vm.groupRooms
     }
     
+    private var searchText: Binding<String> {
+        roomType == .personal ? $vm.personalSearchText : $vm.groupSearchText
+    }
+    
+    private var searchedRooms: [Room] {
+        roomType == .personal ? vm.searchedPersonalRooms : vm.searchedGroupRooms
+    }
+    
     public var body: some View {
         ScrollView {
             VStack(spacing: 0) {
                 rooms.makeView {
                     ProgressView()
                 } success: { rooms in
+                    let rooms = isSearching ? searchedRooms : rooms
                     ForEach(rooms, id: \.id) { room in
                         Button {
                             router.navigate(to: ChatDestination.chatDetail(room: room))
@@ -60,7 +69,7 @@ public struct ChatView: View {
         .hideTitle(isSearching)
         .subView {
             if isSearching {
-                TextField("채팅방 검색", text: .constant(""))
+                TextField("채팅방 검색", text: searchText)
                     .focused($searchFocus)
             }
         }
@@ -84,6 +93,17 @@ public struct ChatView: View {
                 switch subject {
                 case .refreshFailure:
                     appState.clearToken()
+                }
+            }
+        }
+        .onDisappear {
+            vm.clearSearchText()
+        }
+        .onTapGesture {
+            if isSearching {
+                withAnimation {
+                    isSearching = false
+                    vm.clearSearchText()
                 }
             }
         }

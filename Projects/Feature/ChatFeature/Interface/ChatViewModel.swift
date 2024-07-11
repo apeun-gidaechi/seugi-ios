@@ -13,8 +13,31 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
     @Inject private var chatRepo: ChatRepo
     
     // MARK: - State
+    /* personal */
     @Published public var personalRooms: FetchFlow<[Room]> = .fetching
+    @Published public var personalSearchText = ""
+    public var searchedPersonalRooms: [Room] {
+        if personalSearchText.isEmpty {
+            personalRooms.data ?? []
+        } else {
+            personalRooms.data?.filter { room in
+                room.chatName.contains(personalSearchText)
+            } ?? []
+        }
+    }
+    
+    /* group */
     @Published public var groupRooms: FetchFlow<[Room]> = .fetching
+    @Published public var groupSearchText = ""
+    public var searchedGroupRooms: [Room] {
+        if groupSearchText.isEmpty {
+            groupRooms.data ?? []
+        } else {
+            groupRooms.data?.filter { room in
+                room.chatName.contains(groupSearchText)
+            } ?? []
+        }
+    }
     
     // MARK: - Method
     public func fetchChats(workspaceId: String) {
@@ -36,5 +59,10 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
             self.groupRooms = .failure(error)
             self.emit(.refreshFailure)
         }
+    }
+    
+    public func clearSearchText() {
+        personalSearchText = ""
+        groupSearchText = ""
     }
 }
