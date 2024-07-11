@@ -8,18 +8,18 @@
 
 import SwiftUI
 
-public struct ChatItemDateView: View {
+public struct ChatItemDetailView: View {
     
-    var date: String
+    private let text: String
     
-    public init(date: String) {
-        self.date = date
+    public init(text: String) {
+        self.text = text
     }
     
     public var body: some View {
         HStack {
             Spacer()
-            Text(date)
+            Text(text)
                 .font(.caption(.c2))
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
