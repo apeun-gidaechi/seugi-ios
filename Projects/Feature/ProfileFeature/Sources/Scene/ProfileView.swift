@@ -7,8 +7,8 @@ public struct ProfileView: View {
     
     @EnvironmentObject private var appState: AppState
     
-    private var member: RetrieveMember? {
-        appState.member.data
+    private var profile: RetrieveProfile? {
+        appState.profile.data
     }
     
     public init() {}
@@ -18,7 +18,7 @@ public struct ProfileView: View {
             VStack(spacing: 8) {
                 HStack(spacing: 10) {
                     SeugiAvatar(type: .medium)
-                    Text(member?.name ?? "")
+                    Text(profile?.member.name ?? "")
                         .font(.subtitle(.s2))
                         .seugiColor(.sub(.black))
                     Spacer()

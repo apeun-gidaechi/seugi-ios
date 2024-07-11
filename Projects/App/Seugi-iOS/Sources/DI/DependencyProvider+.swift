@@ -57,7 +57,7 @@ extension DependencyProvider {
             SelectingJobAssembly(),
             StartAssembly(),
             NotificationAssembly(),
-            ProfileAssembly(),
+            ProfileFeature.ProfileAssembly(),
             // Domain
             MemberAssembly(),
             Network.ChatAssembly(),
@@ -65,6 +65,7 @@ extension DependencyProvider {
             EmailAssembly(),
             MessageAssembly(),
             NoticeAssembly(),
+            Network.ProfileAssembly(),
             // Core
             KeyValueStoreAssembly()
         ], container: container)

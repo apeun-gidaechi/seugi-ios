@@ -96,13 +96,16 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
         }
     }
     
-//    public func fetchMyInfo() {
-//        sub(profileRepo.) {
-//            self.profile = .fetching
-//        } success: { member in
-//            self.member = .success(member.data)
-//        } failure: { error in
-//            self.member = .failure(error)
-//        }
-//    }
+    public func fetchMyInfo() {
+        guard let selectedWorkspace else {
+            return
+        }
+        sub(profileRepo.me(workspaceId: selectedWorkspace.workspaceId)) {
+            self.profile = .fetching
+        } success: { profile in
+            self.profile = .success(profile.data)
+        } failure: { error in
+            self.profile = .failure(error)
+        }
+    }
 }
