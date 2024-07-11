@@ -94,6 +94,12 @@ public struct MainView: View {
         .ignoresSafeArea(.keyboard)
         .environmentObject(chatViewModel)
         .onAppear {
+            appState.subscribe { subject in
+                switch subject {
+                case .workspaceFetched:
+                    fetchChats()
+                }
+            }
             print("💎 MainView.body.onAppear")
             fetchChats()
             stompManager.subscribe()

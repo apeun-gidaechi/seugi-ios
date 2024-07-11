@@ -26,17 +26,19 @@ public struct ChatDetailView: View {
         ZStack {
             viewModel.messages.makeView {
                 ProgressView()
-            } success: { _ in
+            } success: { messages in
                 ScrollViewReader { scrollViewProxy in
                     ScrollView {
                         LazyVStack(spacing: 0) {
-                            ForEach(viewModel.groupedMessages, id: \.first?.id) { message in
-                                if let author = room.findUserById(id: message.first?.userId ?? 0) {
-                                    ChatItemView(author: author, messages: message, type: .other(isFirst: true, isLast: false), joinedUserCount: room.joinUserId.count)
+                            ForEach(Array(messages.enumerated()), id: \.element.id) { idx, message in
+                                if let author = room.findUserById(id: message.userId) {
+                                    let isFirst = idx == 0 || messages[idx - 1].userId != message.userId
+                                    let isLast = idx == messages.count - 1 || messages[idx + 1].userId != message.userId
+                                    ChatItemView(author: author, message: message, type: .other(isFirst: isFirst, isLast: isLast), joinedUserCount: room.joinUserId.count)
                                 }
                             }
                             Color.clear
-                                .frame(height: 52)
+                                .frame(height: 60)
                                 .id(ChatType.bottom)
                         }
                         .onAppear {

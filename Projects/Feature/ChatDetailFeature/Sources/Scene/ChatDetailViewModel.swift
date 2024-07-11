@@ -21,10 +21,6 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
     @Published private var page = 0
     @Published var message = ""
     
-    var groupedMessages: [[Message]] {
-        (messages.data ?? []).group
-    }
-    
     // MARK: - Method
     func subscribe(roomId: String) {
         stompMessageRepo.subGetMessage(roomId: roomId)
