@@ -31,11 +31,16 @@ public struct ChatDetailView: View {
                     ScrollView {
                         LazyVStack(spacing: 0) {
                             ForEach(Array(messages.enumerated()), id: \.element.id) { idx, message in
-                                if let author = room.findUserById(id: message.userId) {
-                                    let isFirst = idx == 0 || messages[idx - 1].userId != message.userId
-                                    let isLast = idx == messages.count - 1 || messages[idx + 1].userId != message.userId
-                                    ChatItemView(author: author, message: message, type: .other(isFirst: isFirst, isLast: isLast), joinedUserCount: room.joinUserId.count)
-                                }
+                                let isFirst = idx == 0 || messages[idx - 1].userId != message.userId
+                                let isLast = idx == messages.count - 1 || messages[idx + 1].userId != message.userId
+                                let author = room.findUserById(id: message.userId) ?? .init(
+                                    id: message.userId,
+                                    email: "",
+                                    birth: "",
+                                    name: "(알 수 없음)",
+                                    picture: ""
+                                )
+                                ChatItemView(author: author, message: message, type: .other(isFirst: isFirst, isLast: isLast), joinedUserCount: room.joinUserId.count)
                             }
                             Color.clear
                                 .frame(height: 60)

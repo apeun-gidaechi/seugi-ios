@@ -50,6 +50,7 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
             self.messages = .fetching
         } success: { res in
             let messages = res.data.messages
+                .sorted { $0.timestamp ?? .now < $1.timestamp ?? .now }
             self.messages = .success(messages)
             self.emit(.messagesFetched)
         } failure: { error in
