@@ -8,6 +8,7 @@ public extension Color {
         case sub(Sub)
         case red(Red)
         case orange(Orange)
+        case yellow(Yellow)
     }
 }
 
@@ -19,7 +20,8 @@ public extension Color {
              let .gray(colorable as SeugiColorable),
              let .sub(colorable as SeugiColorable),
              let .red(colorable as SeugiColorable),
-             let .orange(colorable as SeugiColorable):
+             let .orange(colorable as SeugiColorable),
+            let .yellow(colorable as SeugiColorable):
             return colorable.color
         }
     }

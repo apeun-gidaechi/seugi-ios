@@ -33,6 +33,8 @@ public enum SeugiIconography: String {
     case closeLine = "close_line"
     case closeRingLine = "close_ring_line"
     
+    case crownFill = "crown_fill"
+    
     case detailHorizontalLine = "detail_horizontal_line"
     case detailVerticalLine = "detail_vertical_line"
     
