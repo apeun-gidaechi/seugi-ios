@@ -43,7 +43,7 @@ public struct ChatDetailView: View {
                                 ChatItemView(author: author, message: message, type: .other(isFirst: isFirst, isLast: isLast), joinedUserCount: room.joinUserId.count)
                             }
                             Color.clear
-                                .frame(height: 60)
+                                .frame(height: 68)
                                 .id(ChatType.bottom)
                         }
                         .onAppear {
