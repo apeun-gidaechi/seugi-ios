@@ -25,6 +25,11 @@ public extension [Message] {
         self
             .sorted { $0.timestamp ?? .now < $1.timestamp ?? .now }
             .forEach { message in
+                guard [.message, .deleteMessage].contains(message.type) else {
+                    result.append([message])
+                    return
+                }
+                
                 if var last = result.last {
                     if last.first?.userId == message.userId {
                         let length = result.count

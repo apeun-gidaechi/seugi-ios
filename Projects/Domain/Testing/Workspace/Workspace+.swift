@@ -6,8 +6,10 @@ extension Workspace: Mock {
             workspaceId: .randomUUID(),
             workspaceName: "temp workspace name",
             workspaceImageUrl: "",
-            studentCount: .randomIn1000(),
-            teacherCount: .randomIn100()
+            workspaceAdmin: 1,
+            middleAdmin: [1, 2],
+            teacher: [],
+            student: []
         )
     }
 }

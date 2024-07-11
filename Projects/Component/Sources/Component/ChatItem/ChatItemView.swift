@@ -1,76 +1,99 @@
 import SwiftUI
 import Domain
 import DateUtil
+import SwiftUIUtil
 
 public struct ChatItemView: View {
     
     private let author: RetrieveMember
-    private let messages: [Message]
+    private let message: Message
     private let type: ChatItemViewCellType
     private let joinedUserCount: Int
     
     public init(
         author: RetrieveMember,
-        messages: [Message],
+        message: Message,
         type: ChatItemViewCellType,
         joinedUserCount: Int
     ) {
         self.author = author
-        self.messages = messages
+        self.message = message
         self.type = type
         self.joinedUserCount = joinedUserCount
     }
     
+    private var isFirst: Bool {
+        switch type {
+        case .other(let isFirst, _) where isFirst,
+                .ai(let isFirst, _) where isFirst:
+            true
+        default:
+            false
+        }
+    }
+    
     public var body: some View {
-        HStack {
-            if case .me = type {
-                Spacer()
+        HStack(alignment: .top) {
+            if case .other(let isFirst, _) = type,
+               isFirst {
+                SeugiAvatar(author.picture, type: .medium)
+            } else if case .ai(let isFirst, _) = type, isFirst {
+                SeugiAppIcon(type: .medium)
             }
-            HStack(alignment: .top) {
-                if case .other = type {
-                    SeugiAvatar(author.picture, type: .medium)
-                } else if case .ai = type {
-                    SeugiAppIcon(type: .medium)
-                }
-                VStack(alignment: .leading, spacing: 4) {
-                    if type.isLeft {
+            VStack(alignment: type.isLeft ? .leading : .trailing, spacing: 4) {
+                // MARK: - author
+                if type.isLeft {
+                    if isFirst {
                         Text(author.name)
                             .font(.body(.b1))
                             .seugiColor(.gray(.g600))
                     }
-                    VStack(alignment: type.isLeft ? .leading : .trailing, spacing: 8) {
-                        ForEach(Array(messages.enumerated()), id: \.element.id) { idx, message in
-                            // 마지막 뷰 일때
-                            ChatItemViewCell(text: message.message, type: type)
-                                .if(idx == messages.count - 1) { view in
-                                    HStack(alignment: .bottom) {
-                                        if type.isLeft {
-                                            view
-                                        }
-                                        VStack(alignment: type.isLeft ? .leading : .trailing, spacing: 0) {
-                                            let unreadUserCount = joinedUserCount - message.read.count
-                                            if unreadUserCount > 0 {
-                                                Text("\(unreadUserCount)")
-                                                    .seugiColor(.gray(.g600))
-                                                    .font(.caption(.c1))
-                                            }
-                                            Text(message.timestamp?.localeHHSS ?? "")
-                                                .seugiColor(.gray(.g600))
-                                                .font(.caption(.c2))
-                                        }
-                                        if !type.isLeft {
-                                            view
-                                        }
-                                    }
+                }
+                // MARK: - Chat
+                Group {
+                    switch type {
+                    case .other(_, let isLast) where isLast,
+                            .ai(_, let isLast) where isLast:
+                        HStack(alignment: .bottom) {
+                            if type.isLeft {
+                                chat
+                            }
+                            VStack(alignment: type.isLeft ? .leading : .trailing, spacing: 0) {
+                                let unreadUserCount = joinedUserCount - message.read.count
+                                if unreadUserCount > 0 {
+                                    Text("\(unreadUserCount)")
+                                        .seugiColor(.gray(.g600))
+                                        .font(.caption(.c1))
                                 }
+                                Text(message.timestamp?.localeHHSS ?? "")
+                                    .seugiColor(.gray(.g600))
+                                    .font(.caption(.c2))
+                            }
+                            if !type.isLeft {
+                                chat
+                            }
                         }
+                    default:
+                        chat
                     }
                 }
-            }
-            .padding()
-            if type.isLeft {
-                Spacer()
+                .if(!isFirst) {
+                    $0.padding(.leading, 40)
+                }
             }
         }
+        .padding(.horizontal, 8)
+        .padding(.top, 8)
+        .if(type.isLeft) {
+            $0.toLeading()
+        }
+        .if(!type.isLeft) {
+            $0.toTrailing()
+        }
+    }
+    
+    @ViewBuilder
+    private var chat: some View {
+        ChatItemViewCell(text: message.message, type: type)
     }
 }

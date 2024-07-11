@@ -17,11 +17,18 @@ public struct ChatItemPreview: View {
         ScrollView {
             VStack(spacing: 0) {
                 ChatItemDateView(date: "2024년 3월 21일 목요일")
-                ChatItemView(author: "이강현", messages: [.mock(), .mock()], type: .other)
-                ChatItemView(author: "이강현", messages: [.mock(), .mock()], type: .me)
-                ChatItemView(author: "박재욱", messages: [.mock(), .mock()], type: .other)
-                ChatItemView(author: "AI", messages: [.mock(), .mock()], type: .ai)
-                ChatItemView(author: "AI", messages: [.mock(), .mock()], type: .ai)
+                // MARK: - Other
+                ChatItemView(author: .mock(), message: .mock(), type: .other(isFirst: true, isLast: false), joinedUserCount: 100)
+                ChatItemView(author: .mock(), message: .mock(), type: .other(isFirst: false, isLast: false), joinedUserCount: 100)
+                ChatItemView(author: .mock(), message: .mock(), type: .other(isFirst: false, isLast: true), joinedUserCount: 100)
+                
+                // MARK: - Me
+                ChatItemView(author: .mock(), message: .mock(), type: .me, joinedUserCount: 100)
+                
+                // MARK: - AI
+                ChatItemView(author: .mock(), message: .mock(), type: .ai(isFirst: true, isLast: false), joinedUserCount: 100)
+                ChatItemView(author: .mock(), message: .mock(), type: .ai(isFirst: false, isLast: false), joinedUserCount: 100)
+                ChatItemView(author: .mock(), message: .mock(), type: .ai(isFirst: false, isLast: true), joinedUserCount: 100)
             }
         }
     }

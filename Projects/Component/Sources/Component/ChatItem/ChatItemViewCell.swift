@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftUIUtil
 
 public struct ChatItemViewCell: View {
     
@@ -19,7 +20,7 @@ public struct ChatItemViewCell: View {
             .background(Color.seugi(type.backgroundColor))
             .cornerRadius(8, corners: type.corners)
             .shadow(.evBlack(.ev1))
-            .if(type == .ai) { view in
+            .if(type.isAi) { view in
                 view.stroke(8, corners: type.corners, content: SeugiGradientSystem.primary, lineWidth: 1.5)
             }
     }
