@@ -93,7 +93,9 @@ public struct ChatDetailView: View {
             } failure: { _ in
                 Text("-")
             }
-            BottomTextField()
+            if !isSearching {
+                BottomTextField()
+            }
         }
         .hideKeyboardWhenTap()
         .seugiTopBar(room.chatName) {
@@ -158,13 +160,18 @@ public struct ChatDetailView: View {
             }
             .ignoresSafeArea()
             SeugiChatTextField("메세지 보내기", text: $viewModel.message) {
-                // handle tapped icon
-            } sendButtonTapped: {
-                viewModel.sendMessage(room: room)
-                if scrollViewProxy != nil {
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        scrollToBottom()
+                switch $0 {
+                case .sendMessage:
+                    viewModel.sendMessage(room: room)
+                    if scrollViewProxy != nil {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            scrollToBottom()
+                        }
                     }
+                case .imageMenu:
+                    break
+                case .fileMenu:
+                    break
                 }
             }
             .toBottom()

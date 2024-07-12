@@ -1,34 +1,37 @@
-//
-//  SeugiChatTextField.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 3/29/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
+import SwiftUIUtil
 import SwiftUI
+
+public enum ChatTextFieldAction {
+    case sendMessage
+    case imageMenu
+    case fileMenu
+}
 
 public struct SeugiChatTextField: View {
     
-    var hint: String
-    @Binding var text: String
-    var addButtonTapped: () -> Void
-    var sendButtonTapped: () -> Void
+    private let hint: String
+    @Binding private var text: String
+    private let action: (ChatTextFieldAction) -> Void
     
-    public init(_ hint: String, 
-                text: Binding<String>,
-                addButtonTapped: @escaping () -> Void,
-                sendButtonTapped: @escaping () -> Void) {
-        self.hint = hint
+    public init(
+        _ hint: String,
+        text: Binding<String>,
+        action: @escaping (ChatTextFieldAction) -> Void
+    ) {
+            self.hint = hint
         self._text = text
-        self.addButtonTapped = addButtonTapped
-        self.sendButtonTapped = sendButtonTapped
+        self.action = action
     }
     
     public var body: some View {
         HStack {
-            Button {
-                addButtonTapped()
+            Menu {
+                Button("이미지", systemImage: "photo") {
+                    action(.imageMenu)
+                }
+                Button("파일", systemImage: "folder") {
+                    action(.fileMenu)
+                }
             } label: {
                 Image(icon: .addFill)
                     .resizable()
@@ -47,7 +50,7 @@ public struct SeugiChatTextField: View {
                 .tint(.seugi(.primary(.p500)))
             let sendButtonColor: Color.SeugiColorSystem = text.isEmpty ? .gray(.g400) : .primary(.p500)
             Button {
-                sendButtonTapped()
+                action(.sendMessage)
             } label: {
                 Image(icon: .sendFill)
                     .resizable()
