@@ -19,10 +19,14 @@ public struct ChatDetailView: View {
     
     // MARK: - EnvironmentObject
     @EnvironmentObject private var appState: AppState
+    @Environment(\.dismiss) private var dismiss
     
     // MARK: - State
     @State private var isDrawerOpen = false
     @State private var scrollViewProxy: ScrollViewProxy?
+    @State private var isSearching = false
+    @State private var searchText = ""
+    @FocusState private var searchFocus: Bool
     
     private let room: Room
     
@@ -92,13 +96,33 @@ public struct ChatDetailView: View {
             BottomTextField()
         }
         .hideKeyboardWhenTap()
-        .seugiTopBar(room.chatName)
-        .showShadow()
-        .button(.searchLine) {
-            // handle searching
+        .seugiTopBar(room.chatName) {
+            if isSearching {
+                withAnimation {
+                    isSearching = false
+                }
+            } else {
+                dismiss()
+            }
         }
-        .button(.hamburgerHorizontalLine) {
-            isDrawerOpen = true
+        .hideTitle(isSearching)
+        .subView {
+            if isSearching {
+                TextField("메세지, 이미지, 파일 검색", text: $searchText)
+                    .focused($searchFocus)
+            }
+        }
+        .showShadow()
+        .if(!isSearching) { view in
+            view.button(.searchLine) {
+                withAnimation {
+                    isSearching = true
+                    searchFocus = true
+                }
+            }
+            .button(.hamburgerHorizontalLine) {
+                isDrawerOpen = true
+            }
         }
         .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
             drawerBody
