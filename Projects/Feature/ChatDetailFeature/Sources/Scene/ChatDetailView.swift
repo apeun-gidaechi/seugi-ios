@@ -14,8 +14,13 @@ enum ChatType: Hashable {
 
 public struct ChatDetailView: View {
     
+    // MARK: - ViewModel
     @InjectObject private var viewModel: ChatDetailViewModel
     
+    // MARK: - EnvironmentObject
+    @EnvironmentObject private var appState: AppState
+    
+    // MARK: - State
     @State private var isDrawerOpen = false
     @State private var scrollViewProxy: ScrollViewProxy?
     
@@ -65,7 +70,9 @@ public struct ChatDetailView: View {
                                         name: "(알 수 없음)",
                                         picture: ""
                                     )
-                                    ChatItemView(author: author, message: message, type: .other(isFirst: isFirst, isLast: isLast), joinedUserCount: room.joinUserId.count)
+                                    let userId = appState.profile.data?.member.id ?? -1
+                                    let type: ChatItemViewCellType = author.id == userId ? .me : .other(isFirst: isFirst, isLast: isLast)
+                                    ChatItemView(author: author, message: message, type: type, joinedUserCount: room.joinUserId.count)
                                 }
                             }
                             Color.clear
