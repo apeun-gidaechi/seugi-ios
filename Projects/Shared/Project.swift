@@ -17,7 +17,7 @@ let project = Project.makeShared(
             .SPM.SwiftBok
         ]),
         .shared(target: .SwiftUIUtil),
-        .shared(target: .SwiftUtil,dependencies: [
+        .shared(target: .SwiftUtil, dependencies: [
             .SPM.SwiftBok
         ])
     ],

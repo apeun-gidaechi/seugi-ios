@@ -26,6 +26,9 @@ public extension StompManager {
         stompRepo.subDisconnect()
             .sink { _ in
                 print("🤩 STOMP disConnected")
+                self.stompRepo.subConnect()
+                    .sink {}
+                    .store(in: &self.subscriptions)
             }
             .store(in: &subscriptions)
         stompRepo.subSendError()
