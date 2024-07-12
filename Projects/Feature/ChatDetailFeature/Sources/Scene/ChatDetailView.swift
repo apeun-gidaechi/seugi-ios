@@ -1,4 +1,5 @@
 import SwiftUI
+import PhotosUI
 import Component
 import BaseFeatureInterface
 import DIContainer
@@ -22,11 +23,16 @@ public struct ChatDetailView: View {
     @Environment(\.dismiss) private var dismiss
     
     // MARK: - State
+    /* drawer */
     @State private var isDrawerOpen = false
+    /* scroll */
     @State private var scrollViewProxy: ScrollViewProxy?
+    /* search */
     @State private var isSearching = false
     @State private var searchText = ""
     @FocusState private var searchFocus: Bool
+    /* photo picker */
+    @State private var showPhotoPicker = false
     
     private let room: Room
     
@@ -147,6 +153,14 @@ public struct ChatDetailView: View {
         .onDisappear {
             viewModel.unsubscribe(roomId: room.id)
         }
+        .photosPicker(
+            isPresented: $showPhotoPicker,
+            selection: $viewModel.photo,
+            matching: .any(of: [.images, .screenshots, .livePhotos])
+        )
+        .onChange(of: viewModel.photo) { _ in
+            
+        }
     }
     
     @ViewBuilder
@@ -169,7 +183,7 @@ public struct ChatDetailView: View {
                         }
                     }
                 case .imageMenu:
-                    break
+                    showPhotoPicker = true
                 case .fileMenu:
                     break
                 }

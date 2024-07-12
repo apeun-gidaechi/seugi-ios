@@ -2,6 +2,8 @@ import Foundation
 import Domain
 import DIContainer
 import BaseFeatureInterface
+import PhotosUI
+import SwiftUI
 
 public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDetailSubject> {
     
@@ -20,6 +22,7 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
     @Published var messages: FetchFlow<[Message]> = .fetching
     @Published private var page = 0
     @Published var message = ""
+    @Published var photo: PhotosPickerItem?
     
     // MARK: - Method
     func subscribe(roomId: String) {
@@ -61,5 +64,9 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
             emoticon: nil
         )
         message = ""
+    }
+    
+    func uploadPhoto() {
+        
     }
 }

@@ -1,5 +1,6 @@
 import SwiftUIUtil
 import SwiftUI
+import PhotosUI
 
 public enum ChatTextFieldAction {
     case sendMessage
@@ -9,9 +10,13 @@ public enum ChatTextFieldAction {
 
 public struct SeugiChatTextField: View {
     
-    private let hint: String
+    // MARK: - State
+    /* textfield */
     @Binding private var text: String
+    
+    // MARK: - Parameters
     private let action: (ChatTextFieldAction) -> Void
+    private let hint: String
     
     public init(
         _ hint: String,
