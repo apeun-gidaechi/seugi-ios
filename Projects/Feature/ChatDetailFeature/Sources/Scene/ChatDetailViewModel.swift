@@ -24,14 +24,7 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
     // MARK: - Method
     func subscribe(roomId: String) {
         stompMessageRepo.subGetMessage(roomId: roomId)
-            .sink { result in
-                switch result {
-                case .failure(let error):
-                    print(error)
-                case .finished:
-                    break
-                }
-            } receiveValue: { [self] res in
+            .sink { [self] res in
                 if var messages = messages.data {
                     messages.append(res)
                     self.messages = .success(messages)
