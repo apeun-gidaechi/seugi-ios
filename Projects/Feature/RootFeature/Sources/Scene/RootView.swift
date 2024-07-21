@@ -25,16 +25,16 @@ public struct RootView: View {
     
     public var body: some View {
         ZStack {
-            if opacity == 0 {
-                if appState.accessToken.isEmpty {
-                    onboardingFactory.makeView().eraseToAnyView()
-                        .environmentObject(timerManager)
-                } else {
-                    mainFactory.makeView().eraseToAnyView()
-                }
+            if appState.accessToken.isEmpty {
+                onboardingFactory.makeView().eraseToAnyView()
+                    .environmentObject(timerManager)
+            } else {
+                mainFactory.makeView().eraseToAnyView()
             }
-            launchScreenFactorry.makeView().eraseToAnyView()
-                .opacity(opacity)
+            if opacity > 0 {
+                launchScreenFactorry.makeView().eraseToAnyView()
+                    .opacity(opacity)
+            }
         }
         .environmentObject(router)
         .environmentObject(appState)
