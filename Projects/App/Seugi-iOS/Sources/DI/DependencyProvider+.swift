@@ -66,6 +66,7 @@ extension DependencyProvider {
             MessageAssembly(),
             NoticeAssembly(),
             Network.ProfileAssembly(),
+            FileAssembly(),
             // Core
             KeyValueStoreAssembly()
         ], container: container)

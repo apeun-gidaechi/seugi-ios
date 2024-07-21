@@ -42,17 +42,19 @@ public struct RootView: View {
         .environmentObject(stompManager)
         .environmentObject(joinWorkspaceManager)
         .onAppear {
-            appState.subscribe { [self] subject in
-                switch subject {
-                case .workspaceFetched:
-                    router.navigateToRoot()
-                    sleep(2)
-                    withAnimation {
-                        opacity = 0
-                    }
-                }
+            sleep(2)
+            withAnimation {
+                opacity = 0
             }
-            appState.fetchWorkspaces()
         }
+        // 디버그일 경우 3번 탭할 시 세션 초기화
+        #if DEBUG
+        .onTapGesture(count: 3) {
+            print("💕 MainView.body.onTapGesture - 세션 초기화")
+            withAnimation {
+                appState.token = .init(accessToken: "", refreshToken: "")
+            }
+        }
+        #endif
     }
 }

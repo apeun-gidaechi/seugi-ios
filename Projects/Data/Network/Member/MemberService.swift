@@ -24,8 +24,8 @@ final class MemberService: Service<MemberEndpoint>, MemberRepo {
         performRequest(.refresh(token: token), res: String.self)
     }
     
-    func register(name: String, email: String, password: String, code: String) -> APIResult<Base<String>> {
-        performRequest(.register(.init(name: name, email: email, password: password, code: code)), res: String.self)
+    func register(name: String, email: String, password: String, code: String) -> APIResult<Base<Token>> {
+        performRequest(.register(.init(name: name, email: email, password: password, code: code)), res: TokenRes.self)
     }
     
     func remove() -> APIResult<BaseVoid> {

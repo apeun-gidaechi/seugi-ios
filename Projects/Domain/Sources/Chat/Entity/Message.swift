@@ -18,32 +18,3 @@ public struct Message: Entity {
     public let read: [Int]
     public let messageStatus: ChatStatusEnum?
 }
-
-// TODO: remove
-//
-//public extension [Message] {
-//    var group: [[Message]] {
-//        var result: [[Message]] = []
-//        self
-//            .sorted { $0.timestamp ?? .now < $1.timestamp ?? .now }
-//            .forEach { message in
-//                guard [.message, .deleteMessage].contains(message.type) else {
-//                    result.append([message])
-//                    return
-//                }
-//                
-//                if var last = result.last {
-//                    if last.first?.userId == message.userId {
-//                        let length = result.count
-//                        last.append(message)
-//                        result[length - 1] = last
-//                    } else {
-//                        result.append([message])
-//                    }
-//                } else {
-//                    result.append([message])
-//                }
-//            }
-//        return result
-//    }
-//}

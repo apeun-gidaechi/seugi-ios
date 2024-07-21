@@ -39,11 +39,6 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
     @Published public var profile: FetchFlow<RetrieveProfile> = .fetching
     
     // MARK: - Method
-    public func clearToken() {
-        accessToken = ""
-        refreshToken = ""
-    }
-    
     public override init() {
         super.init()
         accessToken = keyValueRepo.load(key: .accessToken) ?? ""
@@ -58,6 +53,11 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
                 self.keyValueRepo.save(key: .refreshToken, value: $0)
             }
             .store(in: &subscriptions)
+    }
+    
+    public func clearToken() {
+        accessToken = ""
+        refreshToken = ""
     }
     
     public func fetchWorkspaces() {
@@ -77,8 +77,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
                 }
             }
         } failure: { [self] error in
-            print("failruererqer")
-            print(error)
+            print("💎 AppState.fetchWorkspaces - \(error)")
             if case .refreshFailure = error {
                 accessToken = ""
                 refreshToken = ""

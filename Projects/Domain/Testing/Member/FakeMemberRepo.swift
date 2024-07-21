@@ -22,8 +22,8 @@ public final class FakeMemberRepo: MemberRepo {
         "token".successBaseResult
     }
     
-    public func register(name: String, email: String, password: String, code: String) -> APIResult<Base<String>> {
-        "token".successBaseResult
+    public func register(name: String, email: String, password: String, code: String) -> APIResult<Base<Token>> {
+        Token.mock().successBaseResult
     }
     
     public func remove() -> APIResult<BaseVoid> {

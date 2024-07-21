@@ -99,19 +99,19 @@ public struct MainView: View {
         .environmentObject(chatViewModel)
         .environmentObject(notificationViewModel)
         .onAppear {
+            print("💎 MainView.body.onAppear")
+            appState.fetchWorkspaces()
+            stompManager.subscribe()
             appState.subscribe { subject in
                 switch subject {
                 case .workspaceFetched:
                     fetchAll()
                 }
             }
-            print("💎 MainView.body.onAppear")
-            fetchAll()
-            stompManager.subscribe()
         }
     }
     
-    // TODO: Devide methods with viewModel -
+    // TODO: Devide methods by viewModel -
     private func fetchAll() {
         fetchChats()
         fetchNotices()
@@ -119,13 +119,13 @@ public struct MainView: View {
     }
     
     private func fetchChats() {
-        print("MainView.fetchChats - 어머 채팅 불러왕용")
+        print("💎 MainView.fetchChats")
         guard let workspace = appState.selectedWorkspace else { return }
         chatViewModel.fetchChats(workspaceId: workspace.workspaceId)
     }
     
     private func fetchNotices() {
-        print("MainView.fetchNotices - 어머 공지 불러왕용")
+        print("💎 MainView.fetchNotices")
         guard let workspace = appState.selectedWorkspace else { return }
         notificationViewModel.fetchNotices(workspaceId: workspace.workspaceId)
     }

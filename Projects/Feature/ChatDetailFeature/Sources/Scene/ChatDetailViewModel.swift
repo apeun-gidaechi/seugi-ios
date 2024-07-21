@@ -17,12 +17,17 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
     @Inject private var chatRepo: ChatRepo
     @Inject private var stompRepo: StompRepo
     @Inject private var stompMessageRepo: StompMessageRepo
+    @Inject private var fileRepo: FileRepo
     
     // MARK: - State
-    @Published var messages: FetchFlow<[Message]> = .fetching
     @Published private var page = 0
+    /* message */
+    @Published var messages: FetchFlow<[Message]> = .fetching
     @Published var message = ""
+    
+    /* photo */
     @Published var photo: PhotosPickerItem?
+    @Published var uploadFlow: IdleFlow<Bool> = .fetching
     
     // MARK: - Method
     func subscribe(roomId: String) {
@@ -65,8 +70,22 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
         )
         message = ""
     }
-    
-    func uploadPhoto() {
-        
-    }
+//    
+//    func uploadPhoto() {
+//        guard let photo else {
+//            return
+//        }
+//        Task {
+//            guard let photo = try await photo.loadTransferable(type: Data.self) else {
+//                return
+//            }
+//            sub(fileRepo.upload(type: .image, file: photo)) {
+//                self.uploadFlow = .fetching
+//            } success: { <#T#> in
+//                self.uploadFlow = .success(<#T##data: Bool##Bool#>)
+//            } failure: { <#APIError#> in
+//                <#code#>
+//            }
+//        }
+//    }
 }

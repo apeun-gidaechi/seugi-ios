@@ -6,6 +6,7 @@ public struct EmailVerificationView: View {
     
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var timerManager: TimerManager
+    @EnvironmentObject private var appState: AppState
     @StateObject private var viewModel: EmailVerificationViewModel
     
     private let name: String
@@ -58,6 +59,14 @@ public struct EmailVerificationView: View {
         .onChangeIdleFlow(of: viewModel.signUpFlow) {
             router.navigateToRoot()
         }
+        .onAppear {
+            viewModel.subscribe { subject in
+                switch subject {
+                case .registerSuccess(let token):
+                    appState.token = token
+                }
+            }
+        }
     }
     
     func convertSecondsToTime(timeInSeconds: Int) -> String {
@@ -65,9 +74,7 @@ public struct EmailVerificationView: View {
         let seconds = timeInSeconds % 60
         return String(format: "%02i분 %02i초 남음", minutes, seconds)
     }
-}
-
-extension EmailVerificationView {
+    
     @ViewBuilder
     private func emailSend() -> some View {
         if viewModel.isWaiting {

@@ -6,7 +6,9 @@ import SwiftUI
 
 public final class EmailVerificationViewModel: BaseViewModel<EmailVerificationViewModel.EmailVerificationSubject> {
     
-    public enum EmailVerificationSubject {}
+    public enum EmailVerificationSubject {
+        case registerSuccess(Token)
+    }
     
     // MARK: - Repo
     @Inject private var emailRepo: EmailRepo
@@ -32,10 +34,8 @@ public final class EmailVerificationViewModel: BaseViewModel<EmailVerificationVi
             isWaiting = true
             sendEmailFlow = .fetching
         } success: { res in
-            print(res)
             self.sendEmailFlow = .success()
         } failure: { error in
-            print(error)
             self.sendEmailFlow = .failure(error)
         }
     }
@@ -43,7 +43,8 @@ public final class EmailVerificationViewModel: BaseViewModel<EmailVerificationVi
     func signUp() {
         sub(memberRepo.register(name: name, email: email, password: password, code: verificationCode)) {
             self.signUpFlow = .fetching
-        } success: { _ in
+        } success: { token in
+            self.emit(.registerSuccess(token.data))
             self.signUpFlow = .success()
         } failure: { error in
             print(error)
