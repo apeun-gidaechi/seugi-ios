@@ -158,9 +158,7 @@ public struct ChatDetailView: View {
             selection: $viewModel.photo,
             matching: .any(of: [.images, .screenshots, .livePhotos])
         )
-        .onChange(of: viewModel.photo) { _ in
-            
-        }
+        .onChange(of: viewModel.photo) { _ in }
     }
     
     @ViewBuilder

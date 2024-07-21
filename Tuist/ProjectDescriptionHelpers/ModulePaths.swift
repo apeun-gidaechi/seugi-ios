@@ -24,10 +24,6 @@ public extension ModulePaths {
         case OAuthSignUp
         case Start
         case JoinSchool
-        case JoinSuccess
-        case SchoolCode
-        case SelectingJob
-        case WaitingJoin
         case Main
         case Home
         case Chat

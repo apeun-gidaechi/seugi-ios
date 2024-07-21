@@ -1,4 +1,4 @@
-rm -rf ~/Library/Developer/Xcode/DerivedData
-rm -rf **/*.xcodeproj
-rm -rf *.xcworkspace
+sudo rm -rf ~/Library/Developer/Xcode/DerivedData
+sudo rm -rf **/*.xcodeproj
+sudo rm -rf *.xcworkspace
 tuist clean

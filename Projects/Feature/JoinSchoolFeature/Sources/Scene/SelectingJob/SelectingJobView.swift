@@ -1,6 +1,7 @@
 import SwiftUI
 import Component
 import BaseFeatureInterface
+import JoinSchoolFeatureInterface
 
 public struct SelectingJobView: View {
     
@@ -31,15 +32,8 @@ public struct SelectingJobView: View {
             }
             .padding(.horizontal, 16)
             Spacer()
-            Button {
-                router.navigate(to: SelectingJobDestination.emailSignIn)
-            } label: {
-                Text("이미 계정이 있으신가요?")
-                    .seugiColor(.primary(.p500))
-                    .font(.body(.b1))
-            }
             SeugiButton.large("계속하기", type: .primary) {
-                router.navigate(to: SelectingJobDestination.waitingJoin)
+                router.navigate(to: JoinSchoolDestination.waitingJoin)
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 16)

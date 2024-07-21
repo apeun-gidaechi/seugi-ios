@@ -9,7 +9,6 @@ let project = Project.makeFeature(
         .feature(of: .EmailSignUp),
         .feature(of: .LaunchScreen),
         .feature(of: .OAuthSignUp),
-        .feature(of: .SelectingJob),
         .feature(of: .Start)
     ]
 )

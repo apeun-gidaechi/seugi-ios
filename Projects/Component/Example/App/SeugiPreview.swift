@@ -57,7 +57,8 @@ enum SeugiPreview: String, CaseIterable {
     }
     static var preview: some View {
         NavigationStack {
-            List(Self.allCases.sorted { $0.rawValue < $1.rawValue}, id: \.self) { preview in
+            let lst = Self.allCases.sorted { $0.rawValue < $1.rawValue }
+            List(lst, id: \.self) { preview in
                 NavigationLink {
                     preview.view
                 } label: {

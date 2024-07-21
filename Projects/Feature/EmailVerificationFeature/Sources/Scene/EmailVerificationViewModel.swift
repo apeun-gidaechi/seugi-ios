@@ -33,7 +33,7 @@ public final class EmailVerificationViewModel: BaseViewModel<EmailVerificationVi
         sub(emailRepo.send(email: email)) { [self] in
             isWaiting = true
             sendEmailFlow = .fetching
-        } success: { res in
+        } success: { _ in
             self.sendEmailFlow = .success()
         } failure: { error in
             self.sendEmailFlow = .failure(error)

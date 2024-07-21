@@ -3,7 +3,6 @@
 import SwiftUI
 import Component
 import BaseFeatureInterface
-import JoinSuccessFeatureInterface
 
 public struct JoinSuccessView: View {
     

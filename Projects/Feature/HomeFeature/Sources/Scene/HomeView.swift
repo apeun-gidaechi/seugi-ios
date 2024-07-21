@@ -448,7 +448,6 @@ public struct HomeView: View {
         .seugiBackground(.gray(.g200))
         .cornerRadius(4)
     }
-
     
     private func makeHeadlineIcon(icon: SeugiIconography) -> some View {
         Image(icon: icon)
