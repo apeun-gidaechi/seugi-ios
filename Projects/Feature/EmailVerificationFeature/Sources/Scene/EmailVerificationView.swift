@@ -63,7 +63,8 @@ public struct EmailVerificationView: View {
             viewModel.subscribe { subject in
                 switch subject {
                 case .registerSuccess(let token):
-                    appState.token = token
+                    appState.accessToken = String(token.accessToken.split(separator: " ")[1])
+                    appState.refreshToken = String(token.refreshToken.split(separator: " ")[1])
                 }
             }
         }

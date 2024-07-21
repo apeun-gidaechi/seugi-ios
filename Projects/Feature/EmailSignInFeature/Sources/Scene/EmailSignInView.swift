@@ -8,7 +8,6 @@ public struct EmailSignInView: View {
     @StateObject private var viewModel: EmailSignInViewModel
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
-    @State private var token: Token? = nil
     
     public init(vm: EmailSignInViewModel) {
         self._viewModel = StateObject(wrappedValue: vm)
@@ -50,7 +49,6 @@ public struct EmailSignInView: View {
             viewModel.subscribe { subject in
                 switch subject {
                 case .signInSuccess(let token):
-                    self.token = token
                     print("✅ EmailSignInView - 로그인 성공")
                     let accessToken = String(token.accessToken.split(separator: " ")[1])
                     let refreshToken = String(token.refreshToken.split(separator: " ")[1])

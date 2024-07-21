@@ -5,8 +5,9 @@ import Domain
 import DIContainer
 import SwiftUI
 import Combine
+import Moya
 
-public final class AuthInterceptor: RequestInterceptor {
+public final class AuthInterceptor: Moya.RequestInterceptor {
     
     @Inject private var keyValueStore: any KeyValueRepo
     @Inject private var memberRepo: MemberRepo
@@ -34,8 +35,8 @@ public final class AuthInterceptor: RequestInterceptor {
             return
         }
         print("✅ URL String: \(url.absoluteString)")
-        let refreshStatusCode = 403
-        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == refreshStatusCode else {
+        let refreshStatusCode = [403, 401]
+        guard let response = request.task?.response as? HTTPURLResponse, refreshStatusCode.contains(response.statusCode) else {
             completion(.doNotRetryWithError(error))
             return
         }
@@ -44,7 +45,7 @@ public final class AuthInterceptor: RequestInterceptor {
         let refreshToken = keyValueStore.load(key: .refreshToken) ?? ""
         guard !refreshToken.isEmpty else {
             failureReissue()
-            completion(.doNotRetryWithError(error))
+            completion(.doNotRetryWithError(APIError.refreshFailure))
             return
         }
         

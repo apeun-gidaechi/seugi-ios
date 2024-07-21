@@ -14,7 +14,13 @@ public class Service<Target: SeugiEndpoint> {
         res: T.Type
     ) -> AnyPublisher<T, APIError> {
         self.requestLog(target: target)
-        return (target.authorization == .authorization ? Target.authProvider : Target.provider)
+        
+        let provider = switch target.authorization {
+        case .authorization: Target.authProvider
+        case .none: Target.provider
+        }
+        
+        return provider
             .requestPublisher(target)
             .filterSuccessfulStatusCodes() // 200..<300
             .tryMap { result in // map response
@@ -33,6 +39,12 @@ public class Service<Target: SeugiEndpoint> {
                       let response = error.response else {
                     print("❌ Unknown Error")
                     return APIError.unknown
+                }
+                if case .underlying(let error, _) = error,
+                   let error = error.asAFError,
+                   case .requestRetryFailed(let retryError, _) = error,
+                   let error = retryError as? APIError {
+                    return error
                 }
                 self.responeLog(target: target, response: response)
                 guard let error = try? self.decoder.decode(BaseVoidRes.self, from: response.data) else {
