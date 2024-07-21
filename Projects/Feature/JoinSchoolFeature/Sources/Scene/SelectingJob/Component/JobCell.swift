@@ -4,8 +4,15 @@ import SwiftUIUtil
 
 struct JobCell: View {
     
-    var jobType: JobType
-    var isActive: Bool
+    @Namespace private var animation
+    
+    private let jobType: JobType
+    private let isActive: Bool
+    
+    init(jobType: JobType, isActive: Bool) {
+        self.jobType = jobType
+        self.isActive = isActive
+    }
     
     var body: some View {
         VStack(spacing: 5) {
@@ -14,6 +21,7 @@ struct JobCell: View {
                 Text(jobType.rawValue)
                     .font(.subtitle(.s2))
                     .seugiColor(textColor)
+                    .matchedGeometryEffect(id: "job label", in: animation)
                 if isActive {
                     Image(icon: .checkLine)
                         .resizable()

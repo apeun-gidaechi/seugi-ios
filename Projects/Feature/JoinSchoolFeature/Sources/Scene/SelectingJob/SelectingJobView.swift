@@ -6,6 +6,7 @@ import JoinSchoolFeatureInterface
 public struct SelectingJobView: View {
     
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var viewModel: JoinSchoolViewModel
     @State private var selectedTab: JobType = .student
     
     public init() {}
@@ -21,7 +22,7 @@ public struct SelectingJobView: View {
                 HStack {
                     ForEach(JobType.allCases, id: \.self) { tab in
                         Button {
-                            withAnimation {
+                            withAnimation(.spring(duration: 0.4)) {
                                 selectedTab = tab
                             }
                         } label: {
@@ -39,5 +40,10 @@ public struct SelectingJobView: View {
             .padding(.bottom, 16)
         }
         .seugiTopBar("학교 가입")
+        .alertWithAnyView("가입 요청 실패", when: failureDialog(for: $viewModel.joinFlow)) {
+            Button("닫기", role: .cancel) {}
+        } message: {
+            Text("잠시 후 다시 시도해 주세요")
+        }
     }
 }

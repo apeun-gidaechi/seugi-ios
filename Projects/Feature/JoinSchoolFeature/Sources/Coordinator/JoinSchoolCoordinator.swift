@@ -19,6 +19,7 @@ public struct JoinSchoolCoordinator: View {
                     switch destination {
                     case .waitingJoin: WaitingJoinView()
                     case .joinSuccess: JoinSuccessView()
+                    case .selectingJob: SelectingJobView()
                     }
                 }
                 .environmentObject(joinSchoolViewModel)

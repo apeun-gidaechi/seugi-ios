@@ -5,7 +5,7 @@ extension Workspace: Mock {
         Workspace(
             workspaceId: .randomUUID(),
             workspaceName: "temp workspace name",
-            workspaceImageUrl: "",
+            workspaceImageUrl: "https://cdn2.unrealengine.com/cyberpunk-2077-release-date-1920x1080-582173634.jpg",
             workspaceAdmin: 1,
             middleAdmin: [1, 2],
             teacher: [],
