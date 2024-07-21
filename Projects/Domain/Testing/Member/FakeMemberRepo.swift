@@ -2,6 +2,7 @@ import Domain
 import Combine
 
 public final class FakeMemberRepo: MemberRepo {
+    public init() {}
     public func edit(picture: String, name: String, birth: String) -> APIResult<BaseVoid> {
         BaseVoid.mock().successResult
     }
