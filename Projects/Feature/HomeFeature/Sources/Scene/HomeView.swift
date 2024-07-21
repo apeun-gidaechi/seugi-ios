@@ -7,6 +7,7 @@ import HomeFeatureInterface
 public struct HomeView: View {
     
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var router: Router
     
     private let flow: HomeFetchFlow
     
@@ -80,7 +81,7 @@ public struct HomeView: View {
                         .seugiColor(.gray(.g600))
                         .font(.body(.b2))
                     SeugiButton.large("등록하러 가기", type: .gray) {
-                        // TODO: navigate to registing school
+//                        router.navigate(to: HomeDe)
                     }
                 }
                 .applyCardEffect()

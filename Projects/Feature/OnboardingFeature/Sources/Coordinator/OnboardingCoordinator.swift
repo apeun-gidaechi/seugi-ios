@@ -4,7 +4,6 @@ import StartFeatureInterface
 import EmailSignInFeatureInterface
 import EmailSignUpFeatureInterface
 import OAuthSignUpFeatureInterface
-import SelectingJobFeatureInterface
 import SwiftUIUtil
 import DIContainer
 

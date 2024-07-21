@@ -7,17 +7,13 @@ import CreateRoomFeature
 import EmailSignInFeature
 import EmailSignUpFeature
 import EmailVerificationFeature
-import WaitingJoinFeature
 import HomeFeature
 import JoinSchoolFeature
-import JoinSuccessFeature
 import LaunchScreenFeature
 import MainFeature
 import OAuthSignUpFeature
 import OnboardingFeature
 import RootFeature
-import SchoolCodeFeature
-import SelectingJobFeature
 import StartFeature
 import NotificationFeature
 import ProfileFeature
@@ -44,17 +40,13 @@ extension DependencyProvider {
             EmailSignInAssembly(),
             EmailSignUpAssembly(),
             EmailVerificationAssembly(),
-            WaitingJoinAssembly(),
             HomeAssembly(),
             JoinSchoolAssembly(),
-            JoinSuccessAssembly(),
             LaunchScreenAssembly(),
             MainAssembly(),
             OAuthSignUpAssembly(),
             OnboardingAssembly(),
             RootAssembly(),
-            SchoolCodeAssembly(),
-            SelectingJobAssembly(),
             StartAssembly(),
             NotificationAssembly(),
             ProfileFeature.ProfileAssembly(),
