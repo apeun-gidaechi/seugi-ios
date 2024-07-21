@@ -16,14 +16,16 @@ public struct WaitingJoinView: View {
                     Image(image: .school)
                         .resizable()
                         .frame(width: 145, height: 145)
-                    Text("대구소프트웨어마이스터고등학교")
+                    Text("학교 가입 신청 완료")
                         .font(.subtitle(.s1))
                 }
                 SeugiToolTip(type: .left, size: .large, direction: .top, text: "가입 수락을 대기중이에요")
             }
             .toCenter()
             Spacer()
-            SeugiButton.large("확인", type: .gray) {}
+            SeugiButton.large("완료", type: .primary) {
+                router.navigateToRoot()
+            }
             .padding(.horizontal, 20)
             .padding(.bottom, 16)
         }

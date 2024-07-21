@@ -7,6 +7,7 @@ public final class JoinSchoolViewModel: BaseViewModel<JoinSchoolViewModel.JoinWo
     
     public enum JoinWorkspaceSubject {
         case fetchWorkspaceSuccess
+        case joinWorkspaceSuccess
     }
     
     // MARK: - Repo
@@ -24,6 +25,9 @@ public final class JoinSchoolViewModel: BaseViewModel<JoinSchoolViewModel.JoinWo
     @Published public var joinFlow: IdleFlow<Bool> = .idle
     @Published var roleType = WorkspaceRole.student
     @Published public var code = ""
+    public var isFetchJoinWorkspace: Bool {
+        joinFlow == .fetching
+    }
     public var isInValidInput: Bool {
         code.count < 6
     }
@@ -43,12 +47,14 @@ public final class JoinSchoolViewModel: BaseViewModel<JoinSchoolViewModel.JoinWo
     
     public func joinWorkspace() {
         guard case .success(let w) = workspace else {
+            print("💎 JoinSchoolViewModel.joinWorkspace - workspace not founded")
             return
         }
         sub(workspaceRepo.joinWorkspace(workspaceId: w.workspaceId, workspaceCode: code, role: roleType)) {
             self.joinFlow = .fetching
         } success: { _ in
             self.joinFlow = .success(true)
+            self.emit(.joinWorkspaceSuccess)
         } failure: { error in
             self.joinFlow = .failure(error)
         }

@@ -32,6 +32,8 @@ public struct SchoolCodeView: View {
             viewModel.subscribe { subject in
                 switch subject {
                 case .fetchWorkspaceSuccess: router.navigate(to: JoinSchoolDestination.joinSuccess)
+                default:
+                    break
                 }
             }
         }

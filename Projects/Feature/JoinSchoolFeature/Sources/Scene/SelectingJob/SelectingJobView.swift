@@ -33,8 +33,8 @@ public struct SelectingJobView: View {
             }
             .padding(.horizontal, 16)
             Spacer()
-            SeugiButton.large("계속하기", type: .primary) {
-                router.navigate(to: JoinSchoolDestination.waitingJoin)
+            SeugiButton.large("계속하기", type: .primary, isLoading: viewModel.isFetchJoinWorkspace) {
+                viewModel.joinWorkspace()
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 16)
@@ -44,6 +44,16 @@ public struct SelectingJobView: View {
             Button("닫기", role: .cancel) {}
         } message: {
             Text("잠시 후 다시 시도해 주세요")
+        }
+        .onAppear {
+            viewModel.subscribe { subject in
+                switch subject {
+                case .joinWorkspaceSuccess:
+                    router.navigate(to: JoinSchoolDestination.waitingJoin)
+                default:
+                    break
+                }
+            }
         }
     }
 }
