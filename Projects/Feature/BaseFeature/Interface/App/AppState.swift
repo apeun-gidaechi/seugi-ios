@@ -69,7 +69,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
         sub(workspaceRepo.getWorkspaces()) {
             self.workspaces = .fetching
         } success: { [self] workspaces in
-            withAnimation {
+            withAnimation(.spring(duration: 0.4)) {
                 self.workspaces = .success(workspaces.data)
                 if let workspace = workspaces.data.first,
                    selectedWorkspace == nil {
@@ -79,14 +79,9 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
         } failure: { [self] error in
             print("💎 AppState.fetchWorkspaces - \(error)")
             if case .refreshFailure = error {
-                accessToken = ""
-                refreshToken = ""
-            } else if case .http(let res) = error,
-                      res.state == "FORBIDDEN" {
-                accessToken = ""
-                refreshToken = ""
+                clearToken()
             }
-            withAnimation {
+            withAnimation(.spring(duration: 0.4)) {
                 workspaces = .failure(error)
             }
         } finished: { [self] in
