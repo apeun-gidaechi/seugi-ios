@@ -1,6 +1,7 @@
 import SwiftUI
 import Component
 import BaseFeatureInterface
+import JoinSchoolFeatureInterface
 
 public struct SchoolCodeView: View {
     
@@ -27,10 +28,12 @@ public struct SchoolCodeView: View {
         } message: {
             Text("다시 입력해주세요")
         }
-//        .onChange(of: joinWorkspaceManager.workspace) {
-//            if case .success = $0 {
-//                router.navigate(to: SchoolCodeDestination.joinSuccess)
-//            }
-//        }
+        .onAppear {
+            viewModel.subscribe { subject in
+                switch subject {
+                case .fetchWorkspaceSuccess: router.navigate(to: JoinSchoolDestination.joinSuccess)
+                }
+            }
+        }
     }
 }

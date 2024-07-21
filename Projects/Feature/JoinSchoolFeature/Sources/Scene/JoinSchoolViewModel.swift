@@ -5,7 +5,9 @@ import BaseFeatureInterface
 
 public final class JoinSchoolViewModel: BaseViewModel<JoinSchoolViewModel.JoinWorkspaceSubject> {
     
-    public enum JoinWorkspaceSubject {}
+    public enum JoinWorkspaceSubject {
+        case fetchWorkspaceSuccess
+    }
     
     // MARK: - Repo
     @Inject private var workspaceRepo: WorkspaceRepo
@@ -32,6 +34,7 @@ public final class JoinSchoolViewModel: BaseViewModel<JoinSchoolViewModel.JoinWo
             self.workspace = .fetching
         } success: { res in
             self.workspace = .success(res.data)
+            self.emit(.fetchWorkspaceSuccess)
         } failure: { error in
             self.isFetchFailure = true
             self.workspace = .failure(error)

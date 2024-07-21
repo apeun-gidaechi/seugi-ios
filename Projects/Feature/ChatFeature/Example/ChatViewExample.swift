@@ -11,7 +11,7 @@ struct ChatViewExample: App {
     
     var body: some Scene {
         WindowGroup {
-            ChatView()
+            ChatView(roomType: .personal)
         }
     }
 }

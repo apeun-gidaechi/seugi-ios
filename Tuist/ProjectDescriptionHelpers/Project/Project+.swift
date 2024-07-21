@@ -89,7 +89,8 @@ public extension Project {
                 "UILaunchStoryboardName": .string("LaunchScreen.storyboard")
             ])
             let target = Target.feature(of: type, module: .Example, infoPlist: infoPlist, dependencies: exampleDependency + [
-                .feature(of: type, module: .Feature)
+                .feature(of: type, module: .Feature),
+                .domainTesting
             ])
             
             targets.append(target)

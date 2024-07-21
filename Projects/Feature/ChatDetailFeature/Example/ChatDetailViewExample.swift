@@ -6,12 +6,13 @@ import Component
 struct ChatDetailViewExample: App {
     
     init() {
+        
         Pretendard.register()
     }
     
     var body: some Scene {
         WindowGroup {
-            ChatDetailView()
+//            ChatDetailView(room: .mock)
         }
     }
 }
