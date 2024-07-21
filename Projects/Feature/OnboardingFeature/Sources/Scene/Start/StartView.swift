@@ -2,6 +2,7 @@ import SwiftUI
 import Component
 import BaseFeatureInterface
 import DIContainer
+import OnboardingFeatureInterface
 
 public struct StartView: View {
     
@@ -77,7 +78,7 @@ public struct StartView: View {
             VStack(spacing: 8) {
                 SeugiButton.large("이메일로 계속하기", type: .black) {
                     isPresented = false
-                    router.navigate(to: StartDestination.EmailSignIn)
+                    router.navigate(to: OnboardingDestination.emailSignIn)
                 }
                 .padding(.top, 20)
                 SeugiAppleSignInButton { token in

@@ -1,15 +1,14 @@
 import SwiftUI
 import Component
+import OnboardingFeatureInterface
 import BaseFeatureInterface
 
 public struct EmailSignUpView: View {
     
-    @ObservedObject private var viewModel: EmailSignUpViewModel
+    @StateObject private var viewModel = EmailSignUpViewModel()
     @EnvironmentObject private var router: Router
     
-    public init(viewModel: EmailSignUpViewModel) {
-        self.viewModel = viewModel
-    }
+    public init() {}
     
     public var body: some View {
         VStack(spacing: 16) {
@@ -21,14 +20,14 @@ public struct EmailSignUpView: View {
             SeugiTextFieldForm("비밀번호를 다시 입력해 주세요", text: $viewModel.passwordCheck, type: .password, label: "비밀번호 확인")
             Spacer()
             Button {
-                router.navigate(to: EmailSignUpDestination.emailSignIn)
+                router.navigate(to: OnboardingDestination.emailSignIn)
             } label: {
                 Text("이미 계정이 있으신가요?")
                     .seugiColor(.primary(.p500))
                     .font(.body(.b1))
             }
             SeugiButton.large("계속하기", type: .primary) {
-                router.navigate(to: EmailSignUpDestination.emailVerification(name: viewModel.name, email: viewModel.email, password: viewModel.password))
+                router.navigate(to: OnboardingDestination.emailVerification(name: viewModel.name, email: viewModel.email, password: viewModel.password))
             }
             .disabled(viewModel.isInValidInput)
             .padding(.bottom, 16)

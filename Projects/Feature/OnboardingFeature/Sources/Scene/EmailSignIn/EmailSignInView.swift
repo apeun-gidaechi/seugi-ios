@@ -1,17 +1,16 @@
 import SwiftUI
 import Component
 import BaseFeatureInterface
+import OnboardingFeatureInterface
 import Domain
 
 public struct EmailSignInView: View {
     
-    @StateObject private var viewModel: EmailSignInViewModel
+    @StateObject private var viewModel = EmailSignInViewModel()
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
     
-    public init(vm: EmailSignInViewModel) {
-        self._viewModel = StateObject(wrappedValue: vm)
-    }
+    public init() {}
     
     public var body: some View {
         VStack(spacing: 16) {
@@ -25,7 +24,7 @@ public struct EmailSignInView: View {
                     .font(.body(.b1))
                     .seugiColor(.gray(.g600))
                 Button {
-                    router.navigate(to: EmailSignInDesination.emailSignUp)
+                    router.navigate(to: OnboardingDestination.emailSignUp)
                 } label: {
                     Text("가입하기")
                         .font(.body(.b1))

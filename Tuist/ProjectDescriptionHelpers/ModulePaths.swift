@@ -17,12 +17,7 @@ public extension ModulePaths {
         case Base
         case Root
         case Onboarding
-        case EmailSignUp
-        case EmailVerification
-        case EmailSignIn
         case LaunchScreen
-        case OAuthSignUp
-        case Start
         case JoinSchool
         case Main
         case Home
