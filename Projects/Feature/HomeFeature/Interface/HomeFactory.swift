@@ -2,5 +2,5 @@ import SwiftUI
 
 public protocol HomeFactory {
     associatedtype ViewType: View
-    func makeView() -> ViewType
+    func makeView(flow: HomeFetchFlow) -> ViewType
 }

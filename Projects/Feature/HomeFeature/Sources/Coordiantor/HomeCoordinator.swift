@@ -7,9 +7,17 @@
 //
 
 import SwiftUI
+import HomeFeatureInterface
 
 struct HomeCoordinator: View {
+    
+    private let flow: HomeFetchFlow
+    
+    public init(flow: HomeFetchFlow) {
+        self.flow = flow
+    }
+    
     var body: some View {
-        HomeView()
+        HomeView(flow: flow)
     }
 }
