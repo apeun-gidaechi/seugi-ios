@@ -81,7 +81,7 @@ public struct HomeView: View {
                         .seugiColor(.gray(.g600))
                         .font(.body(.b2))
                     SeugiButton.large("등록하러 가기", type: .gray) {
-//                        router.navigate(to: HomeDe)
+                        router.navigate(to: HomeDestination.joinSchool)
                     }
                 }
                 .applyCardEffect()

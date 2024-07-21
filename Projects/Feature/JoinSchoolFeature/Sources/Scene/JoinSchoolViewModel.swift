@@ -1,8 +1,9 @@
 import Foundation
 import Domain
 import DIContainer
+import BaseFeatureInterface
 
-public final class JoinWorkspaceManager: BaseViewModel<JoinWorkspaceManager.JoinWorkspaceSubject> {
+public final class JoinSchoolViewModel: BaseViewModel<JoinSchoolViewModel.JoinWorkspaceSubject> {
     
     public enum JoinWorkspaceSubject {}
     
@@ -10,14 +11,14 @@ public final class JoinWorkspaceManager: BaseViewModel<JoinWorkspaceManager.Join
     @Inject private var workspaceRepo: WorkspaceRepo
     
     // MARK: - State
-    // workspace
+    /* workspace */
     @Published public var isFetchFailure = false
-    @Published var workspace: FetchFlow<Workspace> = .fetching
+    @Published var workspace: IdleFlow<Workspace> = .idle
     public var isFetchWorkspace: Bool {
         workspace == .fetching
     }
     
-    // join
+    /* join */
     @Published public var joinFlow: IdleFlow<Bool> = .idle
     @Published var roleType = WorkspaceRole.student
     @Published public var code = ""

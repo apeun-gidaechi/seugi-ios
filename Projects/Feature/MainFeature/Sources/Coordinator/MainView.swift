@@ -102,7 +102,9 @@ public struct MainView: View {
         .environmentObject(notificationViewModel)
         .onAppear {
             print("💎 MainView.body.onAppear")
-            appState.fetchWorkspaces()
+            if case .fetching = appState.workspaces {
+                appState.fetchWorkspaces()
+            }
             stompManager.subscribe()
             appState.subscribe { subject in
                 switch subject {

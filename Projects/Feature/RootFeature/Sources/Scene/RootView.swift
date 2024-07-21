@@ -14,7 +14,6 @@ public struct RootView: View {
     @StateObject private var appState = AppState()
     @StateObject private var router = Router()
     @StateObject private var stompManager = StompManager()
-    @StateObject private var joinWorkspaceManager = JoinWorkspaceManager()
     @Inject private var onboardingFactory: any OnboardingFactory
     @Inject private var joinSchoolFactory: any JoinSchoolFactory
     @Inject private var launchScreenFactorry: any LaunchScreenFactory
@@ -40,7 +39,6 @@ public struct RootView: View {
         .environmentObject(router)
         .environmentObject(appState)
         .environmentObject(stompManager)
-        .environmentObject(joinWorkspaceManager)
         .onAppear {
             sleep(2)
             withAnimation {

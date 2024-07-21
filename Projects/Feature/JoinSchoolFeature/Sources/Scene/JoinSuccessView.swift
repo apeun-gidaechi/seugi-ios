@@ -7,7 +7,7 @@ import BaseFeatureInterface
 public struct JoinSuccessView: View {
     
     @EnvironmentObject private var router: Router
-    @EnvironmentObject private var joinWorkspaceManager: JoinWorkspaceManager
+    @EnvironmentObject private var viewModel: JoinSchoolViewModel
     @EnvironmentObject private var appState: AppState
     
     public init() {}
@@ -29,18 +29,18 @@ public struct JoinSuccessView: View {
             }
             Spacer()
             SeugiButton.large("계속하기", type: .primary) {
-                joinWorkspaceManager.joinWorkspace()
+                viewModel.joinWorkspace()
             }
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
         .seugiTopBar("학교 가입")
-        .alertWithAnyView("가입 요청 성공", when: successDialog(for: $joinWorkspaceManager.joinFlow)) {
+        .alertWithAnyView("가입 요청 성공", when: successDialog(for: $viewModel.joinFlow)) {
             Button("닫기", role: .cancel) {}
         } message: {
             Text("요청 수락을 기다려 주세요")
         }
-        .alertWithAnyView("가입 요청 실패", when: failureDialog(for: $joinWorkspaceManager.joinFlow)) {
+        .alertWithAnyView("가입 요청 실패", when: failureDialog(for: $viewModel.joinFlow)) {
             Button("닫기", role: .cancel) {}
         } message: {
             Text("잠시 후 다시 시도해 주세요")

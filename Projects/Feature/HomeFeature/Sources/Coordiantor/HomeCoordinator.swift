@@ -1,15 +1,11 @@
-//
-//  HomeCoordinator.swift
-//  HomeFeature
-//
-//  Created by dgsw8th71 on 4/10/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
 import HomeFeatureInterface
+import JoinSchoolFeatureInterface
+import DIContainer
 
 struct HomeCoordinator: View {
+    
+    @Inject private var joinSchoolFactory: any JoinSchoolFactory
     
     private let flow: HomeFetchFlow
     
@@ -19,5 +15,10 @@ struct HomeCoordinator: View {
     
     var body: some View {
         HomeView(flow: flow)
+            .navigationDestination(for: HomeDestination.self) {
+                switch $0 {
+                case .joinSchool: joinSchoolFactory.makeView().eraseToAnyView()
+                }
+            }
     }
 }
