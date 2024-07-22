@@ -7,7 +7,7 @@ import Domain
 import DomainTesting
 
 @main
-struct CreateRoomViewExample: App {
+struct CreateGroupChatViewExample: App {
     
     init() {
         Pretendard.register()
@@ -24,16 +24,16 @@ struct CreateRoomViewExample: App {
     }
     
     @StateObject private var appState = AppState()
-    @StateObject private var vm = CreateRoomViewModel()
+    @StateObject private var vm = CreateGroupChatViewModel()
     @StateObject private var router = Router()
     
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $router.navPath) {
-                FirstCreateRoomView()
-                    .navigationDestination(for: CreateRoomDestination.self) {
+                FirstCreateGroupChatView()
+                    .navigationDestination(for: CreateGroupChatDestination.self) {
                         switch $0 {
-                        case .secondCreateRoom: SecondCreateRoomView()
+                        case .secondCreateGroupChat: SecondCreateGroupChat()
                         }
                     }
             }

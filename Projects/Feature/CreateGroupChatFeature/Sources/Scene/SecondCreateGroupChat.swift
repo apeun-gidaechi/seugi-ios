@@ -3,10 +3,10 @@ import BaseFeatureInterface
 import Component
 import Domain
 
-public struct SecondCreateRoomView: View {
+public struct SecondCreateGroupChat: View {
     
     @EnvironmentObject private var router: Router
-    @EnvironmentObject private var vm: CreateRoomViewModel
+    @EnvironmentObject private var vm: CreateGroupChatViewModel
     @EnvironmentObject private var appState: AppState
     
     public init() {}
@@ -41,7 +41,7 @@ public struct SecondCreateRoomView: View {
         .subView {
             SeugiButton.small("완료", type: .transparent, isLoading: vm.fetchCreate) {
                 if let selectedWorkspace = appState.selectedWorkspace {
-                    vm.createRoom(workspaceId: selectedWorkspace.workspaceId)
+                    vm.createGroupChat(workspaceId: selectedWorkspace.workspaceId)
                 }
             }
             .disabled(vm.roomName.isEmpty)

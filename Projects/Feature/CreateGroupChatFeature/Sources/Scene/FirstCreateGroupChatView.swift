@@ -4,11 +4,11 @@ import Component
 import Flow
 import SwiftUIUtil
 
-public struct FirstCreateRoomView: View {
+public struct FirstCreateGroupChatView: View {
     
     @EnvironmentObject private var router: Router
     @State private var contentSize: CGSize = .zero
-    @EnvironmentObject private var vm: CreateRoomViewModel
+    @EnvironmentObject private var vm: CreateGroupChatViewModel
     @EnvironmentObject private var appState: AppState
     
     public init() {}
@@ -54,7 +54,7 @@ public struct FirstCreateRoomView: View {
         .subView {
             SeugiButton.small("완료", type: .transparent) {
                 if vm.selectedMembers.count > 1 {
-                    router.navigate(to: CreateRoomDestination.secondCreateRoom)
+                    router.navigate(to: CreateGroupChatDestination.secondCreateGroupChat)
                 } else {
 //                    
                 }

@@ -8,14 +8,14 @@ enum ChatEndpoint: SeugiEndpoint {
     case tossMemberGroup(_ req: ChatMemberEventReq)
     
     // Group
-    case createGroup(_ req: CreateRoomReq)
+    case createGroup(_ req: CreateGroupChatReq)
     case searchGroupByWord(workspaceId: String, word: String)
     case searchGroupById(roomId: String)
     case searchGroup(workspaceId: String)
     case leftGroup(roomId: String)
     
     // Personal
-    case createPersonal(_ req: CreateRoomReq)
+    case createPersonal(_ req: CreateGroupChatReq)
     case searchPersonalByWord(workspaceId: String, word: String)
     case searchPersonalById(roomId: String)
     case searchPersonal(workspaceId: String)

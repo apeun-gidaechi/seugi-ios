@@ -1,6 +1,6 @@
 import SwiftUI
 
-public protocol CreateRoomFactory {
+public protocol CreateGroupChatFactory {
     associatedtype ViewType: View
     func makeView() -> ViewType
 }

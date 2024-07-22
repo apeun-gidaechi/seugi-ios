@@ -3,9 +3,9 @@ import BaseFeatureInterface
 import Foundation
 import DIContainer
 
-public final class CreateRoomViewModel: BaseViewModel<CreateRoomViewModel.CreateRoomSubject> {
+public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewModel.CreateGroupChatSubject> {
     
-    public enum CreateRoomSubject {
+    public enum CreateGroupChatSubject {
         case createSuccess
     }
     
@@ -46,7 +46,7 @@ public final class CreateRoomViewModel: BaseViewModel<CreateRoomViewModel.Create
         }
     }
     
-    func createRoom(workspaceId: String) {
+    func createGroupChat(workspaceId: String) {
         if selectedMembers.count == 1 {
             // TODO: create Personal Chat
             return

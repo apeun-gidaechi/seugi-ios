@@ -83,7 +83,7 @@ public struct ChatView: View {
                 }
                 .if(roomType != .personal) { view in
                     view.button(.addFill) {
-                        router.navigate(to: ChatDestination.createRoom)
+                        router.navigate(to: ChatDestination.createGroupChat)
                     }
                     .hideBackButton()
                 }
