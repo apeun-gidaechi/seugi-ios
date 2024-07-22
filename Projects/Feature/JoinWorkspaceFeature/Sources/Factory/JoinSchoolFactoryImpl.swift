@@ -1,8 +1,8 @@
 import SwiftUI
 import JoinWorkspaceFeatureInterface
 
-final class JoinSchoolFactoryImpl: JoinSchoolFactory {
+final class JoinWorkspaceFactoryImpl: JoinWorkspaceFactory {
     func makeView() -> some View {
-        JoinSchoolCoordinator()
+        JoinWorkspaceCoordinator()
     }
 }

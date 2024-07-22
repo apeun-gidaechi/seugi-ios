@@ -8,7 +8,7 @@ import JoinWorkspaceFeatureInterface
 public struct JoinSuccessView: View {
     
     @EnvironmentObject private var router: Router
-    @EnvironmentObject private var viewModel: JoinSchoolViewModel
+    @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
     @EnvironmentObject private var appState: AppState
     
     public init() {}
@@ -30,7 +30,7 @@ public struct JoinSuccessView: View {
             }
             Spacer()
             SeugiButton.large("계속하기", type: .primary) {
-                router.navigate(to: JoinSchoolDestination.selectingJob)
+                router.navigate(to: JoinWorkspaceDestination.selectingJob)
             }
             .padding(.bottom, 16)
         }

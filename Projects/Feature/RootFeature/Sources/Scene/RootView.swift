@@ -15,7 +15,7 @@ public struct RootView: View {
     @StateObject private var router = Router()
     @StateObject private var stompManager = StompManager()
     @Inject private var onboardingFactory: any OnboardingFactory
-    @Inject private var joinSchoolFactory: any JoinSchoolFactory
+    @Inject private var joinWorkspaceFactory: any JoinWorkspaceFactory
     @Inject private var launchScreenFactorry: any LaunchScreenFactory
     @Inject private var mainFactory: any MainFactory
     @InjectObject private var viewModel: RootViewModel

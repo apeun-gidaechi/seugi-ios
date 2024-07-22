@@ -32,7 +32,7 @@ extension DependencyProvider {
             ChatFeature.ChatAssembly(),
             CreateRoomAssembly(),
             HomeAssembly(),
-            JoinSchoolAssembly(),
+            JoinWorkspaceAssembly(),
             LaunchScreenAssembly(),
             MainAssembly(),
             OnboardingAssembly(),

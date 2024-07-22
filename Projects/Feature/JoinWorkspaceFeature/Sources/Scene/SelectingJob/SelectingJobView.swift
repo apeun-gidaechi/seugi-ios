@@ -6,7 +6,7 @@ import JoinWorkspaceFeatureInterface
 public struct SelectingJobView: View {
     
     @EnvironmentObject private var router: Router
-    @EnvironmentObject private var viewModel: JoinSchoolViewModel
+    @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
     @State private var selectedTab: JobType = .student
     
     public init() {}
@@ -49,7 +49,7 @@ public struct SelectingJobView: View {
             viewModel.subscribe { subject in
                 switch subject {
                 case .joinWorkspaceSuccess:
-                    router.navigate(to: JoinSchoolDestination.waitingJoin)
+                    router.navigate(to: JoinWorkspaceDestination.waitingJoin)
                 default:
                     break
                 }

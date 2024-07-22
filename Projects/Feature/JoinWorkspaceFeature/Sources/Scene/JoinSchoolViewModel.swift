@@ -3,7 +3,7 @@ import Domain
 import DIContainer
 import BaseFeatureInterface
 
-public final class JoinSchoolViewModel: BaseViewModel<JoinSchoolViewModel.JoinWorkspaceSubject> {
+public final class JoinWorkspaceViewModel: BaseViewModel<JoinWorkspaceViewModel.JoinWorkspaceSubject> {
     
     public enum JoinWorkspaceSubject {
         case fetchWorkspaceSuccess
@@ -47,7 +47,7 @@ public final class JoinSchoolViewModel: BaseViewModel<JoinSchoolViewModel.JoinWo
     
     public func joinWorkspace() {
         guard case .success(let w) = workspace else {
-            print("💎 JoinSchoolViewModel.joinWorkspace - workspace not founded")
+            print("💎 JoinWorkspaceViewModel.joinWorkspace - workspace not founded")
             return
         }
         sub(workspaceRepo.joinWorkspace(workspaceId: w.workspaceId, workspaceCode: code, role: roleType)) {

@@ -7,7 +7,7 @@ import Domain
 import DomainTesting
 
 @main
-struct JoinSchoolViewExample: App {
+struct JoinWorkspaceViewExample: App {
     
     init() {
         Pretendard.register()
@@ -21,7 +21,7 @@ struct JoinSchoolViewExample: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $router.navPath) {
-                JoinSchoolCoordinator()
+                JoinWorkspaceCoordinator()
             }
             .environmentObject(router)
         }

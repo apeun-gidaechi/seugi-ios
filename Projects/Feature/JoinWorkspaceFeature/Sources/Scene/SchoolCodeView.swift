@@ -5,7 +5,7 @@ import JoinWorkspaceFeatureInterface
 
 public struct SchoolCodeView: View {
     
-    @EnvironmentObject private var viewModel: JoinSchoolViewModel
+    @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
     @EnvironmentObject private var router: Router
     
     public init() {}
@@ -31,7 +31,7 @@ public struct SchoolCodeView: View {
         .onAppear {
             viewModel.subscribe { subject in
                 switch subject {
-                case .fetchWorkspaceSuccess: router.navigate(to: JoinSchoolDestination.joinSuccess)
+                case .fetchWorkspaceSuccess: router.navigate(to: JoinWorkspaceDestination.joinSuccess)
                 default:
                     break
                 }

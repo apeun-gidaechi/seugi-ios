@@ -1,6 +1,6 @@
 import SwiftUI
 
-public protocol JoinSchoolFactory {
+public protocol JoinWorkspaceFactory {
     associatedtype ViewType: View
     func makeView() -> ViewType
 }

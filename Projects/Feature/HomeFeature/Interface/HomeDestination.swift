@@ -1,3 +1,3 @@
 public enum HomeDestination {
-    case joinSchool
+    case joinWorkspace
 }

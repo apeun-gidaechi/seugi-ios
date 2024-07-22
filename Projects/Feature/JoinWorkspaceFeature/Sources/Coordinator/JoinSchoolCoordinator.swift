@@ -4,17 +4,17 @@ import DIContainer
 import SwiftUIUtil
 import JoinWorkspaceFeatureInterface
 
-public struct JoinSchoolCoordinator: View {
+public struct JoinWorkspaceCoordinator: View {
     
     @EnvironmentObject private var router: Router
-    @StateObject private var joinSchoolViewModel = JoinSchoolViewModel()
+    @StateObject private var joinWorkspaceViewModel = JoinWorkspaceViewModel()
     
     public init() {}
     
     public var body: some View {
         SchoolCodeView()
-            .environmentObject(joinSchoolViewModel)
-            .navigationDestination(for: JoinSchoolDestination.self) { destination in
+            .environmentObject(joinWorkspaceViewModel)
+            .navigationDestination(for: JoinWorkspaceDestination.self) { destination in
                 Group {
                     switch destination {
                     case .waitingJoin: WaitingJoinView()
@@ -22,7 +22,7 @@ public struct JoinSchoolCoordinator: View {
                     case .selectingJob: SelectingJobView()
                     }
                 }
-                .environmentObject(joinSchoolViewModel)
+                .environmentObject(joinWorkspaceViewModel)
             }
     }
 }

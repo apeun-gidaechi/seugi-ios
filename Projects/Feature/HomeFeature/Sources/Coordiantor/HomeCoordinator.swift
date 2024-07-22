@@ -5,7 +5,7 @@ import DIContainer
 
 struct HomeCoordinator: View {
     
-    @Inject private var joinSchoolFactory: any JoinSchoolFactory
+    @Inject private var joinWorkspaceFactory: any JoinWorkspaceFactory
     
     private let flow: HomeFetchFlow
     
@@ -17,7 +17,7 @@ struct HomeCoordinator: View {
         HomeView(flow: flow)
             .navigationDestination(for: HomeDestination.self) {
                 switch $0 {
-                case .joinSchool: joinSchoolFactory.makeView().eraseToAnyView()
+                case .joinWorkspace: joinWorkspaceFactory.makeView().eraseToAnyView()
                 }
             }
     }
