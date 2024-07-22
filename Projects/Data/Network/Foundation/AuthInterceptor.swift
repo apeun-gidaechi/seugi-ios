@@ -42,14 +42,20 @@ public final class AuthInterceptor: Moya.RequestInterceptor {
             return
         }
         print("✅ AuthInterceptor - URL String: \(url.absoluteString)")
-        let refreshStatusCode = [403, 401]
-        guard let response = request.task?.response as? HTTPURLResponse, refreshStatusCode.contains(response.statusCode) else {
-            print("❌ AuthInterceptor - Invalid Response or StatusCode")
+        
+        guard let response = request.task?.response as? HTTPURLResponse else {
+            print("❌ AuthInterceptor - Invalid Response")
             completion(.doNotRetryWithError(error))
             return
         }
         print("✅ AuthInterceptor - StatusCode: \(response.statusCode)")
         
+        let refreshStatusCode = [403, 401]
+        guard refreshStatusCode.contains(response.statusCode) else {
+            print("❌ AuthInterceptor - Invalid StatusCode")
+            completion(.doNotRetryWithError(error))
+            return
+        }
         
         let refreshToken = keyValueStore.load(key: .refreshToken) ?? ""
         guard !refreshToken.isEmpty else {
