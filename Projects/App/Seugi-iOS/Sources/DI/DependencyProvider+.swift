@@ -5,7 +5,7 @@ import ChatDetailFeature
 import ChatFeature
 import CreateRoomFeature
 import HomeFeature
-import JoinSchoolFeature
+import JoinWorkspaceFeature
 import LaunchScreenFeature
 import MainFeature
 import OnboardingFeature

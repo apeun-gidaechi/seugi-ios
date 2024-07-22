@@ -1,6 +1,6 @@
 import SwiftUI
 import HomeFeatureInterface
-import JoinSchoolFeatureInterface
+import JoinWorkspaceFeatureInterface
 import DIContainer
 
 struct HomeCoordinator: View {

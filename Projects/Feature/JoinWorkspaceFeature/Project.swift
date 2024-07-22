@@ -2,6 +2,6 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    type: .JoinSchool,
+    type: .JoinWorkspace,
     include: [.Feature, .Interface, .Example]
 )

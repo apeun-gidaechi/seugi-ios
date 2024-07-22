@@ -1,7 +1,7 @@
 import SwiftUI
 import BaseFeatureInterface
 import OnboardingFeatureInterface
-import JoinSchoolFeatureInterface
+import JoinWorkspaceFeatureInterface
 import MainFeatureInterface
 import DIContainer
 import SwiftUIUtil

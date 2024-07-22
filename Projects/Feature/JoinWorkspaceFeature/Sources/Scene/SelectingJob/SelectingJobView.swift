@@ -1,7 +1,7 @@
 import SwiftUI
 import Component
 import BaseFeatureInterface
-import JoinSchoolFeatureInterface
+import JoinWorkspaceFeatureInterface
 
 public struct SelectingJobView: View {
     

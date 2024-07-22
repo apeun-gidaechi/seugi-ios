@@ -23,7 +23,7 @@ public final class AuthInterceptor: Moya.RequestInterceptor {
             completion(.success(urlRequest))
             return
         }
-        print("✅ AuthInterceptor - Set token \(accessToken)")
+        print("✅ AuthInterceptor - Set token: \(accessToken)")
         modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         completion(.success(modifiedRequest))
     }
@@ -49,6 +49,7 @@ public final class AuthInterceptor: Moya.RequestInterceptor {
             return
         }
         print("✅ AuthInterceptor - StatusCode: \(response.statusCode)")
+        
         
         let refreshToken = keyValueStore.load(key: .refreshToken) ?? ""
         guard !refreshToken.isEmpty else {

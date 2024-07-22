@@ -18,7 +18,7 @@ public extension ModulePaths {
         case Root
         case Onboarding
         case LaunchScreen
-        case JoinSchool
+        case JoinWorkspace
         case Main
         case Home
         case Chat

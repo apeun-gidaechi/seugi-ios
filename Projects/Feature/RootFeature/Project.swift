@@ -6,7 +6,7 @@ let project = Project.makeFeature(
     include: [.Feature, .Interface, .Example],
     featureDependency: [
         .feature(of: .Onboarding),
-        .feature(of: .JoinSchool),
+        .feature(of: .JoinWorkspace),
         .feature(of: .Main)
     ]
 )

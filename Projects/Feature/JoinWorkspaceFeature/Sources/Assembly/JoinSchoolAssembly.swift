@@ -1,5 +1,5 @@
 import Swinject
-import JoinSchoolFeatureInterface
+import JoinWorkspaceFeatureInterface
 
 public final class JoinSchoolAssembly: Assembly {
     public init() {}
