@@ -29,6 +29,7 @@ enum SeugiPreview: String, CaseIterable {
     case roundedCircle = "RoundedCircle"
     case toolTip = "ToolTip"
     case roomImage = "RoomImage"
+    case error = "Error"
     
     var view: some View {
         Group {
@@ -52,6 +53,8 @@ enum SeugiPreview: String, CaseIterable {
             case .roundedCircle: RoundedCirclePreview()
             case .toolTip: ToolTipPreview()
             case .roomImage: RoomImagePreview()
+            case .error: ErrorPreview()
+            default: SeugiError("페이지를 찾을 수 없습니다", image: .faceWithDiagonalMouth)
             }
         }
     }

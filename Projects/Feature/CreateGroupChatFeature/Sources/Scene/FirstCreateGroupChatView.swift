@@ -43,6 +43,7 @@ public struct FirstCreateGroupChatView: View {
             } failure: { _ in
                 Text("불러오기 실패")
                     .font(.body(.b1))
+                    .toVertical()
             }
         }
         .onAppear {

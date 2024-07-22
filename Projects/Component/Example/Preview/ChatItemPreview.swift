@@ -16,7 +16,7 @@ public struct ChatItemPreview: View {
     public var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                ChatItemDetailView(date: "2024년 3월 21일 목요일")
+                ChatItemDetailView(text: "2024년 3월 21일 목요일")
                 // MARK: - Other
                 ChatItemView(author: .mock(), message: .mock(), type: .other(isFirst: true, isLast: false), joinedUserCount: 100)
                 ChatItemView(author: .mock(), message: .mock(), type: .other(isFirst: false, isLast: false), joinedUserCount: 100)
