@@ -3,7 +3,7 @@ import Component
 import BaseFeatureInterface
 import JoinWorkspaceFeatureInterface
 
-public struct SchoolCodeView: View {
+public struct JoinWorkspaceCodeView: View {
     
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
     @EnvironmentObject private var router: Router

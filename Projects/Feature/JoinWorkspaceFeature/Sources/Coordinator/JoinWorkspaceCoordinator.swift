@@ -12,14 +12,14 @@ public struct JoinWorkspaceCoordinator: View {
     public init() {}
     
     public var body: some View {
-        SchoolCodeView()
+        JoinWorkspaceCodeView()
             .environmentObject(joinWorkspaceViewModel)
             .navigationDestination(for: JoinWorkspaceDestination.self) { destination in
                 Group {
                     switch destination {
-                    case .waitingJoin: WaitingJoinView()
-                    case .joinSuccess: JoinSuccessView()
-                    case .selectingJob: SelectingJobView()
+                    case .waitingJoin: JoinWorkspaceFinishView()
+                    case .joinSuccess: JoinWorkspaceSuccessView()
+                    case .selectingJob: JoinWorkspaceRoleView()
                     }
                 }
                 .environmentObject(joinWorkspaceViewModel)

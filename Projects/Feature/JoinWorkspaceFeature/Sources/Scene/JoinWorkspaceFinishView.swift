@@ -2,7 +2,7 @@ import SwiftUI
 import Component
 import BaseFeatureInterface
 
-public struct WaitingJoinView: View {
+public struct JoinWorkspaceFinishView: View {
     
     @EnvironmentObject private var router: Router
     

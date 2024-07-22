@@ -5,7 +5,7 @@ import Component
 import BaseFeatureInterface
 import JoinWorkspaceFeatureInterface
 
-public struct JoinSuccessView: View {
+public struct JoinWorkspaceSuccessView: View {
     
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel

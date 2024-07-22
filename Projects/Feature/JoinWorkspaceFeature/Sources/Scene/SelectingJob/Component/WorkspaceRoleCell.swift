@@ -2,7 +2,7 @@ import SwiftUI
 import Component
 import SwiftUIUtil
 
-struct JobCell: View {
+struct WorkspaceRoleCell: View {
     
     @Namespace private var animation
     

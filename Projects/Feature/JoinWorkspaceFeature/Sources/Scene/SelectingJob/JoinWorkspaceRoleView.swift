@@ -3,7 +3,7 @@ import Component
 import BaseFeatureInterface
 import JoinWorkspaceFeatureInterface
 
-public struct SelectingJobView: View {
+public struct JoinWorkspaceRoleView: View {
     
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
@@ -26,7 +26,7 @@ public struct SelectingJobView: View {
                                 selectedTab = tab
                             }
                         } label: {
-                            JobCell(jobType: tab, isActive: tab == selectedTab)
+                            WorkspaceRoleCell(jobType: tab, isActive: tab == selectedTab)
                         }
                     }
                 }
