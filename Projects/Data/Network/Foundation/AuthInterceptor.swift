@@ -66,7 +66,8 @@ public final class AuthInterceptor: Moya.RequestInterceptor {
                 switch result {
                 case .success(let res):
                     print("✅ AuthInterceptor - Refresh Success")
-                    keyValueStore.save(key: .accessToken, value: res.data)
+                    let accessToken = String(res.data.split(separator: " ")[1])
+                    keyValueStore.save(key: .accessToken, value: accessToken)
                     completion(.retry)
                 case .failure(let error):
                     print(error)
