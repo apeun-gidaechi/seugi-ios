@@ -20,7 +20,6 @@ public struct SeugiBottomNavigation: View {
         self._selectedTab = selectedTab
         self.tabs = tabs
     }
-    
     public var body: some View {
         HStack {
             Spacer()
