@@ -5,11 +5,13 @@ struct CreateGroupChatCoordinator: View {
     @InjectObject private var createGroupChatViewModel: CreateGroupChatViewModel
     var body: some View {
         FirstCreateGroupChatView()
-            .navigationDestination(for: CreateGroupChatDestination.self) {
-                switch $0 {
-                case .secondCreateGroupChat: SecondCreateGroupChat()
-                        .environmentObject(createGroupChatViewModel)
+            .navigationDestination(for: CreateGroupChatDestination.self) { destination in
+                Group {
+                    switch destination {
+                    case .secondCreateGroupChat: SecondCreateGroupChat()
+                    }
                 }
+                .environmentObject(createGroupChatViewModel)
             }
             .environmentObject(createGroupChatViewModel)
     }

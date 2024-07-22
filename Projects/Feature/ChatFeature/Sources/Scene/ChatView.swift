@@ -6,7 +6,6 @@ import Domain
 
 public struct ChatView: View {
     
-    // MARK: - Object
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var viewModel: ChatViewModel

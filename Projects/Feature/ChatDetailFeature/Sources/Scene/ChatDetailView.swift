@@ -2,23 +2,19 @@ import SwiftUI
 import PhotosUI
 import Component
 import BaseFeatureInterface
-import DIContainer
 import Domain
+import DIContainer
 
 let pagingInterval = 50
 
-enum ChatType: Hashable {
-    case chat(id: Int)
+enum ChatDetailSupporterType: Hashable {
     case bottom
     case top
 }
 
 public struct ChatDetailView: View {
     
-    // MARK: - ViewModel
     @InjectObject private var viewModel: ChatDetailViewModel
-    
-    // MARK: - EnvironmentObject
     @EnvironmentObject private var appState: AppState
     @Environment(\.dismiss) private var dismiss
     
@@ -36,7 +32,9 @@ public struct ChatDetailView: View {
     
     private let room: Room
     
-    public init(room: Room) {
+    public init(
+        room: Room
+    ) {
         self.room = room
     }
     
@@ -50,7 +48,7 @@ public struct ChatDetailView: View {
                         LazyVStack(spacing: 0) {
                             Color.clear
                                 .frame(height: 1)
-                                .id(ChatType.top)
+                                .id(ChatDetailSupporterType.top)
                                 .onAppear {
                                     let messages = viewModel.messages.data ?? []
 //                                    messages.count - 1 / pagingInterval
@@ -87,11 +85,11 @@ public struct ChatDetailView: View {
                             }
                             Color.clear
                                 .frame(height: 68)
-                                .id(ChatType.bottom)
+                                .id(ChatDetailSupporterType.bottom)
                         }
                         .onAppear {
                             self.scrollViewProxy = scrollViewProxy
-                            scrollViewProxy.scrollTo(ChatType.bottom, anchor: .bottom)
+                            scrollViewProxy.scrollTo(ChatDetailSupporterType.bottom, anchor: .bottom)
                         }
                     }
                     .background(Color.seugi(.primary(.p050)))
@@ -253,6 +251,6 @@ public struct ChatDetailView: View {
     }
     
     private func scrollToBottom() {
-        scrollViewProxy?.scrollTo(ChatType.bottom)
+        scrollViewProxy?.scrollTo(ChatDetailSupporterType.bottom)
     }
 }
