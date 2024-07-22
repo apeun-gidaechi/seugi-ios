@@ -23,45 +23,54 @@ public final class AuthInterceptor: Moya.RequestInterceptor {
             completion(.success(urlRequest))
             return
         }
-        print("✅ Set token \(accessToken)")
+        print("✅ AuthInterceptor - Set token \(accessToken)")
         modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         completion(.success(modifiedRequest))
     }
     
     public func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        print("✅ Start refresh")
+        
+        print("✅ AuthInterceptor - Start refresh")
+        guard request.retryCount <= 3 else {
+            print("❌ AuthInterceptor - RetryCount가 3보다 큽니다")
+            return
+        }
+        
         guard let url = request.request?.url else {
+            print("❌ AuthInterceptor - Invalid URL")
             completion(.doNotRetryWithError(error))
             return
         }
-        print("✅ URL String: \(url.absoluteString)")
+        print("✅ AuthInterceptor - URL String: \(url.absoluteString)")
         let refreshStatusCode = [403, 401]
         guard let response = request.task?.response as? HTTPURLResponse, refreshStatusCode.contains(response.statusCode) else {
+            print("❌ AuthInterceptor - Invalid Response or StatusCode")
             completion(.doNotRetryWithError(error))
             return
         }
-        print("✅ StatusCode = \(response.statusCode)")
+        print("✅ AuthInterceptor - StatusCode: \(response.statusCode)")
         
         let refreshToken = keyValueStore.load(key: .refreshToken) ?? ""
         guard !refreshToken.isEmpty else {
+            print("❌ AuthInterceptor - Refresh Token is Empty")
             failureReissue()
             completion(.doNotRetryWithError(APIError.refreshFailure))
             return
         }
         
-        print("✅ Try refresh with token - \(refreshToken)")
+        print("✅ AuthInterceptor - Try refresh with token - \(refreshToken)")
         
         memberRepo.refresh(token: refreshToken)
             .sink { [self] result in
                 switch result {
                 case .success(let res):
-                    print("✅ Refresh Success")
+                    print("✅ AuthInterceptor - Refresh Success")
                     keyValueStore.save(key: .accessToken, value: res.data)
                     completion(.retry)
                 case .failure(let error):
                     print(error)
                     failureReissue()
-                    print("❌ Refresh Failure")
+                    print("❌ AuthInterceptor - Refresh Failure")
                     completion(.doNotRetryWithError(APIError.refreshFailure))
                 case .fetching:
                     break
