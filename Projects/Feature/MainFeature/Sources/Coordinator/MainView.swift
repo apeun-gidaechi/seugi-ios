@@ -4,7 +4,7 @@ import Component
 import HomeFeatureInterface
 import ChatFeatureInterface
 import ChatDetailFeatureInterface
-import CreateRoomFeatureInterface
+import CreateGroupChatFeatureInterface
 import NotificationFeatureInterface
 import ProfileFeatureInterface
 import DIContainer

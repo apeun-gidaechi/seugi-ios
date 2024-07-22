@@ -1,5 +1,5 @@
 import SwiftUI
-import CreateRoomFeature
+import CreateGroupChatFeature
 import Component
 import DIContainer
 import BaseFeatureInterface

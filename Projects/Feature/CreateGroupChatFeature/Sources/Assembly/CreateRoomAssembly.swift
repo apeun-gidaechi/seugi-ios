@@ -1,5 +1,5 @@
 import Swinject
-import CreateRoomFeatureInterface
+import CreateGroupChatFeatureInterface
 
 public final class CreateRoomAssembly: Assembly {
     public init() {}

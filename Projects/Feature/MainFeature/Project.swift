@@ -8,7 +8,7 @@ let project = Project.makeFeature(
         .feature(of: .Home),
         .feature(of: .Chat),
         .feature(of: .ChatDetail),
-        .feature(of: .CreateRoom),
+        .feature(of: .CreateGroupChat),
         .feature(of: .Notification),
         .feature(of: .Profile)
     ]

@@ -1,6 +1,6 @@
 import SwiftUI
 import ChatDetailFeatureInterface
-import CreateRoomFeatureInterface
+import CreateGroupChatFeatureInterface
 import DIContainer
 import SwiftUIUtil
 import Domain

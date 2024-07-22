@@ -23,7 +23,7 @@ public extension ModulePaths {
         case Home
         case Chat
         case ChatDetail
-        case CreateRoom
+        case CreateGroupChat
         case Notification
         case Profile
     }

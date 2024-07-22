@@ -3,7 +3,7 @@ import DIContainer
 // Feature
 import ChatDetailFeature
 import ChatFeature
-import CreateRoomFeature
+import CreateGroupChatFeature
 import HomeFeature
 import JoinWorkspaceFeature
 import LaunchScreenFeature
