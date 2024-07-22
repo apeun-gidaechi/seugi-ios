@@ -2,19 +2,19 @@ import SwiftUI
 import BaseFeatureInterface
 import Component
 
-public struct EmailVerificationView: View {
+public struct RegisterEmailVerificationView: View {
     
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var timerManager: TimerManager
     @EnvironmentObject private var appState: AppState
-    @StateObject private var viewModel: EmailVerificationViewModel
+    @StateObject private var viewModel: RegisterEmailVerificationViewModel
     
     private let name: String
     private let email: String
     private let password: String
     
     public init(
-        viewModel: EmailVerificationViewModel,
+        viewModel: RegisterEmailVerificationViewModel,
         name: String,
         email: String,
         password: String

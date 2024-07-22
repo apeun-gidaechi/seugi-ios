@@ -2,12 +2,12 @@ import SwiftUI
 import Component
 import BaseFeatureInterface
 
-public struct OAuthSignUpView: View {
+public struct RegisterOAuthView: View {
     
-    @ObservedObject private var viewModel: OAuthSignUpViewModel
+    @ObservedObject private var viewModel: RegisterOAuthViewModel
     @EnvironmentObject private var router: Router
     
-    public init(viewModel: OAuthSignUpViewModel) {
+    public init(viewModel: RegisterOAuthViewModel) {
         self.viewModel = viewModel
     }
     

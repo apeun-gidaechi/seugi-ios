@@ -3,7 +3,7 @@ import Foundation
 import DIContainer
 import Domain
 
-public class EmailSignUpViewModel: ObservableObject {
+public class RegisterEmailViewModel: ObservableObject {
     
     // MARK: - State
     @Published var name = ""

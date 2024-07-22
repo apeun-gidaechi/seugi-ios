@@ -1,5 +1,5 @@
 //
-//  OAuthSignUpViewModel.swift
+//  RegisterOAuthViewModel.swift
 //  Feature
 //
 //  Created by dgsw8th71 on 3/26/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class OAuthSignUpViewModel: ObservableObject {
+public class RegisterOAuthViewModel: ObservableObject {
     
     @Published var name = ""
     

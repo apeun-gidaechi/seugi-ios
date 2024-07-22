@@ -3,9 +3,9 @@ import Component
 import OnboardingFeatureInterface
 import BaseFeatureInterface
 
-public struct EmailSignUpView: View {
+public struct RegisterEmailView: View {
     
-    @StateObject private var viewModel = EmailSignUpViewModel()
+    @StateObject private var viewModel = RegisterEmailViewModel()
     @EnvironmentObject private var router: Router
     
     public init() {}

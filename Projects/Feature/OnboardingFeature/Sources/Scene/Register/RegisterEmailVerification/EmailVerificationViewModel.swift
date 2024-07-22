@@ -4,7 +4,7 @@ import DIContainer
 import Domain
 import SwiftUI
 
-public final class EmailVerificationViewModel: BaseViewModel<EmailVerificationViewModel.EmailVerificationSubject> {
+public final class RegisterEmailVerificationViewModel: BaseViewModel<RegisterEmailVerificationViewModel.EmailVerificationSubject> {
     
     public enum EmailVerificationSubject {
         case registerSuccess(Token)

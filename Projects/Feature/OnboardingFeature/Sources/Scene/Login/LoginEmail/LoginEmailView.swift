@@ -4,9 +4,9 @@ import BaseFeatureInterface
 import OnboardingFeatureInterface
 import Domain
 
-public struct EmailSignInView: View {
+public struct LoginEmailView: View {
     
-    @StateObject private var viewModel = EmailSignInViewModel()
+    @StateObject private var viewModel = LoginEmailViewModel()
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
     
