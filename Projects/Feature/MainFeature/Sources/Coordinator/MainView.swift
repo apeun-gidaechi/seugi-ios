@@ -74,27 +74,21 @@ public struct MainView: View {
     
     @ViewBuilder
     private var content: some View {
-        ZStack {
-            switch appState.selectedMainTab {
-            case .home: homeFactory.makeView(flow: homeFetchFlow).eraseToAnyView()
-            case .chat: chatFactory.makeView(roomType: .personal).eraseToAnyView()
-            case .room: chatFactory.makeView(roomType: .group).eraseToAnyView()
-            case .notification: notificationFactory.makeView().eraseToAnyView()
-            case .profile: profileFactory.makeView().eraseToAnyView()
-            }
-            if appState.workspaces != .fetching {
-                GeometryReader { reader in
-                    ZStack(alignment: .bottom) {
-                        SeugiBottomNavigation(selectedTab: $appState.selectedMainTab, tabs: tabs)
-                            .shadow(color: Color.black.opacity(0.04), radius: 12)
-                        VStack {
-                            Spacer()
-                            Color.white
-                                .frame(height: reader.safeAreaInsets.bottom, alignment: .bottom)
-                        }
-                        .ignoresSafeArea()
-                    }
+        ZStack(alignment: .bottom) {
+            Group {
+                switch appState.selectedMainTab {
+                case .home: homeFactory.makeView(flow: homeFetchFlow).eraseToAnyView()
+                case .chat: chatFactory.makeView(roomType: .personal).eraseToAnyView()
+                case .room: chatFactory.makeView(roomType: .group).eraseToAnyView()
+                case .notification: notificationFactory.makeView().eraseToAnyView()
+                case .profile: profileFactory.makeView().eraseToAnyView()
                 }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            if appState.workspaces != .fetching {
+                SeugiBottomNavigation(selectedTab: $appState.selectedMainTab, tabs: tabs)
+                    .padding(.horizontal, 20)
+                    .frame(maxWidth: 400)
             }
         }
         .ignoresSafeArea(.keyboard)

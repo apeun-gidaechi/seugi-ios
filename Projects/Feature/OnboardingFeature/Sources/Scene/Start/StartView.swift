@@ -15,7 +15,7 @@ public struct StartView: View {
     @State private var opacity2 = 0.0
     @State private var isPresented = false
     
-    @InjectObject private var viewModel: StartViewModel
+    @StateObject private var viewModel = StartViewModel()
     
     public init() {}
     

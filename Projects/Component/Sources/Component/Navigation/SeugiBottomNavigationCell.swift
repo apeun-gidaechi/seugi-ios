@@ -17,14 +17,13 @@ struct SeugiBottomNavigationCell: View {
     var body: some View {
         
         let imageColor: Color = isSelected ? .seugi(.primary(.p500)) : .seugi(.gray(.g300))
-        let textColor: Color = isSelected ? .seugi(.primary(.p500)) : .seugi(.gray(.g500))
+//        let textColor: Color = isSelected ? .seugi(.primary(.p500)) : .seugi(.gray(.g500))
         
         VStack(spacing: 0) {
             Image(icon: cellData.type.image)
                 .renderingMode(.template)
                 .resizable()
-                .frame(width: 28, height: 28)
-                .padding(.top, 4)
+                .frame(width: 30, height: 30)
                 .foregroundStyle(imageColor)
                 .overlay {
                     if cellData.hasBadge {
@@ -34,9 +33,9 @@ struct SeugiBottomNavigationCell: View {
                             .offset(x: 4, y: -2)
                     }
                 }
-            Text(cellData.type.text)
-                .font(.caption(.c2))
-                .foregroundStyle(textColor)
+//            Text(cellData.type.text)
+//                .font(.caption(.c2))
+//                .foregroundStyle(textColor)
         }
         .padding(.horizontal, 4)
     }

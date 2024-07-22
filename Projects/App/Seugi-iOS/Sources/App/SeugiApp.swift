@@ -3,8 +3,6 @@ import RootFeature
 import BaseFeatureInterface
 import Component
 import Swinject
-import StartFeatureInterface
-import StartFeature
 import DIContainer
 import RootFeatureInterface
 import SwiftUIUtil

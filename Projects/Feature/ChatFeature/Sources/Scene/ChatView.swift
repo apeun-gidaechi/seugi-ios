@@ -33,27 +33,33 @@ public struct ChatView: View {
     }
     
     public var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                rooms.makeView {
-                    ProgressView()
-                } success: { rooms in
-                    let rooms = isSearching ? searchedRooms : rooms
-                    ForEach(rooms, id: \.id) { room in
-                        Button {
-                            router.navigate(to: ChatDestination.chatDetail(room: room))
-                        } label: {
-                            SeugiChatList(type: roomType, room: room)
+        rooms.makeView {
+            ProgressView()
+        } success: { rooms in
+            let rooms = isSearching ? searchedRooms : rooms
+            if rooms.isEmpty {
+                SeugiError("채팅방이 없어요", image: .kissingFaceWithClosedEyes)
+                    .toVertical()
+            } else {
+                ScrollView {
+                    VStack(spacing: 0) {
+                        ForEach(rooms, id: \.id) { room in
+                            Button {
+                                router.navigate(to: ChatDestination.chatDetail(room: room))
+                            } label: {
+                                SeugiChatList(type: roomType, room: room)
+                            }
+                            .applyAnimation()
                         }
-                        .applyAnimation()
                     }
-                } failure: { _ in
-                    Text("불러오기 실패")
+                    .frame(maxWidth: .infinity)
                 }
             }
-            .frame(maxWidth: .infinity)
-            .background(.clear)
+        } failure: { _ in
+            SeugiError("불러오기 실패", image: .faceWithDiagonalMouth)
+                .toVertical()
         }
+        .background(.clear)
         .hideKeyboardWhenTap()
         .refreshable {
             if let selectedWorkspace = appState.selectedWorkspace {

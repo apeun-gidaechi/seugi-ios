@@ -23,24 +23,26 @@ public struct SeugiBottomNavigation: View {
     
     public var body: some View {
         HStack {
+            Spacer()
             ForEach(tabs, id: \.self) { tab in
-                Spacer()
                 Button {
                     selectedTab = tab.type
                 } label: {
                     SeugiBottomNavigationCell(cellData: tab, isSelected: selectedTab == tab.type)
+                        .frame(height: 64)
+                        .toHorizontal()
                 }
                 .applyAnimation()
             }
             Spacer()
         }
-        .padding(.vertical, 10)
-        .background(Color.white)
-        .cornerRadius(12, corners: .allCorners)
+        .frame(height: 64)
+        .background(.white)
+        .cornerRadius(18, corners: .allCorners)
+        .shadow(color: Color.black.opacity(0.06), radius: 18, y: 2)
         .onChange(of: selectedTab) { _ in
             let impactMed = UIImpactFeedbackGenerator(style: .rigid)
             impactMed.impactOccurred()
         }
-        .shadow(.bottomNavigation(.default))
     }
 }

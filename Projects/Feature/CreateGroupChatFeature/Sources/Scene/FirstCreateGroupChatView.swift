@@ -41,8 +41,7 @@ public struct FirstCreateGroupChatView: View {
                 .scrollIndicators(.hidden)
                 Spacer()
             } failure: { _ in
-                Text("불러오기 실패")
-                    .font(.body(.b1))
+                SeugiError("불러오기 실패", image: .faceWithDiagonalMouth)
                     .toVertical()
             }
         }
