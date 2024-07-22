@@ -85,6 +85,18 @@ public struct MainView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .mask(alignment: .bottom) {
+                VStack(spacing: 0) {
+                    Color.black
+                    LinearGradient(
+                        colors: [.black, .clear],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .frame(height: 120)
+                }
+                .ignoresSafeArea()
+            }
             if appState.workspaces != .fetching {
                 SeugiBottomNavigation(selectedTab: $appState.selectedMainTab, tabs: tabs)
                     .padding(.horizontal, 20)
