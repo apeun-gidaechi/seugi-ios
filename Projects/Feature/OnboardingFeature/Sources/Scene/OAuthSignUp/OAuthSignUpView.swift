@@ -4,16 +4,16 @@ import BaseFeatureInterface
 
 public struct OAuthSignUpView: View {
     
-    @ObservedObject private var vm: OAuthSignUpViewModel
+    @ObservedObject private var viewModel: OAuthSignUpViewModel
     @EnvironmentObject private var router: Router
     
-    public init(vm: OAuthSignUpViewModel) {
-        self.vm = vm
+    public init(viewModel: OAuthSignUpViewModel) {
+        self.viewModel = viewModel
     }
     
     public var body: some View {
         VStack(spacing: 16) {
-            SeugiTextFieldForm("이름을 입력해 주세요", text: $vm.name, label: "이름")
+            SeugiTextFieldForm("이름을 입력해 주세요", text: $viewModel.name, label: "이름")
                 .padding(.top, 16)
             
             Spacer()

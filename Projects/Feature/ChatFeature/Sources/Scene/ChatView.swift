@@ -9,7 +9,7 @@ public struct ChatView: View {
     // MARK: - Object
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
-    @EnvironmentObject private var vm: ChatViewModel
+    @EnvironmentObject private var viewModel: ChatViewModel
     
     // MARK: - State
     @State private var isSearching = false
@@ -22,15 +22,15 @@ public struct ChatView: View {
     }
     
     private var rooms: FetchFlow<[Room]> {
-        roomType == .personal ? vm.personalRooms : vm.groupRooms
+        roomType == .personal ? viewModel.personalRooms : viewModel.groupRooms
     }
     
     private var searchText: Binding<String> {
-        roomType == .personal ? $vm.personalSearchText : $vm.groupSearchText
+        roomType == .personal ? $viewModel.personalSearchText : $viewModel.groupSearchText
     }
     
     private var searchedRooms: [Room] {
-        roomType == .personal ? vm.searchedPersonalRooms : vm.searchedGroupRooms
+        roomType == .personal ? viewModel.searchedPersonalRooms : viewModel.searchedGroupRooms
     }
     
     public var body: some View {
@@ -58,7 +58,7 @@ public struct ChatView: View {
         .hideKeyboardWhenTap()
         .refreshable {
             if let selectedWorkspace = appState.selectedWorkspace {
-                vm.fetchChats(workspaceId: selectedWorkspace.workspaceId)
+                viewModel.fetchChats(workspaceId: selectedWorkspace.workspaceId)
             }
         }
         .seugiTopBar(roomType == .personal ? "채팅" : "그룹") {
@@ -89,7 +89,7 @@ public struct ChatView: View {
                 }
         }
         .onAppear {
-            vm.subscribe { subject in
+            viewModel.subscribe { subject in
                 switch subject {
                 case .refreshFailure:
                     appState.clearToken()
@@ -97,13 +97,13 @@ public struct ChatView: View {
             }
         }
         .onDisappear {
-            vm.clearSearchText()
+            viewModel.clearSearchText()
         }
         .onTapGesture {
             if isSearching {
                 withAnimation {
                     isSearching = false
-                    vm.clearSearchText()
+                    viewModel.clearSearchText()
                 }
             }
         }

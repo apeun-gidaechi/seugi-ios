@@ -24,7 +24,7 @@ struct CreateGroupChatViewExample: App {
     }
     
     @StateObject private var appState = AppState()
-    @StateObject private var vm = CreateGroupChatViewModel()
+    @StateObject private var viewModel = CreateGroupChatViewModel()
     @StateObject private var router = Router()
     
     var body: some Scene {
@@ -39,7 +39,7 @@ struct CreateGroupChatViewExample: App {
             }
             .environmentObject(router)
             .environmentObject(appState)
-            .environmentObject(vm)
+            .environmentObject(viewModel)
             .onAppear {
                 appState.selectedWorkspace = .mock()
             }

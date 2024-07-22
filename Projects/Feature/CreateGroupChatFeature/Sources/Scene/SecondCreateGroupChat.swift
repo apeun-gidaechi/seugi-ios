@@ -6,13 +6,13 @@ import Domain
 public struct SecondCreateGroupChat: View {
     
     @EnvironmentObject private var router: Router
-    @EnvironmentObject private var vm: CreateGroupChatViewModel
+    @EnvironmentObject private var viewModel: CreateGroupChatViewModel
     @EnvironmentObject private var appState: AppState
     
     public init() {}
     
     private var firstMember: RetrieveProfile {
-        vm.selectedMembers.first!
+        viewModel.selectedMembers.first!
     }
     
     public var body: some View {
@@ -32,25 +32,25 @@ public struct SecondCreateGroupChat: View {
                     .seugiColor(.sub(.black))
                     .padding(.top, 6)
                     .padding(.leading, 4)
-                SeugiTextField("\(firstMember.member.name) 외 \(vm.selectedMembers.count - 1)명", text: $vm.roomName)
+                SeugiTextField("\(firstMember.member.name) 외 \(viewModel.selectedMembers.count - 1)명", text: $viewModel.roomName)
                 Spacer()
             }
         }
         .padding(.horizontal, 20)
         .seugiTopBar("")
         .subView {
-            SeugiButton.small("완료", type: .transparent, isLoading: vm.fetchCreate) {
+            SeugiButton.small("완료", type: .transparent, isLoading: viewModel.fetchCreate) {
                 if let selectedWorkspace = appState.selectedWorkspace {
-                    vm.createGroupChat(workspaceId: selectedWorkspace.workspaceId)
+                    viewModel.createGroupChat(workspaceId: selectedWorkspace.workspaceId)
                 }
             }
-            .disabled(vm.roomName.isEmpty)
+            .disabled(viewModel.roomName.isEmpty)
         }
-        .alertWithAnyView("채팅방 만들기 실패", when: $vm.createFailure) {
+        .alertWithAnyView("채팅방 만들기 실패", when: $viewModel.createFailure) {
             Button("확인") {}
         }
         .onAppear {
-            vm.subscribe { subject in
+            viewModel.subscribe { subject in
                 switch subject {
                 case .createSuccess:
                     router.navigateToRoot()

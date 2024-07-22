@@ -8,7 +8,7 @@ public struct FirstCreateGroupChatView: View {
     
     @EnvironmentObject private var router: Router
     @State private var contentSize: CGSize = .zero
-    @EnvironmentObject private var vm: CreateGroupChatViewModel
+    @EnvironmentObject private var viewModel: CreateGroupChatViewModel
     @EnvironmentObject private var appState: AppState
     
     public init() {}
@@ -16,7 +16,7 @@ public struct FirstCreateGroupChatView: View {
     public var body: some View {
         VStack(spacing: 0) {
             selectMember()
-            vm.members.makeView {
+            viewModel.members.makeView {
                 Spacer()
                 ProgressView()
                 Spacer()
@@ -24,7 +24,7 @@ public struct FirstCreateGroupChatView: View {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         ForEach(members, id: \.member.id) { member in
-                            let selected = vm.selectedMembers.contains {
+                            let selected = viewModel.selectedMembers.contains {
                                 $0.member.id == member.member.id
                             }
                             SeugiMemberList(type: .normal(member: member.member)) {
@@ -32,7 +32,7 @@ public struct FirstCreateGroupChatView: View {
                                     .disabled(true)
                             }
                             .button {
-                                vm.selectMember(member: member, selected: selected)
+                                viewModel.selectMember(member: member, selected: selected)
                             }
                             .applyAnimation()
                         }
@@ -47,35 +47,35 @@ public struct FirstCreateGroupChatView: View {
         }
         .onAppear {
             if let selectedWorkspace = appState.selectedWorkspace {
-                vm.fetchWorkspaceMembers(workspaceId: selectedWorkspace.workspaceId)
+                viewModel.fetchWorkspaceMembers(workspaceId: selectedWorkspace.workspaceId)
             }
         }
         .seugiTopBar("멤버 선택")
         .subView {
             SeugiButton.small("완료", type: .transparent) {
-                if vm.selectedMembers.count > 1 {
+                if viewModel.selectedMembers.count > 1 {
                     router.navigate(to: CreateGroupChatDestination.secondCreateGroupChat)
                 } else {
 //                    
                 }
             }
-            .disabled(vm.selectedMembers.isEmpty)
+            .disabled(viewModel.selectedMembers.isEmpty)
         }
     }
     
     @ViewBuilder
     private func selectMember() -> some View {
         HStack {
-            if vm.selectedMembers.isEmpty {
+            if viewModel.selectedMembers.isEmpty {
                 Text("멤버를 선택해 주세요")
                     .font(.body(.b2))
                     .seugiColor(.gray(.g500))
                     .padding(.leading, 8)
             } else {
                 HFlow(itemSpacing: 4, rowSpacing: 4) {
-                    ForEach(vm.selectedMembers, id: \.member.id) { member in
+                    ForEach(viewModel.selectedMembers, id: \.member.id) { member in
                         SeugiSelectingMember(member: member) {
-                            vm.removeMember(member: member)
+                            viewModel.removeMember(member: member)
                         }
                     }
                 }
@@ -86,7 +86,7 @@ public struct FirstCreateGroupChatView: View {
         .padding(4)
         .onReadSize { size in
             // count <= 1 일때 애니메이션 이상해서 조건으로 분기함
-            if vm.selectedMembers.count > 1 {
+            if viewModel.selectedMembers.count > 1 {
                 withAnimation {
                     contentSize = size
                 }
