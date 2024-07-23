@@ -5,12 +5,12 @@ import DIContainer
 public final class StompManager: BaseViewModel<StompManager.StompManagerSubject> {
     public enum StompManagerSubject {}
     
+    // MARK: - Properties
     @Inject private var stompRepo: any StompRepo
     @Inject private var stompMessageRep: StompMessageRepo
-}
-
-public extension StompManager {
-    func subscribe() {
+    
+    // MARK: - Method
+    public func subscribe() {
         print("💎 StompManager.subscribe")
         stompRepo.openSocket()
         stompRepo.subConnect()

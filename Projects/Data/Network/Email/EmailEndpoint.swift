@@ -1,10 +1,10 @@
 import Moya
 
-enum EmailEndpoint: SeugiEndpoint {
+public enum EmailEndpoint: SeugiEndpoint {
     case send(email: String)
 }
 
-extension EmailEndpoint {
+public extension EmailEndpoint {
     
     static var provider = MoyaProvider<EmailEndpoint>(session: session)
     static var authProvider = MoyaProvider<EmailEndpoint>(session: authSession)

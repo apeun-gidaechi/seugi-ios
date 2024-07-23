@@ -7,8 +7,8 @@ public enum FileEndpoint: SeugiEndpoint {
 }
 
 public extension FileEndpoint {
-    static var provider: MoyaProvider<FileEndpoint> = .init()
-    static var authProvider: MoyaProvider<FileEndpoint> = .init()
+    static var provider = MoyaProvider<FileEndpoint>(session: session)
+    static var authProvider = MoyaProvider<FileEndpoint>(session: authSession)
     
     var host: String {
         "file"
@@ -17,8 +17,8 @@ public extension FileEndpoint {
     var route: (Moya.Method, String, Moya.Task) {
         switch self {
         case .upload(let type, let file):
-            let fileType = MultipartFormData(provider: .data(type.rawValue.data(using: .utf8)!), name: "type")
-            return Moya.Method.post - "upload/\(type)" - .uploadMultipart([fileType])
+            let fileType = MultipartFormData(provider: .data(file), name: "file", fileName: "seugi.png")
+            return Moya.Method.post - "upload/\(type.rawValue)" - .uploadMultipart([fileType])
         }
     }
 }

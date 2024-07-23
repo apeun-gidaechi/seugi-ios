@@ -14,6 +14,7 @@ public struct RootView: View {
     @StateObject private var appState = AppState()
     @StateObject private var router = Router()
     @StateObject private var stompManager = StompManager()
+    @StateObject private var fileManager = SeugiFileManager()
     @Inject private var onboardingFactory: any OnboardingFactory
     @Inject private var joinWorkspaceFactory: any JoinWorkspaceFactory
     @Inject private var launchScreenFactorry: any LaunchScreenFactory
@@ -39,6 +40,7 @@ public struct RootView: View {
         .environmentObject(router)
         .environmentObject(appState)
         .environmentObject(stompManager)
+        .environmentObject(fileManager)
         .onAppear {
             sleep(2)
             withAnimation {

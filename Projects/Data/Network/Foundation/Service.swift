@@ -88,6 +88,10 @@ public class Service<Target: SeugiEndpoint> {
         } else if case .requestParameters(let parameters, _) = target.task,
                   let json = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) {
             print("Body: \(String(data: json, encoding: .utf8) ?? "-")")
+        } else if case .uploadMultipart(let multiParts) = target.task {
+            Array(multiParts.enumerated()).forEach { idx, data in
+                print("MultiPart \(idx): name - \(data.name), fileName - \(data.fileName ?? ""), mimeType - \(data.mimeType ?? "")")
+            }
         }
     }
     

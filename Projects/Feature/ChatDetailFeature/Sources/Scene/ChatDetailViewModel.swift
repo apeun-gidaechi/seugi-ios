@@ -70,22 +70,4 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
         )
         message = ""
     }
-//    
-//    func uploadPhoto() {
-//        guard let photo else {
-//            return
-//        }
-//        Task {
-//            guard let photo = try await photo.loadTransferable(type: Data.self) else {
-//                return
-//            }
-//            sub(fileRepo.upload(type: .image, file: photo)) {
-//                self.uploadFlow = .fetching
-//            } success: { <#T#> in
-//                self.uploadFlow = .success(<#T##data: Bool##Bool#>)
-//            } failure: { <#APIError#> in
-//                <#code#>
-//            }
-//        }
-//    }
 }

@@ -2,10 +2,16 @@ import SwiftUI
 import Component
 import BaseFeatureInterface
 import Domain
+import PhotosUI
 
 public struct SettingProfileView: View {
     
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var fileManager: SeugiFileManager
+    @ObservedObject private var viewModel = SettingProfileViewModel()
+    
+    @State private var showPhotoPicker = false
+    @State private var profileImagePhoto: PhotosPickerItem?
     
     private var profile: RetrieveProfile? {
         appState.profile.data
@@ -24,7 +30,7 @@ public struct SettingProfileView: View {
                 }
                 .padding(.vertical, 8)
                 .button {
-                    // TODO: Handle to pick image
+                    showPhotoPicker = true
                 }
                 .applyAnimation()
                 HStack(spacing: 4) {
@@ -59,5 +65,37 @@ public struct SettingProfileView: View {
             Spacer()
         }
         .seugiTopBar("설정")
+        .photosPicker(
+            isPresented: $showPhotoPicker,
+            selection: $profileImagePhoto,
+            matching: .any(of: [.images, .screenshots])
+        )
+        .onChange(of: profileImagePhoto) { photo in
+            guard let photo else {
+                return
+            }
+            fileManager.uploadPhoto(photo: photo) { url in
+                viewModel.editMember(picture: url)
+            } failure: { error in
+                viewModel.editMemberFlow = .failure(error)
+            }
+        }
+        .onAppear {
+            viewModel.member = appState.profile.data?.member
+        }
+        .onChange(of: appState.profile) {
+            viewModel.member = $0.data?.member
+        }
+        .onChangeIdleFlow(of: viewModel.editMemberFlow) {
+            appState.fetchMyInfo()
+        }
+        .alertWithAnyView("정보 수정 성공", when: successDialog(for: $viewModel.editMemberFlow)) {
+            Button("닫기") {}
+        }
+        .alertWithAnyView("정보 수정 실패", when: failureDialog(for: $viewModel.editMemberFlow)) {
+            Button("확인") {}
+        } message: {
+            Text("잠시 후 다시 시도해 주세요")
+        }
     }
 }
