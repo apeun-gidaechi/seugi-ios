@@ -24,14 +24,13 @@ public struct SeugiBottomNavigation: View {
         HStack {
             Spacer()
             ForEach(tabs, id: \.self) { tab in
-                Button {
-                    selectedTab = tab.type
-                } label: {
-                    SeugiBottomNavigationCell(cellData: tab, isSelected: selectedTab == tab.type)
-                        .frame(height: 64)
-                        .toHorizontal()
-                }
-                .applyAnimation()
+                SeugiBottomNavigationCell(cellData: tab, isSelected: selectedTab == tab.type)
+                    .frame(height: 64)
+                    .toHorizontal()
+                    .button {
+                        selectedTab = tab.type
+                    }
+                    .applyAnimation()
             }
             Spacer()
         }

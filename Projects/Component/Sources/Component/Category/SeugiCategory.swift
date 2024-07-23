@@ -33,17 +33,16 @@ public struct SeugiCategory: View {
         let foregroundColor: Color.SeugiColorSystem = isSelected ? .sub(.white) : .gray(.g500)
         let backgroundColor: Color = isSelected ? .seugi(.primary(.p500)) : .seugi(.gray(.g100))
         
-        Button {
-            action()
-        } label: {
-            Text(text)
-                .font(.subtitle(.s2))
-                .frame(height: Self.categoryHeight)
-                .padding(.horizontal, 16)
-                .seugiColor(foregroundColor)
-                .background(backgroundColor)
-                .cornerRadius(Self.categoryHeight / 2, corners: .allCorners)
-        }
-        .applyAnimation()
+        Text(text)
+            .font(.subtitle(.s2))
+            .frame(height: Self.categoryHeight)
+            .padding(.horizontal, 16)
+            .seugiColor(foregroundColor)
+            .background(backgroundColor)
+            .cornerRadius(Self.categoryHeight / 2, corners: .allCorners)
+            .button {
+                action()
+            }
+            .applyAnimation()
     }
 }

@@ -104,5 +104,6 @@ public struct SeugiListItem: View {
         }
         .frame(maxWidth: .infinity)
         .frame(height: 56)
+        .background()
     }
 }
