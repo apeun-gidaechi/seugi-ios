@@ -17,15 +17,16 @@ final class CreateWorkspaceViewModel: BaseViewModel<CreateWorkspaceViewModel.Cre
     @Inject private var workspaceRepo: any WorkspaceRepo
     
     @Published var workspaceName = ""
+    @Published var createWorkspaceFlow: IdleFlow<Bool> = .idle
     
     func createWorkspace() {
-//        sub(workspaceRepo.) {
-//            <#code#>
-//        } success: { <#T#> in
-//            <#code#>
-//        } failure: { <#APIError#> in
-//            <#code#>
-//        }
-
+        // TODO: Add workspace image url
+        sub(workspaceRepo.createWorkspace(workspaceName: workspaceName, workspaceImageUrl: "")) {
+            self.createWorkspaceFlow = .fetching
+        } success: { _ in
+            self.createWorkspaceFlow = .success()
+        } failure: { error in
+            self.createWorkspaceFlow = .failure(error)
+        }
     }
 }

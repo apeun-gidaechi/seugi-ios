@@ -23,7 +23,7 @@ public final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
     }
     
     public func createWorkspace(workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid> {
-        performRequest(.createWorkspace(.init(workspaceName: workspaceName, worksapceImageUrl: workspaceImageUrl)))
+        performRequest(.createWorkspace(.init(workspaceName: workspaceName, workspaceImageUrl: workspaceImageUrl)))
     }
     
     public func removeWorkspace(workspaceId: String) -> APIResult<BaseVoid> {

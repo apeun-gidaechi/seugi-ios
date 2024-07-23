@@ -41,7 +41,7 @@ public struct SeugiRoundedCircleImage: View {
         .frame(width: size.rawValue, height: size.rawValue)
         .seugiBackground(.gray(.g100))
         .cornerRadius(size.rawValue * 16 / 45, corners: .allCorners)
-        .if(type.isIcon) { view in
+        .if(!type.isIcon) { view in
             view.stroke(size.rawValue * 16 / 45, content: Color.seugi(.gray(.g400)), lineWidth: 2)
         }
     }
