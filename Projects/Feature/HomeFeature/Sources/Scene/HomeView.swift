@@ -59,7 +59,8 @@ public struct HomeView: View {
                 VStack(spacing: 4) {
                     ForEach(appState.workspaces.data ?? [], id: \.workspaceId) { workspace in
                         HomeWorkspaceCell(workspace: workspace, workspaceRole: appState.workspaceRole ?? .student) {
-                            // TODO: Handle action
+                            router.navigate(to: HomeDestination.settingWorkspace)
+                            viewModel.isSheetPresent = false
                         }
                         .onTapGesture {
                             appState.selectedWorkspace = workspace

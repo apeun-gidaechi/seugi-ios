@@ -6,6 +6,7 @@ let project = Project.makeFeature(
     include: [.Feature, .Interface, .Example],
     featureDependency: [
         .feature(of: .JoinWorkspace),
-        .feature(of: .CreateWorkspace)
+        .feature(of: .CreateWorkspace),
+        .feature(of: .SettingWorkspace)
     ]
 )
