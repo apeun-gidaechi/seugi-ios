@@ -33,16 +33,15 @@ public struct ChatView: View {
     }
     
     public var body: some View {
-        rooms.makeView {
-            ProgressView()
-        } success: { rooms in
-            let rooms = isSearching ? searchedRooms : rooms
-            if rooms.isEmpty {
-                SeugiError("채팅방이 없어요", image: .kissingFaceWithClosedEyes)
-                    .toVertical()
-            } else {
-                ScrollView {
-                    VStack(spacing: 0) {
+        ScrollView {
+            rooms.makeView {
+                ProgressView()
+            } success: { rooms in
+                let rooms = isSearching ? searchedRooms : rooms
+                if rooms.isEmpty {
+                    SeugiError("채팅방이 없어요", image: .kissingFaceWithClosedEyes)
+                } else {
+                    LazyVStack(spacing: 0) {
                         ForEach(rooms, id: \.id) { room in
                             Button {
                                 router.navigate(to: ChatDestination.chatDetail(room: room))
@@ -52,13 +51,13 @@ public struct ChatView: View {
                             .applyAnimation()
                         }
                     }
-                    .frame(maxWidth: .infinity)
                 }
+            } failure: { _ in
+                SeugiError("불러오기 실패", image: .faceWithDiagonalMouth)
             }
-        } failure: { _ in
-            SeugiError("불러오기 실패", image: .faceWithDiagonalMouth)
-                .toVertical()
         }
+        .scrollIndicators(.hidden)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.clear)
         .hideKeyboardWhenTap()
         .refreshable {

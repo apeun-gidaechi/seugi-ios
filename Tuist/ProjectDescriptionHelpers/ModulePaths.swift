@@ -26,6 +26,7 @@ public extension ModulePaths {
         case CreateGroupChat
         case Notification
         case Profile
+        case CreateNotification
     }
     
     enum Data: String, CaseIterable {

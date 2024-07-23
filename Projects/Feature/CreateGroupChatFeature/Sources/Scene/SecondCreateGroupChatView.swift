@@ -3,7 +3,7 @@ import BaseFeatureInterface
 import Component
 import Domain
 
-public struct SecondCreateGroupChat: View {
+public struct SecondCreateGroupChatView: View {
     
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var viewModel: CreateGroupChatViewModel

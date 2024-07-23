@@ -1,5 +1,5 @@
 //
-//  Notice.swift
+//  Notification.swift
 //  App
 //
 //  Created by dgsw8th61 on 1/7/24.

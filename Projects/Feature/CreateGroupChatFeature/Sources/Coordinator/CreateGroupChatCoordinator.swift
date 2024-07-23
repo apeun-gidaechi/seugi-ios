@@ -8,7 +8,7 @@ struct CreateGroupChatCoordinator: View {
             .navigationDestination(for: CreateGroupChatDestination.self) { destination in
                 Group {
                     switch destination {
-                    case .secondCreateGroupChat: SecondCreateGroupChat()
+                    case .secondCreateGroupChat: SecondCreateGroupChatView()
                     }
                 }
                 .environmentObject(createGroupChatViewModel)

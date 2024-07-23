@@ -21,6 +21,24 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
     /* workspace */
     @Published public var workspaces: FetchFlow<[Workspace]> = .fetching
     @Published public var selectedWorkspace: Workspace?
+    public var workspaceRole: WorkspaceRole? {
+        guard let selectedWorkspace,
+              let memberId = profile.data?.member.id
+        else {
+            return nil
+        }
+        return if selectedWorkspace.student.contains(memberId) {
+            .student
+        } else if selectedWorkspace.teacher.contains(memberId) {
+            .teacher
+        } else if selectedWorkspace.middleAdmin.contains(memberId) {
+            .middleAdmin
+        } else if selectedWorkspace.workspaceAdmin == memberId {
+            .middleAdmin
+        } else {
+            nil
+        }
+    }
     
     /* token */
     @Published public var accessToken: String = ""

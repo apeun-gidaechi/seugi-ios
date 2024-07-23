@@ -80,6 +80,15 @@ public class Service<Target: SeugiEndpoint> {
             + "Header: \(target.headers ?? [:])\n"
             + "Method: \(target.method.rawValue)"
         )
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        if case .requestJSONEncodable(let req) = target.task,
+           let json = try? encoder.encode(req) {
+            print("Body: \(String(data: json, encoding: .utf8) ?? "-")")
+        } else if case .requestParameters(let parameters, _) = target.task,
+                  let json = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) {
+            print("Body: \(String(data: json, encoding: .utf8) ?? "-")")
+        }
     }
     
     private func responeLog(target: Target.Target, response: Moya.Response) {

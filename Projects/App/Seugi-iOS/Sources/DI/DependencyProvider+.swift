@@ -12,6 +12,7 @@ import OnboardingFeature
 import RootFeature
 import NotificationFeature
 import ProfileFeature
+import CreateNotificationFeature
 
 // Domain
 import Domain
@@ -37,15 +38,16 @@ extension DependencyProvider {
             MainAssembly(),
             OnboardingAssembly(),
             RootAssembly(),
-            NotificationAssembly(),
+            NotificationFeature.NotificationAssembly(),
             ProfileFeature.ProfileAssembly(),
+            CreateNotificationAssembly(),
             // Domain
             MemberAssembly(),
             Network.ChatAssembly(),
             WorkspaceAssembly(),
             EmailAssembly(),
             MessageAssembly(),
-            NoticeAssembly(),
+            Network.NotificationAssembly(),
             Network.ProfileAssembly(),
             FileAssembly(),
             // Core

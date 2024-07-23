@@ -33,7 +33,7 @@ struct CreateGroupChatViewExample: App {
                 FirstCreateGroupChatView()
                     .navigationDestination(for: CreateGroupChatDestination.self) {
                         switch $0 {
-                        case .secondCreateGroupChat: SecondCreateGroupChat()
+                        case .secondCreateGroupChat: SecondCreateGroupChatView()
                         }
                     }
             }
