@@ -8,14 +8,17 @@ public struct HomeView: View {
     
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
+    @StateObject private var viewModel = HomeViewModel()
     
-    private let flow: HomeFetchFlow
+    @State private var sheetSize: CGSize = .zero
     
     @Namespace private var currentWorkspaceNamespace
     @Namespace private var todayScheduleNamespace
     @Namespace private var todayMealNamespace
     @Namespace private var catSeugiNamespace
     @Namespace private var commingScheduleNamespace
+    
+    private let flow: HomeFetchFlow
     
     public init(
         flow: HomeFetchFlow
@@ -47,9 +50,35 @@ public struct HomeView: View {
             }
             .padding(.horizontal, 20)
         }
+        .scrollIndicators(.hidden)
         .seugiBackground(.primary(.p050))
         .seugiTopBar("홈", background: .seugi(.primary(.p050)))
         .hideBackButton()
+        .sheet(isPresented: $viewModel.isSheetPresent) {
+            VStack(spacing: 16) {
+                VStack(spacing: 4) {
+                    ForEach(appState.workspaces.data ?? [], id: \.workspaceId) { workspace in
+                        HomeWorkspaceCell(workspace: workspace, workspaceRole: appState.workspaceRole ?? .student) {
+                            // TODO: Handle action
+                        }
+                    }
+                }
+                HStack(spacing: 8) {
+                    Spacer()
+                    SeugiButton.small("새 학교 등록", type: .gray) {
+                        // TODO: Route
+                    }
+                    SeugiButton.small("초대 코드로 가입", type: .primary) {
+                        // TODO: Route
+                    }
+                }
+            }
+            .padding(16)
+            .onReadSize {
+                self.sheetSize = $0
+            }
+            .presentationDetents([.height(sheetSize.height)])
+        }
     }
     
     @ViewBuilder
@@ -105,7 +134,7 @@ public struct HomeView: View {
                             .seugiColor(.gray(.g600))
                         Spacer()
                         SeugiButton.small("전환", type: .gray) {
-                            // TODO: handle action
+                            viewModel.isSheetPresent = true
                         }
                     }
                 }
