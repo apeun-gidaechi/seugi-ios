@@ -2,10 +2,12 @@ import SwiftUI
 import Component
 import Domain
 import BaseFeatureInterface
+import ProfileFeatureInterface
 
 public struct ProfileView: View {
     
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var router: Router
     @ObservedObject private var viewModel = ProfileViewModel()
     
     private var profile: RetrieveProfile? {
@@ -26,6 +28,10 @@ public struct ProfileView: View {
                         .renderingMode(.template)
                         .seugiColor(.gray(.g500))
                         .frame(width: 32, height: 32)
+                        .button {
+                            router.navigate(to: ProfileDestination.settingProfile)
+                        }
+                        .applyAnimation()
                 }
                 .padding(.vertical, 8)
                 .padding(.horizontal, 16)

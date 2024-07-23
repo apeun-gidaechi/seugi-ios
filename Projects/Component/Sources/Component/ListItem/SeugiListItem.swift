@@ -10,65 +10,73 @@ import SwiftUI
 
 public struct SeugiListItem: View {
     
-    var isOn: Binding<Bool>?
-    var title: String
-    var description: String?
-    var icon: SeugiIconography?
-    var content: AnyView?
+    private let isOn: Binding<Bool>?
+    private let title: String
+    private let description: String?
+    private let icon: SeugiIconography?
+    private let content: AnyView?
+    private let titleColor: Color.SeugiColorSystem
     
     private init(
         title: String,
         isOn: Binding<Bool>? = nil,
         description: String? = nil,
         icon: SeugiIconography? = nil,
-        content: AnyView? = nil
+        content: AnyView? = nil,
+        titleColor: Color.SeugiColorSystem
     ) {
         self.title = title
         self.isOn = isOn
         self.description = description
         self.icon = icon
         self.content = content
+        self.titleColor = titleColor
     }
     
     public static func normal(
-        title: String
+        title: String,
+        titleColor: Color.SeugiColorSystem = .sub(.black)
     ) -> Self {
-        .init(title: title)
+        .init(title: title, titleColor: titleColor)
     }
     
     public static func toggle(
         title: String,
-        isOn: Binding<Bool>
+        isOn: Binding<Bool>,
+        titleColor: Color.SeugiColorSystem = .sub(.black)
     ) -> Self {
-        .init(title: title, isOn: isOn)
+        .init(title: title, isOn: isOn, titleColor: titleColor)
     }
     
     public static func description(
         title: String,
-        description: String
+        description: String,
+        titleColor: Color.SeugiColorSystem = .sub(.black)
     ) -> Self {
-        .init(title: title, description: description)
+        .init(title: title, description: description, titleColor: titleColor)
     }
     
     public static func icon(
         title: String,
-        icon: SeugiIconography
+        icon: SeugiIconography,
+        titleColor: Color.SeugiColorSystem = .sub(.black)
     ) -> Self {
-        .init(title: title, icon: icon)
+        .init(title: title, icon: icon, titleColor: titleColor)
     }
     
     public static func content<Content: View>(
         title: String,
+        titleColor: Color.SeugiColorSystem = .sub(.black),
         content: @escaping () -> Content
     ) -> Self {
-        .init(title: title, content: content().eraseToAnyView())
+        .init(title: title, content: content().eraseToAnyView(), titleColor: titleColor)
     }
     
     public var body: some View {
         HStack {
             Text(title)
                 .font(.subtitle(.s2))
-                .seugiColor(.sub(.black))
+                .seugiColor(titleColor)
                 .padding(.leading, 20)
             Spacer()
             if let isOn {
@@ -86,7 +94,7 @@ public struct SeugiListItem: View {
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 28, height: 28)
-                    .seugiColor(.gray(.g600))
+                    .seugiColor(.gray(.g400))
                     .padding(.trailing, 20)
             }
             if let content {
