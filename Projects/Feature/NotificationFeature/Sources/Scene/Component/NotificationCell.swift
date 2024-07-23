@@ -5,16 +5,16 @@ import DateUtil
 
 struct NotificationCell: View {
     
-    private let notice: Notice
+    private let notification: Domain.Notification
     
-    init(notice: Notice) {
-        self.notice = notice
+    init(notification: Domain.Notification) {
+        self.notification = notification
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("\(notice.userName) · \(notice.creationDate?.localeMMDDEEEE ?? "")")
+                Text("\(notification.userName) · \(notification.creationDate?.localeMMDDEEEE ?? "")")
                     .seugiColor(.gray(.g600))
                     .font(.body(.b2))
                 Spacer()
@@ -25,11 +25,11 @@ struct NotificationCell: View {
                     .frame(width: 24, height: 24)
             }
             VStack(alignment: .leading, spacing: 0) {
-                Text(notice.title)
+                Text(notification.title)
                     .multilineTextAlignment(.leading)
                     .seugiColor(.sub(.black))
                     .font(.subtitle(.s2))
-                Text(notice.content)
+                Text(notification.content)
                     .font(.body(.b2))
                     .multilineTextAlignment(.leading)
                     .seugiColor(.sub(.black))

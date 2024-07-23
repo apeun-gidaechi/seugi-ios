@@ -13,8 +13,8 @@ struct NoticeRes: SeugiResponse {
 }
 
 extension NoticeRes {
-    func toEntity() -> Notice {
-        Notice(
+    func toEntity() -> Notification {
+        Notification(
             id: id,
             workspaceId: workspaceId,
             userName: userName,
