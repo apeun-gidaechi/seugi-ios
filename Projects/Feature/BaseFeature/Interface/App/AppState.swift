@@ -34,7 +34,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
         } else if selectedWorkspace.middleAdmin.contains(memberId) {
             .middleAdmin
         } else if selectedWorkspace.workspaceAdmin == memberId {
-            .middleAdmin
+            .admin
         } else {
             nil
         }

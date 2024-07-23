@@ -35,8 +35,8 @@ struct HomeWorkspaceCell: View {
                 .truncationMode(.tail)
             Spacer()
             switch workspaceRole {
-            case .middleAdmin:
-                Image(icon: .expandRightLine)
+            case .middleAdmin, .admin:
+                Image(icon: .settingFill)
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 24, height: 24)
