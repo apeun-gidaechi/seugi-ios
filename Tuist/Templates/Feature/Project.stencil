@@ -1,8 +1,7 @@
-//
-//  File.swift
-//  Manifests
-//
-//  Created by hhhello0507 on 6/27/24.
-//
+import ProjectDescription
+import ProjectDescriptionHelpers
 
-import Foundation
+let project = Project.makeFeature(
+    type: .{{name}},
+    include: [.Feature, .Example, .Interface]
+)

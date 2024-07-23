@@ -1,7 +1,7 @@
 import ProjectDescription
 
 private let nameAttribute = Template.Attribute.required("name")
-private let root = "Projects/Feature/\(nameAttribute)Feature/Sources"
+private let root = "Projects/Feature/\(nameAttribute)Feature"
 
 private let template = Template(
     description: "A template for a new feature module",
@@ -11,29 +11,33 @@ private let template = Template(
     items: [
         // MARK: - Sources
         .file(
-            path: "\(root)/Assembly/\(nameAttribute)Assembly.swift",
+            path: "\(root)/Sources/Assembly/\(nameAttribute)Assembly.swift",
             templatePath: "FeatureAssembly.stencil"
         ),
         .file(
-            path: "\(root)/Factory/\(nameAttribute)FactoryImpl.swift",
+            path: "\(root)/Sources/Factory/\(nameAttribute)FactoryImpl.swift",
             templatePath: "FeatureFactoryImpl.stencil"
         ),
         .file(
-            path: "\(root)/Coordinator/\(nameAttribute)Coordinator.swift",
+            path: "\(root)/Sources/Coordinator/\(nameAttribute)Coordinator.swift",
             templatePath: "FeatureCoordinator.stencil"
         ),
         .file(
-            path: "\(root)/Scene/\(nameAttribute)View",
+            path: "\(root)/Sources/Scene/\(nameAttribute)View.swift",
             templatePath: "FeatureView.stencil"
+        ),
+        .file(
+            path: "\(root)/Project.swift",
+            templatePath: "Project.stencil"
         ),
         // MARK: - Interface
         .file(
-            path: "Projects/Feature/\(nameAttribute)Feature/Interface/\(nameAttribute)Factory.swift",
+            path: "\(root)/Interface/\(nameAttribute)Factory.swift",
             templatePath: "InterfaceFactory.stencil"
         ),
         // MARK: - Example
         .file(
-            path: "Projects/Feature/\(nameAttribute)Feature/Example/\(nameAttribute)Example.swift",
+            path: "\(root)/Example/\(nameAttribute)Example.swift",
             templatePath: "Example.stencil"
         )
     ]
