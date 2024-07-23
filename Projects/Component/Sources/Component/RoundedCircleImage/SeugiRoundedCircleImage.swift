@@ -11,8 +11,8 @@ import SwiftUIUtil
 
 public struct SeugiRoundedCircleImage: View {
     
-    var type: SeugiRoundedCircleImageType
-    var size: SeugiRoundedCircleImageType.Size
+    private let type: SeugiRoundedCircleImageType
+    private let size: SeugiRoundedCircleImageType.Size
     
     private init(
         type: SeugiRoundedCircleImageType,
@@ -23,34 +23,45 @@ public struct SeugiRoundedCircleImage: View {
     }
     
     public var body: some View {
-        let imageSize = type.getImageSize(size: size)
-        ZStack {
+        Group {
             switch type {
-            case .fill:
-                type.image
-                    .resizable()
-                    .frame(maxWidth: imageSize, maxHeight: imageSize)
-                    .stroke(size.roundedCorner, content: Color.seugi(.gray(.g400)), lineWidth: 2)
-            default:
-                type.image
+            case .icon(let icon):
+                Image(icon: icon)
                     .resizable()
                     .renderingMode(.template)
-                    .frame(width: imageSize, height: imageSize)
+                    .frame(width: size.rawValue / 9 * 5, height: size.rawValue / 9 * 5)
                     .seugiColor(.gray(.g400))
+                    
+            case .image(let image):
+                Image(image: image)
+                    .resizable()
+                    .frame(width: .infinity, height: .infinity)
             }
         }
         .frame(width: size.rawValue, height: size.rawValue)
-        .background(Color.seugi(.gray(.g100)))
-        .cornerRadius(size.roundedCorner, corners: .allCorners)
+        .seugiBackground(.gray(.g100))
+        .cornerRadius(size.rawValue * 16 / 45, corners: .allCorners)
+        .if(type.isIcon) { view in
+            view.stroke(size.rawValue * 16 / 45, content: Color.seugi(.gray(.g400)), lineWidth: 2)
+        }
     }
 }
 
 public extension SeugiRoundedCircleImage {
+    
     static func large(type: SeugiRoundedCircleImageType) -> Self {
         .init(type: type, size: .large)
     }
     
+    static func medium(type: SeugiRoundedCircleImageType) -> Self {
+        .init(type: type, size: .medium)
+    }
+    
     static func small(type: SeugiRoundedCircleImageType) -> Self {
-        .init(type: type, size: .small)
+        .init(type: type, size: .medium)
+    }
+    
+    static func extraSmall(type: SeugiRoundedCircleImageType) -> Self {
+        .init(type: type, size: .extraSmall)
     }
 }

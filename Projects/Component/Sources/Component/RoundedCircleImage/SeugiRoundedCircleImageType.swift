@@ -1,44 +1,21 @@
 import SwiftUI
 
-public enum SeugiRoundedCircleImageType {
-    case add
-    case school
-    case image
-    case fill(image: SeugiImage)
+public enum SeugiRoundedCircleImageType: Hashable {
+    case icon(SeugiIconography)
+    case image(SeugiImage)
     
-    var image: Image {
-        switch self {
-        case .add: Image(icon: .addLine)
-        case .school: Image(icon: .schoolFill)
-        case .image: Image(icon: .imageLine)
-        case let .fill(image): Image(image: image)
-        }
+    public enum Size: CGFloat {
+        case large = 100
+        case medium = 72
+        case small = 36
+        case extraSmall = 27
     }
     
-    func getImageSize(size: Size) -> CGFloat {
-        switch (self, size) {
-        case (.add, .large): 54
-        case (.add, .small): 38
-        case (.school, .large): 100
-        case (.school, .small): 72
-        case (.image, .large): 100
-        case (.image, .small): 72
-        case (.fill, .large): .infinity
-        case (.fill, .small): .infinity
-        }
-    }
-}
-
-public extension SeugiRoundedCircleImageType {
-    enum Size: CGFloat {
-        case small = 128
-        case large = 180
-        
-        var roundedCorner: CGFloat {
-            switch self {
-            case .small: 48
-            case .large: 64
-            }
+    public var isIcon: Bool {
+        if case .icon = self {
+            true
+        } else {
+            false
         }
     }
 }

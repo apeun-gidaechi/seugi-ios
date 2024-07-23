@@ -23,8 +23,8 @@ public struct SeugiRoundedCircleAsyncImage: View {
         }
         .processors([.resize(size: .init(width: size.rawValue, height: size.rawValue), unit: .pixels)])
         .frame(width: size.rawValue, height: size.rawValue)
-        .stroke(size.roundedCorner, content: Color.seugi(.gray(.g400)), lineWidth: 2)
-        .cornerRadius(size.roundedCorner, corners: .allCorners)
+        .stroke(size.rawValue * 16 / 45, content: Color.seugi(.gray(.g400)), lineWidth: 2)
+        .cornerRadius(size.rawValue * 16 / 45, corners: .allCorners)
     }
 }
 

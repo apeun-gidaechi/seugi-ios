@@ -27,6 +27,7 @@ public extension ModulePaths {
         case Notification
         case Profile
         case CreateNotification
+        case CreateWorkspace
     }
     
     enum Data: String, CaseIterable {

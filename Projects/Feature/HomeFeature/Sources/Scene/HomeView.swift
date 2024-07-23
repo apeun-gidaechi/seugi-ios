@@ -61,15 +61,21 @@ public struct HomeView: View {
                         HomeWorkspaceCell(workspace: workspace, workspaceRole: appState.workspaceRole ?? .student) {
                             // TODO: Handle action
                         }
+                        .onTapGesture {
+                            appState.selectedWorkspace = workspace
+                            viewModel.isSheetPresent = false
+                        }
                     }
                 }
                 HStack(spacing: 8) {
                     Spacer()
                     SeugiButton.small("새 학교 등록", type: .gray) {
-                        // TODO: Route
+                        router.navigate(to: HomeDestination.createWorkspace)
+                        viewModel.isSheetPresent = false
                     }
                     SeugiButton.small("초대 코드로 가입", type: .primary) {
-                        // TODO: Route
+                        router.navigate(to: HomeDestination.joinWorkspace)
+                        viewModel.isSheetPresent = false
                     }
                 }
             }

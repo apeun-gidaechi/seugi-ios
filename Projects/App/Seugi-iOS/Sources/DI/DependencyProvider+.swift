@@ -13,6 +13,7 @@ import RootFeature
 import NotificationFeature
 import ProfileFeature
 import CreateNotificationFeature
+import CreateWorkspaceFeature
 
 // Domain
 import Domain
@@ -41,6 +42,7 @@ extension DependencyProvider {
             NotificationFeature.NotificationAssembly(),
             ProfileFeature.ProfileAssembly(),
             CreateNotificationAssembly(),
+            CreateWorkspaceAssembly(),
             // Domain
             MemberAssembly(),
             Network.ChatAssembly(),

@@ -17,12 +17,12 @@ public struct RoundedCirclePreview: View {
                 SeugiRoundedCircleImage.large(type: .add)
                 SeugiRoundedCircleImage.large(type: .school)
                 SeugiRoundedCircleImage.large(type: .image)
-                SeugiRoundedCircleImage.large(type: .fill(image: .chicken))
+                SeugiRoundedCircleImage.large(type: .image(image: .chicken))
                 
                 SeugiRoundedCircleImage.small(type: .add)
                 SeugiRoundedCircleImage.small(type: .school)
                 SeugiRoundedCircleImage.small(type: .image)
-                SeugiRoundedCircleImage.small(type: .fill(image: .taco))
+                SeugiRoundedCircleImage.small(type: .image(image: .taco))
                 SeugiRoundedCircleAsyncImage.large(url: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg")
                 SeugiRoundedCircleAsyncImage.small(url: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg")
             }

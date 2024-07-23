@@ -119,6 +119,9 @@ public struct MainView: View {
                 }
             }
         }
+        .onChange(of: appState.selectedWorkspace) { _ in
+            fetchAll()
+        }
     }
     
     // TODO: Devide methods by viewModel -

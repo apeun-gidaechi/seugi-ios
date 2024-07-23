@@ -40,4 +40,8 @@ public extension StompManager {
             }
             .store(in: &subscriptions)
     }
+    
+    func unsubscribe() {
+//        stompRepo.unsubscribe() // TODO: Impl
+    }
 }
