@@ -13,7 +13,7 @@ public struct SeugiDivider: View {
     var thickness: Thickness
     var direction: Self.Direction
     
-    public init(thickness: Thickness, 
+    public init(thickness: Thickness = .thin, 
                 direction: Self.Direction = .horizontal) {
         self.thickness = thickness
         self.direction = direction

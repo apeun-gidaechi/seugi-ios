@@ -6,12 +6,11 @@ import BaseFeatureInterface
 public struct ProfileView: View {
     
     @EnvironmentObject private var appState: AppState
+    @ObservedObject private var viewModel = ProfileViewModel()
     
     private var profile: RetrieveProfile? {
         appState.profile.data
     }
-    
-    public init() {}
     
     public var body: some View {
         ScrollView {
@@ -31,35 +30,68 @@ public struct ProfileView: View {
                 .padding(.vertical, 8)
                 .padding(.horizontal, 16)
                 SeugiDivider(thickness: .thick)
-                makeProfileCell()
-                SeugiDivider(thickness: .thin).padding(.horizontal, 16)
-                makeProfileCell()
-                SeugiDivider(thickness: .thin).padding(.horizontal, 16)
-                makeProfileCell()
-                SeugiDivider(thickness: .thin).padding(.horizontal, 16)
-                makeProfileCell()
+                if let profile {
+                    ProfileCell("상태메세지", value: profile.status) {
+                        viewModel.selectedProfleInfo = \.status
+                    }
+                    ProfileCell("직위", value: profile.spot) {
+                        viewModel.selectedProfleInfo = \.spot
+                    }
+                    ProfileCell("소속", value: profile.belong) {
+                        viewModel.selectedProfleInfo = \.belong
+                    }
+                    ProfileCell("휴대전화번호", value: profile.phone) {
+                        viewModel.selectedProfleInfo = \.phone
+                    }
+                    ProfileCell("유선전화번호", value: profile.wire) {
+                        viewModel.selectedProfleInfo = \.wire
+                    }
+                    ProfileCell("근무위치", value: profile.location) {
+                        viewModel.selectedProfleInfo = \.location
+                    }
+                }
             }
         }
         .seugiBackground(.sub(.white))
         .seugiTopBar("내 프로필")
         .hideBackButton()
-    }
-}
-
-private func makeProfileCell() -> some View {
-    VStack(spacing: 0) {
-        HStack {
-            Text("상태메세지")
-                .font(.body(.b1))
-                .seugiColor(.gray(.g500))
-            Spacer()
-            Image(icon: .writeLine)
-                .resizable()
-                .renderingMode(.template)
-                .seugiColor(.gray(.g500))
-                .frame(width: 20, height: 20)
+        .sheet(isPresented: $viewModel.isSheetPresent) {
+            VStack(spacing: 32) {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("__ 수정")
+                        .padding(.leading, 4)
+                        .font(.subtitle(.s2))
+                        .seugiColor(.sub(.black))
+                    SeugiTextField(text: .init {
+                        viewModel.updateProfileContent ?? ""
+                    } set: {
+                        viewModel.updateProfileContent = $0
+                    })
+                }
+                SeugiButton.large("저장", type: .primary) {
+                    guard let selectedWorkspace = appState.selectedWorkspace else {
+                        return
+                    }
+                    viewModel.updateProfile(workspaceId: selectedWorkspace.workspaceId)
+                }
+            }
+            .padding(20)
+            .presentationDetents([.height(220)])
         }
-        .padding(.horizontal, 20)
-        SeugiListItem.normal(title: "대소고 어딘가")
+        .alertWithAnyView("프로필 수정 성공", when: successDialog(for: $viewModel.updateProfileFlow)) {
+            Button("닫기") {}
+        }
+        .alertWithAnyView("프로필 수정 실패", when: failureDialog(for: $viewModel.updateProfileFlow)) {
+            Button("확인") {}
+        }
+        .onAppear {
+            viewModel.updateProfile = profile
+        }
+        .onChange(of: profile) {
+            viewModel.updateProfile = $0
+        }
+        .onChangeIdleFlow(of: viewModel.updateProfileFlow) {
+            appState.fetchMyInfo()
+        }
     }
 }
