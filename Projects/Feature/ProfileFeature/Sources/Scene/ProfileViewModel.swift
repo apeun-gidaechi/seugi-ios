@@ -14,6 +14,7 @@ import Domain
 final class ProfileViewModel: BaseViewModel<ProfileViewModel.ProfileSubject> {
     enum ProfileSubject {}
     
+    // MARK: - Properties
     @Inject private var profileRepo: any ProfileRepo
     
     @Published var isSheetPresent = false
@@ -24,6 +25,11 @@ final class ProfileViewModel: BaseViewModel<ProfileViewModel.ProfileSubject> {
             isSheetPresent = true
         }
     }
+    
+    var selectedProfleInfolabel: String {
+        selectedProfleInfo?.label ?? ""
+    }
+    
     var updateProfileContent: String? {
         get {
             guard let selectedProfleInfo,
@@ -42,6 +48,7 @@ final class ProfileViewModel: BaseViewModel<ProfileViewModel.ProfileSubject> {
         }
     }
     
+    // MARK: - Method
     func updateProfile(
         workspaceId: String
     ) {
