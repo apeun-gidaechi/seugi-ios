@@ -8,46 +8,77 @@
 
 import Foundation
 import SwiftUI
+import SwiftUIUtil
+import Combine
 
-public protocol SegmentedButtonProtocol {
+public protocol SegmentedButtonProtocol: Equatable {
     var label: String { get }
 }
 
 public struct SeugiSegmentedButton<T: SegmentedButtonProtocol>: View {
     
     private let data: [T]
-    @Binding private var selection: T
     @Namespace private var animation
+    @State private var selection: Binding<T>
+    @State private var selected: T
+    @State private var animatedSelection: T
     
     public init(
-        data: [T],
+        _ data: [T],
         selection: Binding<T>
     ) {
         self.data = data
-        self._selection = selection
+        self.selection = selection
+        let selected = selection.wrappedValue
+        self.selected = selected
+        self.animatedSelection = selected
     }
     
     public var body: some View {
         HStack(spacing: 4) {
             ForEach(data, id: \.label) { item in
-                let selected = item.label == selection.label
+                let isSelected = animatedSelection == item
                 Text(item.label)
-                    .font(selected ? .body(.b2) : .body(.b1))
-                    .seugiColor(selected ? .gray(.g800) : .gray(.g500))
-                    .if(selected) {
-                        $0.background {
-                            Color.seugi(.sub(.white))
+                    .font(isSelected ? .body(.b1) : .body(.b2))
+                    .seugiColor(isSelected ? .gray(.g800) : .gray(.g500))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 40)
+                    .background {
+                        if isSelected {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.seugi(.sub(.white)))
                                 .matchedGeometryEffect(id: "background", in: animation)
+                                .shadow(.evBlack(.ev1))
+                        } else {
+                            Color.seugi(.gray(.g100))
                         }
                     }
                     .button {
-                        selection = item
+                        if selected != item {
+                            selected = item
+                        }
+                    }
+                    .applyAnimation()
+                    .if(isSelected) {
+                        $0.zIndex(1)
                     }
             }
         }
         .padding(4)
-        .frame(height: 44)
+        .frame(height: 48)
+        .frame(maxWidth: .infinity)
         .seugiBackground(.gray(.g100))
         .cornerRadius(12)
+        .onChange(of: selected) { newValue in
+            selection.wrappedValue = newValue
+            withAnimation(.spring(duration: 0.2)) {
+                animatedSelection = newValue
+            }
+        }
+        .onReceive(Just(selection)) { newValue in
+            withAnimation(.spring(duration: 0.2)) {
+                selected = newValue.wrappedValue
+            }
+        }
     }
 }

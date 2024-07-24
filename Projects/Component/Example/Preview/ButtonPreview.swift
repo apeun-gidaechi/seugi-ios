@@ -9,7 +9,21 @@
 import SwiftUI
 import Component
 
+struct Role: SegmentedButtonProtocol {
+    var label: String
+}
+
+private let data: [Role] = [
+    .init(label: "선생님"),
+    .init(label: "학생")
+]
+
 struct ButtonPreview: View {
+    
+    @State var selection: Role = data[0]
+    
+    init() {}
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -33,6 +47,11 @@ struct ButtonPreview: View {
                     SeugiToggle(isOn: .constant(true), type: .checkbox(size: $0))
                     SeugiToggle(isOn: .constant(false), type: .checkbox(size: $0))
                 }
+                
+                SeugiSegmentedButton(
+                    data,
+                    selection: $selection
+                )
             }
             .padding(.horizontal, 20)
         }
