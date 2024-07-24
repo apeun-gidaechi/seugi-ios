@@ -20,6 +20,8 @@ final class InvitationMemberViewModel: BaseViewModel<InvitationMemberViewModel.I
     @Published private var studentWaitMembers: FetchFlow<[Int]> = .fetching
     @Published private var teacherWaitMembers: FetchFlow<[Int]> = .fetching
     @Published var selection = segmentedButtonRoles[0]
+    @Published var workspaceCode: FetchFlow<String> = .fetching
+    
     
     // MARK: - Method
     func fetchWaitMembers(workspaceId: String) {
@@ -36,6 +38,16 @@ final class InvitationMemberViewModel: BaseViewModel<InvitationMemberViewModel.I
             self.teacherWaitMembers = .success(response.data)
         } failure: { error in
             self.teacherWaitMembers = .failure(error)
+        }
+    }
+    
+    func fetchWorkspaceCode(workspaceId: String) {
+        sub(workspaceRepo.getWorkspaceCode(workspaceId: workspaceId)) {
+            self.workspaceCode = .fetching
+        } success: { response in
+            self.workspaceCode = .success(response.data)
+        } failure: { error in
+            self.workspaceCode = .failure(error)
         }
     }
 }
