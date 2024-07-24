@@ -12,7 +12,8 @@ let project = Project.makeData(
             .shared(of: .SwiftUtil),
             .shared(of: .GlobalThirdPartyLibrary),
             .shared(of: .DateUtil),
-            .SPM.ApeunStompKit
+            .SPM.ApeunStompKit,
+            .SPM.Then
         ])
     ],
     xcconfig: .relativeToXCConfig("Config.xcconfig")
