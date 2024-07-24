@@ -65,6 +65,14 @@ public struct ChatView: View {
                 viewModel.fetchChats(workspaceId: selectedWorkspace.workspaceId)
             }
         }
+        .onTapGesture {
+            if isSearching {
+                withAnimation {
+                    isSearching = false
+                    viewModel.clearSearchText()
+                }
+            }
+        }
         .seugiTopBar(roomType == .personal ? "채팅" : "그룹") {
             withAnimation {
                 isSearching = false
@@ -102,14 +110,6 @@ public struct ChatView: View {
         }
         .onDisappear {
             viewModel.clearSearchText()
-        }
-        .onTapGesture {
-            if isSearching {
-                withAnimation {
-                    isSearching = false
-                    viewModel.clearSearchText()
-                }
-            }
         }
     }
 }
