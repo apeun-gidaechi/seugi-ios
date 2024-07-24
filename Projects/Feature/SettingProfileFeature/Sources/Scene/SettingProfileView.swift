@@ -10,8 +10,12 @@ public struct SettingProfileView: View {
     @EnvironmentObject private var fileManager: SeugiFileManager
     @ObservedObject private var viewModel = SettingProfileViewModel()
     
+    // photo
     @State private var showPhotoPicker = false
     @State private var profileImagePhoto: PhotosPickerItem?
+    
+    // session
+    @State private var showLogoutDialog = false
     
     private var profile: RetrieveProfile? {
         appState.profile.data
@@ -45,6 +49,11 @@ public struct SettingProfileView: View {
                 }
             }
             LazyVStack(spacing: 0) {
+                SeugiListItem.icon(title: "로그아웃", icon: .expandRightLine)
+                    .button {
+                        showLogoutDialog = true
+                    }
+                    .applyAnimation()
                 SeugiListItem.icon(title: "회원탈퇴", icon: .expandRightLine, titleColor: .red(.r500))
                     .button {
                         // TODO: Handle remove member
@@ -96,6 +105,12 @@ public struct SettingProfileView: View {
             Button("확인") {}
         } message: {
             Text("잠시 후 다시 시도해 주세요")
+        }
+        .alertWithAnyView("로그아웃 하시겠습니까?", when: $showLogoutDialog) {
+            Button("아니요", role: .cancel) {}
+            Button("로그아웃", role: .destructive) {
+                appState.logout()
+            }
         }
     }
 }

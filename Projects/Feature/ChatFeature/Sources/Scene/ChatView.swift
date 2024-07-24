@@ -104,7 +104,7 @@ public struct ChatView: View {
             viewModel.subscribe { subject in
                 switch subject {
                 case .refreshFailure:
-                    appState.sessionFinished()
+                    appState.logout()
                 }
             }
         }

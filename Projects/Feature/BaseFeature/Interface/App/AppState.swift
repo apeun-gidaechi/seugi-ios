@@ -8,6 +8,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
     
     public enum AppSubject {
         case workspaceFetched
+        case logout
     }
     
     // MARK: - Repo
@@ -62,12 +63,17 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
             .store(in: &subscriptions)
     }
     
-    public func sessionFinished() {
+    public func login() {
+        fetchWorkspaces()
+    }
+    
+    public func logout() {
         selectedMainTab = .home
         accessToken = ""
         refreshToken = ""
         selectedWorkspace = nil
         profile = .fetching
+        emit(.logout)
     }
     
     public func fetchWorkspaces() {
@@ -89,7 +95,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
         } failure: { [self] error in
             print("💎 AppState.fetchWorkspaces - \(error)")
             if case .refreshFailure = error {
-                sessionFinished()
+                logout()
             }
             withAnimation(.spring(duration: 0.4)) {
                 workspaces = .failure(error)

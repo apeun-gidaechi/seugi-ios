@@ -26,11 +26,13 @@ public struct RootView: View {
     
     public var body: some View {
         ZStack {
-            if appState.accessToken.isEmpty {
-                onboardingFactory.makeView().eraseToAnyView()
-                    .environmentObject(timerManager)
-            } else {
-                mainFactory.makeView().eraseToAnyView()
+            NavigationStack(path: $router.navPath) {
+                if appState.accessToken.isEmpty {
+                    onboardingFactory.makeView().eraseToAnyView()
+                        .environmentObject(timerManager)
+                } else {
+                    mainFactory.makeView().eraseToAnyView()
+                }
             }
             if opacity > 0 {
                 launchScreenFactorry.makeView().eraseToAnyView()
@@ -46,14 +48,20 @@ public struct RootView: View {
             withAnimation {
                 opacity = 0
             }
+            appState.subscribe { subject in
+                switch subject {
+                case .logout:
+                    router.navigateToRoot()
+                default:
+                    break
+                }
+            }
         }
         // 디버그일 경우 3번 탭할 시 세션 초기화
         #if DEBUG
         .onTapGesture(count: 3) {
-            print("💕 MainView.body.onTapGesture - 세션 초기화")
-            withAnimation {
-                appState.sessionFinished()
-            }
+            print("💕 [DEBUG] MainView.body.onTapGesture - 세션이 초기화 되는 마법~")
+            appState.logout()
         }
         #endif
     }

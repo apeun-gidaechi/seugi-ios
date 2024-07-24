@@ -54,7 +54,7 @@ public struct LoginEmailView: View {
                     withAnimation {
                         appState.accessToken = accessToken
                         appState.refreshToken = refreshToken
-                        appState.fetchWorkspaces()
+                        appState.login()
                         router.navigateToRoot()
                     }
                 }

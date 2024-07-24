@@ -32,8 +32,44 @@ public struct MainView: View {
     public init() {}
     
     public var body: some View {
-        NavigationStack(path: $router.navPath) {
-            content
+        ZStack(alignment: .bottom) {
+            Group {
+                switch appState.selectedMainTab {
+                case .home: homeFactory.makeView(flow: homeFetchFlow).eraseToAnyView()
+                case .chat: chatFactory.makeView(roomType: .personal).eraseToAnyView()
+                case .room: chatFactory.makeView(roomType: .group).eraseToAnyView()
+                case .notification: notificationFactory.makeView().eraseToAnyView()
+                case .profile: profileFactory.makeView().eraseToAnyView()
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .bottomGradientMask()
+            if appState.workspaces != .fetching {
+                SeugiBottomNavigation(selectedTab: $appState.selectedMainTab, tabs: tabs)
+                    .padding(.horizontal, 20)
+                    .frame(maxWidth: 400)
+            }
+        }
+        .ignoresSafeArea(.keyboard)
+        .environmentObject(chatViewModel)
+        .environmentObject(notificationViewModel)
+        .onAppear {
+            print("💎 MainView.body.onAppear")
+            if case .fetching = appState.workspaces {
+                appState.fetchWorkspaces()
+            }
+            stompManager.subscribe()
+            appState.subscribe { subject in
+                switch subject {
+                case .workspaceFetched:
+                    fetchAll()
+                default:
+                    break
+                }
+            }
+        }
+        .onChange(of: appState.selectedWorkspace) { _ in
+            fetchAll()
         }
     }
     
@@ -69,47 +105,6 @@ public struct MainView: View {
             .failure
         } else {
             .success
-        }
-    }
-    
-    @ViewBuilder
-    private var content: some View {
-        ZStack(alignment: .bottom) {
-            Group {
-                switch appState.selectedMainTab {
-                case .home: homeFactory.makeView(flow: homeFetchFlow).eraseToAnyView()
-                case .chat: chatFactory.makeView(roomType: .personal).eraseToAnyView()
-                case .room: chatFactory.makeView(roomType: .group).eraseToAnyView()
-                case .notification: notificationFactory.makeView().eraseToAnyView()
-                case .profile: profileFactory.makeView().eraseToAnyView()
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .bottomGradientMask()
-            if appState.workspaces != .fetching {
-                SeugiBottomNavigation(selectedTab: $appState.selectedMainTab, tabs: tabs)
-                    .padding(.horizontal, 20)
-                    .frame(maxWidth: 400)
-            }
-        }
-        .ignoresSafeArea(.keyboard)
-        .environmentObject(chatViewModel)
-        .environmentObject(notificationViewModel)
-        .onAppear {
-            print("💎 MainView.body.onAppear")
-            if case .fetching = appState.workspaces {
-                appState.fetchWorkspaces()
-            }
-            stompManager.subscribe()
-            appState.subscribe { subject in
-                switch subject {
-                case .workspaceFetched:
-                    fetchAll()
-                }
-            }
-        }
-        .onChange(of: appState.selectedWorkspace) { _ in
-            fetchAll()
         }
     }
     
