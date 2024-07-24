@@ -52,7 +52,7 @@ public struct RootView: View {
         .onTapGesture(count: 3) {
             print("💕 MainView.body.onTapGesture - 세션 초기화")
             withAnimation {
-                appState.token = .init(accessToken: "", refreshToken: "")
+                appState.sessionFinished()
             }
         }
         #endif
