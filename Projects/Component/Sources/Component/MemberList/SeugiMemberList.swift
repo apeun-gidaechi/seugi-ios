@@ -26,17 +26,20 @@ public struct SeugiMemberList<Content>: View where Content: View {
                 SeugiAvatar(type: .large)
             }
             switch type {
-            case .normal(let member, let isAdmin):
+            case .normal(let member, let role):
                 HStack(spacing: 4) {
                     Text("\(member.name)")
                         .font(.subtitle(.s2))
                         .seugiColor(.sub(.black))
-                    if isAdmin {
+                    switch role {
+                    case .middleAdmin, .admin:
                         Image(icon: .crownFill)
                             .resizable()
                             .renderingMode(.template)
                             .frame(width: 24, height: 24)
-                            .seugiColor(.yellow(.y500))
+                            .seugiColor(role == .admin ? .orange(.o500) : .yellow(.y500))
+                    default:
+                        EmptyView()
                     }
                 }
             case .invitation:

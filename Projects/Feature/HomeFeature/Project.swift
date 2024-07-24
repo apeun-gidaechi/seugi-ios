@@ -7,6 +7,7 @@ let project = Project.makeFeature(
     featureDependency: [
         .feature(of: .JoinWorkspace),
         .feature(of: .CreateWorkspace),
-        .feature(of: .SettingWorkspace)
+        .feature(of: .SettingWorkspace
+                )
     ]
 )

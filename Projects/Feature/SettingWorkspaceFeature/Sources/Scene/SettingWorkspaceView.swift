@@ -1,6 +1,7 @@
 import SwiftUI
 import Component
 import BaseFeatureInterface
+import SettingWorkspaceFeatureInterface
 
 public struct SettingWorkspaceView: View {
     
@@ -25,7 +26,7 @@ public struct SettingWorkspaceView: View {
                     .padding(.top, 24)
                 SeugiListItem.icon(title: "멤버 관리", icon: .expandRightLine)
                     .button {
-                        //
+                        router.navigate(to: SettingWorkspaceDestination.manageMember)
                     }
                     .applyAnimation()
                 SeugiListItem.icon(title: "멤버 초대", icon: .expandRightLine)

@@ -50,7 +50,7 @@ public struct ChatDetailView: View {
                                 .frame(height: 1)
                                 .id(ChatDetailSupporterType.top)
                                 .onAppear {
-                                    let messages = viewModel.messages.data ?? []
+//                                    let messages = viewModel.messages.data ?? []
 //                                    messages.count - 1 / pagingInterval
 //                                    guard let index = data.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
 //                                      
@@ -92,7 +92,7 @@ public struct ChatDetailView: View {
                             scrollViewProxy.scrollTo(ChatDetailSupporterType.bottom, anchor: .bottom)
                         }
                     }
-                    .background(Color.seugi(.primary(.p050)))
+                    .seugiBackground(.primary(.p050))
                 }
             } failure: { _ in
                 Text("-")
@@ -206,11 +206,13 @@ public struct ChatDetailView: View {
                 .font(.subtitle(.s2))
                 .frame(height: 40)
             SeugiDivider(thickness: .thin)
-            ScrollView {
-                LazyVStack(spacing: 0) {
-                    SeugiMemberList(type: .invitation)
-                    ForEach(room.joinUserId, id: \.id) {
-                        SeugiMemberList(type: .normal(member: $0, isAdmin: room.roomAdmin == $0.id))
+            if let selectedWorkspace = appState.selectedWorkspace {
+                ScrollView {
+                    LazyVStack(spacing: 0) {
+                        SeugiMemberList(type: .invitation)
+                        ForEach(room.joinUserId, id: \.id) { member in
+                            SeugiMemberList(type: .normal(member: member, role: .getRole(memberId: member.id, workspace: selectedWorkspace)))
+                        }
                     }
                 }
             }

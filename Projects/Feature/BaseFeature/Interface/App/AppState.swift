@@ -23,21 +23,10 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
     @Published public var selectedWorkspace: Workspace?
     public var workspaceRole: WorkspaceRole? {
         guard let selectedWorkspace,
-              let memberId = profile.data?.member.id
-        else {
+              let memberId = profile.data?.member.id else {
             return nil
         }
-        return if selectedWorkspace.student.contains(memberId) {
-            .student
-        } else if selectedWorkspace.teacher.contains(memberId) {
-            .teacher
-        } else if selectedWorkspace.middleAdmin.contains(memberId) {
-            .middleAdmin
-        } else if selectedWorkspace.workspaceAdmin == memberId {
-            .admin
-        } else {
-            nil
-        }
+        return .getRole(memberId: memberId, workspace: selectedWorkspace)
     }
     
     /* token */
