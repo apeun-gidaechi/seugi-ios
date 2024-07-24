@@ -7,6 +7,8 @@ public struct SettingWorkspaceView: View {
     
     @EnvironmentObject private var router: Router
     
+    public init() {}
+    
     public var body: some View {
         ScrollView {
             LazyVStack(spacing: 0) {

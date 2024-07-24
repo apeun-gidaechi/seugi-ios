@@ -20,7 +20,7 @@ public final class FakeWorkspaceRepo: WorkspaceRepo {
     }
     
     public func getMembers(workspaceId: String) -> APIResult<Base<[RetrieveProfile]>> {
-        return (0..<100).map { _ in RetrieveProfile.mock() }.successBaseResult
+        (0..<100).map { _ in RetrieveProfile.mock() }.successBaseResult
     }
     
     public func createWorkspace(workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid> {

@@ -9,7 +9,9 @@
 import SwiftUI
 import SwiftUIUtil
 
-public struct SeugiDropdown<T: Hashable & CustomStringConvertible>: View {
+public protocol DropdownProtocol: Hashable & CustomStringConvertible {}
+
+public struct SeugiDropdown<T: DropdownProtocol>: View {
     
     // MARK: - parameters
     let hint: String

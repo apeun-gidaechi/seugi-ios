@@ -18,6 +18,16 @@ final class ManageMemberViewModel: BaseViewModel<ManageMemberViewModel.ManageMem
     
     @Published var memberSearchText = ""
     @Published var members: FetchFlow<[RetrieveProfile]> = .fetching
+    @Published var searchText = ""
+    var searchedMembers: [RetrieveProfile] {
+        if searchText.isEmpty {
+            members.data ?? []
+        } else {
+            members.data?.filter { member in
+                member.member.name.contains(searchText)
+            } ?? []
+        }
+    }
     
     func fetchMembers(workspaceId: String) {
         sub(workspaceRepo.getMembers(workspaceId: workspaceId)) {
