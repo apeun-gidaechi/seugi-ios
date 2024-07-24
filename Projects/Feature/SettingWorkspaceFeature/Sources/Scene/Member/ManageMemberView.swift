@@ -22,6 +22,7 @@ private let data: [ManageMemberData] = [
 
 struct ManageMemberView: View {
     
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var appState: AppState
     @ObservedObject private var viewModel = ManageMemberViewModel()
     
@@ -78,6 +79,9 @@ struct ManageMemberView: View {
             withAnimation {
                 isSearching = false
             }
+            if !isSearching {
+                dismiss()
+            }
         }
         .hideTitle(isSearching)
         .subView {
@@ -87,13 +91,12 @@ struct ManageMemberView: View {
             }
         }
         .if(!isSearching) { view in
-            view.hideBackButton()
-                .button(.searchLine) {
-                    withAnimation {
-                        isSearching = true
-                        searchFocus = true
-                    }
+            view.button(.searchLine) {
+                withAnimation {
+                    isSearching = true
+                    searchFocus = true
                 }
+            }
         }
         .onAppear {
             guard let selectedWorkspace = appState.selectedWorkspace else {
