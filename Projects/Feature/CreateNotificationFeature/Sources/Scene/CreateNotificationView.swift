@@ -4,6 +4,7 @@ import Component
 
 public struct CreateNotificationView: View {
     
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
     @ObservedObject private var viewModel = CreateNotificationViewModel()
@@ -29,7 +30,9 @@ public struct CreateNotificationView: View {
             .disabled(viewModel.content.isEmpty || viewModel.title.isEmpty)
         }
         .alertWithAnyView("공지 작성 성공", when: successDialog(for: $viewModel.fetchCreateNotification)) {
-            Button("닫기") {}
+            Button("닫기") {
+                dismiss()
+            }
         }
         .alertWithAnyView("공지 작성 실패", when: failureDialog(for: $viewModel.fetchCreateNotification)) {
             Button("확인") {
