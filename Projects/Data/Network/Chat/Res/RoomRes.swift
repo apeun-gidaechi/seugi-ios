@@ -10,11 +10,11 @@ struct RoomRes: SeugiResponse {
     let roomAdmin: Int
     let chatName: String
     let chatRoomImg: String?
-    var createdAt: String
+    var createdAt: Date
     let chatStatusEnum: ChatStatusEnum
     let joinUserId: [RetrieveMemberRes]
     let lastMessage: String?
-    let lastMessageTimestamp: String?
+    let lastMessageTimestamp: Date?
     let notReadCnt: Int
     
     func toEntity() -> Room {
@@ -25,7 +25,7 @@ struct RoomRes: SeugiResponse {
             roomAdmin: roomAdmin,
             chatName: chatName,
             chatRoomImg: chatRoomImg,
-            createdAt: createdAt.localDateTime,
+            createdAt: createdAt,
             chatStatusEnum: chatStatusEnum,
             joinUserId: joinUserId.map { $0.toEntity() }
         )

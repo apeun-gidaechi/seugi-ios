@@ -1,23 +1,6 @@
 import Foundation
 
 public extension Date {
-    init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let text = try container.decode(String.self)
-        
-        if let date = DateFormatter.localDateTime.date(from: text) {
-            self = date
-        }
-        
-        if let date = DateFormatter.localDate.date(from: text) {
-            self = date
-        }
-        
-        self = .now
-    }
-}
-
-public extension Date {
     var timeAgo: String {
         let currentDate = Date()
         let calendar = Calendar.current
@@ -36,24 +19,6 @@ public extension Date {
         } else {
             "방금 전"
         }
-    }
-    
-    var monthPerDay: String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd"
-        return dateFormatter.string(from: self)
-    }
-    
-    static var datesForWeek: [Date] {
-        var datesInWeek: [Date] = []
-        let currentDate = Date()
-        let calendar = Calendar.current
-        var startDate = calendar.startOfDay(for: currentDate)
-        for _ in 1...7 {
-            datesInWeek.append(startDate)
-            startDate = calendar.date(byAdding: .day, value: -1, to: startDate) ?? .now
-        }
-        return datesInWeek.reversed()
     }
     
     var localeHHSS: String {
@@ -92,16 +57,8 @@ public extension Date {
        }
     
     var localeMMDDEEEE: String {
-
-        // DateFormatter를 생성하고 원하는 형식으로 설정합니다.
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "M월 d일 EEEE"
-
-        // 날짜를 문자열로 변환합니다.
+        let dateFormatter = DateFormatter("M월 d일 EEEE")
         let formattedDate = dateFormatter.string(from: self)
-
-        // 변환된 날짜를 출력합니다.
         return formattedDate
     }
 }

@@ -4,10 +4,33 @@ import Moya
 import CombineMoya
 import Combine
 import Domain
+import Then
+import DateUtil
 
 public class Service<Target: SeugiEndpoint> {
     
-    private let decoder = JSONDecoder()
+    private lazy var decoder = JSONDecoder().then { decoder in
+        
+        let localDateTimeMSFormatter = DateFormatter("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+        let localDateTimeFormatter = DateFormatter("yyyy-MM-dd'T'HH:mm:ss")
+        let localDateFormatter = DateFormatter("yyyy-MM-dd")
+        
+        decoder.dateDecodingStrategy = .custom { decoder in
+            let container = try decoder.singleValueContainer()
+            let dateStr = try container.decode(String.self)
+            
+            return if let date = localDateTimeMSFormatter.date(from: dateStr) {
+                date
+            } else if let date = localDateTimeFormatter.date(from: dateStr) {
+                date
+            } else if let date = localDateFormatter.date(from: dateStr) {
+                date
+            } else {
+                let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Invalid date format")
+                throw DecodingError.dataCorrupted(context)
+            }
+        }
+    }
     
     func request<T: Decodable>(
         _ target: Target.Target,

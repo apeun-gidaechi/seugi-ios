@@ -1,5 +1,6 @@
 import Domain
 import DateUtil
+import Foundation
 
 struct NoticeRes: SeugiResponse {
     let id: Int
@@ -8,21 +9,21 @@ struct NoticeRes: SeugiResponse {
     let title: String
     let content: String
     let emoji: [String]
-    let creationDate: String
-    let lastModifiedDate: String
+    let creationDate: Date
+    let lastModifiedDate: Date
 }
 
 extension NoticeRes {
-    func toEntity() -> Notification {
-        Notification(
+    func toEntity() -> Domain.Notification {
+        Domain.Notification(
             id: id,
             workspaceId: workspaceId,
             userName: userName,
             title: title,
             content: content,
             emoji: emoji,
-            creationDate: creationDate.localDateTime,
-            lastModifiedDate: lastModifiedDate.localDateTime
+            creationDate: creationDate,
+            lastModifiedDate: lastModifiedDate
         )
     }
 }
