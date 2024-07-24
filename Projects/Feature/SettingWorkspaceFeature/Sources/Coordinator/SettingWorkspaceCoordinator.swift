@@ -10,6 +10,7 @@ public struct SettingWorkspaceCoordinator: View {
             .navigationDestination(for: SettingWorkspaceDestination.self) {
                 switch $0 {
                 case .manageMember: ManageMemberView()
+                case .invitationMember: InvitationMemberView()
                 }
             }
     }

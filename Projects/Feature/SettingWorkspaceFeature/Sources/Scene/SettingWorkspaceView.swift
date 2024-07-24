@@ -33,7 +33,7 @@ public struct SettingWorkspaceView: View {
                     .applyAnimation()
                 SeugiListItem.icon(title: "멤버 초대", icon: .expandRightLine)
                     .button {
-                        //
+                        router.navigate(to: SettingWorkspaceDestination.invitationMember)
                     }
                     .applyAnimation()
             }
