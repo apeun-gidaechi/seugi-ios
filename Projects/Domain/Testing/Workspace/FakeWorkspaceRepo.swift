@@ -1,6 +1,7 @@
 import Domain
 
 public final class FakeWorkspaceRepo: WorkspaceRepo {
+    
     public init() {}
     public func getWorkspaces() -> APIResult<Base<[Workspace]>> {
         [Workspace.mock()].successBaseResult
