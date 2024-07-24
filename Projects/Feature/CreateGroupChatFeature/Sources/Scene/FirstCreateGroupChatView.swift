@@ -16,6 +16,7 @@ public struct FirstCreateGroupChatView: View {
     public var body: some View {
         VStack(spacing: 0) {
             selectMember()
+                .padding(.top, 6)
             viewModel.members.makeView {
                 Spacer()
                 ProgressView()
@@ -37,6 +38,7 @@ public struct FirstCreateGroupChatView: View {
                             .applyAnimation()
                         }
                     }
+                    .padding(.horizontal, 4)
                 }
                 .scrollIndicators(.hidden)
                 Spacer()
@@ -98,7 +100,7 @@ public struct FirstCreateGroupChatView: View {
         .frame(height: min(contentSize.height, 300))
         .frame(minHeight: 52)
         .stroke(12, content: Color.seugi(.gray(.g300)))
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 20)
         .padding(.bottom, 8)
         .seugiBackground(.sub(.white))
     }

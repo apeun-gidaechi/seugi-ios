@@ -20,7 +20,7 @@ struct ManageMemberView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
-                SeugiTextField(text: $viewModel.memberSearchText)
+                SeugiTextField("멤버 검색", text: $viewModel.memberSearchText)
                     .padding(.top, 6)
                     .padding(.horizontal, 20)
                 viewModel.members.makeView {
@@ -39,5 +39,12 @@ struct ManageMemberView: View {
             }
         }
         .scrollIndicators(.hidden)
+        .seugiTopBar("멤버 관리")
+        .onAppear {
+            guard let selectedWorkspace = appState.selectedWorkspace else {
+                return
+            }
+            viewModel.fetchMembers(workspaceId: selectedWorkspace.workspaceId)
+        }
     }
 }

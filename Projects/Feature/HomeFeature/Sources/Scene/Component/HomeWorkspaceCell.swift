@@ -27,7 +27,7 @@ struct HomeWorkspaceCell: View {
     }
     
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 12) {
             Text(workspace.workspaceName)
                 .font(.subtitle(.s2))
                 .seugiColor(.sub(.black))

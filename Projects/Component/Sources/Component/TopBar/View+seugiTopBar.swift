@@ -16,6 +16,10 @@ public struct SeugiTopBarView: View {
     private let onBackAction: (() -> Void)?
     private let content: AnyView
     
+    private var showMergedBackButton: Bool {
+        showBackButton || isTextField
+    }
+    
     public init(
         title: String,
         showShadow: Bool,
@@ -43,29 +47,31 @@ public struct SeugiTopBarView: View {
             background.ignoresSafeArea()
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    if showBackButton || isTextField {
-                        Button {
-                            if let onBackAction {
-                                onBackAction()
-                            } else {
-                                dismiss()
+                    if showMergedBackButton {
+                        Image(icon: .expandLeftLine)
+                            .resizable()
+                            .renderingMode(.template)
+                            .seugiColor(.sub(.black))
+                            .frame(width: 24, height: 24)
+                            .button {
+                                if let onBackAction {
+                                    onBackAction()
+                                } else {
+                                    dismiss()
+                                }
                             }
-                        } label: {
-                            Image(icon: .arrowLeftLine)
-                                .resizable()
-                                .renderingMode(.template)
-                                .seugiColor(.sub(.black))
-                                .frame(width: 28, height: 28)
-                        }
-                        .matchedGeometryEffect(id: "backbutton", in: animation)
+                            .applyAnimation()
+                            .matchedGeometryEffect(id: "backbutton", in: animation)
                     }
                     
                     if showTitle {
                         Text(title)
-                            .font(.subtitle(.s1))
+                            .font(showMergedBackButton ? .subtitle(.s2) : .title(.t2))
                             .seugiColor(.sub(.black))
-                            .if(showBackButton) {
-                                $0.padding(.leading, 16)
+                            .if(showMergedBackButton) {
+                                $0.padding(.leading, 12)
+                            } else: {
+                                $0.padding(.leading, 8)
                             }
                             .matchedGeometryEffect(id: "title", in: animation)
                     }
