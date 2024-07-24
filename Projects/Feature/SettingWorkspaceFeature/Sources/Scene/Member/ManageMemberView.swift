@@ -11,22 +11,13 @@ import Component
 import Domain
 import BaseFeatureInterface
 
-private struct ManageMemberData: SegmentedButtonProtocol {
-    var label: String
-}
-
-private let data: [ManageMemberData] = [
-    .init(label: "선생님"),
-    .init(label: "학생")
-]
-
 struct ManageMemberView: View {
     
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var appState: AppState
     @ObservedObject private var viewModel = ManageMemberViewModel()
     
-    @State private var selection = data[0]
+    @State private var selection = segmentedButtonRoles[0]
     @State private var isSheetPresent = false
     @State private var sheetSize: CGSize = .zero
     @State private var isSearching = false
@@ -36,7 +27,7 @@ struct ManageMemberView: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            SeugiSegmentedButton(data, selection: $selection)
+            SeugiSegmentedButton(segmentedButtonRoles, selection: $selection)
                 .padding(.top, 6)
                 .padding(.horizontal, 20)
             viewModel.members.makeView {
