@@ -40,7 +40,7 @@ public struct SeugiSegmentedButton<T: SegmentedButtonProtocol>: View {
                 let isSelected = animatedSelection == item
                 Text(item.label)
                     .font(isSelected ? .body(.b1) : .body(.b2))
-                    .seugiColor(isSelected ? .gray(.g800) : .gray(.g500))
+                    .seugiColor(isSelected ? .gray(.g800) : .gray(.g600))
                     .frame(maxWidth: .infinity)
                     .frame(height: 40)
                     .background {

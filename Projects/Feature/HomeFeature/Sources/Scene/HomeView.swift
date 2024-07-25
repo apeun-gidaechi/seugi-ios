@@ -135,15 +135,10 @@ public struct HomeView: View {
                             .seugiColor(.gray(.g500))
                             .frame(width: 24, height: 24)
                     }
-                    HStack {
-                        Text("대구 소프트웨어 마이스터 고등학교")
-                            .font(.subtitle(.s2))
-                            .seugiColor(.gray(.g600))
-                        Spacer()
-                        SeugiButton.small("전환", type: .gray) {
-                            viewModel.isSheetPresent = true
-                        }
-                    }
+                    Text("대구 소프트웨어 마이스터 고등학교")
+                        .font(.subtitle(.s2))
+                        .seugiColor(.gray(.g600))
+                        .toLeading()
                 }
                 .applyCardEffect()
             }
