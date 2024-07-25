@@ -42,6 +42,10 @@ public struct HomeView: View {
             VStack(spacing: 8) {
                 currentWorkspace
                     .padding(.top, 8)
+                    .button {
+                        router.navigate(to: HomeDestination.workspaceDetail)
+                    }
+                    .applyAnimation()
                 todaySchedule
                 todayMeal
                 catSeugi

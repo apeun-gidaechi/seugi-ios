@@ -16,6 +16,7 @@ import CreateNotificationFeature
 import CreateWorkspaceFeature
 import SettingProfileFeature
 import SettingWorkspaceFeature
+import WorkspaceDetailFeature
 
 // Domain
 import Domain
@@ -47,6 +48,7 @@ extension DependencyProvider {
             CreateWorkspaceAssembly(),
             SettingProfileAssembly(),
             SettingWorkspaceAssembly(),
+            WorkspaceDetailAssembly(),
             // Domain
             MemberAssembly(),
             Network.ChatAssembly(),

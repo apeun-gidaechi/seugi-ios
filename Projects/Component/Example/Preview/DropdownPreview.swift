@@ -16,7 +16,7 @@ struct DropdownPreview: View {
     
     var body: some View {
         ScrollView {
-            SeugiDropdown("Option", pickerOptions: pickerOptions, selection: $selectedOption)
+//            SeugiDropdown("Option", pickerOptions: pickerOptions, selection: $selectedOption)
         }
     }
 }

@@ -5,10 +5,10 @@ public enum SeugiRoundedCircleImageType: Hashable {
     case image(SeugiImage)
     
     public enum Size: CGFloat {
-        case large = 100
-        case medium = 72
-        case small = 36
-        case extraSmall = 27
+        case large = 180
+        case medium = 128
+        case small = 64
+        case extraSmall = 48
     }
     
     public var isIcon: Bool {
