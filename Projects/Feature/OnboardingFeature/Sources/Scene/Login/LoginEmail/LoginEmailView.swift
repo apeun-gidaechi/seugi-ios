@@ -7,6 +7,7 @@ import SwiftUIUtil
 
 public struct LoginEmailView: View {
     
+    @EnvironmentObject private var alertProvider: AlertProvider
     @StateObject private var viewModel = LoginEmailViewModel()
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
@@ -32,7 +33,7 @@ public struct LoginEmailView: View {
                     }
                     .applyAnimation()
             }
-            SeugiButton.large("로그인", type: .primary, isLoading: viewModel.isSignInFetching) {
+            SeugiButton.large("로그인", type: .primary, isLoading: viewModel.signInFlow == .fetching) {
                 viewModel.signIn()
             }
             .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
@@ -40,26 +41,20 @@ public struct LoginEmailView: View {
         }
         .padding(.horizontal, 20)
         .seugiTopBar("로그인")
-        .alertWithAnyView("로그인 실패", when: $viewModel.showSignInFailureDialog) {
-            Button("닫기", role: .cancel) {}
-        } message: {
-            Text("아이디 혹은 비밀번호를 다시 확인해 주세요")
-        }
-        .onAppear {
-            viewModel.subscribe { subject in
-                switch subject {
-                case .signInSuccess(let token):
-                    print("✅ EmailSignInView - 로그인 성공")
-                    let accessToken = String(token.accessToken.split(separator: " ")[1])
-                    let refreshToken = String(token.refreshToken.split(separator: " ")[1])
-                    withAnimation {
-                        appState.accessToken = accessToken
-                        appState.refreshToken = refreshToken
-                        appState.login()
-                        router.navigateToRoot()
-                    }
-                }
+        .onChange(of: viewModel.signInFlow) { token in
+            print("✅ EmailSignInView - 로그인 성공")
+            let accessToken = String(token.accessToken.split(separator: " ")[1])
+            let refreshToken = String(token.refreshToken.split(separator: " ")[1])
+            withAnimation {
+                appState.accessToken = accessToken
+                appState.refreshToken = refreshToken
+                appState.login()
+                router.navigateToRoot()
             }
+        } failure: { _ in
+            alertProvider.present("로그인 실패")
+                .message("아이디 혹은 비밀번호를 다시 확인해 주세요")
+                .show()
         }
     }
 }

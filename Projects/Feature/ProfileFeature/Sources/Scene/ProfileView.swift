@@ -6,6 +6,7 @@ import ProfileFeatureInterface
 
 public struct ProfileView: View {
     
+    @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
     @ObservedObject private var viewModel = ProfileViewModel()
@@ -84,11 +85,13 @@ public struct ProfileView: View {
             .padding(20)
             .presentationDetents([.height(220)])
         }
-        .alertWithAnyView("\(viewModel.selectedProfleInfolabel) 수정 성공", when: successDialog(for: $viewModel.updateProfileFlow)) {
-            Button("닫기") {}
-        }
-        .alertWithAnyView("\(viewModel.selectedProfleInfolabel) 수정 실패", when: failureDialog(for: $viewModel.updateProfileFlow)) {
-            Button("확인") {}
+        .onChange(of: viewModel.updateProfileFlow) { _ in
+            alertProvider.present("\(viewModel.selectedProfleInfolabel) 수정 성공")
+                .show()
+        } failure: { _ in
+            alertProvider.present("\(viewModel.selectedProfleInfolabel) 수정 실패")
+                .primaryButton("확인") {}
+                .show()
         }
         .onAppear {
             viewModel.updateProfile = profile
@@ -96,7 +99,7 @@ public struct ProfileView: View {
         .onChange(of: profile) {
             viewModel.updateProfile = $0
         }
-        .onChangeIdleFlow(of: viewModel.updateProfileFlow) {
+        .onChangeSuccess(of: viewModel.updateProfileFlow) { _ in
             appState.fetchMyInfo()
         }
     }

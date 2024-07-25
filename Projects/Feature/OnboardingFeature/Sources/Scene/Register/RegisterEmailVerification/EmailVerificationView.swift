@@ -4,6 +4,7 @@ import Component
 
 public struct RegisterEmailVerificationView: View {
     
+    @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var timerManager: TimerManager
     @EnvironmentObject private var appState: AppState
@@ -44,20 +45,17 @@ public struct RegisterEmailVerificationView: View {
         }
         .padding(.horizontal, 20)
         .seugiTopBar("이메일 인증")
-        .alertWithAnyView("회원가입 실패", when: failureDialog(for: $viewModel.signUpFlow)) {
-            Button("닫기", role: .cancel) {}
-        } message: {
-            if let text = viewModel.signUpFlow.httpError?.message {
-                Text(text)
-            } else {
-                Text("잠시 후 다시 시도해 주세요")
-            }
-        }
-        .alertWithAnyView("이메일 전송 실패", when: failureDialog(for: $viewModel.sendEmailFlow)) {
-            Button("닫기", role: .cancel) {}
-        }
-        .onChangeIdleFlow(of: viewModel.signUpFlow) {
+        .onChange(of: viewModel.signUpFlow) { _ in
             router.navigateToRoot()
+        } failure: { _ in
+            let message = viewModel.signUpFlow.httpError?.message ?? "잠시 후 다시 시도해 주세요"
+            alertProvider.present("회원가입 실패")
+                .message(message)
+                .show()
+        }
+        .onChange(of: viewModel.sendEmailFlow) { _ in } failure: { _ in
+            alertProvider.present("이메일 전송 실패")
+                .show()
         }
         .onAppear {
             viewModel.subscribe { subject in

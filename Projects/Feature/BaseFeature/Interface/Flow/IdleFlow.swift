@@ -48,47 +48,43 @@ public enum IdleFlow<Data: Equatable>: Equatable {
     }
 }
 
-public func successDialog(for flow: Binding<IdleFlow<Bool>>) -> Binding<Bool> {
-    Binding {
-        flow.wrappedValue == .success(true)
-    } set: { _ in
-        flow.wrappedValue = .idle
-    }
-}
-
-public func failureDialog(for flow: Binding<IdleFlow<Bool>>) -> Binding<Bool> {
-    Binding {
-        flow.wrappedValue.isFailure
-    } set: { _ in
-        flow.wrappedValue = .idle
-    }
-}
-
 public extension View {
     
-    func onChangeIdleFlow<T: Equatable>(
+    func onChangeSuccess<T: Equatable>(
         of value: IdleFlow<T>,
-        success: @escaping () -> Void
+        success: @escaping (T) -> Void
     ) -> some View {
         self
             .onChange(of: value) {
-                if case .success = $0 {
-                    success()
+                if case .success(let data) = $0 {
+                    success(data)
                 }
             }
     }
     
-    func onChangeIdleFlow<T: Equatable>(
+    func onChangeFailure<T: Equatable>(
         of value: IdleFlow<T>,
-        success: @escaping () -> Void,
-        failure: @escaping () -> Void
+        failure: @escaping (APIError) -> Void
     ) -> some View {
         self
             .onChange(of: value) {
-                if case .success = $0 {
-                    success()
-                } else if case .failure = $0 {
-                    failure()
+                if case .failure(let error) = $0 {
+                    failure(error)
+                }
+            }
+    }
+    
+    func onChange<T: Equatable>(
+        of value: IdleFlow<T>,
+        success: @escaping (T) -> Void,
+        failure: @escaping (APIError) -> Void
+    ) -> some View {
+        self
+            .onChange(of: value) {
+                if case .success(let data) = $0 {
+                    success(data)
+                } else if case .failure(let error) = $0 {
+                    failure(error)
                 }
             }
     }

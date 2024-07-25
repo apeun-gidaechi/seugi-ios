@@ -6,6 +6,7 @@ public struct CreateWorkspaceView: View {
     
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var alertProvider: AlertProvider
     @ObservedObject private var viewModel = CreateWorkspaceViewModel()
     
     public var body: some View {
@@ -33,18 +34,15 @@ public struct CreateWorkspaceView: View {
         }
         .padding(.horizontal, 20)
         .seugiTopBar("새 학교 등록")
-        .alertWithAnyView("학교 등록 성공", when: successDialog(for: $viewModel.createWorkspaceFlow)) {
-            Button("닫기") {
-                router.popToStack()
-            }
-        }
-        .alertWithAnyView("학교 등록 실패", when: failureDialog(for: $viewModel.createWorkspaceFlow)) {
-            Button("확인") {}
-        } message: {
-            Text("잠시 후 다시 시도해 주세요")
-        }
-        .onChangeIdleFlow(of: viewModel.createWorkspaceFlow) {
+        .onChange(of: viewModel.createWorkspaceFlow) { _ in
+            alertProvider.present("학교 등록 성공")
+                .show()
             appState.fetchWorkspaces()
+        } failure: { _ in
+            alertProvider.present("학교 등록 실패")
+                .primaryButton("확인") {}
+                .message("잠시 후 다시 시도해 주세요")
+                .show()
         }
     }
 }

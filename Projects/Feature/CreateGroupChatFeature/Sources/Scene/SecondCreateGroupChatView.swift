@@ -6,6 +6,7 @@ import Domain
 public struct SecondCreateGroupChatView: View {
     
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var viewModel: CreateGroupChatViewModel
     @EnvironmentObject private var appState: AppState
     
@@ -39,23 +40,19 @@ public struct SecondCreateGroupChatView: View {
         .padding(.horizontal, 20)
         .seugiTopBar("")
         .subView {
-            SeugiButton.small("완료", type: .transparent, isLoading: viewModel.fetchCreate) {
+            SeugiButton.small("완료", type: .transparent, isLoading: viewModel.createFlow == .fetching) {
                 if let selectedWorkspace = appState.selectedWorkspace {
                     viewModel.createGroupChat(workspaceId: selectedWorkspace.workspaceId)
                 }
             }
             .disabled(viewModel.roomName.isEmpty)
         }
-        .alertWithAnyView("채팅방 만들기 실패", when: $viewModel.createFailure) {
-            Button("확인") {}
-        }
-        .onAppear {
-            viewModel.subscribe { subject in
-                switch subject {
-                case .createSuccess:
-                    router.navigateToRoot()
-                }
-            }
+        .onChange(of: viewModel.createFlow) { _ in
+            router.navigateToRoot()
+        } failure: { _ in
+            alertProvider.present("채팅방 만들기 실패")
+                .primaryButton("확인") {}
+                .show()
         }
     }
 }

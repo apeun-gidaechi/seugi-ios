@@ -12,6 +12,7 @@ import BaseFeatureInterface
 
 struct InvitationMemberView: View {
     
+    @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var appState: AppState
     @ObservedObject private var viewModel = InvitationMemberViewModel()
     
@@ -32,6 +33,8 @@ struct InvitationMemberView: View {
                         SeugiButton.small("학교코드 확인", type: .gray) {
                             if viewModel.workspaceCode.isSuccess {
                                 showWorkspaceCodeDialog = true
+                                alertProvider.present("초대코드는 \(viewModel.workspaceCode.data ?? "")입니다")
+                                    .show()
                             }
                         }
                     }
@@ -51,7 +54,6 @@ struct InvitationMemberView: View {
                     //
                     //                }
                     //                .padding(.horizontal, 4)
-                    
                 }
             }
             .scrollIndicators(.hidden)
@@ -77,9 +79,6 @@ struct InvitationMemberView: View {
             .padding(.bottom, 16)
         }
         .seugiTopBar("멤버 초대")
-        .alertWithAnyView("초대코드는 \(viewModel.workspaceCode.data ?? "")입니다", when: $showWorkspaceCodeDialog) { 
-            Button("닫기") {}
-        }
         .onAppear {
             guard let selectedWorkspace = appState.selectedWorkspace else {
                 return

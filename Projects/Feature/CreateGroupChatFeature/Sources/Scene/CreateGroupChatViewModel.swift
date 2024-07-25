@@ -5,9 +5,7 @@ import DIContainer
 
 public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewModel.CreateGroupChatSubject> {
     
-    public enum CreateGroupChatSubject {
-        case createSuccess
-    }
+    public enum CreateGroupChatSubject {}
     
     // MARK: - Repo
     @Inject private var workspaceRepo: WorkspaceRepo
@@ -18,8 +16,7 @@ public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewMo
     @Published var members: FetchFlow<[RetrieveProfile]> = .fetching
     @Published var selectedMembers: [RetrieveProfile] = []
     @Published var roomName = ""
-    @Published var createFailure = false
-    @Published var fetchCreate = false
+    @Published var createFlow: IdleFlow<Bool> = .fetching
     
     func fetchWorkspaceMembers(
         workspaceId: String,
@@ -58,13 +55,11 @@ public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewMo
         
         let joinUsers = selectedMembers.map { $0.member.id }
         sub(chatRepo.createGroup(roomName: roomName, workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: "")) {
-            self.fetchCreate = true
+            self.createFlow = .fetching
         } success: { _ in
-            self.emit(.createSuccess)
-        } failure: { _ in
-            self.createFailure = true
-        } finished: {
-            self.fetchCreate = false
+            self.createFlow = .success()
+        } failure: { error in
+            self.createFlow = .failure(error)
         }
     }
 }

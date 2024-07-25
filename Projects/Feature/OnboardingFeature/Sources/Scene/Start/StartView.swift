@@ -110,7 +110,7 @@ public struct StartView: View {
                 }
             }
         }
-        .onChangeIdleFlow(of: viewModel.signInFlow, success: {}) {
+        .onChange(of: viewModel.signInFlow) { _ in } failure: { _ in
             alertProvider.present("로그인 실패")
                 .message("잠시 후 다시 시도해 주세요")
                 .show()

@@ -8,14 +8,12 @@ public struct SettingProfileView: View {
     
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var fileManager: SeugiFileManager
+    @EnvironmentObject private var alertProvider: AlertProvider
     @ObservedObject private var viewModel = SettingProfileViewModel()
     
     // photo
     @State private var showPhotoPicker = false
     @State private var profileImagePhoto: PhotosPickerItem?
-    
-    // session
-    @State private var showLogoutDialog = false
     
     private var profile: RetrieveProfile? {
         appState.profile.data
@@ -51,7 +49,12 @@ public struct SettingProfileView: View {
             LazyVStack(spacing: 0) {
                 SeugiListItem.icon(title: "로그아웃", icon: .expandRightLine)
                     .button {
-                        showLogoutDialog = true
+                        alertProvider.present("로그아웃 하시겠습니까?")
+                            .primaryButton("로그아웃") {
+                                appState.logout()
+                            }
+                            .secondaryButton("아니요") {}
+                            .show()
                     }
                     .applyAnimation()
                 SeugiListItem.icon(title: "회원탈퇴", icon: .expandRightLine, titleColor: .red(.r500))
@@ -95,22 +98,15 @@ public struct SettingProfileView: View {
         .onChange(of: appState.profile) {
             viewModel.member = $0.data?.member
         }
-        .onChangeIdleFlow(of: viewModel.editMemberFlow) {
+        .onChange(of: viewModel.editMemberFlow) { _ in
             appState.fetchMyInfo()
-        }
-        .alertWithAnyView("정보 수정 성공", when: successDialog(for: $viewModel.editMemberFlow)) {
-            Button("닫기") {}
-        }
-        .alertWithAnyView("정보 수정 실패", when: failureDialog(for: $viewModel.editMemberFlow)) {
-            Button("확인") {}
-        } message: {
-            Text("잠시 후 다시 시도해 주세요")
-        }
-        .alertWithAnyView("로그아웃 하시겠습니까?", when: $showLogoutDialog) {
-            Button("아니요", role: .cancel) {}
-            Button("로그아웃", role: .destructive) {
-                appState.logout()
-            }
+            alertProvider.present("정보 수정 성공")
+                .show()
+        } failure: { _ in
+            alertProvider.present("정보 수정 실패")
+                .primaryButton("확인") {}
+                .message("잠시 후 다시 시도해 주세요")
+                .show()
         }
     }
 }

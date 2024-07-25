@@ -14,14 +14,10 @@ public final class JoinWorkspaceViewModel: BaseViewModel<JoinWorkspaceViewModel.
     @Inject private var workspaceRepo: WorkspaceRepo
     
     // MARK: - State
-    /* workspace */
-    @Published public var isFetchFailure = false
+    // workspace
     @Published var workspace: IdleFlow<Workspace> = .idle
-    public var isFetchWorkspace: Bool {
-        workspace == .fetching
-    }
     
-    /* join */
+    // join
     @Published public var joinFlow: IdleFlow<Bool> = .idle
     @Published var roleType = WorkspaceRole.student
     @Published public var code = ""
@@ -40,7 +36,6 @@ public final class JoinWorkspaceViewModel: BaseViewModel<JoinWorkspaceViewModel.
             self.workspace = .success(res.data)
             self.emit(.fetchWorkspaceSuccess)
         } failure: { error in
-            self.isFetchFailure = true
             self.workspace = .failure(error)
         }
     }

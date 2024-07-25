@@ -6,6 +6,7 @@ import HomeFeatureInterface
 
 public struct HomeView: View {
     
+    @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
     @StateObject private var viewModel = HomeViewModel()
@@ -14,7 +15,6 @@ public struct HomeView: View {
     @Namespace private var todayMealNamespace
     @Namespace private var catSeugiNamespace
     @Namespace private var commingScheduleNamespace
-    @State private var showJoinWorkspaceDialog: Bool = false
     
     private let flow: HomeFetchFlow
     
@@ -34,6 +34,18 @@ public struct HomeView: View {
         "창체"
     ]
     private let dummyNow = 3
+    
+    private func showJoinWorkspaceAlert() {
+        alertProvider.present("학교 등록하기")
+            .primaryButton("기존 학교 가입") {
+                router.navigate(to: HomeDestination.joinWorkspace)
+            }
+            .secondaryButton("새 학교 만들기") {
+                router.navigate(to: HomeDestination.createWorkspace)
+            }
+            .message("학교를 등록한 뒤 스기를 사용할 수 있어요")
+            .show()
+    }
     
     public var body: some View {
         ScrollView {
@@ -56,21 +68,15 @@ public struct HomeView: View {
         .seugiBackground(.primary(.p050))
         .seugiTopBar("홈", background: .seugi(.primary(.p050)))
         .hideBackButton()
-        .alertWithAnyView("학교 등록하기", when: $showJoinWorkspaceDialog) {
-            Button("새 학교 만들기") {
-                router.navigate(to: HomeDestination.createWorkspace)
-            }
-            Button("기존 학교 가입") {
-                router.navigate(to: HomeDestination.joinWorkspace)
-            }
-        } message: {
-            Text("등록한 뒤 스기를 사용할 수 있어요")
-        }
         .onAppear {
-            showJoinWorkspaceDialog = flow == .failure
+            if flow == .failure {
+                showJoinWorkspaceAlert()
+            }
         }
         .onChange(of: flow) {
-            showJoinWorkspaceDialog = $0 == .failure
+            if $0 == .failure {
+                showJoinWorkspaceAlert()
+            }
         }
     }
     

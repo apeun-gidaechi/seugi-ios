@@ -5,6 +5,7 @@ import JoinWorkspaceFeatureInterface
 
 public struct JoinWorkspaceRoleView: View {
     
+    @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
     @State private var selectedTab: JobType = .student
@@ -40,10 +41,10 @@ public struct JoinWorkspaceRoleView: View {
             .padding(.bottom, 16)
         }
         .seugiTopBar("학교 가입")
-        .alertWithAnyView("가입 요청 실패", when: failureDialog(for: $viewModel.joinFlow)) {
-            Button("닫기", role: .cancel) {}
-        } message: {
-            Text("잠시 후 다시 시도해 주세요")
+        .onChange(of: viewModel.joinFlow) { _ in } failure: { _ in
+            alertProvider.present("가입 요청 실패")
+                .message("잠시 후 다시 시도해 주세요")
+                .show()
         }
         .onAppear {
             viewModel.subscribe { subject in

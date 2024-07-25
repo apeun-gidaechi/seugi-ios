@@ -7,9 +7,7 @@ import SwiftUI
 
 public class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.EmailSignInSubject> {
     
-    public enum EmailSignInSubject {
-        case signInSuccess(token: Token)
-    }
+    public enum EmailSignInSubject {}
     
     // MARK: - Repo
     @Inject private var memberRepo: MemberRepo
@@ -17,8 +15,7 @@ public class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.EmailSignInS
     // MARK: - State
     @Published var email = ""
     @Published var password = ""
-    @Published var isSignInFetching = false
-    @Published var showSignInFailureDialog = false
+    @Published var signInFlow: IdleFlow<Token> = .fetching
     
     public override init() {
         super.init()
@@ -27,16 +24,11 @@ public class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.EmailSignInS
     // MARK: - Method
     func signIn() {
         sub(memberRepo.login(email: email, password: password)) {
-            self.isSignInFetching = true
+            self.signInFlow = .fetching
         } success: { res in
-            self.emit(.signInSuccess(token: res.data))
+            self.signInFlow = .success(res.data)
         } failure: { error in
-            if case .http(let error) = error {
-                print(error)
-            }
-            self.showSignInFailureDialog = true
-        } finished: {
-            self.isSignInFetching = false
+            self.signInFlow = .failure(error)
         }
     }
 }

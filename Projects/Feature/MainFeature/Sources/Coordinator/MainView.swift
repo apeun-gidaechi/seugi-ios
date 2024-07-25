@@ -31,6 +31,64 @@ public struct MainView: View {
     
     public init() {}
     
+    private var isWorkspaceEmpty: Bool {
+        if let workspaces = appState.workspaces.data,
+           !workspaces.isEmpty {
+            false
+        } else {
+            true
+        }
+    }
+    
+    private var tabs: [SeugiBottomNavigationCellData] {
+        if isWorkspaceEmpty {
+            [
+                .init(type: .home, hasBadge: false)
+            ]
+        } else {
+            [
+                .init(type: .home, hasBadge: false),
+                .init(type: .chat, hasBadge: false),
+                .init(type: .room, hasBadge: false),
+                .init(type: .notification, hasBadge: false),
+                .init(type: .profile, hasBadge: false)
+            ]
+        }
+    }
+    
+    private var homeFetchFlow: HomeFetchFlow {
+        if appState.workspaces == .fetching {
+            .fetching
+        } else if isWorkspaceEmpty {
+            .failure
+        } else {
+            .success
+        }
+    }
+    
+    // TODO: Devide methods by viewModel
+    private func fetchAll() {
+        fetchChats()
+        fetchNotices()
+        fetchMyInfo()
+    }
+    
+    private func fetchChats() {
+        print("💎 MainView.fetchChats")
+        guard let workspace = appState.selectedWorkspace else { return }
+        chatViewModel.fetchChats(workspaceId: workspace.workspaceId)
+    }
+    
+    private func fetchNotices() {
+        print("💎 MainView.fetchNotices")
+        guard let workspace = appState.selectedWorkspace else { return }
+        notificationViewModel.fetchNotices(workspaceId: workspace.workspaceId)
+    }
+    
+    private func fetchMyInfo() {
+        appState.fetchMyInfo()
+    }
+    
     public var body: some View {
         ZStack(alignment: .bottom) {
             Group {
@@ -73,61 +131,4 @@ public struct MainView: View {
         }
     }
     
-    private var isWorkspaceEmpty: Bool {
-        if let workspaces = appState.workspaces.data,
-           !workspaces.isEmpty {
-            false
-        } else {
-            true
-        }
-    }
-    
-    private var tabs: [SeugiBottomNavigationCellData] {
-        if isWorkspaceEmpty {
-            [
-                .init(type: .home, hasBadge: false)
-            ]
-        } else {
-            [
-                .init(type: .home, hasBadge: false),
-                .init(type: .chat, hasBadge: false),
-                .init(type: .room, hasBadge: false),
-                .init(type: .notification, hasBadge: false),
-                .init(type: .profile, hasBadge: false)
-            ]
-        }
-    }
-    
-    private var homeFetchFlow: HomeFetchFlow {
-        if appState.workspaces == .fetching {
-            .fetching
-        } else if isWorkspaceEmpty {
-            .failure
-        } else {
-            .success
-        }
-    }
-    
-    // TODO: Devide methods by viewModel -
-    private func fetchAll() {
-        fetchChats()
-        fetchNotices()
-        fetchMyInfo()
-    }
-    
-    private func fetchChats() {
-        print("💎 MainView.fetchChats")
-        guard let workspace = appState.selectedWorkspace else { return }
-        chatViewModel.fetchChats(workspaceId: workspace.workspaceId)
-    }
-    
-    private func fetchNotices() {
-        print("💎 MainView.fetchNotices")
-        guard let workspace = appState.selectedWorkspace else { return }
-        notificationViewModel.fetchNotices(workspaceId: workspace.workspaceId)
-    }
-    
-    private func fetchMyInfo() {
-        appState.fetchMyInfo()
-    }
 }
