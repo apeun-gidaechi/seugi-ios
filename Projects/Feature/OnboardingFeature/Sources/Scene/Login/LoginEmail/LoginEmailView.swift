@@ -3,6 +3,7 @@ import Component
 import BaseFeatureInterface
 import OnboardingFeatureInterface
 import Domain
+import SwiftUIUtil
 
 public struct LoginEmailView: View {
     
@@ -23,13 +24,13 @@ public struct LoginEmailView: View {
                 Text("계정이 없으시다면?")
                     .font(.body(.b1))
                     .seugiColor(.gray(.g600))
-                Button {
-                    router.navigate(to: OnboardingDestination.emailSignUp)
-                } label: {
-                    Text("가입하기")
-                        .font(.body(.b1))
-                        .seugiColor(.primary(.p500))
-                }
+                Text("가입하기")
+                    .font(.body(.b1))
+                    .seugiColor(.primary(.p500))
+                    .button {
+                        router.navigate(to: OnboardingDestination.emailSignUp)
+                    }
+                    .applyAnimation()
             }
             SeugiButton.large("로그인", type: .primary, isLoading: viewModel.isSignInFetching) {
                 viewModel.signIn()
