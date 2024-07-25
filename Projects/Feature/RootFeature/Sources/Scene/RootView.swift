@@ -23,25 +23,28 @@ public struct RootView: View {
     @Inject private var mainFactory: any MainFactory
     @InjectObject private var viewModel: RootViewModel
     @State private var opacity = 1.0
+    @State private var alertBackgroundOpacity = 0.0
     
     public init() {}
     
     public var body: some View {
-        SeugiAlertPresenter(provider: alertProvider) {
-            ZStack {
-                NavigationStack(path: $router.navPath) {
-                    if appState.accessToken.isEmpty {
-                        onboardingFactory.makeView().eraseToAnyView()
-                            .environmentObject(timerManager)
-                    } else {
-                        mainFactory.makeView().eraseToAnyView()
-                    }
-                }
-                if opacity > 0 {
-                    launchScreenFactorry.makeView().eraseToAnyView()
-                        .opacity(opacity)
+        SeugiAlertPresenter(provider: alertProvider, backgroundOpacity: $alertBackgroundOpacity) {
+            NavigationStack(path: $router.navPath) {
+                if appState.accessToken.isEmpty {
+                    onboardingFactory.makeView().eraseToAnyView()
+                        .environmentObject(timerManager)
+                } else {
+                    mainFactory.makeView().eraseToAnyView()
                 }
             }
+        
+            if opacity > 0 {
+                launchScreenFactorry.makeView().eraseToAnyView()
+                    .opacity(opacity)
+            }
+            
+            Color.black.opacity(0.2).ignoresSafeArea()
+                .opacity(alertBackgroundOpacity)
         }
         .environmentObject(router)
         .environmentObject(appState)

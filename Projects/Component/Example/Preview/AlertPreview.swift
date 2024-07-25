@@ -12,7 +12,7 @@ import Component
 struct AlertPreview: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    
+    @State var show = false
     var body: some View {
         
         VStack {
@@ -27,6 +27,14 @@ struct AlertPreview: View {
                     }
                     .show()
             }
+            Button("Normal") {
+                show = true
+            }
+        }
+        .alert("제목을 입력해주세요", isPresented: $show) {
+            Button("확인") {}
+        } message: {
+            Text("본문을 입력해주세요")
         }
     }
 }
