@@ -3,11 +3,12 @@ import SwiftUIUtil
 
 public struct SeugiAlertPresenter<C: View>: View {
     
-    @ObservedObject private var alertProvider = AlertProvider()
+    @StateObject private var alertProvider = AlertProvider()
     
     private let content: () -> C
     
-    public init(@ViewBuilder content: @escaping () -> C) {
+    public init(provider: AlertProvider = .init(), @ViewBuilder content: @escaping () -> C) {
+        self._alertProvider = .init(wrappedValue: provider)
         self.content = content
     }
     

@@ -14,7 +14,6 @@ public final class StartViewModel: BaseViewModel<StartViewModel.StartSubject> {
     
     // MARK: - State
     @Published var signInFlow: IdleFlow<Bool> = .fetching
-    @Published var isSignInFailure = false
     
     // MARK: - Method
     func signIn(token: String, provider: OAuth2Provider) {
@@ -25,7 +24,6 @@ public final class StartViewModel: BaseViewModel<StartViewModel.StartSubject> {
             emit(.signInSuccess(token: token.data))
         } failure: { error in
             self.signInFlow = .failure(error)
-            self.isSignInFailure = true
         }
     }
 }

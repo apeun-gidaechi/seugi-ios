@@ -7,6 +7,7 @@ import DIContainer
 import SwiftUIUtil
 import Domain
 import LaunchScreenFeatureInterface
+import Component
 
 public struct RootView: View {
     
@@ -15,6 +16,7 @@ public struct RootView: View {
     @StateObject private var router = Router()
     @StateObject private var stompManager = StompManager()
     @StateObject private var fileManager = SeugiFileManager()
+    @StateObject private var alertProvider = AlertProvider()
     @Inject private var onboardingFactory: any OnboardingFactory
     @Inject private var joinWorkspaceFactory: any JoinWorkspaceFactory
     @Inject private var launchScreenFactorry: any LaunchScreenFactory
@@ -25,18 +27,20 @@ public struct RootView: View {
     public init() {}
     
     public var body: some View {
-        ZStack {
-            NavigationStack(path: $router.navPath) {
-                if appState.accessToken.isEmpty {
-                    onboardingFactory.makeView().eraseToAnyView()
-                        .environmentObject(timerManager)
-                } else {
-                    mainFactory.makeView().eraseToAnyView()
+        SeugiAlertPresenter(provider: alertProvider) {
+            ZStack {
+                NavigationStack(path: $router.navPath) {
+                    if appState.accessToken.isEmpty {
+                        onboardingFactory.makeView().eraseToAnyView()
+                            .environmentObject(timerManager)
+                    } else {
+                        mainFactory.makeView().eraseToAnyView()
+                    }
                 }
-            }
-            if opacity > 0 {
-                launchScreenFactorry.makeView().eraseToAnyView()
-                    .opacity(opacity)
+                if opacity > 0 {
+                    launchScreenFactorry.makeView().eraseToAnyView()
+                        .opacity(opacity)
+                }
             }
         }
         .environmentObject(router)

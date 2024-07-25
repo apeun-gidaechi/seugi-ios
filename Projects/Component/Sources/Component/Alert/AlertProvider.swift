@@ -61,6 +61,8 @@ public final class AlertProvider: ObservableObject {
     @Published var secondaryButton: AlertButton?
     @Published var primaryButton: AlertButton?
     
+    public init() {}
+    
     public func present(
         _ title: String
     ) -> Builder {

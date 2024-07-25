@@ -8,6 +8,7 @@ public struct StartView: View {
     
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var alertProvider: AlertProvider
     
     @State private var offsetY1: CGFloat = 16
     @State private var opacity1 = 0.0
@@ -78,15 +79,19 @@ public struct StartView: View {
                 }
                 .padding(.top, 20)
                 SeugiAppleSignInButton { token in
+                    isPresented = false
                     viewModel.signIn(token: token, provider: .apple)
                 } onFailure: {
-                    viewModel.isSignInFailure = true
+                    isPresented = false
+                    viewModel.signInFlow = .failure(.unknown)
                 }
                 .frame(height: 56)
                 SeugiGoogleSignInButton { token in
+                    isPresented = false
                     viewModel.signIn(token: token, provider: .google)
                 } onFailure: {
-                    viewModel.isSignInFailure = true
+                    isPresented = false
+                    viewModel.signInFlow = .failure(.unknown)
                 }
                 .frame(height: 56)
                 .frame(maxWidth: .infinity)
@@ -96,11 +101,6 @@ public struct StartView: View {
             .presentationDetents([.height(256)])
         }
         .eraseToAnyView()
-        .alert("로그인 실패", isPresented: $viewModel.isSignInFailure) {
-            Button("닫기", role: .cancel) {}
-        } message: {
-            Text("잠시 후 다시 시도해 주세요")
-        }
         .onAppear {
             viewModel.subscribe { subject in
                 switch subject {
@@ -109,6 +109,11 @@ public struct StartView: View {
                     appState.refreshToken = String(token.refreshToken.split(separator: " ")[1])
                 }
             }
+        }
+        .onChangeIdleFlow(of: viewModel.signInFlow, success: {}) {
+            alertProvider.present("로그인 실패")
+                .message("잠시 후 다시 시도해 주세요")
+                .show()
         }
     }
 }
