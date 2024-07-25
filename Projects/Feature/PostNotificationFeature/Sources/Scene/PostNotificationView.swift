@@ -1,6 +1,7 @@
 import SwiftUI
 import BaseFeatureInterface
 import PostNotificationFeatureInterface
+import NotificationFeatureInterface
 import Component
 
 public struct PostNotificationView: View {
@@ -9,6 +10,7 @@ public struct PostNotificationView: View {
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
     @ObservedObject private var viewModel = PostNotificationViewModel()
+    @EnvironmentObject private var notificationViewModel: NotificationViewModel
     
     private let type: PostNotificationType
     
@@ -50,6 +52,10 @@ public struct PostNotificationView: View {
         .alertWithAnyView(type == .createNotification ? "공지 작성 성공" : "공지 수정 성공", when: successDialog(for: $viewModel.fetchPostNotification)) {
             Button("닫기") {
                 dismiss()
+                guard let selectedWorkspace = appState.selectedWorkspace else {
+                    return
+                }
+                notificationViewModel.fetchNotices(workspaceId: selectedWorkspace.workspaceId)
             }
         }
         .alertWithAnyView(type == .createNotification ? "공지 작성 실패" : "공지 수정 실패", when: failureDialog(for: $viewModel.fetchPostNotification)) {
