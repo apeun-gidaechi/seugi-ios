@@ -28,6 +28,8 @@ public struct SeugiModalProvider<C: View>: View {
         SeugiTimePicker(provider: timePickerProvider) {
             SeugiAlertPresenter(provider: alertProvider) {
                 content()
+                    .environmentObject(timePickerProvider)
+                    .environmentObject(alertProvider)
             }
         }
     }

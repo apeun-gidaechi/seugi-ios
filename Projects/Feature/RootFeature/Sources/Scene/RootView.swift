@@ -34,7 +34,7 @@ public struct RootView: View {
         SeugiModalProvider(
             alertProvider: alertProvider,
             timePickerProvider: timePickerProvider
-        ) {
+        ) { // zstack
             NavigationStack(path: $router.navPath) {
                 if appState.accessToken.isEmpty {
                     onboardingFactory.makeView().eraseToAnyView()
@@ -49,8 +49,6 @@ public struct RootView: View {
                     .opacity(opacity)
             }
         }
-        .environmentObject(timePickerProvider)
-        .environmentObject(alertProvider)
         .environmentObject(router)
         .environmentObject(appState)
         .environmentObject(stompManager)

@@ -18,8 +18,6 @@ struct ComponentApp: App {
                     SeugiPreview.preview
                 }
             }
-            .environmentObject(a)
-            .environmentObject(t)
         }
     }
 }
