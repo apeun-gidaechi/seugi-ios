@@ -41,6 +41,7 @@ public struct WorkspaceDetailView: View {
                 LazyVStack(spacing: 0) {
                     SeugiDivider(thickness: .thick)
                     SeugiListItem.icon(title: "멤버 보기", icon: .expandRightLine)
+                        .leadingIcon(.personFill)
                         .button {
                             router.navigate(to: WorkspaceDetailDestination.workspaceMembers)
                         }

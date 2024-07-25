@@ -22,6 +22,10 @@ public final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
         performRequest(.getMembers(workspaceId: workspaceId), res: [RetrieveProfileRes].self)
     }
     
+    public func getMembersChart(workspaceId: String) -> APIResult<Base<WorkspaceMembersChart>> {
+        performRequest(.getMembersChart(workspaceId: workspaceId), res: WorkspaceMembersChartRes.self)
+    }
+    
     public func createWorkspace(workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid> {
         performRequest(.createWorkspace(.init(workspaceName: workspaceName, workspaceImageUrl: workspaceImageUrl)))
     }

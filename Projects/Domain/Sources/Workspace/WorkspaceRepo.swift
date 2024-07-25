@@ -7,6 +7,7 @@ public protocol WorkspaceRepo {
     func getWorkspace(code: String) -> APIResult<Base<Workspace>>
     func joinWorkspace(workspaceId: String, workspaceCode: String, role: WorkspaceRole) -> APIResult<BaseVoid>
     func getMembers(workspaceId: String) -> APIResult<Base<[RetrieveProfile]>>
+    func getMembersChart(workspaceId: String) -> APIResult<Base<WorkspaceMembersChart>>
     func removeWorkspace(workspaceId: String) -> APIResult<BaseVoid>
     func approveJoinWorkspace(workspaceId: String, approvalUserSer: [Int], role: WorkspaceRole) -> APIResult<BaseVoid>
     func getWaitList(workspaceId: String, workspaceRole: WorkspaceRole) -> APIResult<Base<[Int]>>

@@ -16,6 +16,7 @@ public struct SeugiListItem: View {
     private let icon: SeugiIconography?
     private let content: AnyView?
     private let titleColor: Color.SeugiColorSystem
+    private let leadingIcon: SeugiIconography?
     
     private init(
         title: String,
@@ -23,7 +24,8 @@ public struct SeugiListItem: View {
         description: String? = nil,
         icon: SeugiIconography? = nil,
         content: AnyView? = nil,
-        titleColor: Color.SeugiColorSystem
+        titleColor: Color.SeugiColorSystem,
+        leadingIcon: SeugiIconography? = nil
     ) {
         self.title = title
         self.isOn = isOn
@@ -31,6 +33,7 @@ public struct SeugiListItem: View {
         self.icon = icon
         self.content = content
         self.titleColor = titleColor
+        self.leadingIcon = leadingIcon
     }
     
     public static func normal(
@@ -72,8 +75,27 @@ public struct SeugiListItem: View {
         .init(title: title, content: content().eraseToAnyView(), titleColor: titleColor)
     }
     
+    public func leadingIcon(_ icon: SeugiIconography) -> Self {
+        .init(
+            title: title,
+            isOn: isOn,
+            description: description,
+            icon: icon,
+            content: content,
+            titleColor: titleColor,
+            leadingIcon: icon
+        )
+    }
+    
     public var body: some View {
-        HStack {
+        HStack(spacing: 8) {
+            if let leadingIcon {
+                Image(icon: leadingIcon)
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 24, height: 24)
+                    .seugiColor(.sub(.black))
+            }
             Text(title)
                 .font(.subtitle(.s2))
                 .seugiColor(titleColor)
