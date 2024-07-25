@@ -23,6 +23,10 @@ public final class FakeWorkspaceRepo: WorkspaceRepo {
         (0..<100).map { _ in RetrieveProfile.mock() }.successBaseResult
     }
     
+    public func getMembersChart(workspaceId: String) -> APIResult<Base<WorkspaceMembersChart>> {
+        WorkspaceMembersChart.mock().successBaseResult
+    }
+    
     public func createWorkspace(workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid> {
         BaseVoid.mock().successResult
     }

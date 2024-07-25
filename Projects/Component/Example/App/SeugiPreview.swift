@@ -30,6 +30,7 @@ enum SeugiPreview: String, CaseIterable {
     case toolTip = "ToolTip"
     case roomImage = "RoomImage"
     case error = "Error"
+    case alert = "Alert"
     
     var view: some View {
         Group {
@@ -54,20 +55,22 @@ enum SeugiPreview: String, CaseIterable {
             case .toolTip: ToolTipPreview()
             case .roomImage: RoomImagePreview()
             case .error: ErrorPreview()
+            case .alert: AlertPreview()
             default: SeugiError("페이지를 찾을 수 없습니다", image: .faceWithDiagonalMouth)
             }
         }
     }
     static var preview: some View {
-        NavigationStack {
-            let lst = Self.allCases.sorted { $0.rawValue < $1.rawValue }
-            List(lst, id: \.self) { preview in
-                NavigationLink {
-                    preview.view
-                } label: {
-                    Text(preview.rawValue)
-                }
-            }
-        }
+//        NavigationStack {
+//            let lst = Self.allCases.sorted { $0.rawValue < $1.rawValue }
+//            List(lst, id: \.self) { preview in
+//                NavigationLink {
+//                    preview.view
+//                } label: {
+//                    Text(preview.rawValue)
+//                }
+//            }
+//        }
+        SeugiPreview.alert.view
     }
 }

@@ -10,7 +10,9 @@ struct ComponentApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SeugiPreview.preview
+            SeugiAlertPresenter {
+                SeugiPreview.preview
+            }
         }
     }
 }
