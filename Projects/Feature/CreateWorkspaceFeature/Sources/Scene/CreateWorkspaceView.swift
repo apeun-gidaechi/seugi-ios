@@ -41,7 +41,7 @@ public struct CreateWorkspaceView: View {
         .alertWithAnyView("학교 등록 실패", when: failureDialog(for: $viewModel.createWorkspaceFlow)) {
             Button("확인") {}
         } message: {
-            Text("잠시 뒤 다시 시도해 주세요")
+            Text("잠시 후 다시 시도해 주세요")
         }
         .onChangeIdleFlow(of: viewModel.createWorkspaceFlow) {
             appState.fetchWorkspaces()

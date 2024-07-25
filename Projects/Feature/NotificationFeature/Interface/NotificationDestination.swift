@@ -1,4 +1,6 @@
+import Domain
+
 public enum NotificationDestination: Hashable {
     case createNotification
-    case updateNotification(id: Int)
+    case updateNotification(Domain.Notification)
 }

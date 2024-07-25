@@ -1,5 +1,5 @@
 //
-//  CreateNotificationReq.swift
+//  PostNotificationReq.swift
 //  Core
 //
 //  Created by hhhello0507 on 7/23/24.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CreateNotificationReq: Encodable {
+struct PostNotificationReq: Encodable {
     
     let title: String
     let content: String

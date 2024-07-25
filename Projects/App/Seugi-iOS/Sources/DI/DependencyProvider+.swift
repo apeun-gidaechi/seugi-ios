@@ -12,12 +12,11 @@ import OnboardingFeature
 import RootFeature
 import NotificationFeature
 import ProfileFeature
-import CreateNotificationFeature
+import PostNotificationFeature
 import CreateWorkspaceFeature
 import SettingProfileFeature
 import SettingWorkspaceFeature
 import WorkspaceDetailFeature
-import UpdateNotificationFeature
 
 // Domain
 import Domain
@@ -45,12 +44,11 @@ extension DependencyProvider {
             RootAssembly(),
             NotificationFeature.NotificationAssembly(),
             ProfileFeature.ProfileAssembly(),
-            CreateNotificationAssembly(),
+            PostNotificationAssembly(),
             CreateWorkspaceAssembly(),
-            SettingProfileAssembly(),   
+            SettingProfileAssembly(),
             SettingWorkspaceAssembly(),
             WorkspaceDetailAssembly(),
-            UpdateNotificationAssembly(),
             // Domain
             MemberAssembly(),
             Network.ChatAssembly(),

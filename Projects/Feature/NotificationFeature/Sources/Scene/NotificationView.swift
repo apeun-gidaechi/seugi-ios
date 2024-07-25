@@ -23,7 +23,7 @@ public struct NotificationView: View {
                         ForEach(notices, id: \.id) { notification in
                             NotificationCell(notification: notification) {
                                 switch $0 {
-                                case .updateNotification: router.navigate(to: NotificationDestination.updateNotification(id: notification.id))
+                                case .updateNotification: router.navigate(to: NotificationDestination.updateNotification(notification))
                                 }
                             }
                             .button {

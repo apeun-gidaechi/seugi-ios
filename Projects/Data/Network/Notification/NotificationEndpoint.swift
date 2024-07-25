@@ -2,7 +2,7 @@ import Moya
 
 enum NotificationEndpoint: SeugiEndpoint {
     case getNotifications(workspaceId: String)
-    case createNotification(CreateNotificationReq)
+    case postNotification(PostNotificationReq)
     case updateNotification(UpdateNotificationReq)
     case removeNotification(workspaceId: String, id: Int)
 }
@@ -20,7 +20,7 @@ extension NotificationEndpoint {
         switch self {
         case .getNotifications(let workspaceId):
                 .get - "\(workspaceId)" - .requestPlain
-        case .createNotification(let req):
+        case .postNotification(let req):
                 .post - "" - req.toJSONParameters()
         case .updateNotification(let req):
                 .patch - "" - req.toJSONParameters()

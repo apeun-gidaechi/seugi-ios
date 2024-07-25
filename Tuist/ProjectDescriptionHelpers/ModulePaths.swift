@@ -26,12 +26,11 @@ public extension ModulePaths {
         case CreateGroupChat
         case Notification
         case Profile
-        case CreateNotification
+        case PostNotification
         case CreateWorkspace
         case SettingProfile
         case SettingWorkspace
         case WorkspaceDetail
-        case UpdateNotification
     }
     
     enum Data: String, CaseIterable {

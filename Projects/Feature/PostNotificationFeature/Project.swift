@@ -2,6 +2,6 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.makeFeature(
-    type: .UpdateNotification,
+    type: .PostNotification,
     include: [.Feature, .Example, .Interface]
 )

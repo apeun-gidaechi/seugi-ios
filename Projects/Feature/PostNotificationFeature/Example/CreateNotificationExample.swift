@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct CreateNotificationExample: App {
+struct PostNotificationExample: App {
     var body: some Scene {
         WindowGroup {
             EmptyView()

@@ -5,8 +5,8 @@ final class NotificationService: Service<NotificationEndpoint>, NotificationRepo
         performRequest(.getNotifications(workspaceId: workspaceId), res: [NoticeRes].self)
     }
     
-    func createNotification(title: String, content: String, workspaceId: String) -> APIResult<BaseVoid> {
-        performRequest(.createNotification(.init(title: title, content: content, workspaceId: workspaceId)))
+    func postNotification(title: String, content: String, workspaceId: String) -> APIResult<BaseVoid> {
+        performRequest(.postNotification(.init(title: title, content: content, workspaceId: workspaceId)))
     }
     
     func updateNotification(id: Int, title: String, content: String) -> APIResult<BaseVoid> {
