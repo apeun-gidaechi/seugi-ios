@@ -9,9 +9,6 @@ public struct HomeView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
     @StateObject private var viewModel = HomeViewModel()
-    
-    @State private var sheetSize: CGSize = .zero
-    
     @Namespace private var currentWorkspaceNamespace
     @Namespace private var todayScheduleNamespace
     @Namespace private var todayMealNamespace
@@ -58,38 +55,6 @@ public struct HomeView: View {
         .seugiBackground(.primary(.p050))
         .seugiTopBar("홈", background: .seugi(.primary(.p050)))
         .hideBackButton()
-        .sheet(isPresented: $viewModel.isSheetPresent) {
-            VStack(spacing: 16) {
-                VStack(spacing: 4) {
-                    ForEach(appState.workspaces.data ?? [], id: \.workspaceId) { workspace in
-                        HomeWorkspaceCell(workspace: workspace, workspaceRole: appState.workspaceRole ?? .student) {
-                            router.navigate(to: HomeDestination.settingWorkspace)
-                            viewModel.isSheetPresent = false
-                        }
-                        .onTapGesture {
-                            appState.selectedWorkspace = workspace
-                            viewModel.isSheetPresent = false
-                        }
-                    }
-                }
-                HStack(spacing: 8) {
-                    Spacer()
-                    SeugiButton.small("새 학교 등록", type: .gray) {
-                        router.navigate(to: HomeDestination.createWorkspace)
-                        viewModel.isSheetPresent = false
-                    }
-                    SeugiButton.small("초대 코드로 가입", type: .primary) {
-                        router.navigate(to: HomeDestination.joinWorkspace)
-                        viewModel.isSheetPresent = false
-                    }
-                }
-            }
-            .padding(16)
-            .onReadSize {
-                self.sheetSize = $0
-            }
-            .presentationDetents([.height(sheetSize.height)])
-        }
     }
     
     @ViewBuilder
@@ -120,9 +85,6 @@ public struct HomeView: View {
                     Text("내 학교를 등록해주세요")
                         .seugiColor(.gray(.g600))
                         .font(.body(.b2))
-                    SeugiButton.large("등록하러 가기", type: .gray) {
-                        router.navigate(to: HomeDestination.joinWorkspace)
-                    }
                 }
                 .applyCardEffect()
             case .success:

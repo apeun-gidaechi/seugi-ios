@@ -80,7 +80,7 @@ public struct SeugiListItem: View {
             title: title,
             isOn: isOn,
             description: description,
-            icon: icon,
+            icon: self.icon,
             content: content,
             titleColor: titleColor,
             leadingIcon: icon
@@ -89,17 +89,19 @@ public struct SeugiListItem: View {
     
     public var body: some View {
         HStack(spacing: 8) {
-            if let leadingIcon {
-                Image(icon: leadingIcon)
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: 24, height: 24)
-                    .seugiColor(.sub(.black))
+            HStack(spacing: 8) {
+                if let leadingIcon {
+                    Image(icon: leadingIcon)
+                        .resizable()
+                        .renderingMode(.template)
+                        .frame(width: 24, height: 24)
+                        .seugiColor(.sub(.black))
+                }
+                Text(title)
+                    .font(.subtitle(.s2))
+                    .seugiColor(titleColor)
             }
-            Text(title)
-                .font(.subtitle(.s2))
-                .seugiColor(titleColor)
-                .padding(.leading, 20)
+            .padding(.leading, 20)
             Spacer()
             if let isOn {
                 SeugiToggle(isOn: isOn)

@@ -12,6 +12,4 @@ import DIContainer
 
 final class HomeViewModel: BaseViewModel<HomeViewModel.HomeSubject> {
     enum HomeSubject {}
-    
-    @Published var isSheetPresent = false
 }
