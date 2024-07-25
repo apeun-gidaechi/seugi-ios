@@ -47,6 +47,7 @@ public struct WorkspaceDetailView: View {
                         .button {
                             router.navigate(to: WorkspaceDetailDestination.workspaceMembers)
                         }
+                        .applyAnimation()
                 }
             }
             .padding(.top, 12)
@@ -54,33 +55,38 @@ public struct WorkspaceDetailView: View {
         .scrollIndicators(.hidden)
         .seugiTopBar("내 학교")
         .sheet(isPresented: $isSheetPresent) {
-            VStack(spacing: 16) {
-                VStack(spacing: 4) {
-                    ForEach(appState.workspaces.data ?? [], id: \.workspaceId) { workspace in
-                        HomeWorkspaceCell(workspace: workspace, workspaceRole: appState.workspaceRole ?? .student) {
-                            router.navigate(to: WorkspaceDetailDestination.settingWorkspace)
-                            isSheetPresent = false
-                        }
-                        .onTapGesture {
-                            appState.selectedWorkspace = workspace
-                            isSheetPresent = false
-                        }
-                    }
-                }
-                HStack(spacing: 8) {
-                    Spacer()
-                    SeugiButton.small("새 학교 만들기", type: .gray) {
-                        router.navigate(to: WorkspaceDetailDestination.createWorkspace)
+            sheet
+        }
+    }
+    
+    @ViewBuilder
+    private var sheet: some View {
+        VStack(spacing: 16) {
+            VStack(spacing: 4) {
+                ForEach(appState.workspaces.data ?? [], id: \.workspaceId) { workspace in
+                    HomeWorkspaceCell(workspace: workspace, workspaceRole: appState.workspaceRole ?? .student) {
+                        router.navigate(to: WorkspaceDetailDestination.settingWorkspace)
                         isSheetPresent = false
                     }
-                    SeugiButton.small("기존 학교 가입", type: .primary) {
-                        router.navigate(to: WorkspaceDetailDestination.joinWorkspace)
+                    .onTapGesture {
+                        appState.selectedWorkspace = workspace
                         isSheetPresent = false
                     }
                 }
             }
-            .padding(16)
-            .adjustedHeightSheet()
+            HStack(spacing: 8) {
+                Spacer()
+                SeugiButton.small("새 학교 만들기", type: .gray) {
+                    router.navigate(to: WorkspaceDetailDestination.createWorkspace)
+                    isSheetPresent = false
+                }
+                SeugiButton.small("기존 학교 가입", type: .primary) {
+                    router.navigate(to: WorkspaceDetailDestination.joinWorkspace)
+                    isSheetPresent = false
+                }
+            }
         }
+        .padding(16)
+        .adjustedHeightSheet()
     }
 }
