@@ -23,7 +23,7 @@ public struct CreateWorkspaceView: View {
             }
             .applyAnimation()
             .padding(.top, 16)
-            SeugiTextField("학교 이름을 입력해 주세요", text: $viewModel.workspaceName)
+            SeugiTextFieldForm("학교 이름을 입력해 주세요", text: $viewModel.workspaceName, label: "학교 이름")
 
             Spacer()
             SeugiButton.large("계속하기", type: .primary, isLoading: viewModel.createWorkspaceFlow == .fetching) {

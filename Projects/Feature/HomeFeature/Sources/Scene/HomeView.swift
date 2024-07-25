@@ -14,6 +14,7 @@ public struct HomeView: View {
     @Namespace private var todayMealNamespace
     @Namespace private var catSeugiNamespace
     @Namespace private var commingScheduleNamespace
+    @State private var showJoinWorkspaceDialog: Bool = false
     
     private let flow: HomeFetchFlow
     
@@ -55,6 +56,22 @@ public struct HomeView: View {
         .seugiBackground(.primary(.p050))
         .seugiTopBar("홈", background: .seugi(.primary(.p050)))
         .hideBackButton()
+        .alertWithAnyView("학교 등록하기", when: $showJoinWorkspaceDialog) {
+            Button("새 학교 만들기") {
+                router.navigate(to: HomeDestination.createWorkspace)
+            }
+            Button("기존 학교 가입") {
+                router.navigate(to: HomeDestination.joinWorkspace)
+            }
+        } message: {
+            Text("등록한 뒤 스기를 사용할 수 있어요")
+        }
+        .onAppear {
+            showJoinWorkspaceDialog = flow == .failure
+        }
+        .onChange(of: flow) {
+            showJoinWorkspaceDialog = $0 == .failure
+        }
     }
     
     @ViewBuilder

@@ -59,16 +59,12 @@ public struct StartView: View {
             }
         }
         .task {
-            do {
-                try await Task.sleep(for: .seconds(0.25))
-            } catch {}
+            try? await Task.sleep(for: .seconds(0.25))
             withAnimation(.easeInOut(duration: 1)) {
                 offsetY1 = 0
                 opacity1 = 1
             }
-            do {
-                try await Task.sleep(for: .seconds(0.75))
-            } catch {}
+            try? await Task.sleep(for: .seconds(0.75))
             withAnimation(.easeInOut(duration: 1)) {
                 offsetY2 = 0
                 opacity2 = 1

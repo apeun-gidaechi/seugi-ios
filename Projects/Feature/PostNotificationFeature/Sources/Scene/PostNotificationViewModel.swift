@@ -37,4 +37,14 @@ class PostNotificationViewModel: BaseViewModel<PostNotificationViewModel.PostNot
             self.fetchPostNotification = .failure(error)
         }
     }
+    
+//    func removeNotification(notificationId: Int) {
+//        sub(notificationRepo.removeNotification(workspaceId: <#T##String#>, id: <#T##Int#>)) {
+//            <#code#>
+//        } success: { <#T#> in
+//            <#code#>
+//        } failure: { <#APIError#> in
+//            <#code#>
+//        }
+//    }
 }

@@ -58,7 +58,7 @@ public extension SeugiRoundedCircleImage {
     }
     
     static func small(type: SeugiRoundedCircleImageType) -> Self {
-        .init(type: type, size: .medium)
+        .init(type: type, size: .small)
     }
     
     static func extraSmall(type: SeugiRoundedCircleImageType) -> Self {
