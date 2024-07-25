@@ -8,13 +8,14 @@
 
 import Foundation
 import SwiftUI
+import SwiftUIUtil
 
-struct BaseModal<MC: View, C: View, P: ModalProvider>: View {
+struct BaseModal<MC: View, C: View>: View {
     
+    @Namespace var animation
     @State private var scaleEffect: CGFloat = 1.2
     @Binding var isPresent: Bool
-    let provider: P
-    @State var backdropOpacity: Double = 0.0
+    @State var opacity: Double = 0.0
     let backgroundColor: Color.SeugiColorSystem = .sub(.white)
     let cornerRadius: CGFloat = 16
     let shadow: SeugiShadowSystem = .evBlack(.ev1)
@@ -24,35 +25,27 @@ struct BaseModal<MC: View, C: View, P: ModalProvider>: View {
     var body: some View {
         ZStack {
             content()
-                .environmentObject(provider)
-            
-            Color.black.opacity(0.2).ignoresSafeArea()
-                .opacity(backdropOpacity)
-            
-            if isPresent || backdropOpacity > 0 {
-                // MARK: - Alert
-                VStack {
-                    Spacer()
-                    modalContent()
-                        .seugiBackground(backgroundColor)
-                        .cornerRadius(cornerRadius)
-                        .shadow(shadow)
-                    Spacer()
-                }
-                .scaleEffect(scaleEffect)
-                .opacity(backdropOpacity)
-                .onChange(of: isPresent) { isPresent in
-                    withAnimation(.easeOut(duration: 0.2)) {
-                        backdropOpacity = isPresent ? 1 : 0
-                        scaleEffect = isPresent ? 1 : 1.2
+            Color.black
+                .opacity(0.2 * opacity)
+                .ignoresSafeArea()
+            // MARK: - Alert
+            VStack {
+                Spacer()
+                modalContent()
+                    .seugiBackground(backgroundColor)
+                    .cornerRadius(cornerRadius)
+                    .shadow(shadow)
+                    .if(isPresent) {
+                        $0.scaleEffect(scaleEffect)
                     }
-                }
-                .onAppear {
-                    withAnimation(.easeOut(duration: 0.2)) {
-                        backdropOpacity = 1
-                        scaleEffect = 1.0
-                    }
-                }
+                    .opacity(opacity)
+                Spacer()
+            }
+        }
+        .onChange(of: isPresent) { isPresent in
+            withAnimation(.easeOut(duration: 0.2)) {
+                opacity = isPresent ? 1 : 0
+                scaleEffect = isPresent ? 1 : 1.1
             }
         }
     }

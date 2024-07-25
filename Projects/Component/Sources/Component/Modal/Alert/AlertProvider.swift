@@ -68,4 +68,8 @@ public final class AlertProvider: ObservableObject, ModalProvider {
     ) -> Builder {
         .init(title: title, provider: self)
     }
+    
+    public var description: String {
+        "title: \(title), message: \(message ?? "nil")"
+    }
 }

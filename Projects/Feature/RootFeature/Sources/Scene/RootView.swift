@@ -17,18 +17,24 @@ public struct RootView: View {
     @StateObject private var stompManager = StompManager()
     @StateObject private var fileManager = SeugiFileManager()
     @StateObject private var alertProvider = AlertProvider()
+    @StateObject private var timePickerProvider = TimePickerProvider()
+    
     @Inject private var onboardingFactory: any OnboardingFactory
     @Inject private var joinWorkspaceFactory: any JoinWorkspaceFactory
     @Inject private var launchScreenFactorry: any LaunchScreenFactory
     @Inject private var mainFactory: any MainFactory
+    
     @InjectObject private var viewModel: RootViewModel
+    
     @State private var opacity = 1.0
-    @State private var alertBackgroundOpacity = 0.0
     
     public init() {}
     
     public var body: some View {
-        SeugiAlertPresenter(provider: alertProvider) {
+        SeugiModalProvider(
+            alertProvider: alertProvider,
+            timePickerProvider: timePickerProvider
+        ) {
             NavigationStack(path: $router.navPath) {
                 if appState.accessToken.isEmpty {
                     onboardingFactory.makeView().eraseToAnyView()
@@ -37,12 +43,14 @@ public struct RootView: View {
                     mainFactory.makeView().eraseToAnyView()
                 }
             }
-        
+            
             if opacity > 0 {
                 launchScreenFactorry.makeView().eraseToAnyView()
                     .opacity(opacity)
             }
         }
+        .environmentObject(timePickerProvider)
+        .environmentObject(alertProvider)
         .environmentObject(router)
         .environmentObject(appState)
         .environmentObject(stompManager)

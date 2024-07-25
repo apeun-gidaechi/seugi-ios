@@ -15,7 +15,7 @@ public class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.EmailSignInS
     // MARK: - State
     @Published var email = ""
     @Published var password = ""
-    @Published var signInFlow: IdleFlow<Token> = .fetching
+    @Published var signInFlow: IdleFlow<Token> = .idle
     
     public override init() {
         super.init()

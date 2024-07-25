@@ -10,7 +10,7 @@ public struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
     let content: () -> C
     
     public init(
-        provider: AlertProvider = .init(),
+        provider: AlertProvider,
         @ViewBuilder content: @escaping () -> C
     ) {
         self._provider = .init(wrappedValue: provider)
@@ -24,7 +24,6 @@ public struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
     public var body: some View {
         BaseModal(
             isPresent: $provider.isPresent,
-            provider: provider,
             modalContent: {
                 VStack(spacing: 18) {
                     VStack(alignment: .leading, spacing: 8) {

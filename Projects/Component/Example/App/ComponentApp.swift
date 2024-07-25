@@ -7,13 +7,19 @@ struct ComponentApp: App {
     init() {
         Pretendard.register()
     }
-    @State var opacity = 0.0
+    @State var opacity = 1.0
+    @StateObject var a = AlertProvider()
+    @StateObject var t = TimePickerProvider()
     
     var body: some Scene {
         WindowGroup {
-            SeugiModalProvider {
-                SeugiPreview.preview
+            SeugiModalProvider(alertProvider: a, timePickerProvider: t) {
+                NavigationStack {
+                    SeugiPreview.preview
+                }
             }
+            .environmentObject(a)
+            .environmentObject(t)
         }
     }
 }

@@ -16,7 +16,7 @@ public struct SeugiTimePicker<C: View>: ModalViewProtocol {
     var content: () -> C
     
     init(
-        provider: TimePickerProvider = .init(),
+        provider: TimePickerProvider,
         @ViewBuilder content: @escaping () -> C
     ) {
         self._provider = .init(wrappedValue: provider)
@@ -30,13 +30,12 @@ public struct SeugiTimePicker<C: View>: ModalViewProtocol {
     public var body: some View {
         BaseModal(
             isPresent: $provider.isPresent,
-            provider: provider,
             modalContent: {
-                Text("반값다 나다")
-                    .onTapGesture {
-                        dismiss()
-                    }
-                    .padding(10)
+//                Text("반값다 나다")
+//                    .onTapGesture {
+//                        dismiss()
+//                    }
+//                    .padding(10)
             },
             content: content
         )

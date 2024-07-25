@@ -25,9 +25,9 @@ struct ModalPreview: View {
 //                    }
                     .primaryButton("확인") {}
                     .show()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    timePickerProvider.isPresent = true
-                }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//                    timePickerProvider.isPresent = true
+//                }
             }
             Button("Norma Alert") {
                 show = true

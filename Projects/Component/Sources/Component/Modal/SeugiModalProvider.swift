@@ -15,9 +15,9 @@ public struct SeugiModalProvider<C: View>: View {
     private let content: () -> C
     
     public init(
-        alertProvider: AlertProvider = .init(),
-        timePickerProvider: TimePickerProvider = .init(),
-        content: @escaping () -> C
+        alertProvider: AlertProvider,
+        timePickerProvider: TimePickerProvider,
+        @ViewBuilder content: @escaping () -> C
     ) {
         self.alertProvider = alertProvider
         self.timePickerProvider = timePickerProvider
