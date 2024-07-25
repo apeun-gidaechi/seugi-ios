@@ -31,6 +31,7 @@ public extension ModulePaths {
         case SettingProfile
         case SettingWorkspace
         case WorkspaceDetail
+        case UpdateNotification
     }
     
     enum Data: String, CaseIterable {

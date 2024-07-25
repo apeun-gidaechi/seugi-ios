@@ -21,7 +21,15 @@ public struct NotificationView: View {
                         Spacer()
                             .frame(height: 12)
                         ForEach(notices, id: \.id) { notification in
-                            NotificationCell(notification: notification)
+                            NotificationCell(notification: notification) {
+                                switch $0 {
+                                case .updateNotification: router.navigate(to: NotificationDestination.updateNotification(id: notification.id))
+                                }
+                            }
+                            .button {
+                                // TODO: navigate to notification detail
+                            }
+                            .applyAnimation()
                         }
                         Spacer()
                             .frame(height: 80)

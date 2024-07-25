@@ -5,10 +5,19 @@ import DateUtil
 
 struct NotificationCell: View {
     
-    private let notification: Domain.Notification
+    enum Action {
+        case updateNotification
+    }
     
-    init(notification: Domain.Notification) {
+    private let notification: Domain.Notification
+    private let action: (Action) -> Void
+    
+    init(
+        notification: Domain.Notification,
+        action: @escaping (Action) -> Void
+    ) {
         self.notification = notification
+        self.action = action
     }
     
     var body: some View {
@@ -18,11 +27,19 @@ struct NotificationCell: View {
                     .seugiColor(.gray(.g600))
                     .font(.body(.b2))
                 Spacer()
-                Image(icon: .detailVerticalLine)
-                    .resizable()
-                    .renderingMode(.template)
-                    .seugiColor(.gray(.g500))
-                    .frame(width: 24, height: 24)
+                Menu {
+                    Button("알림 수정") {
+                        action(.updateNotification)
+                    }
+                    Button("알림 신고") {}
+                } label: {
+                    Image(icon: .detailVerticalLine)
+                        .resizable()
+                        .renderingMode(.template)
+                        .seugiColor(.gray(.g500))
+                        .frame(width: 24, height: 24)
+                }
+                .onTapGesture {} // to stop propagation
             }
             VStack(alignment: .leading, spacing: 0) {
                 Text(notification.title)
