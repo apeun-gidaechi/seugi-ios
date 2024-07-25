@@ -8,6 +8,6 @@
 
 import Foundation
 
-public protocol ModalProvider: ObservableObject {
+protocol ModalProvider: ObservableObject {
     var isPresent: Bool { get }
 }

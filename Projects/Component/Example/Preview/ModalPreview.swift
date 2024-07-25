@@ -9,9 +9,10 @@
 import SwiftUI
 import Component
 
-struct AlertPreview: View {
+struct ModalPreview: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
+    @EnvironmentObject private var timePickerProvider: TimePickerProvider
     @State var show = false
     var body: some View {
         
@@ -22,13 +23,17 @@ struct AlertPreview: View {
 //                    .secondaryButton("취소") {
 //                        //
 //                    }
-                    .primaryButton("확인") {
-                        //
-                    }
+                    .primaryButton("확인") {}
                     .show()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    timePickerProvider.isPresent = true
+                }
             }
-            Button("Normal") {
+            Button("Norma Alert") {
                 show = true
+            }
+            Button("Time Picker") {
+                timePickerProvider.isPresent = true
             }
         }
         .alert("제목을 입력해주세요", isPresented: $show) {

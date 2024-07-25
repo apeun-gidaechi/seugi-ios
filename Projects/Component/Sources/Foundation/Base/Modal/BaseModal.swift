@@ -18,8 +18,8 @@ struct BaseModal<MC: View, C: View, P: ModalProvider>: View {
     let backgroundColor: Color.SeugiColorSystem = .sub(.white)
     let cornerRadius: CGFloat = 16
     let shadow: SeugiShadowSystem = .evBlack(.ev1)
-    let modalContent: () -> MC
-    let content: () -> C
+    @ViewBuilder let modalContent: () -> MC
+    @ViewBuilder let content: () -> C
     
     var body: some View {
         ZStack {

@@ -55,7 +55,7 @@ enum SeugiPreview: String, CaseIterable {
             case .toolTip: ToolTipPreview()
             case .roomImage: RoomImagePreview()
             case .error: ErrorPreview()
-            case .alert: AlertPreview()
+            case .alert: ModalPreview()
             default: SeugiError("페이지를 찾을 수 없습니다", image: .faceWithDiagonalMouth)
             }
         }

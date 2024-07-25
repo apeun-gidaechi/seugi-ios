@@ -7,7 +7,7 @@ public struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
     public typealias P = AlertProvider
     @StateObject private var provider: AlertProvider
     
-    private let content: () -> C
+    let content: () -> C
     
     public init(
         provider: AlertProvider = .init(),
@@ -17,7 +17,7 @@ public struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
         self.content = content
     }
     
-    private func dismiss() {
+    func dismiss() {
         provider.isPresent = false
     }
     

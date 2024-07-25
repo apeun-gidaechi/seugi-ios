@@ -11,7 +11,7 @@ struct ComponentApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SeugiAlertPresenter {
+            SeugiModalProvider {
                 SeugiPreview.preview
             }
         }
