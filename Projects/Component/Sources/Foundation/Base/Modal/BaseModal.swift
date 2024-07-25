@@ -9,10 +9,11 @@
 import Foundation
 import SwiftUI
 
-struct BaseModal<MC: View, C: View>: View {
+struct BaseModal<MC: View, C: View, P: ModalProvider>: View {
     
     @State private var scaleEffect: CGFloat = 1.2
     @Binding var isPresent: Bool
+    let provider: P
     @State var backdropOpacity: Double = 0.0
     let backgroundColor: Color.SeugiColorSystem = .sub(.white)
     let cornerRadius: CGFloat = 16
@@ -23,6 +24,7 @@ struct BaseModal<MC: View, C: View>: View {
     var body: some View {
         ZStack {
             content()
+                .environmentObject(provider)
             
             Color.black.opacity(0.2).ignoresSafeArea()
                 .opacity(backdropOpacity)

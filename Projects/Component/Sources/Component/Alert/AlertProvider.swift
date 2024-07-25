@@ -1,6 +1,6 @@
 import Foundation
 
-public final class AlertProvider: ObservableObject {
+public final class AlertProvider: ObservableObject, ModalProvider {
     
     public struct Builder {
         let title: String
@@ -51,11 +51,11 @@ public final class AlertProvider: ObservableObject {
             provider.message = message
             provider.secondaryButton = secondaryButton
             provider.primaryButton = primaryButton
-            provider.showAlert = true
+            provider.isPresent = true
         }
     }
     
-    @Published var showAlert = false
+    @Published public var isPresent = false
     @Published var title: String = ""
     @Published var message: String?
     @Published var secondaryButton: AlertButton?
