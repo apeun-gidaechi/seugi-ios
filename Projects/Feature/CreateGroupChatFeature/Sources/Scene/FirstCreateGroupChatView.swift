@@ -15,32 +15,36 @@ public struct FirstCreateGroupChatView: View {
     
     public var body: some View {
         VStack(spacing: 0) {
-            selectMember()
-                .padding(.top, 6)
             viewModel.members.makeView {
                 Spacer()
                 ProgressView()
                 Spacer()
             } success: { members in
-                ScrollView {
-                    LazyVStack(spacing: 0) {
-                        ForEach(members, id: \.member.id) { member in
-                            let selected = viewModel.selectedMembers.contains {
-                                $0.member.id == member.member.id
+                if members.isEmpty {
+                    SeugiError("멤버가 없어요", image: .sadButRelievedFace)
+                } else {
+                    selectMember()
+                        .padding(.top, 6)
+                    ScrollView {
+                        LazyVStack(spacing: 0) {
+                            ForEach(members, id: \.member.id) { member in
+                                let selected = viewModel.selectedMembers.contains {
+                                    $0.member.id == member.member.id
+                                }
+                                SeugiMemberList(type: .normal(member: member.member)) {
+                                    SeugiToggle(isOn: .constant(selected), type: .checkbox(size: .large))
+                                        .disabled(true)
+                                }
+                                .button {
+                                    viewModel.selectMember(member: member, selected: selected)
+                                }
+                                .applyAnimation()
                             }
-                            SeugiMemberList(type: .normal(member: member.member)) {
-                                SeugiToggle(isOn: .constant(selected), type: .checkbox(size: .large))
-                                    .disabled(true)
-                            }
-                            .button {
-                                viewModel.selectMember(member: member, selected: selected)
-                            }
-                            .applyAnimation()
                         }
+                        .padding(.horizontal, 4)
                     }
-                    .padding(.horizontal, 4)
+                    .scrollIndicators(.hidden)
                 }
-                .scrollIndicators(.hidden)
                 Spacer()
             } failure: { _ in
                 SeugiError("불러오기 실패", image: .faceWithDiagonalMouth)
@@ -48,9 +52,11 @@ public struct FirstCreateGroupChatView: View {
             }
         }
         .onAppear {
-            if let selectedWorkspace = appState.selectedWorkspace {
-                viewModel.fetchWorkspaceMembers(workspaceId: selectedWorkspace.workspaceId)
+            guard let selectedWorkspace = appState.selectedWorkspace,
+                  let member = appState.profile.data?.member else {
+                return
             }
+            viewModel.fetchWorkspaceMembers(workspaceId: selectedWorkspace.workspaceId, memberId: member.id)
         }
         .seugiTopBar("멤버 선택")
         .subView {

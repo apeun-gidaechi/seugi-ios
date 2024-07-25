@@ -21,12 +21,16 @@ public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewMo
     @Published var createFailure = false
     @Published var fetchCreate = false
     
-    func fetchWorkspaceMembers(workspaceId: String) {
+    func fetchWorkspaceMembers(
+        workspaceId: String,
+        memberId: Int
+    ) {
         sub(workspaceRepo.getMembers(workspaceId: workspaceId)) {
             self.isFetchMembers = true
             self.members = .fetching
-        } success: {
-            self.members = .success($0.data)
+        } success: { response in
+            let members = response.data.filter { $0.member.id != memberId }
+            self.members = .success(members)
         } failure: {
             self.members = .failure($0)
         }
