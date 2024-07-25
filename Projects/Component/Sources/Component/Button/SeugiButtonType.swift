@@ -54,7 +54,7 @@ public enum SeugiButtonType: CaseIterable {
         case .primary: .seugi(.sub(.white))
         case .black: .seugi(.sub(.white))
         case .red: .seugi(.red(.r300))
-        case .transparent: .seugi(.sub(.black))
+        case .transparent: .seugi(.gray(.g500))
         case .shadow: .seugi(.gray(.g500))
         case .gray: .seugi(.gray(.g500))
         }
