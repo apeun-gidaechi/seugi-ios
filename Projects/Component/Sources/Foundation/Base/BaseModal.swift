@@ -13,7 +13,7 @@ struct BaseModal<MC: View, C: View>: View {
     
     @State private var scaleEffect: CGFloat = 1.2
     @Binding var isPresent: Bool
-    @Binding var opacity: Double
+    @State var backdropOpacity: Double = 0.0
     let backgroundColor: Color.SeugiColorSystem = .sub(.white)
     let cornerRadius: CGFloat = 16
     let shadow: SeugiShadowSystem = .evBlack(.ev1)
@@ -23,7 +23,11 @@ struct BaseModal<MC: View, C: View>: View {
     var body: some View {
         ZStack {
             content()
-            if isPresent || opacity > 0 {
+            
+            Color.black.opacity(0.2).ignoresSafeArea()
+                .opacity(backdropOpacity)
+            
+            if isPresent || backdropOpacity > 0 {
                 // MARK: - Alert
                 VStack {
                     Spacer()
@@ -34,16 +38,16 @@ struct BaseModal<MC: View, C: View>: View {
                     Spacer()
                 }
                 .scaleEffect(scaleEffect)
-                .opacity(opacity)
+                .opacity(backdropOpacity)
                 .onChange(of: isPresent) { isPresent in
                     withAnimation(.easeOut(duration: 0.2)) {
-                        opacity = isPresent ? 1 : 0
+                        backdropOpacity = isPresent ? 1 : 0
                         scaleEffect = isPresent ? 1 : 1.2
                     }
                 }
                 .onAppear {
                     withAnimation(.easeOut(duration: 0.2)) {
-                        opacity = 1
+                        backdropOpacity = 1
                         scaleEffect = 1.0
                     }
                 }

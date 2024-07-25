@@ -28,7 +28,7 @@ public struct RootView: View {
     public init() {}
     
     public var body: some View {
-        SeugiAlertPresenter(provider: alertProvider, backgroundOpacity: $alertBackgroundOpacity) {
+        SeugiAlertPresenter(provider: alertProvider) {
             NavigationStack(path: $router.navPath) {
                 if appState.accessToken.isEmpty {
                     onboardingFactory.makeView().eraseToAnyView()
@@ -42,9 +42,6 @@ public struct RootView: View {
                 launchScreenFactorry.makeView().eraseToAnyView()
                     .opacity(opacity)
             }
-            
-            Color.black.opacity(0.2).ignoresSafeArea()
-                .opacity(alertBackgroundOpacity)
         }
         .environmentObject(router)
         .environmentObject(appState)

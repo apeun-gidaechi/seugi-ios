@@ -11,10 +11,8 @@ struct ComponentApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SeugiAlertPresenter(backgroundOpacity: $opacity) {
+            SeugiAlertPresenter {
                 SeugiPreview.preview
-                Color.black.opacity(0.2).ignoresSafeArea()
-                    .opacity(opacity)
             }
         }
     }
