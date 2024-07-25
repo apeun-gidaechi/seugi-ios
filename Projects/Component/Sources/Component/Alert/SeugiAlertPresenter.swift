@@ -19,24 +19,23 @@ public struct SeugiAlertPresenter<C: View>: View {
     }
     
     public var body: some View {
-        ZStack {
+        AlertView(
+            isPresent: $alertProvider.showAlert,
+            opacity: $backgroundOpacity,
+            title: alertProvider.title,
+            message: alertProvider.message,
+            secondaryButton: alertProvider.secondaryButton,
+            primaryButton: alertProvider.primaryButton
+        ) {
+            alertProvider.showAlert = false
+        } content: {
             content()
                 .environmentObject(alertProvider)
-            AlertView(
-                isPresent: $alertProvider.showAlert,
-                opacity: $backgroundOpacity,
-                title: alertProvider.title,
-                message: alertProvider.message,
-                secondaryButton: alertProvider.secondaryButton,
-                primaryButton: alertProvider.primaryButton
-            ) {
-                alertProvider.showAlert = false
-            }
         }
     }
 }
 
-struct AlertView: View {
+struct AlertView<C: View>: View {
     
     @State private var scaleEffect: CGFloat = 1.2
     
@@ -48,11 +47,13 @@ struct AlertView: View {
     let secondaryButton: AlertButton?
     let primaryButton: AlertButton?
     let dismiss: () -> Void
+    let content: () -> C
     
     var body: some View {
-        if isPresent || opacity > 0 {
-            VStack {
-                Spacer()
+        BaseModal(
+            isPresent: $isPresent,
+            opacity: $opacity,
+            modalContent: {
                 VStack(spacing: 18) {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(title)
@@ -123,35 +124,8 @@ struct AlertView: View {
                 }
                 .padding(18)
                 .frame(width: 328)
-                .seugiBackground(.sub(.white))
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .shadow(color: Color.black.opacity(0.06), radius: 12, y: 4)
-                .onChange(of: isPresent) { isPresent in
-                    withAnimation(.easeOut(duration: 0.2)) {
-                        opacity = isPresent ? 1 : 0
-                    }
-                    if isPresent {
-                        withAnimation(.easeOut(duration: 0.3)) {
-                            scaleEffect = 1
-                        }
-                    } else {
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            scaleEffect = 1.2
-                        }
-                    }
-                }
-                .onAppear {
-                    withAnimation(.easeOut(duration: 0.3)) {
-                        opacity = 1
-                    }
-                    withAnimation(.easeOut(duration: 0.2)) {
-                        scaleEffect = 1.0
-                    }
-                }
-                .scaleEffect(scaleEffect)
-                Spacer()
-            }
-            .opacity(opacity)
-        }
+            },
+            content: content
+        )
     }
 }

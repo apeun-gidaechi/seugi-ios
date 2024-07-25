@@ -24,7 +24,7 @@ public struct JoinWorkspaceCodeView: View {
         }
         .padding(.horizontal, 20)
         .seugiTopBar("학교 가입")
-        .onChange(of: viewModel.workspace) {_ in } failure:  { _ in
+        .onChange(of: viewModel.workspace) { _ in } failure: { _ in
             alertProvider.present("초대코드가 올바르지 않습니다")
                 .message("다시 입력해주세요")
                 .show()
