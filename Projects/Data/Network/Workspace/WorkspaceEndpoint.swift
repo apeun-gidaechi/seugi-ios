@@ -32,7 +32,7 @@ public extension WorkspaceEndpoint {
         case .getWorkspaceCode(let workspaceId):
                 .get - "code/\(workspaceId)" - .requestPlain
         case .getWorkspace(let code):
-                .get - "\(code)" - .requestPlain
+                .get - "search/\(code)" - .requestPlain
         case .joinWorkspace(let req):
                 .post - "join" - req.toJSONParameters()
         case .getMembers(let workspaceId):

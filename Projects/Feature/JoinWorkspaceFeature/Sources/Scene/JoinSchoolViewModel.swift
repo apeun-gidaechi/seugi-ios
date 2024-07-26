@@ -15,7 +15,7 @@ public final class JoinWorkspaceViewModel: BaseViewModel<JoinWorkspaceViewModel.
     
     // MARK: - State
     // workspace
-    @Published var workspace: IdleFlow<Workspace> = .idle
+    @Published var workspace: IdleFlow<WorkspaceInfo> = .idle
     
     // join
     @Published public var joinFlow: IdleFlow<Bool> = .idle

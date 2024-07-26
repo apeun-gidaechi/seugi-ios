@@ -10,8 +10,8 @@ public final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
         performRequest(.getWorkspaceCode(workspaceId: workspaceId), res: String.self)
     }
     
-    public func getWorkspace(code: String) -> APIResult<Base<Workspace>> {
-        performRequest(.getWorkspace(code: code), res: WorkspaceRes.self)
+    public func getWorkspace(code: String) -> APIResult<Base<WorkspaceInfo>> {
+        performRequest(.getWorkspace(code: code), res: WorkspaceInfoRes.self)
     }
     
     public func joinWorkspace(workspaceId: String, workspaceCode: String, role: WorkspaceRole) -> APIResult<BaseVoid> {
@@ -46,7 +46,7 @@ public final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
         performRequest(.updateWorkspace(.init(workspaceId: workspaceId, workspaceName: workspaceName, workspaceImgUrl: workspaceImageUrl)))
     }
     
-    public func getMyWaitList() -> APIResult<Base<[Workspace]>> {
-        performRequest(.getMyWaitList, res: [WorkspaceRes].self)
+    public func getMyWaitList() -> APIResult<Base<[WorkspaceInfo]>> {
+        performRequest(.getMyWaitList, res: [WorkspaceInfoRes].self)
     }
 }

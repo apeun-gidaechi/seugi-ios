@@ -23,7 +23,7 @@ public struct JoinWorkspaceSuccessView: View {
                     Text(workspace.workspaceName)
                         .font(.subtitle(.s1))
                         .seugiColor(.sub(.black))
-                    Text("학생 \(workspace.student.count)명 선생님 \(workspace.teacher.count)명")
+                    Text("학생 \(workspace.studentCount)명 선생님 \(workspace.teacherCount)명")
                         .font(.body(.b1))
                         .seugiColor(.gray(.g600))
                 }
