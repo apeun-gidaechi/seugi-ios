@@ -25,15 +25,14 @@ struct ModalPreview: View {
 //                    }
                     .primaryButton("확인") {}
                     .show()
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//                    timePickerProvider.isPresent = true
-//                }
             }
             Button("Norma Alert") {
                 show = true
             }
             Button("Time Picker") {
-                timePickerProvider.isPresent = true
+                timePickerProvider.present("wow") {
+                    print("selected")
+                }
             }
         }
         .alert("제목을 입력해주세요", isPresented: $show) {

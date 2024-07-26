@@ -19,6 +19,10 @@ extension MessageService: StompRepo {
         stomp.openSocket()
     }
     
+    public func closeSocket() {
+        stomp.disconnect()
+    }
+    
     public func subDisconnect() -> AnyPublisher<Void, Never> {
         stomp.subDisconnect()
     }

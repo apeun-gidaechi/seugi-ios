@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftUIUtil
 
 public struct SeugiTimePicker<C: View>: ModalViewProtocol {
     
@@ -31,11 +32,22 @@ public struct SeugiTimePicker<C: View>: ModalViewProtocol {
         BaseModal(
             isPresent: $provider.isPresent,
             modalContent: {
-//                Text("반값다 나다")
-//                    .onTapGesture {
-//                        dismiss()
-//                    }
-//                    .padding(10)
+                VStack(spacing: 16) {
+                    if let title = provider.title {
+                        Text(title)
+                            .font(.subtitle(.s1))
+                            .seugiColor(.sub(.black))
+                            .toLeading()
+                    }
+                    DatePicker("", selection: .constant(.now))
+                        .datePickerStyle(.wheel)
+                    SeugiButton.large("선택", type: .primary) {
+                        provider.action?()
+                        dismiss()
+                    }
+                }
+                .padding(24)
+                .frame(width: 336)
             },
             content: content
         )
