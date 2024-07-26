@@ -57,7 +57,7 @@ public struct PostNotificationView: View {
                     guard let selectedWorkspace = appState.selectedWorkspace else {
                         return
                     }
-                    notificationViewModel.fetchNotices(workspaceId: selectedWorkspace.workspaceId)
+                    notificationViewModel.fetchNotifications(workspaceId: selectedWorkspace.workspaceId)
                 }
                 .show()
         } failure: { _ in

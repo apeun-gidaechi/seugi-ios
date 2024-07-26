@@ -11,16 +11,16 @@ public struct NotificationView: View {
     
     public var body: some View {
         ScrollView {
-            notificationViewModel.notices.makeView {
+            notificationViewModel.notifications.makeView {
                 ProgressView()
-            } success: { notices in
+            } success: { notifications in
                 LazyVStack(spacing: 8) {
-                    if notices.isEmpty {
+                    if notifications.isEmpty {
                         SeugiError("알림이 없어요", image: .faceWithDiagonalMouth)
                     } else {
                         Spacer()
                             .frame(height: 12)
-                        ForEach(notices, id: \.id) { notification in
+                        ForEach(notifications, id: \.id) { notification in
                             NotificationCell(notification: notification) {
                                 switch $0 {
                                 case .updateNotification: router.navigate(to: NotificationDestination.updateNotification(notification))
@@ -44,7 +44,7 @@ public struct NotificationView: View {
             guard let selectedWorkspace = appState.selectedWorkspace else {
                 return
             }
-            notificationViewModel.fetchNotices(workspaceId: selectedWorkspace.workspaceId)
+            notificationViewModel.fetchNotifications(workspaceId: selectedWorkspace.workspaceId)
         }
         .padding(.horizontal, 20)
         .seugiBackground(.primary(.p050))

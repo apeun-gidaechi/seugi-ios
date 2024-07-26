@@ -11,15 +11,17 @@ public final class NotificationViewModel: BaseViewModel<NotificationViewModel.No
     @Inject private var noticeRepo: NotificationRepo
     
     // MARK: - State
-    @Published public var notices: FetchFlow<[Domain.Notification]> = .fetching
+    @Published public var notifications: FetchFlow<[Domain.Notification]> = .fetching
     
-    public func fetchNotices(workspaceId: String) {
+    public func fetchNotifications(workspaceId: String) {
         sub(noticeRepo.getNotifications(workspaceId: workspaceId)) {
-            self.notices = .fetching
-        } success: { notices in
-            self.notices = .success(notices.data)
+            self.notifications = .fetching
+        } success: { notifications in
+            let notifications = notifications.data
+                .sorted { $0.creationDate ?? .now > $1.creationDate ?? .now }
+            self.notifications = .success(notifications)
         } failure: { error in
-            self.notices = .failure(error)
+            self.notifications = .failure(error)
         }
     }
 }

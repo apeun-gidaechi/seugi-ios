@@ -10,7 +10,7 @@ public final class StompManager: BaseViewModel<StompManager.StompManagerSubject>
     @Inject private var stompMessageRep: StompMessageRepo
     
     // MARK: - Method
-    public func subscribe() {
+    public func openSocket() {
         print("💎 StompManager.subscribe")
         stompRepo.openSocket()
         stompRepo.subConnect()
@@ -41,7 +41,7 @@ public final class StompManager: BaseViewModel<StompManager.StompManagerSubject>
             .store(in: &subscriptions)
     }
     
-    func unsubscribe() {
-//        stompRepo.unsubscribe() // TODO: Impl
+    func closeSocket() {
+        stompRepo.closeSocket()
     }
 }

@@ -69,7 +69,7 @@ public struct MainView: View {
     // TODO: Devide methods by viewModel
     private func fetchAll() {
         fetchChats()
-        fetchNotices()
+        fetchNotifications()
         fetchMyInfo()
     }
     
@@ -79,10 +79,10 @@ public struct MainView: View {
         chatViewModel.fetchChats(workspaceId: workspace.workspaceId)
     }
     
-    private func fetchNotices() {
-        print("💎 MainView.fetchNotices")
+    private func fetchNotifications() {
+        print("💎 MainView.fetchNotifications")
         guard let workspace = appState.selectedWorkspace else { return }
-        notificationViewModel.fetchNotices(workspaceId: workspace.workspaceId)
+        notificationViewModel.fetchNotifications(workspaceId: workspace.workspaceId)
     }
     
     private func fetchMyInfo() {
@@ -116,7 +116,7 @@ public struct MainView: View {
             if case .fetching = appState.workspaces {
                 appState.fetchWorkspaces()
             }
-            stompManager.subscribe()
+            stompManager.openSocket()
             appState.subscribe { subject in
                 switch subject {
                 case .workspaceFetched:
