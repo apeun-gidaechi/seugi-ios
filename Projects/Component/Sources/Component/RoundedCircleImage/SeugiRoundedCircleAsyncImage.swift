@@ -30,12 +30,12 @@ public struct SeugiRoundedCircleAsyncImage: View {
 
 public extension SeugiRoundedCircleAsyncImage {
     
-    static func extraLarge(url: String?) -> Self {
+    static func large(url: String?) -> Self {
         .init(url: url, size: .large)
     }
     
-    static func large(url: String?) -> Self {
-        .init(url: url, size: .large)
+    static func medium(url: String?) -> Self {
+        .init(url: url, size: .medium)
     }
     
     static func small(url: String?) -> Self {

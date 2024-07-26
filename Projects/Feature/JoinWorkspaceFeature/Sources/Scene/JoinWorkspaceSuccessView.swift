@@ -18,7 +18,7 @@ public struct JoinWorkspaceSuccessView: View {
             Spacer()
             VStack(spacing: 0) {
                 if case .success(let workspace) = viewModel.workspace {
-                    SeugiRoundedCircleAsyncImage.small(url: workspace.workspaceImageUrl)
+                    SeugiRoundedCircleAsyncImage.medium(url: workspace.workspaceImageUrl)
                         .padding(.bottom, 16)
                     Text(workspace.workspaceName)
                         .font(.subtitle(.s1))
