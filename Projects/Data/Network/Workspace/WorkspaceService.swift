@@ -38,8 +38,8 @@ public final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
         performRequest(.approveJoinWorkspace(.init(workspaceId: workspaceId, approvalUserSet: approvalUserSer, role: role)))
     }
     
-    public func getWaitList(workspaceId: String, workspaceRole: WorkspaceRole) -> APIResult<Base<[Int]>> {
-        performRequest(.getWaitList(workspaceId: workspaceId, workspaceRole: workspaceRole), res: [Int].self)
+    public func getWaitList(workspaceId: String, workspaceRole: WorkspaceRole) -> APIResult<Base<[RetrieveMember]>> {
+        performRequest(.getWaitList(workspaceId: workspaceId, workspaceRole: workspaceRole), res: [RetrieveMemberRes].self)
     }
     
     public func updateWorkspace(workspaceId: String, workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid> {

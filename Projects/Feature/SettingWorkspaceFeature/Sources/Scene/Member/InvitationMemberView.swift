@@ -21,6 +21,14 @@ struct InvitationMemberView: View {
     
     init() {}
     
+    private func fetchAll() {
+        guard let selectedWorkspace = appState.selectedWorkspace else {
+            return
+        }
+        viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)
+        viewModel.fetchWorkspaceCode(workspaceId: selectedWorkspace.workspaceId)
+    }
+    
     var body: some View {
         ZStack {
             ScrollView {
@@ -40,34 +48,53 @@ struct InvitationMemberView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 6)
-                    VStack(spacing: 12) {
-                        Group {
-                            Text("\(3)명으로부터 가입 요청이 왔어요")
-                                .font(.subtitle(.s2))
-                                .seugiColor(.sub(.black))
-                                .toLeading()
-                            SeugiSegmentedButton(segmentedButtonRoles, selection: $viewModel.selection)
+                    viewModel.waitMembers.makeView {
+                        ProgressView()
+                    } success: { members in
+                        VStack(spacing: 12) {
+                            Group {
+                                Text("\(members.count)명으로부터 가입 요청이 왔어요")
+                                    .font(.subtitle(.s2))
+                                    .seugiColor(.sub(.black))
+                                    .toLeading()
+                                SeugiSegmentedButton(segmentedButtonRoles, selection: $viewModel.selection)
+                            }
+                            .padding(.horizontal, 20)
                         }
-                        .padding(.horizontal, 20)
+                        LazyVStack(spacing: 0) {
+                            ForEach(members, id: \.id) { member in
+                                SeugiMemberList(type: .normal(member: member)) {
+                                    let selected = viewModel.selectedMembers.contains(member)
+                                    SeugiToggle(isOn: .constant(selected), type: .checkbox(size: .large))
+                                }
+                                .button {
+                                    viewModel.selectMember(member: member)
+                                }
+                                .applyAnimation()
+                            }
+                        }
+                        .padding(.horizontal, 4)
+                    } failure: { _ in
+                        SeugiError("불러올 수 없어요", image: .faceWithDiagonalMouth)
                     }
-                    //                LazyVStack() {
-                    //
-                    //                }
-                    //                .padding(.horizontal, 4)
                 }
             }
             .scrollIndicators(.hidden)
             .bottomGradientMask()
+            .refreshable {
+                fetchAll()
+            }
             GeometryReader { proxy in
                 HStack(spacing: 8) {
-                    SeugiButton.large("거절", type: .red) {
+                    Group {
+                        SeugiButton.large("거절", type: .red) {
+                        }
+                        .frame(width: proxy.size.width * 0.33)
+                        SeugiButton.large("수락", type: .primary) {
+                        }
+                        .frame(width: proxy.size.width * 0.67)
                     }
-                    .disabled(true)
-                    .frame(width: proxy.size.width * 0.33)
-                    SeugiButton.large("수락", type: .primary) {
-                    }
-                    .disabled(true)
-                    .frame(width: proxy.size.width * 0.67)
+                    .disabled(viewModel.selectedMembers.isEmpty)
                 }
                 .onReadSize {
                     buttonsSize = $0
@@ -80,11 +107,7 @@ struct InvitationMemberView: View {
         }
         .seugiTopBar("멤버 초대")
         .onAppear {
-            guard let selectedWorkspace = appState.selectedWorkspace else {
-                return
-            }
-            viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)
-            viewModel.fetchWorkspaceCode(workspaceId: selectedWorkspace.workspaceId)
+            fetchAll()
         }
     }
 }

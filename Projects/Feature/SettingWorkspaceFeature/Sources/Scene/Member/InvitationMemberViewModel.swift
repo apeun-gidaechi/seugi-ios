@@ -17,11 +17,18 @@ final class InvitationMemberViewModel: BaseViewModel<InvitationMemberViewModel.I
     @Inject private var workspaceRepo: any WorkspaceRepo
     
     // MARK: - Properties
-    @Published private var studentWaitMembers: FetchFlow<[Int]> = .fetching
-    @Published private var teacherWaitMembers: FetchFlow<[Int]> = .fetching
     @Published var selection = segmentedButtonRoles[0]
     @Published var workspaceCode: FetchFlow<String> = .fetching
-    
+    @Published private var studentWaitMembers: FetchFlow<[RetrieveMember]> = .fetching
+    @Published private var teacherWaitMembers: FetchFlow<[RetrieveMember]> = .fetching
+    var waitMembers: FetchFlow<[RetrieveMember]> {
+        if selection == segmentedButtonRoles[0] {
+            teacherWaitMembers
+        } else {
+            studentWaitMembers
+        }
+    }
+    @Published var selectedMembers: [RetrieveMember] = []
     
     // MARK: - Method
     func fetchWaitMembers(workspaceId: String) {
@@ -49,5 +56,28 @@ final class InvitationMemberViewModel: BaseViewModel<InvitationMemberViewModel.I
         } failure: { error in
             self.workspaceCode = .failure(error)
         }
+    }
+    
+    func selectMember(member: RetrieveMember) {
+        if selectedMembers.contains(member) {
+            selectedMembers.removeAll { $0 == member}
+        } else {
+            selectedMembers.append(member)
+        }
+    }
+    
+    func approve(workspaceId: String) {
+//        sub(workspaceRepo.approveJoinWorkspace(
+//            workspaceId: workspaceId,
+//            approvalUserSer: waitMembers.data?.map { $0.id } ?? [],
+//            role: selection.role
+//        )) {
+//            <#code#>
+//        } success: { <#T#> in
+//            <#code#>
+//        } failure: { <#APIError#> in
+//            <#code#>
+//        }
+
     }
 }

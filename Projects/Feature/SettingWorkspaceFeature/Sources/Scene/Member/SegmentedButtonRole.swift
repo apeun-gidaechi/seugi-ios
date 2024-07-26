@@ -7,13 +7,15 @@
 //
 
 import Foundation
+import Domain
 import Component
 
 struct SegmentedButtonRole: SegmentedButtonProtocol {
     var label: String
+    let role: WorkspaceRole
 }
 
 let segmentedButtonRoles: [SegmentedButtonRole] = [
-    .init(label: "선생님"),
-    .init(label: "학생")
+    .init(label: "선생님", role: .teacher),
+    .init(label: "학생", role: .student)
 ]
