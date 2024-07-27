@@ -29,7 +29,7 @@ final class InvitationMemberViewModel: BaseViewModel<InvitationMemberViewModel.I
         }
     }
     @Published var selectedMembers: [RetrieveMember] = []
-    @Published var approveFlow: IdleFlow<Bool> = .idle
+    @Published var addWorkspaceFlow: IdleFlow<Bool> = .idle
     @Published var rejectFlow: IdleFlow<Bool> = .idle
     
     // MARK: - Method
@@ -68,17 +68,21 @@ final class InvitationMemberViewModel: BaseViewModel<InvitationMemberViewModel.I
         }
     }
     
-    func approve(workspaceId: String) {
-        sub(workspaceRepo.approveJoinWorkspace(
+    func addWorkspace(workspaceId: String) {
+        sub(workspaceRepo.addWorkspace(
             workspaceId: workspaceId,
             userSet: selectedMembers.map { $0.id },
             role: selection.role
         )) {
-            self.approveFlow = .fetching
+            self.addWorkspaceFlow = .fetching
         } success: { _ in
-            self.approveFlow = .success()
+            self.addWorkspaceFlow = .success()
         } failure: { error in
-            self.approveFlow = .failure(error)
+            self.addWorkspaceFlow = .failure(error)
         }
+    }
+    
+    func cancelWorkspace(workspaceId: String) {
+        
     }
 }

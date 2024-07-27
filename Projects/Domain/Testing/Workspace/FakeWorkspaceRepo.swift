@@ -35,7 +35,7 @@ public final class FakeWorkspaceRepo: WorkspaceRepo {
         BaseVoid.mock().successResult
     }
     
-    public func approveJoinWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> APIResult<BaseVoid> {
+    public func addWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> APIResult<BaseVoid> {
         BaseVoid.mock().successResult
     }
     

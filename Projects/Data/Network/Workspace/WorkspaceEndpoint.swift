@@ -10,7 +10,7 @@ public enum WorkspaceEndpoint: SeugiEndpoint {
     case getMembersChart(workspaceId: String)
     case createWorkspace(CreateWorkspaceReq)
     case removeWorkspace(workspaceId: String)
-    case approveJoinWorkspace(WaitSetWorkspaceMemberReq)
+    case addWorkspace(WaitSetWorkspaceMemberReq)
     case getWaitList(workspaceId: String, workspaceRole: WorkspaceRole)
     case updateWorkspace(UpdateWorkspaceReq)
     case getMyWaitList
@@ -43,7 +43,7 @@ public extension WorkspaceEndpoint {
                 .post - "" - req.toJSONParameters()
         case .removeWorkspace(let workspaceId):
                 .delete - "\(workspaceId)" - .requestPlain
-        case .approveJoinWorkspace(let req):
+        case .addWorkspace(let req):
                 .patch - "add" - req.toJSONParameters()
         case .getWaitList(let workspaceId, let workspaceRole):
                 .get - "wait-list" - ["workspaceId": workspaceId, "role": workspaceRole.rawValue].toURLParameters()

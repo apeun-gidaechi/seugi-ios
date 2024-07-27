@@ -91,11 +91,11 @@ struct InvitationMemberView: View {
                         SeugiButton.large("거절", type: .red) {
                         }
                         .frame(width: proxy.size.width * 0.33)
-                        SeugiButton.large("수락", type: .primary, isLoading: viewModel.approveFlow == .fetching) {
+                        SeugiButton.large("수락", type: .primary, isLoading: viewModel.addWorkspaceFlow == .fetching) {
                             guard let selectedWorkspace = appState.selectedWorkspace else {
                                 return
                             }
-                            viewModel.approve(workspaceId: selectedWorkspace.workspaceId)
+                            viewModel.addWorkspace(workspaceId: selectedWorkspace.workspaceId)
                         }
                         .frame(width: proxy.size.width * 0.67)
                     }
@@ -114,7 +114,7 @@ struct InvitationMemberView: View {
         .onAppear {
             fetchAll()
         }
-        .onChange(of: viewModel.approveFlow) { _ in
+        .onChange(of: viewModel.addWorkspaceFlow) { _ in
             alertProvider.present("가입 수락 성공")
                 .show()
             guard let selectedWorkspace = appState.selectedWorkspace else {

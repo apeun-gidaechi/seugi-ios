@@ -1,5 +1,5 @@
 //
-//  ApproveJoinWorkspaceReq.swift
+//  WaitSetWorkspaceMemberReq.swift
 //  Network
 //
 //  Created by hhhello0507 on 7/23/24.
