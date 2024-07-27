@@ -8,8 +8,14 @@ extension Encodable {
             with: data,
             options: .allowFragments
            )).flatMap({ $0 as? [String: Any] }) {
+            let parameters = object.mapValues { value -> Any in
+                if let enumValue = value as? (any RawRepresentable) {
+                    return enumValue.rawValue
+                }
+                return value
+            }
             return .requestParameters(
-                parameters: object,
+                parameters: parameters,
                 encoding: encoding
             )
         }
