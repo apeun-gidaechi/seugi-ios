@@ -40,7 +40,6 @@ public extension ModulePaths {
     }
     
     enum Shared: String, CaseIterable {
-        case GlobalThirdPartyLibrary
         case SwiftUIUtil
         case SwiftUtil
         case DateUtil

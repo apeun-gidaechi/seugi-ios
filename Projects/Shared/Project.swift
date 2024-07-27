@@ -12,9 +12,6 @@ import DependencyPlugin
 let project = Project.makeShared(
     targets: [
         .shared(target: .DateUtil),
-        .shared(target: .GlobalThirdPartyLibrary, dependencies: [
-            .SPM.Swinject
-        ]),
         .shared(target: .SwiftUIUtil),
         .shared(target: .SwiftUtil, dependencies: [
             .SPM.SwiftBok
