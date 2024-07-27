@@ -1,6 +1,5 @@
 import Foundation
 import Combine
-import SwiftUtil
 import Domain
 
 open class BaseViewModel<Subject>: ObservableObject {

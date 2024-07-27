@@ -1,6 +1,5 @@
 import Domain
 import Combine
-import SwiftUtil
 
 final class ChatService: Service<ChatEndpoint>, ChatRepo {
     

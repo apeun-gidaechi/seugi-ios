@@ -1,5 +1,4 @@
 import Foundation
-import SwiftUtil
 import Moya
 import CombineMoya
 import Combine

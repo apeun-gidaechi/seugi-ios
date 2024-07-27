@@ -1,6 +1,5 @@
 import Foundation
 import Domain
-import SwiftUtil
 import DateUtil
 
 struct RoomRes: SeugiResponse {

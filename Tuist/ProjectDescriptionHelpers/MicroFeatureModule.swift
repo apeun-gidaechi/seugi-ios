@@ -12,9 +12,9 @@ public extension MicroFeatureModule {
     var product: Product {
         switch self {
         case .Feature: .staticLibrary
-        case .Interface: .framework
+        case .Interface: .staticFramework
         case .Tests: .unitTests
-        case .Testing: .framework
+        case .Testing: .staticFramework
         case .Example: .app
         }
     }

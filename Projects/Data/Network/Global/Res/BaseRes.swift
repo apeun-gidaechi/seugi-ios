@@ -1,4 +1,3 @@
-import SwiftUtil
 import Domain
 
 struct BaseRes<Data: SeugiResponse>: SeugiResponse {

@@ -1,5 +1,3 @@
-import SwiftUtil
-
 public protocol WorkspaceRepo {
     func createWorkspace(workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid>
     func getWorkspaces() -> APIResult<Base<[Workspace]>>

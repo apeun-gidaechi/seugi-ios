@@ -1,6 +1,5 @@
 import Domain
 import Combine
-import SwiftUtil
 
 final class ProfileService: Service<ProfileEndpoint>, ProfileRepo {
     func me(workspaceId: String) -> APIResult<Base<RetrieveProfile>> {

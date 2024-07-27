@@ -13,9 +13,7 @@ let project = Project.makeShared(
     targets: [
         .shared(target: .DateUtil),
         .shared(target: .SwiftUIUtil),
-        .shared(target: .SwiftUtil, dependencies: [
-            .SPM.SwiftBok
-        ])
+        .shared(target: .SwiftUtil)
     ],
     xcconfig: .relativeToXCConfig("Config.xcconfig")
 )

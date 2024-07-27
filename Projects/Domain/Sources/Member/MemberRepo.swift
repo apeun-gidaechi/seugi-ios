@@ -1,4 +1,3 @@
-import SwiftUtil
 import Combine
 public protocol MemberRepo {
     func edit(picture: String, name: String, birth: String) -> APIResult<BaseVoid>
