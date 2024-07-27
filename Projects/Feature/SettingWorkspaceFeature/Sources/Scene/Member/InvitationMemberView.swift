@@ -38,6 +38,7 @@ struct InvitationMemberView: View {
                             .font(.subtitle(.s2))
                             .seugiColor(.sub(.black))
                             .toLeading()
+                            .padding(.leading, 4)
                         SeugiButton.small("학교코드 확인", type: .gray) {
                             if viewModel.workspaceCode.isSuccess {
                                 showWorkspaceCodeDialog = true
@@ -52,15 +53,14 @@ struct InvitationMemberView: View {
                         ProgressView()
                     } success: { members in
                         VStack(spacing: 12) {
-                            Group {
-                                Text("\(members.count)명으로부터 가입 요청이 왔어요")
-                                    .font(.subtitle(.s2))
-                                    .seugiColor(.sub(.black))
-                                    .toLeading()
-                                SeugiSegmentedButton(segmentedButtonRoles, selection: $viewModel.selection)
-                            }
-                            .padding(.horizontal, 20)
+                            Text("\(members.count)명으로부터 가입 요청이 왔어요")
+                                .font(.subtitle(.s2))
+                                .seugiColor(.sub(.black))
+                                .toLeading()
+                                .padding(.leading, 4)
+                            SeugiSegmentedButton(segmentedButtonRoles, selection: $viewModel.selection)
                         }
+                        .padding(.horizontal, 20)
                         LazyVStack(spacing: 0) {
                             ForEach(members, id: \.id) { member in
                                 SeugiMemberList(type: .normal(member: member)) {
@@ -84,13 +84,18 @@ struct InvitationMemberView: View {
             .refreshable {
                 fetchAll()
             }
+            // MARK: - Bottom buttons
             GeometryReader { proxy in
                 HStack(spacing: 8) {
                     Group {
                         SeugiButton.large("거절", type: .red) {
                         }
                         .frame(width: proxy.size.width * 0.33)
-                        SeugiButton.large("수락", type: .primary) {
+                        SeugiButton.large("수락", type: .primary, isLoading: viewModel.approveFlow == .fetching) {
+                            guard let selectedWorkspace = appState.selectedWorkspace else {
+                                return
+                            }
+                            viewModel.approve(workspaceId: selectedWorkspace.workspaceId)
                         }
                         .frame(width: proxy.size.width * 0.67)
                     }
@@ -108,6 +113,19 @@ struct InvitationMemberView: View {
         .seugiTopBar("멤버 초대")
         .onAppear {
             fetchAll()
+        }
+        .onChange(of: viewModel.approveFlow) { _ in
+            alertProvider.present("가입 수락 성공")
+                .show()
+            guard let selectedWorkspace = appState.selectedWorkspace else {
+                return
+            }
+            viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)
+        } failure: { _ in
+            alertProvider.present("가입 수락 실패")
+                .primaryButton("확인") {}
+                .message("잠시 후 다시 시도해 주세요")
+                .show()
         }
     }
 }

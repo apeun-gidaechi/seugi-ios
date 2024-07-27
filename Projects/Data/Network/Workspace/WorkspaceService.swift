@@ -34,8 +34,8 @@ public final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
         performRequest(.removeWorkspace(workspaceId: workspaceId))
     }
     
-    public func approveJoinWorkspace(workspaceId: String, approvalUserSer: [Int], role: WorkspaceRole) -> APIResult<BaseVoid> {
-        performRequest(.approveJoinWorkspace(.init(workspaceId: workspaceId, approvalUserSet: approvalUserSer, role: role)))
+    public func approveJoinWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> APIResult<BaseVoid> {
+        performRequest(.approveJoinWorkspace(.init(workspaceId: workspaceId, userSet: userSet, role: role)))
     }
     
     public func getWaitList(workspaceId: String, workspaceRole: WorkspaceRole) -> APIResult<Base<[RetrieveMember]>> {

@@ -29,6 +29,8 @@ final class InvitationMemberViewModel: BaseViewModel<InvitationMemberViewModel.I
         }
     }
     @Published var selectedMembers: [RetrieveMember] = []
+    @Published var approveFlow: IdleFlow<Bool> = .idle
+    @Published var rejectFlow: IdleFlow<Bool> = .idle
     
     // MARK: - Method
     func fetchWaitMembers(workspaceId: String) {
@@ -67,17 +69,16 @@ final class InvitationMemberViewModel: BaseViewModel<InvitationMemberViewModel.I
     }
     
     func approve(workspaceId: String) {
-//        sub(workspaceRepo.approveJoinWorkspace(
-//            workspaceId: workspaceId,
-//            approvalUserSer: waitMembers.data?.map { $0.id } ?? [],
-//            role: selection.role
-//        )) {
-//            <#code#>
-//        } success: { <#T#> in
-//            <#code#>
-//        } failure: { <#APIError#> in
-//            <#code#>
-//        }
-
+        sub(workspaceRepo.approveJoinWorkspace(
+            workspaceId: workspaceId,
+            userSet: selectedMembers.map { $0.id },
+            role: selection.role
+        )) {
+            self.approveFlow = .fetching
+        } success: { _ in
+            self.approveFlow = .success()
+        } failure: { error in
+            self.approveFlow = .failure(error)
+        }
     }
 }
