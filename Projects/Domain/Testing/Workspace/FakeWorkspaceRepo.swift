@@ -39,6 +39,10 @@ public final class FakeWorkspaceRepo: WorkspaceRepo {
         BaseVoid.mock().successResult
     }
     
+    public func cancelWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> APIResult<BaseVoid> {
+        BaseVoid.mock().successResult
+    }
+    
     public func getWaitList(workspaceId: String, workspaceRole: WorkspaceRole) -> APIResult<Base<[RetrieveMember]>> {
         [.mock()].successBaseResult
     }
