@@ -25,8 +25,7 @@
 - Tusit version: 3.35.1
 - [Use mise to install](https://docs.tuist.io/guide/introduction/installation)
 
-
+just `make go` !
 ```bash
-mise exec -- tuist fetch
-make
+make go
 ```
