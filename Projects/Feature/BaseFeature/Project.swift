@@ -7,9 +7,6 @@ let project = Project.makeFeature(
     include: [.Interface],
     interfaceDependency: [
         .diContainer,
-        .component,
-        .shared(of: .GlobalThirdPartyLibrary),
-        .shared(of: .SwiftUIUtil),
-        .shared(of: .DateUtil)
+        .component
     ]
 )

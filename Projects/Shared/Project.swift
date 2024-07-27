@@ -13,8 +13,7 @@ let project = Project.makeShared(
     targets: [
         .shared(target: .DateUtil),
         .shared(target: .GlobalThirdPartyLibrary, dependencies: [
-            .SPM.Swinject,
-            .SPM.SwiftBok
+            .SPM.Swinject
         ]),
         .shared(target: .SwiftUIUtil),
         .shared(target: .SwiftUtil, dependencies: [

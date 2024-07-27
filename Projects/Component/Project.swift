@@ -19,7 +19,6 @@ let project = Project.makeComponent(
         .SPM.GoogleSignIn,
         .domain,
         .shared(of: .SwiftUIUtil),
-        .shared(of: .DateUtil)
     ],
     xcconfig: .relativeToXCConfig("Config.xcconfig")
 )

@@ -9,11 +9,9 @@ let project = Project.makeData(
         .data(target: .Network, dependencies: [
             .SPM.Moya,
             .SPM.CombineMoya,
-            .shared(of: .SwiftUtil),
-            .shared(of: .GlobalThirdPartyLibrary),
-            .shared(of: .DateUtil),
             .SPM.ApeunStompKit,
-            .SPM.Then
+            .SPM.Then,
+            .shared(of: .DateUtil)
         ])
     ],
     xcconfig: .relativeToXCConfig("Config.xcconfig")

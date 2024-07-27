@@ -84,7 +84,7 @@ public extension Target {
     ) -> Self {
         .makeTarget(
             name: "\(target.rawValue)",
-            product: .framework,
+            product: .staticFramework,
             bundleId: "com.\(env.name).\(target.rawValue.lowercased())",
             infoPlist: infoPlist,
             sources: ["\(target.rawValue)/**"],
