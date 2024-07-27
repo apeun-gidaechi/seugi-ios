@@ -30,7 +30,7 @@ final class InvitationMemberViewModel: BaseViewModel<InvitationMemberViewModel.I
     }
     @Published var selectedMembers: [RetrieveMember] = []
     @Published var addWorkspaceFlow: IdleFlow<Bool> = .idle
-    @Published var rejectFlow: IdleFlow<Bool> = .idle
+    @Published var cancelWorkspaceFlow: IdleFlow<Bool> = .idle
     
     // MARK: - Method
     func fetchWaitMembers(workspaceId: String) {
@@ -83,6 +83,16 @@ final class InvitationMemberViewModel: BaseViewModel<InvitationMemberViewModel.I
     }
     
     func cancelWorkspace(workspaceId: String) {
-        
+        sub(workspaceRepo.cancelWorkspace(
+            workspaceId: workspaceId,
+            userSet: selectedMembers.map { $0.id },
+            role: selection.role
+        )) {
+            self.cancelWorkspaceFlow = .fetching
+        } success: { _ in
+            self.cancelWorkspaceFlow = .success()
+        } failure: { error in
+            self.cancelWorkspaceFlow = .failure(error)
+        }
     }
 }

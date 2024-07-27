@@ -89,6 +89,10 @@ struct InvitationMemberView: View {
                 HStack(spacing: 8) {
                     Group {
                         SeugiButton.large("거절", type: .red) {
+                            guard let selectedWorkspace = appState.selectedWorkspace else {
+                                return
+                            }
+                            viewModel.addWorkspace(workspaceId: selectedWorkspace.workspaceId)
                         }
                         .frame(width: proxy.size.width * 0.33)
                         SeugiButton.large("수락", type: .primary, isLoading: viewModel.addWorkspaceFlow == .fetching) {
@@ -123,6 +127,19 @@ struct InvitationMemberView: View {
             viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)
         } failure: { _ in
             alertProvider.present("가입 수락 실패")
+                .primaryButton("확인") {}
+                .message("잠시 후 다시 시도해 주세요")
+                .show()
+        }
+        .onChange(of: viewModel.cancelWorkspaceFlow) { _ in
+            alertProvider.present("가입 거절 실패")
+                .show()
+            guard let selectedWorkspace = appState.selectedWorkspace else {
+                return
+            }
+            viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)
+        } failure: { _ in
+            alertProvider.present("가입 거절 실패")
                 .primaryButton("확인") {}
                 .message("잠시 후 다시 시도해 주세요")
                 .show()
