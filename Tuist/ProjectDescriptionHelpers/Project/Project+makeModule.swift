@@ -9,11 +9,6 @@ extension Project {
         targets: [Target] = []
     ) -> Project {
         let settings: Settings = .settings(
-            base: [
-                "OTHER_LDFLAGS": .string("-ObjC"),
-                "ENABLE_USER_SCRIPT_SANDBOXING": .string("No"),
-                "SKIP_INSTALL": true
-            ],
             configurations: [
                 .debug(name: .debug, xcconfig: xcconfig),
                 .release(name: .release)

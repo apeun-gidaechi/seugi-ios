@@ -11,6 +11,6 @@ public struct ProjectEnvironment {
 public let env = ProjectEnvironment(
     name: "seugi",
     organizationName: "apeun.gidaechi",
-    destinations: [.iPhone, .iPad],
+    destinations: [.iPhone],
     deploymentTargets: .iOS("16.4")
 )
