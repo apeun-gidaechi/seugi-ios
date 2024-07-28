@@ -12,7 +12,7 @@ public final class FakeWorkspaceRepo: WorkspaceRepo {
     }
     
     public func getWorkspace(code: String) -> APIResult<Base<WorkspaceInfo>> {
-        Workspace.mock().successBaseResult
+        WorkspaceInfo.mock().successBaseResult
     }
     
     public func joinWorkspace(workspaceId: String, workspaceCode: String, role: WorkspaceRole) -> APIResult<BaseVoid> {

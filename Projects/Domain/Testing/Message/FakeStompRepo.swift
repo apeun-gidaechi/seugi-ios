@@ -2,6 +2,10 @@ import Domain
 import Combine
 
 public final class FakeStompRepo: StompRepo {
+    public func closeSocket() {
+        //
+    }
+    
     public func openSocket() {
         print("🤩 FakeStompRepo.openSocket")
     }
