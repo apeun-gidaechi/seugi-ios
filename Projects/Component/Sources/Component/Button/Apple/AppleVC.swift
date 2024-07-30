@@ -25,7 +25,7 @@ struct AppleSignInLabel: View {
     }
 }
 
-public class AppleVC: UIViewController {
+public final class AppleVC: UIViewController {
     
     var onSuccess: ((_ token: String) -> Void)!
     var onFailure: (() -> Void)!
@@ -105,6 +105,6 @@ extension AppleVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
     }
     
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("login failed - \(error.localizedDescription)")
+        debugPrint("login failed - \(error.localizedDescription)")
     }
 }

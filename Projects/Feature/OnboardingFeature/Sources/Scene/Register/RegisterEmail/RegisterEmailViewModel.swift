@@ -4,7 +4,7 @@ import DIContainer
 import Domain
 import BaseFeatureInterface
 
-public class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.Subject> {
+public final class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.Subject> {
     
     public enum Subject {
         case registerSuccess(Token)
@@ -51,7 +51,7 @@ public class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.Subjec
             self.emit(.registerSuccess(token.data))
             self.signUpFlow = .success()
         } failure: { error in
-            print(error)
+            debugPrint(error)
             self.signUpFlow = .failure(error)
         }
     }

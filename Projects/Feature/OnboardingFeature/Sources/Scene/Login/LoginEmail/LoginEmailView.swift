@@ -42,7 +42,7 @@ public struct LoginEmailView: View {
         .padding(.horizontal, 20)
         .seugiTopBar("로그인")
         .onChange(of: viewModel.signInFlow) { token in
-            print("✅ EmailSignInView - 로그인 성공")
+            debugPrint("✅ EmailSignInView - 로그인 성공")
             let accessToken = String(token.accessToken.split(separator: " ")[1])
             let refreshToken = String(token.refreshToken.split(separator: " ")[1])
             withAnimation {

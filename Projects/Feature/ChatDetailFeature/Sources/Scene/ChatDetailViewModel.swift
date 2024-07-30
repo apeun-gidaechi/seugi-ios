@@ -55,7 +55,7 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
             self.messages = .success(messages)
             self.emit(.messagesFetched)
         } failure: { error in
-            print("❌", error)
+            debugPrint("❌", error)
         }
     }
     

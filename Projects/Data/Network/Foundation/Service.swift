@@ -6,7 +6,7 @@ import Domain
 import Then
 import DateUtil
 
-public class Service<Target: SeugiEndpoint> {
+class Service<Target: SeugiEndpoint> {
     
     private lazy var decoder = JSONDecoder().then { decoder in
         
@@ -51,7 +51,7 @@ public class Service<Target: SeugiEndpoint> {
                 do {
                     value = try self.decoder.decode(T.self, from: result.data)
                 } catch {
-                   print("❌ Decoding Error - cause: \(error)")
+                   debugPrint("❌ Decoding Error - cause: \(error)")
                    throw APIError.unknown
                 }
                 return value
@@ -59,7 +59,7 @@ public class Service<Target: SeugiEndpoint> {
             .mapError { error in // map error
                 guard let error = error as? MoyaError,
                       let response = error.response else {
-                    print("❌ Unknown Error")
+                    debugPrint("❌ Unknown Error")
                     return APIError.unknown
                 }
                 if case .underlying(let error, _) = error,
@@ -96,8 +96,8 @@ public class Service<Target: SeugiEndpoint> {
     }
     
     private func requestLog(target: Target.Target) {
-        print("🛰 NETWORK Reqeust LOG")
-        print(
+        debugPrint("🛰 NETWORK Reqeust LOG")
+        debugPrint(
             "URL: \(target.host)/\(target.path)\n"
             + "Header: \(target.headers ?? [:])\n"
             + "Method: \(target.method.rawValue)"
@@ -106,20 +106,20 @@ public class Service<Target: SeugiEndpoint> {
         encoder.outputFormatting = .prettyPrinted
         if case .requestJSONEncodable(let req) = target.task,
            let json = try? encoder.encode(req) {
-            print("Body: \(String(data: json, encoding: .utf8) ?? "-")")
+            debugPrint("Body: \(String(data: json, encoding: .utf8) ?? "-")")
         } else if case .requestParameters(let parameters, _) = target.task,
                   let json = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) {
-            print("Body: \(String(data: json, encoding: .utf8) ?? "-")")
+            debugPrint("Body: \(String(data: json, encoding: .utf8) ?? "-")")
         } else if case .uploadMultipart(let multiParts) = target.task {
             Array(multiParts.enumerated()).forEach { idx, data in
-                print("MultiPart \(idx): name - \(data.name), fileName - \(data.fileName ?? ""), mimeType - \(data.mimeType ?? "")")
+                debugPrint("MultiPart \(idx): name - \(data.name), fileName - \(data.fileName ?? ""), mimeType - \(data.mimeType ?? "")")
             }
         }
     }
     
     private func responeLog(target: Target.Target, response: Moya.Response) {
-        print("🛰 NETWORK Response LOG")
-        print(
+        debugPrint("🛰 NETWORK Response LOG")
+        debugPrint(
             "URL: \(target.host)/\(target.path)" + "\n"
             + "StatusCode: " + "\(response.response?.statusCode ?? 0)" + "\n"
             + "Data: \(response.data.toPrettyPrintedString ?? "")"

@@ -77,7 +77,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
     }
     
     public func fetchWorkspaces() {
-        print("💎 try to fetch workspace")
+        debugPrint("💎 try to fetch workspace")
         guard !accessToken.isEmpty else {
             emit(.workspaceFetched)
             return
@@ -93,7 +93,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
                 }
             }
         } failure: { [self] error in
-            print("💎 AppState.fetchWorkspaces - \(error)")
+            debugPrint("💎 AppState.fetchWorkspaces - \(error)")
             if case .refreshFailure = error {
                 logout()
             }
@@ -101,7 +101,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
                 workspaces = .failure(error)
             }
         } finished: { [self] in
-            print("💎 workspace fetched")
+            debugPrint("💎 workspace fetched")
             emit(.workspaceFetched)
         }
     }

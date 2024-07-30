@@ -5,7 +5,7 @@ import BaseFeatureInterface
 import Combine
 import SwiftUI
 
-public class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.EmailSignInSubject> {
+public final class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.EmailSignInSubject> {
     
     public enum EmailSignInSubject {}
     

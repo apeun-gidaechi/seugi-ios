@@ -29,7 +29,7 @@ import Local
 // SPM
 import Swinject
 
-extension DependencyProvider {
+public extension DependencyProvider {
     func register() {
         _ = Assembler([
             // Feature

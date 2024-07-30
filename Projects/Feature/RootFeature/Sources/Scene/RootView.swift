@@ -70,7 +70,7 @@ public struct RootView: View {
         // 디버그일 경우 3번 탭할 시 세션 초기화
         #if DEBUG
         .onTapGesture(count: 3) {
-            print("💕 [DEBUG] MainView.body.onTapGesture - 세션이 초기화 되는 마법~")
+            debugPrint("💕 [DEBUG] MainView.body.onTapGesture - 세션이 초기화 되는 마법~")
             appState.logout()
         }
         #endif

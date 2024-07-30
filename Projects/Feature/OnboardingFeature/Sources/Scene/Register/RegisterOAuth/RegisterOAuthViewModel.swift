@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class RegisterOAuthViewModel: ObservableObject {
+public final class RegisterOAuthViewModel: ObservableObject {
     
     @Published var name = ""
     

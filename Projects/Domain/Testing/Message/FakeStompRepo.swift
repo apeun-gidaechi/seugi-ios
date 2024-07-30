@@ -7,7 +7,7 @@ public final class FakeStompRepo: StompRepo {
     }
     
     public func openSocket() {
-        print("🤩 FakeStompRepo.openSocket")
+        debugPrint("🤩 FakeStompRepo.openSocket")
     }
     
     public func subDisconnect() -> AnyPublisher<Void, Never> {

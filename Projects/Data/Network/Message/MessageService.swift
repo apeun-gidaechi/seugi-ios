@@ -2,7 +2,7 @@ import Domain
 import ApeunStompKit
 import Combine
 
-public final class MessageService: Service<MessageEndpoint> {
+final class MessageService: Service<MessageEndpoint> {
     private let stomp = ApeunStompService.shared.stomp
 }
 
@@ -15,11 +15,11 @@ extension MessageService: MessageRepo {
 
 // MARK: - Stomp Protocol
 extension MessageService: StompRepo {
-    public func openSocket() {
+    func openSocket() {
         stomp.openSocket()
     }
     
-    public func closeSocket() {
+    func closeSocket() {
         stomp.disconnect()
     }
     

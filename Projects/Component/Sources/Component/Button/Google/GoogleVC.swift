@@ -23,7 +23,7 @@ struct GoogleSignInLabel: View {
     }
 }
 
-public class GoogleVC: UIViewController {
+public final class GoogleVC: UIViewController {
     
     var onSuccess: ((_ idToken: String) -> Void)!
     var onFailure: (() -> Void)!
@@ -70,7 +70,7 @@ public class GoogleVC: UIViewController {
     @objc
     private func googleSignIn() {
         let clientId = Bundle.main.object(forInfoDictionaryKey: "GoogleClientId") as? String ?? ""
-        print("clientId", clientId)
+        debugPrint("clientId", clientId)
         let signInConfig = GIDConfiguration(clientID: clientId)
         GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
             guard error == nil else { return }

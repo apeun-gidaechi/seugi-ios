@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftUIUtil
 import Combine
 
-public struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
+struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
     
     public typealias P = AlertProvider
     @StateObject private var provider: AlertProvider

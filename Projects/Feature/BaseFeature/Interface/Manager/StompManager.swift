@@ -11,32 +11,32 @@ public final class StompManager: BaseViewModel<StompManager.StompManagerSubject>
     
     // MARK: - Method
     public func openSocket() {
-        print("💎 StompManager.subscribe")
+        debugPrint("💎 StompManager.subscribe")
         stompRepo.openSocket()
         stompRepo.subConnect()
             .sink { _ in
-                print("🤩 STOMP connected")
+                debugPrint("🤩 STOMP connected")
                 self.stompRepo.subPing()
                     .sink { _ in
-                        print("🤩 STOMP ping")
+                        debugPrint("🤩 STOMP ping")
                     }
                     .store(in: &self.subscriptions)
             }
             .store(in: &subscriptions)
         stompRepo.subDisconnect()
             .sink { _ in
-                print("🤩 STOMP disConnected")
+                debugPrint("🤩 STOMP disConnected")
             }
             .store(in: &subscriptions)
         stompRepo.subSendError()
             .sink { error in
-                print("🤩 STOMP error")
+                debugPrint("🤩 STOMP error")
                 dump(error)
             }
             .store(in: &subscriptions)
         stompRepo.subSendReciept()
             .sink { recieptId in
-                print("🤩 STOMP recieptId \(recieptId)")
+                debugPrint("🤩 STOMP recieptId \(recieptId)")
             }
             .store(in: &subscriptions)
     }

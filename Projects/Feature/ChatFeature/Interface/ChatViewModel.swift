@@ -46,7 +46,7 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
         } success: { res in
             self.personalRooms = .success(res.data)
         } failure: { error in
-            print(error)
+            debugPrint(error)
             self.personalRooms = .failure(error)
             self.emit(.refreshFailure)
         }
@@ -55,7 +55,7 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
         } success: { res in
             self.groupRooms = .success(res.data)
         } failure: { error in
-            print(error)
+            debugPrint(error)
             self.groupRooms = .failure(error)
             self.emit(.refreshFailure)
         }

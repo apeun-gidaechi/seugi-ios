@@ -1,6 +1,6 @@
 import Swinject
 
-public class DependencyProvider {
+public final class DependencyProvider {
     
     public static let shared = DependencyProvider()
     

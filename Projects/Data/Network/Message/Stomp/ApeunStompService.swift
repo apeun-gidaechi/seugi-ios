@@ -6,12 +6,12 @@ import DIContainer
 private let wssBaseUrl = Bundle.main.object(forInfoDictionaryKey: "WssBaseUrl") as? String ?? ""
 private let url = URL(string: "\(wssBaseUrl)/stomp/chat")!
 
-public final class ApeunStompService {
+final class ApeunStompService {
     
     @Inject private var keyValueRepo: KeyValueRepo
     
     private init() {
-        print(url)
+        debugPrint(url)
     }
     private(set) lazy var stomp = ApeunStomp(request: .init(url: url), connectionHeaders: [
         "Authorization": "Bearer \(keyValueRepo.load(key: .accessToken) ?? "")",
@@ -19,6 +19,6 @@ public final class ApeunStompService {
     ])
 }
 
-public extension ApeunStompService {
+extension ApeunStompService {
     static let shared = ApeunStompService()
 }
