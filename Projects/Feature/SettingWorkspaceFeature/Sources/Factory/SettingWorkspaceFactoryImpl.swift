@@ -6,4 +6,3 @@ final class SettingWorkspaceFactoryImpl: SettingWorkspaceFactory {
         SettingWorkspaceCoordinator()
     }
 }
-

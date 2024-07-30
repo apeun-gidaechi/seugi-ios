@@ -31,7 +31,7 @@ public final class SeugiFileManager: BaseViewModel<SeugiFileManager.Subject> {
                 } failure: { error in
                     failure(error)
                 }
-            case .failure(let error):
+            case .failure:
                 failure(.unknown)
             }
         }

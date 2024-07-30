@@ -62,7 +62,7 @@ final class InvitationMemberViewModel: BaseViewModel<InvitationMemberViewModel.I
     
     func selectMember(member: RetrieveMember) {
         if selectedMembers.contains(member) {
-            selectedMembers.removeAll { $0 == member}
+            selectedMembers.removeAll { $0 == member }
         } else {
             selectedMembers.append(member)
         }

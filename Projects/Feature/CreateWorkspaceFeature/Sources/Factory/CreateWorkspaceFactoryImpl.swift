@@ -6,4 +6,3 @@ final class CreateWorkspaceFactoryImpl: CreateWorkspaceFactory {
         CreateWorkspaceCoordinator()
     }
 }
-

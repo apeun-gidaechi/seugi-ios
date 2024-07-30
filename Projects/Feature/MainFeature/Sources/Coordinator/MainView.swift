@@ -130,5 +130,4 @@ public struct MainView: View {
             fetchAll()
         }
     }
-    
 }

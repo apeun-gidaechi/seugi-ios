@@ -65,15 +65,10 @@ public struct RegisterEmailVerificationView: View {
                 .seugiColor(.gray(.g600))
         } else {
             SeugiButton.small("인증 코드 전송", type: .primary) {
-                do {
-                    timerManager.startTimer {
-                        viewModel.isWaiting = false
-                    }
-                    viewModel.sendEmail()
-                } catch {
-                    alertProvider.present("\(error)")
-                        .show()
+                timerManager.startTimer {
+                    viewModel.isWaiting = false
                 }
+                viewModel.sendEmail()
             }
         }
     }

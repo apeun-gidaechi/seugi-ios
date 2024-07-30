@@ -6,4 +6,3 @@ final class WorkspaceDetailFactoryImpl: WorkspaceDetailFactory {
         WorkspaceDetailCoordinator()
     }
 }
-

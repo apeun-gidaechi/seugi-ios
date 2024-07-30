@@ -6,4 +6,3 @@ final class SettingProfileFactoryImpl: SettingProfileFactory {
         SettingProfileCoordinator()
     }
 }
-

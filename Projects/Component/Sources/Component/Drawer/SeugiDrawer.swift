@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftUIUtil
 
 public extension View {
     func seugiDrawer<Body>(
@@ -46,7 +47,7 @@ public struct SeugiDrawerModifier<Body>: ViewModifier where Body: View {
                     .frame(width: width)
                     .background(Color.seugi(.sub(.white)))
                     .offset(x: isDrawerOpen ? UIScreen.main.bounds.width - width : UIScreen.main.bounds.width)
-                    .animation(.default)
+                    .animation(.default, value: isDrawerOpen)
                     .toLeading()
             }
     }
