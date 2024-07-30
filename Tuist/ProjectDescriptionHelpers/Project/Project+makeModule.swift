@@ -11,7 +11,7 @@ extension Project {
         let settings: Settings = .settings(
             configurations: [
                 .debug(name: .debug, xcconfig: xcconfig),
-                .release(name: .release)
+                .release(name: .release, xcconfig: xcconfig)
             ], defaultSettings: .recommended
         )
         
