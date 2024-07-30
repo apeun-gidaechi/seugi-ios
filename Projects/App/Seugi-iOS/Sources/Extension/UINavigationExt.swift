@@ -1,11 +1,3 @@
-//
-//  UINavigationController.swift
-//  BaseFeature
-//
-//  Created by dgsw8th71 on 4/7/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import UIKit
 
 extension UINavigationController: UIGestureRecognizerDelegate {
