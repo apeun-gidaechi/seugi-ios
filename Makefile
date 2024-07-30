@@ -4,3 +4,5 @@ generate:
 go:
 	mise exec -- tuist fetch
 	make generate
+edit:
+	mise exec -- tuist edit
