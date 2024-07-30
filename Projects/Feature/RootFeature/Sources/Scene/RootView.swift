@@ -38,7 +38,6 @@ public struct RootView: View {
             NavigationStack(path: $router.navPath) {
                 if appState.accessToken.isEmpty {
                     onboardingFactory.makeView().eraseToAnyView()
-                        .environmentObject(timerManager)
                 } else {
                     mainFactory.makeView().eraseToAnyView()
                 }
@@ -49,6 +48,7 @@ public struct RootView: View {
                     .opacity(opacity)
             }
         }
+        .environmentObject(timerManager)
         .environmentObject(router)
         .environmentObject(appState)
         .environmentObject(stompManager)

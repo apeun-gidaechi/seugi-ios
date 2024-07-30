@@ -5,6 +5,7 @@ enum NotificationEndpoint: SeugiEndpoint {
     case postNotification(PostNotificationReq)
     case updateNotification(UpdateNotificationReq)
     case removeNotification(workspaceId: String, id: Int)
+    case emojiNotification(NotificationEmojiReq)
 }
 
 extension NotificationEndpoint {
@@ -26,6 +27,8 @@ extension NotificationEndpoint {
                 .patch - "" - req.toJSONParameters()
         case .removeNotification(workspaceId: let workspaceId, id: let id):
                 .delete - "\(workspaceId)/\(id)" - .requestPlain
+        case .emojiNotification(let req):
+                .patch - "emoji" - req.toJSONParameters()
         }
     }
 }

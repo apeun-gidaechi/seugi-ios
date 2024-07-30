@@ -8,26 +8,9 @@ public struct RegisterEmailVerificationView: View {
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var timerManager: TimerManager
     @EnvironmentObject private var appState: AppState
-    @StateObject private var viewModel: RegisterEmailVerificationViewModel
+    @EnvironmentObject private var viewModel: RegisterEmailViewModel
     
-    private let name: String
-    private let email: String
-    private let password: String
-    
-    public init(
-        viewModel: RegisterEmailVerificationViewModel,
-        name: String,
-        email: String,
-        password: String
-    ) {
-        viewModel.name = name
-        viewModel.email = email
-        viewModel.password = password
-        self._viewModel = StateObject(wrappedValue: viewModel)
-        self.name = name
-        self.email = email
-        self.password = password
-    }
+    public init() {}
     
     public var body: some View {
         VStack(spacing: 8) {
@@ -37,10 +20,10 @@ public struct RegisterEmailVerificationView: View {
             emailSend()
                 .toTrailing()
             Spacer()
-            SeugiButton.large("계속하기", type: .primary, isLoading: viewModel.isFetchSignUp) {
+            SeugiButton.large("계속하기", type: .primary, isLoading: viewModel.signUpFlow == .fetching) {
                 viewModel.signUp()
             }
-            .disabled(viewModel.isInValidInput)
+            .disabled(viewModel.isInValidCodeInput)
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
@@ -53,7 +36,7 @@ public struct RegisterEmailVerificationView: View {
                 .message(message)
                 .show()
         }
-        .onChange(of: viewModel.sendEmailFlow) { _ in } failure: { _ in
+        .onChangeFailure(of: viewModel.sendEmailFlow) { _ in
             alertProvider.present("이메일 전송 실패")
                 .show()
         }
@@ -82,10 +65,15 @@ public struct RegisterEmailVerificationView: View {
                 .seugiColor(.gray(.g600))
         } else {
             SeugiButton.small("인증 코드 전송", type: .primary) {
-                timerManager.startTimer {
-                    viewModel.isWaiting = false
+                do {
+                    timerManager.startTimer {
+                        viewModel.isWaiting = false
+                    }
+                    viewModel.sendEmail()
+                } catch {
+                    alertProvider.present("\(error)")
+                        .show()
                 }
-                viewModel.sendEmail()
             }
         }
     }

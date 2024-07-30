@@ -9,7 +9,7 @@ public struct Notification: Entity {
     public let userName: String
     public let title: String
     public let content: String
-    public let emoji: [String]
+    public let emoji: [NotificationEmoji]
     public let creationDate: Date?
     public let lastModifiedDate: Date?
 }

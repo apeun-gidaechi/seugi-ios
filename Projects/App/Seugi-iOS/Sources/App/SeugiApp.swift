@@ -1,5 +1,4 @@
 import SwiftUI
-import RootFeature
 import BaseFeatureInterface
 import Component
 import Swinject

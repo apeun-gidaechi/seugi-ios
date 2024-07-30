@@ -6,7 +6,7 @@ import SwiftUIUtil
 
 public struct RegisterEmailView: View {
     
-    @StateObject private var viewModel = RegisterEmailViewModel()
+    @EnvironmentObject private var viewModel: RegisterEmailViewModel
     @EnvironmentObject private var router: Router
     
     public init() {}
@@ -28,7 +28,7 @@ public struct RegisterEmailView: View {
                 }
                 .applyAnimation()
             SeugiButton.large("계속하기", type: .primary) {
-                router.navigate(to: OnboardingDestination.emailVerification(name: viewModel.name, email: viewModel.email, password: viewModel.password))
+                router.navigate(to: OnboardingDestination.emailVerification)
             }
             .disabled(viewModel.isInValidInput)
             .padding(.bottom, 16)

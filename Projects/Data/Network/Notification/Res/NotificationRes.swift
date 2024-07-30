@@ -2,18 +2,18 @@ import Domain
 import DateUtil
 import Foundation
 
-struct NoticeRes: SeugiResponse {
+struct NotificationRes: SeugiResponse {
     let id: Int
     let workspaceId: String
     let userName: String
     let title: String
     let content: String
-    let emoji: [String]
+    let emoji: [NotificationEmojiRes]
     let creationDate: Date
     let lastModifiedDate: Date
 }
 
-extension NoticeRes {
+extension NotificationRes {
     func toEntity() -> Domain.Notification {
         Domain.Notification(
             id: id,
@@ -21,7 +21,7 @@ extension NoticeRes {
             userName: userName,
             title: title,
             content: content,
-            emoji: emoji,
+            emoji: emoji.map { $0.toEntity() },
             creationDate: creationDate,
             lastModifiedDate: lastModifiedDate
         )

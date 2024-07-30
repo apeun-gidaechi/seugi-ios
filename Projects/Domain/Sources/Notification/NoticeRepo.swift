@@ -3,4 +3,5 @@ public protocol NotificationRepo {
     func postNotification(title: String, content: String, workspaceId: String) -> APIResult<BaseVoid>
     func updateNotification(id: Int, title: String, content: String) -> APIResult<BaseVoid>
     func removeNotification(workspaceId: String, id: Int) -> APIResult<BaseVoid>
+    func emojiNotification(emoji: String, notificationId: Int) -> APIResult<BaseVoid>
 }
