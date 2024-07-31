@@ -1,6 +1,6 @@
 import SwiftUI
 
 public protocol HomeFactory {
-    associatedtype ViewType: View
-    func makeView(flow: HomeFetchFlow) -> ViewType
+    associatedtype ContentView: View
+    func makeView(flow: HomeFetchFlow) -> ContentView
 }

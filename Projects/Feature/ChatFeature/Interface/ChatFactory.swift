@@ -2,6 +2,6 @@ import SwiftUI
 import Domain
 
 public protocol ChatFactory {
-    associatedtype ViewType: View
-    func makeView(roomType: RoomType) -> ViewType
+    associatedtype ContentView: View
+    func makeView(roomType: RoomType) -> ContentView
 }

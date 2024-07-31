@@ -10,8 +10,7 @@ let project = Project.makeData(
             .SPM.Moya,
             .SPM.CombineMoya,
             .SPM.ApeunStompKit,
-            .SPM.Then,
-            .shared(of: .DateUtil)
+            .SPM.Then
         ])
     ],
     xcconfig: .relativeToXCConfig("Config.xcconfig")

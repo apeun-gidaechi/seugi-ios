@@ -1,6 +1,6 @@
 import SwiftUI
 
 public protocol WorkspaceDetailFactory {
-    associatedtype ViewType: View
-    func makeView() -> ViewType
+    associatedtype ContentView: View
+    func makeView() -> ContentView
 }

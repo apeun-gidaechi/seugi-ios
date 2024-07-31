@@ -4,6 +4,7 @@ import DependencyPlugin
 
 let project = Project.makeDomain(
     dependency: [
-        .SPM.SwiftBok
+        .SPM.SwiftBok,
+        .shared(of: .DateUtil)
     ]
 )

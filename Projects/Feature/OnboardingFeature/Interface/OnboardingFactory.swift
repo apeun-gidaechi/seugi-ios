@@ -1,6 +1,6 @@
 import SwiftUI
 
 public protocol OnboardingFactory {
-    associatedtype ViewType: View
-    func makeView() -> ViewType
+    associatedtype ContentView: View
+    func makeView() -> ContentView
 }
