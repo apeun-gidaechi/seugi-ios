@@ -19,9 +19,9 @@ final class CreateWorkspaceViewModel: BaseViewModel<CreateWorkspaceViewModel.Cre
     @Published var workspaceName = ""
     @Published var createWorkspaceFlow: IdleFlow<Bool> = .idle
     
-    func createWorkspace() {
+    func createWorkspace(imageUrl: String) {
         // TODO: Add workspace image url
-        sub(workspaceRepo.createWorkspace(workspaceName: workspaceName, workspaceImageUrl: "")) {
+        sub(workspaceRepo.createWorkspace(workspaceName: workspaceName, workspaceImageUrl: imageUrl)) {
             self.createWorkspaceFlow = .fetching
         } success: { _ in
             self.createWorkspaceFlow = .success()

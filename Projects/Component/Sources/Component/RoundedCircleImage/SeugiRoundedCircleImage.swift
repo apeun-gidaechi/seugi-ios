@@ -14,7 +14,7 @@ public struct SeugiRoundedCircleImage: View {
     private let type: SeugiRoundedCircleImageType
     private let size: SeugiRoundedCircleImageType.Size
     
-    private init(
+    internal init(
         type: SeugiRoundedCircleImageType,
         size: SeugiRoundedCircleImageType.Size
     ) {
