@@ -11,8 +11,8 @@ import BaseFeatureInterface
 import Domain
 import DIContainer
 
-final class ManageMemberViewModel: BaseViewModel<ManageMemberViewModel.ManageMemberViewSubject> {
-    enum ManageMemberViewSubject {}
+final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Subject> {
+    enum Subject {}
     
     @Inject private var workspaceRepo: any WorkspaceRepo
     

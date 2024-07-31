@@ -11,11 +11,11 @@ import Component
 import Domain
 import BaseFeatureInterface
 
-struct ManageMemberView: View {
+struct WorkspaceMemberView: View {
     
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var appState: AppState
-    @ObservedObject private var viewModel = ManageMemberViewModel()
+    @ObservedObject private var viewModel = WorkspaceMemberViewModel()
     
     @State private var selection = segmentedButtonRoles[0]
     @State private var isSheetPresent = false

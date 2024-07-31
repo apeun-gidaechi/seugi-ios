@@ -17,8 +17,8 @@ struct WorkspaceDetailCoordinator: View {
                 case .workspaceMembers: WorkspaceMembersView()
                 case .createWorkspace: createWorkspaceFactory.makeView().eraseToAnyView()
                 case .joinWorkspace: joinWorkspaceFactory.makeView().eraseToAnyView()
-                case .manageMember: ManageMemberView()
-                case .invitationMember: InvitationMemberView()
+                case .manageMember: WorkspaceMemberView()
+                case .invitationMember: InvitateMemberView()
                 }
             }
     }

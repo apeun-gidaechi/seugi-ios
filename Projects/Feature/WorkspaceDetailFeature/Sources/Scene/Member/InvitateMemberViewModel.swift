@@ -11,8 +11,8 @@ import BaseFeatureInterface
 import DIContainer
 import Domain
 
-final class InvitationMemberViewModel: BaseViewModel<InvitationMemberViewModel.InvitationMemberSubject> {
-    enum InvitationMemberSubject {}
+final class InvitateMemberViewModel: BaseViewModel<InvitateMemberViewModel.InvitateMemberSubject> {
+    enum InvitateMemberSubject {}
     
     @Inject private var workspaceRepo: any WorkspaceRepo
     

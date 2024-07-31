@@ -10,11 +10,11 @@ import SwiftUI
 import Component
 import BaseFeatureInterface
 
-struct InvitationMemberView: View {
+struct InvitateMemberView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var appState: AppState
-    @ObservedObject private var viewModel = InvitationMemberViewModel()
+    @StateObject private var viewModel = InvitateMemberViewModel()
     
     @State private var buttonsSize: CGSize = .zero
     @State private var showWorkspaceCodeDialog = false
