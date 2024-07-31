@@ -14,16 +14,13 @@ struct HomeWorkspaceCell: View {
     
     private let workspace: Workspace
     private let workspaceRole: WorkspaceRole
-    private let settingAction: () -> Void
     
     init(
         workspace: Workspace,
-        workspaceRole: WorkspaceRole,
-        settingAction: @escaping () -> Void
+        workspaceRole: WorkspaceRole
     ) {
         self.workspace = workspace
         self.workspaceRole = workspaceRole
-        self.settingAction = settingAction
     }
     
     var body: some View {
@@ -34,18 +31,19 @@ struct HomeWorkspaceCell: View {
                 .lineLimit(1)
                 .truncationMode(.tail)
             Spacer()
-            switch workspaceRole {
-            case .middleAdmin, .admin:
-                Image(icon: .settingFill)
-                    .resizable()
-                    .renderingMode(.template)
-                    .frame(width: 24, height: 24)
-                    .seugiColor(.gray(.g500))
-                    .button {
-                        settingAction()
-                    }
-            default: EmptyView()
-            }
+            // setting workspace
+//            switch workspaceRole {
+//            case .middleAdmin, .admin:
+//                Image(icon: .settingFill)
+//                    .resizable()
+//                    .renderingMode(.template)
+//                    .frame(width: 24, height: 24)
+//                    .seugiColor(.gray(.g500))
+//                    .button {
+//                        settingAction()
+//                    }
+//            default: EmptyView()
+//            }
             Image(icon: .expandRightLine)
                 .resizable()
                 .renderingMode(.template)

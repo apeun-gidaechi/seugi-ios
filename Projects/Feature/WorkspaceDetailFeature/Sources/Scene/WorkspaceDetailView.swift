@@ -26,28 +26,40 @@ public struct WorkspaceDetailView: View {
                                 .font(.body(.b1))
                                 .seugiColor(.sub(.black))
                                 .padding(.leading, 4)
-                            HStack(spacing: 8) {
-                                SeugiButton.small("학교 전환", type: .gray) {
-                                    isSheetPresent = true
-                                }
-                                .expanded()
-                                SeugiButton.small("학교 설정", type: .gray) {
-                                    router.navigate(to: WorkspaceDetailDestination.settingWorkspace)
-                                }
-                                .expanded()
+                            SeugiButton.small("학교 전환", type: .gray) {
+                                isSheetPresent = true
                             }
                         }
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 20)
                 }
                 LazyVStack(spacing: 0) {
                     SeugiDivider(thickness: .thick)
-                    SeugiListItem.icon(title: "멤버 보기", icon: .expandRightLine)
-                        .leadingIcon(.personFill)
-                        .button {
-                            router.navigate(to: WorkspaceDetailDestination.workspaceMembers)
-                        }
-                        .applyAnimation()
+                        SettingWorkspaceHeadline(icon: .settingFill)
+                            .padding(.top, 6)
+                        SeugiListItem.icon(title: "일반", icon: .expandRightLine)
+                            .button {
+                                //
+                            }
+                            .applyAnimation()
+                        SeugiListItem.icon(title: "알림 설정", icon: .expandRightLine)
+                            .button {
+                                //
+                            }
+                            .applyAnimation()
+                        SettingWorkspaceHeadline(icon: .personFill)
+                            .padding(.top, 24)
+                        SeugiListItem.icon(title: "멤버", icon: .expandRightLine)
+                            .button {
+                                router.navigate(to: WorkspaceDetailDestination.manageMember)
+                            }
+                            .applyAnimation()
+                        SeugiListItem.icon(title: "멤버 초대", icon: .expandRightLine)
+                            .button {
+                                router.navigate(to: WorkspaceDetailDestination.invitationMember)
+                            }
+                            .applyAnimation()
                 }
             }
             .padding(.top, 12)
@@ -64,14 +76,12 @@ public struct WorkspaceDetailView: View {
         VStack(spacing: 16) {
             VStack(spacing: 4) {
                 ForEach(appState.workspaces.data ?? [], id: \.workspaceId) { workspace in
-                    HomeWorkspaceCell(workspace: workspace, workspaceRole: appState.workspaceRole ?? .student) {
-                        router.navigate(to: WorkspaceDetailDestination.settingWorkspace)
-                        isSheetPresent = false
-                    }
-                    .onTapGesture {
-                        appState.selectedWorkspace = workspace
-                        isSheetPresent = false
-                    }
+                    HomeWorkspaceCell(workspace: workspace, workspaceRole: appState.workspaceRole ?? .student)
+                        .button {
+                            appState.selectedWorkspace = workspace
+                            isSheetPresent = false
+                        }
+                        .applyAnimation()
                 }
             }
             HStack(spacing: 8) {

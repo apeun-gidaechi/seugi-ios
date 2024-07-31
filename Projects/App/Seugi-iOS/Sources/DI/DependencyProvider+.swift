@@ -15,7 +15,6 @@ import ProfileFeature
 import PostNotificationFeature
 import CreateWorkspaceFeature
 import SettingProfileFeature
-import SettingWorkspaceFeature
 import WorkspaceDetailFeature
 
 // Domain
@@ -47,7 +46,6 @@ public extension DependencyProvider {
             PostNotificationAssembly(),
             CreateWorkspaceAssembly(),
             SettingProfileAssembly(),
-            SettingWorkspaceAssembly(),
             WorkspaceDetailAssembly(),
             // Domain
             MemberAssembly(),

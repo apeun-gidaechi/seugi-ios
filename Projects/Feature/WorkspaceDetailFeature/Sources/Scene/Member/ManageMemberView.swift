@@ -66,7 +66,7 @@ struct ManageMemberView: View {
             }
             Spacer()
         }
-        .seugiTopBar("멤버 관리") {
+        .seugiTopBar("멤버") {
             withAnimation {
                 isSearching = false
             }

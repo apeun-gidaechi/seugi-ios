@@ -29,7 +29,6 @@ public extension ModulePaths {
         case PostNotification
         case CreateWorkspace
         case SettingProfile
-        case SettingWorkspace
         case WorkspaceDetail
     }
     

@@ -49,7 +49,6 @@ public struct CreateWorkspaceView: View {
                     router.navigateToRoot()
                 }
                 .show()
-            
         } failure: { _ in
             alertProvider.present("학교 등록 실패")
                 .primaryButton("확인") {}
@@ -65,7 +64,7 @@ public struct CreateWorkspaceView: View {
             if let photo {
                 fileManager.uploadPhoto(photo: photo) { url in
                     self.photoUrl = url
-                } failure: { error in
+                } failure: { _ in
                     alertProvider.present("이미지 업로드 실패")
                         .primaryButton("확인") {}
                         .message("잠시 후 다시 시도해 주세요")

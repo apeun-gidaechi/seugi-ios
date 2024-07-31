@@ -9,8 +9,9 @@
 import Foundation
 
 public enum WorkspaceDetailDestination: Hashable {
-    case settingWorkspace
     case workspaceMembers
     case createWorkspace
     case joinWorkspace
+    case manageMember
+    case invitationMember
 }

@@ -2,7 +2,6 @@ import SwiftUI
 import HomeFeatureInterface
 import JoinWorkspaceFeatureInterface
 import CreateWorkspaceFeatureInterface
-import SettingWorkspaceFeatureInterface
 import WorkspaceDetailFeatureInterface
 import DIContainer
 import Component
