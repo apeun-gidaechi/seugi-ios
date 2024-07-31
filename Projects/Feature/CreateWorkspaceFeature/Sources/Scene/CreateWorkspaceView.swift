@@ -38,6 +38,8 @@ public struct CreateWorkspaceView: View {
             alertProvider.present("학교 등록 성공")
                 .show()
             appState.fetchWorkspaces()
+            router.navigateToRoot()
+            
         } failure: { _ in
             alertProvider.present("학교 등록 실패")
                 .primaryButton("확인") {}
