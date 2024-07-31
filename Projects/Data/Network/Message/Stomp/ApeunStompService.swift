@@ -10,9 +10,7 @@ final class ApeunStompService {
     
     @Inject private var keyValueRepo: KeyValueRepo
     
-    private init() {
-        debugPrint(url)
-    }
+    private init() {}
     private(set) lazy var stomp = ApeunStomp(request: .init(url: url), connectionHeaders: [
         "Authorization": "Bearer \(keyValueRepo.load(key: .accessToken) ?? "")",
         StompCommands.commandHeaderHeartBeat.rawValue: "0,10000"

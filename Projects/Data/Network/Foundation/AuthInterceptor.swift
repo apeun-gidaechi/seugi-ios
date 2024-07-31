@@ -6,6 +6,7 @@ import DIContainer
 import SwiftUI
 import Combine
 import Moya
+import SwiftUtil
 
 final class AuthInterceptor: Moya.RequestInterceptor {
     
@@ -23,62 +24,62 @@ final class AuthInterceptor: Moya.RequestInterceptor {
             completion(.success(urlRequest))
             return
         }
-        debugPrint("✅ AuthInterceptor - Set token: \(accessToken)")
+        log("✅ AuthInterceptor - Set token: \(accessToken)")
         modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         completion(.success(modifiedRequest))
     }
     
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         
-        debugPrint("✅ AuthInterceptor - Start refresh")
+        log("✅ AuthInterceptor - Start refresh")
         guard request.retryCount <= 3 else {
-            debugPrint("❌ AuthInterceptor - RetryCount가 3보다 큽니다")
+            log("❌ AuthInterceptor - RetryCount가 3보다 큽니다")
             return
         }
         
         guard let url = request.request?.url else {
-            debugPrint("❌ AuthInterceptor - Invalid URL")
+            log("❌ AuthInterceptor - Invalid URL")
             completion(.doNotRetryWithError(error))
             return
         }
-        debugPrint("✅ AuthInterceptor - URL String: \(url.absoluteString)")
+        log("✅ AuthInterceptor - URL String: \(url.absoluteString)")
         
         guard let response = request.task?.response as? HTTPURLResponse else {
-            debugPrint("❌ AuthInterceptor - Invalid Response")
+            log("❌ AuthInterceptor - Invalid Response")
             completion(.doNotRetryWithError(error))
             return
         }
-        debugPrint("✅ AuthInterceptor - StatusCode: \(response.statusCode)")
+        log("✅ AuthInterceptor - StatusCode: \(response.statusCode)")
         
         let refreshStatusCode = [403, 401]
         guard refreshStatusCode.contains(response.statusCode) else {
-            debugPrint("❌ AuthInterceptor - Invalid StatusCode")
+            log("❌ AuthInterceptor - Invalid StatusCode")
             completion(.doNotRetryWithError(error))
             return
         }
         
         let refreshToken = keyValueStore.load(key: .refreshToken) ?? ""
         guard !refreshToken.isEmpty else {
-            debugPrint("❌ AuthInterceptor - Refresh Token is Empty")
+            log("❌ AuthInterceptor - Refresh Token is Empty")
             failureReissue()
             completion(.doNotRetryWithError(APIError.refreshFailure))
             return
         }
         
-        debugPrint("✅ AuthInterceptor - Try refresh with token - \(refreshToken)")
+        log("✅ AuthInterceptor - Try refresh with token - \(refreshToken)")
         
         memberRepo.refresh(token: refreshToken)
             .sink { [self] result in
                 switch result {
                 case .success(let res):
-                    debugPrint("✅ AuthInterceptor - Refresh Success")
+                    log("✅ AuthInterceptor - Refresh Success")
                     let accessToken = String(res.data.split(separator: " ")[1])
                     keyValueStore.save(key: .accessToken, value: accessToken)
                     completion(.retry)
                 case .failure(let error):
-                    debugPrint(error)
+                    log(error)
                     failureReissue()
-                    debugPrint("❌ AuthInterceptor - Refresh Failure")
+                    log("❌ AuthInterceptor - Refresh Failure")
                     completion(.doNotRetryWithError(APIError.refreshFailure))
                 case .fetching:
                     break

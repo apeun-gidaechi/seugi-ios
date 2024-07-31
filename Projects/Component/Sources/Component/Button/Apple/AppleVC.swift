@@ -105,6 +105,6 @@ extension AppleVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerP
     }
     
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        debugPrint("login failed - \(error.localizedDescription)")
+        log("login failed - \(error.localizedDescription)")
     }
 }

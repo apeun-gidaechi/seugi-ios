@@ -31,7 +31,7 @@ struct ModalPreview: View {
             }
             Button("Time Picker") {
                 timePickerProvider.present("wow") {
-                    debugPrint("selected")
+                    log("selected")
                 }
             }
         }

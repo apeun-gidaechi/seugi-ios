@@ -70,7 +70,7 @@ public final class GoogleVC: UIViewController {
     @objc
     private func googleSignIn() {
         let clientId = Bundle.main.object(forInfoDictionaryKey: "GoogleClientId") as? String ?? ""
-        debugPrint("clientId", clientId)
+        log("clientId", clientId)
         let signInConfig = GIDConfiguration(clientID: clientId)
         GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
             guard error == nil else { return }

@@ -74,13 +74,13 @@ public struct MainView: View {
     }
     
     private func fetchChats() {
-        debugPrint("💎 MainView.fetchChats")
+        log("💎 MainView.fetchChats")
         guard let workspace = appState.selectedWorkspace else { return }
         chatViewModel.fetchChats(workspaceId: workspace.workspaceId)
     }
     
     private func fetchNotifications() {
-        debugPrint("💎 MainView.fetchNotifications")
+        log("💎 MainView.fetchNotifications")
         guard let workspace = appState.selectedWorkspace else { return }
         notificationViewModel.fetchNotifications(workspaceId: workspace.workspaceId)
     }
@@ -112,7 +112,7 @@ public struct MainView: View {
         .environmentObject(chatViewModel)
         .environmentObject(notificationViewModel)
         .onAppear {
-            debugPrint("💎 MainView.body.onAppear")
+            log("💎 MainView.body.onAppear")
             if case .fetching = appState.workspaces {
                 appState.fetchWorkspaces()
             }

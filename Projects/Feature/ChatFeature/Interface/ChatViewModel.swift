@@ -2,6 +2,7 @@ import Foundation
 import Domain
 import BaseFeatureInterface
 import DIContainer
+import SwiftUtil
 
 public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
     
@@ -46,7 +47,7 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
         } success: { res in
             self.personalRooms = .success(res.data)
         } failure: { error in
-            debugPrint(error)
+            log(error)
             self.personalRooms = .failure(error)
             self.emit(.refreshFailure)
         }
@@ -55,7 +56,7 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
         } success: { res in
             self.groupRooms = .success(res.data)
         } failure: { error in
-            debugPrint(error)
+            log(error)
             self.groupRooms = .failure(error)
             self.emit(.refreshFailure)
         }

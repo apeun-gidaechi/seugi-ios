@@ -42,7 +42,6 @@ public extension ModulePaths {
         case SwiftUIUtil
         case SwiftUtil
         case DateUtil
-        case Config
     }
     
     enum Single: String {

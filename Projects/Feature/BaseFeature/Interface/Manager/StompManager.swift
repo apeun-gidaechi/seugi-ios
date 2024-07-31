@@ -1,6 +1,7 @@
 import Foundation
 import Domain
 import DIContainer
+import SwiftUtil
 
 public final class StompManager: BaseViewModel<StompManager.StompManagerSubject> {
     public enum StompManagerSubject {}
@@ -11,32 +12,32 @@ public final class StompManager: BaseViewModel<StompManager.StompManagerSubject>
     
     // MARK: - Method
     public func openSocket() {
-        debugPrint("💎 StompManager.subscribe")
+        log("💎 StompManager.subscribe")
         stompRepo.openSocket()
         stompRepo.subConnect()
             .sink { _ in
-                debugPrint("🤩 STOMP connected")
+                log("🤩 STOMP connected")
                 self.stompRepo.subPing()
                     .sink { _ in
-                        debugPrint("🤩 STOMP ping")
+                        log("🤩 STOMP ping")
                     }
                     .store(in: &self.subscriptions)
             }
             .store(in: &subscriptions)
         stompRepo.subDisconnect()
             .sink { _ in
-                debugPrint("🤩 STOMP disConnected")
+                log("🤩 STOMP disConnected")
             }
             .store(in: &subscriptions)
         stompRepo.subSendError()
             .sink { error in
-                debugPrint("🤩 STOMP error")
+                log("🤩 STOMP error")
                 dump(error)
             }
             .store(in: &subscriptions)
         stompRepo.subSendReciept()
             .sink { recieptId in
-                debugPrint("🤩 STOMP recieptId \(recieptId)")
+                log("🤩 STOMP recieptId \(recieptId)")
             }
             .store(in: &subscriptions)
     }
