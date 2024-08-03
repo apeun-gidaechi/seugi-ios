@@ -22,7 +22,7 @@
 - Add `./Projects/App/Seugi-iOS/Resources/GoogleService-Info.plist`
 
 ### Project
-- Tusit version: 3.35.1
+- Tusit version: 3.42.2
 - [Use mise to install](https://docs.tuist.io/guide/introduction/installation)
 
 just `make go` !
