@@ -9,6 +9,7 @@ public struct RegisterEmailVerificationView: View {
     @EnvironmentObject private var timerManager: TimerManager
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var viewModel: RegisterEmailViewModel
+    @FocusState private var firstTextField: Bool
     
     public init() {}
     
@@ -17,6 +18,7 @@ public struct RegisterEmailVerificationView: View {
             SeugiCodeTextFieldForm(text: $viewModel.verificationCode, label: "인증코드", length: 6)
                 .keyboardType(.numberPad)
                 .padding(.top, 16)
+                .focused($firstTextField)
             emailSend()
                 .toTrailing()
             Spacer()
@@ -48,6 +50,7 @@ public struct RegisterEmailVerificationView: View {
                     appState.refreshToken = String(token.refreshToken.split(separator: " ")[1])
                 }
             }
+            firstTextField = true
         }
     }
     

@@ -8,6 +8,7 @@ public struct RegisterEmailView: View {
     
     @EnvironmentObject private var viewModel: RegisterEmailViewModel
     @EnvironmentObject private var router: Router
+    @FocusState private var firstTextField: Bool
     
     public init() {}
     
@@ -15,6 +16,7 @@ public struct RegisterEmailView: View {
         VStack(spacing: 16) {
             SeugiTextFieldForm("이름을 입력해 주세요", text: $viewModel.name, label: "이름")
                 .padding(.top, 16)
+                .focused($firstTextField)
             SeugiTextFieldForm("이메일 입력해 주세요", text: $viewModel.email, label: "이메일")
                 .keyboardType(.emailAddress)
             SeugiTextFieldForm("비밀번호 입력해 주세요", text: $viewModel.password, type: .password, label: "비밀번호")
@@ -36,5 +38,8 @@ public struct RegisterEmailView: View {
         .padding(.horizontal, 20)
         .seugiTopBar("회원가입")
         .hideKeyboardWhenTap()
+        .onAppear {
+            firstTextField = true
+        }
     }
 }

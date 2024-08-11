@@ -15,29 +15,35 @@ struct WorkspaceMemberView: View {
     
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var appState: AppState
-    @ObservedObject private var viewModel = WorkspaceMemberViewModel()
+    @State private var viewModel = WorkspaceMemberViewModel()
     
-    @State private var selection = segmentedButtonRoles[0]
     @State private var isSheetPresent = false
     @State private var sheetSize: CGSize = .zero
-    @State private var isSearching = false
     @FocusState private var searchFocus: Bool
     
     init() {}
     
     var body: some View {
         VStack(spacing: 12) {
-            SeugiSegmentedButton(segmentedButtonRoles, selection: $selection)
+            SeugiSegmentedButton(segmentedButtonRoles, selection: $viewModel.selection)
                 .padding(.top, 6)
                 .padding(.horizontal, 20)
+            Menu {
+                ForEach(viewModel.menus, id: \.self) { menu in
+                    Button(menu) {
+                        viewModel.selectedMenu = menu
+                    }
+                }
+            } label: {
+                Text(viewModel.selectedMenu ?? "전체")
+            }
             viewModel.members.makeView {
                 ProgressView()
-            } success: { members in
+            } success: { _ in
                 if let selectedWorkspace = appState.selectedWorkspace {
-                    let members = isSearching ? viewModel.searchedMembers : members
                     ScrollView {
                         LazyVStack(spacing: 0) {
-                            ForEach(members, id: \.member.id) { member in
+                            ForEach(viewModel.searchtedMembers, id: \.member.id) { member in
                                 SeugiMemberList(type: .normal(member: member.member, role: .getRole(memberId: member.member.id, workspace: selectedWorkspace))) {
                                     Menu {
                                         Button("부관리자 임명") {}
@@ -68,23 +74,23 @@ struct WorkspaceMemberView: View {
         }
         .seugiTopBar("멤버") {
             withAnimation {
-                isSearching = false
+                viewModel.isSearching = false
             }
-            if !isSearching {
+            if !viewModel.isSearching {
                 dismiss()
             }
         }
-        .hideTitle(isSearching)
+        .hideTitle(viewModel.isSearching)
         .subView {
-            if isSearching {
+            if viewModel.isSearching {
                 TextField("채팅방 검색", text: $viewModel.searchText)
                     .focused($searchFocus)
             }
         }
-        .if(!isSearching) { view in
+        .if(!viewModel.isSearching) { view in
             view.button(.searchLine) {
                 withAnimation {
-                    isSearching = true
+                    viewModel.isSearching = true
                     searchFocus = true
                 }
             }

@@ -6,6 +6,7 @@ public struct RegisterOAuthView: View {
     
     @ObservedObject private var viewModel: RegisterOAuthViewModel
     @EnvironmentObject private var router: Router
+    @FocusState private var firstTextField: Bool
     
     public init(viewModel: RegisterOAuthViewModel) {
         self.viewModel = viewModel
@@ -31,5 +32,8 @@ public struct RegisterOAuthView: View {
         }
         .padding(.horizontal, 20)
         .seugiTopBar("회원가입")
+        .onAppear {
+            firstTextField = true
+        }
     }
 }

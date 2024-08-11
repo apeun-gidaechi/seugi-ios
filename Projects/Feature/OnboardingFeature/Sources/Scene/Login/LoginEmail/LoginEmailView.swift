@@ -11,6 +11,7 @@ public struct LoginEmailView: View {
     @StateObject private var viewModel = LoginEmailViewModel()
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
+    @FocusState private var firstTextField: Bool
     
     public init() {}
     
@@ -19,6 +20,7 @@ public struct LoginEmailView: View {
             SeugiTextFieldForm("이메일을 입력해주세요", text: $viewModel.email, label: "이메일", isForcedLabel: true)
                 .keyboardType(.emailAddress)
                 .padding(.top, 16)
+                .focused($firstTextField)
             SeugiTextFieldForm("비밀번호를 입력해주세요", text: $viewModel.password, type: .password, label: "비밀번호", isForcedLabel: true)
             Spacer()
             HStack(spacing: 4) {
@@ -55,6 +57,10 @@ public struct LoginEmailView: View {
             alertProvider.present("로그인 실패")
                 .message("아이디 혹은 비밀번호를 다시 확인해 주세요")
                 .show()
+        }
+        .onAppear {
+            
+            firstTextField = true
         }
     }
 }

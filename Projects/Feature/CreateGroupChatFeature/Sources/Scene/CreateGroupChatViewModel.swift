@@ -16,7 +16,7 @@ public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewMo
     @Published var members: FetchFlow<[RetrieveProfile]> = .fetching
     @Published var selectedMembers: [RetrieveProfile] = []
     @Published var roomName = ""
-    @Published var createFlow: IdleFlow<Bool> = .fetching
+    @Published var createFlow: IdleFlow<Bool> = .idle
     
     func fetchWorkspaceMembers(
         workspaceId: String,

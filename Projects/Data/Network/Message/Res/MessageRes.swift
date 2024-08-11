@@ -12,7 +12,7 @@ struct MessageRes: SeugiResponse {
     let emojiList: [EmojiRes]
     let mention: [Int]
     let mentionAll: Bool
-    let timestamp: Date
+    let timestamp: Date?
     let read: [Int]
     let messageStatus: String
     
