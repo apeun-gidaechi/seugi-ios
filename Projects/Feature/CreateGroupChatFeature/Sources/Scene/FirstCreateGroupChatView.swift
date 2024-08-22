@@ -3,6 +3,7 @@ import BaseFeatureInterface
 import Component
 import Flow
 import SwiftUIUtil
+import Domain
 
 public struct FirstCreateGroupChatView: View {
     
@@ -12,6 +13,10 @@ public struct FirstCreateGroupChatView: View {
     @EnvironmentObject private var appState: AppState
     
     public init() {}
+    
+    private var profile: RetrieveProfile? {
+        appState.profile.data
+    }
     
     public var body: some View {
         VStack(spacing: 0) {
@@ -27,7 +32,8 @@ public struct FirstCreateGroupChatView: View {
                         .padding(.top, 6)
                     ScrollView {
                         LazyVStack(spacing: 0) {
-                            ForEach(members, id: \.member.id) { member in
+                            // 나를 제외한 모든 멤버 나타내기
+                            ForEach(members.filter { $0.member.id != profile?.member.id }, id: \.member.id) { member in
                                 let selected = viewModel.selectedMembers.contains {
                                     $0.member.id == member.member.id
                                 }
@@ -64,7 +70,7 @@ public struct FirstCreateGroupChatView: View {
                 if viewModel.selectedMembers.count > 1 {
                     router.navigate(to: CreateGroupChatDestination.secondCreateGroupChat)
                 } else {
-//                    
+                    // TODO: 개인 채팅방 만들기
                 }
             }
             .disabled(viewModel.selectedMembers.isEmpty)
