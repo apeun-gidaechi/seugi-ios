@@ -6,30 +6,34 @@ import Domain
 import Then
 import DateUtil
 
-class Service<Target: SeugiEndpoint> {
+public let decoder = JSONDecoder().then { decoder in
     
-    private lazy var decoder = JSONDecoder().then { decoder in
+    let localDateTimeMSFormatter = DateFormatter("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+    let localDateTimeFormatter = DateFormatter("yyyy-MM-dd'T'HH:mm:ss")
+    let localDateFormatter = DateFormatter("yyyy-MM-dd")
+    
+    decoder.dateDecodingStrategy = .custom { decoder in
+        let container = try decoder.singleValueContainer()
+        var dateStr = try container.decode(String.self)
         
-        let localDateTimeMSFormatter = DateFormatter("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-        let localDateTimeFormatter = DateFormatter("yyyy-MM-dd'T'HH:mm:ss")
-        let localDateFormatter = DateFormatter("yyyy-MM-dd")
+        if dateStr.count > 26 {
+            dateStr = String(dateStr[0..<26])
+        }
         
-        decoder.dateDecodingStrategy = .custom { decoder in
-            let container = try decoder.singleValueContainer()
-            let dateStr = try container.decode(String.self)
-            
-            return if let date = localDateTimeMSFormatter.date(from: dateStr) {
-                date
-            } else if let date = localDateTimeFormatter.date(from: dateStr) {
-                date
-            } else if let date = localDateFormatter.date(from: dateStr) {
-                date
-            } else {
-                let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Invalid date format")
-                throw DecodingError.dataCorrupted(context)
-            }
+        return if let date = localDateTimeMSFormatter.date(from: dateStr) {
+            date
+        } else if let date = localDateTimeFormatter.date(from: dateStr) {
+            date
+        } else if let date = localDateFormatter.date(from: dateStr) {
+            date
+        } else {
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Invalid date format")
+            throw DecodingError.dataCorrupted(context)
         }
     }
+}
+class Service<Target: SeugiEndpoint> {
+    
     
     func request<T: Decodable>(
         _ target: Target.Target,
@@ -49,7 +53,7 @@ class Service<Target: SeugiEndpoint> {
                 self.responeLog(target: target, response: result)
                 let value: T
                 do {
-                    value = try self.decoder.decode(T.self, from: result.data)
+                    value = try decoder.decode(T.self, from: result.data)
                 } catch {
                    log("❌ Decoding Error - cause: \(error)")
                    throw APIError.unknown
@@ -69,7 +73,7 @@ class Service<Target: SeugiEndpoint> {
                     return error
                 }
                 self.responeLog(target: target, response: response)
-                guard let error = try? self.decoder.decode(BaseVoidRes.self, from: response.data) else {
+                guard let error = try? decoder.decode(BaseVoidRes.self, from: response.data) else {
                     return APIError.unknown
                 }
                 return APIError.http(error.toEntity())

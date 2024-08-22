@@ -27,6 +27,8 @@ public final class StompManager: BaseViewModel<StompManager.StompManagerSubject>
         stompRepo.subDisconnect()
             .sink { _ in
                 log("🤩 STOMP disConnected")
+                self.stompRepo.openSocket()
+                log("🤩 STOMP reconnecting...")
             }
             .store(in: &subscriptions)
         stompRepo.subSendError()

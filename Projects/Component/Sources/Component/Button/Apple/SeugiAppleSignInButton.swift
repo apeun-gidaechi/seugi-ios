@@ -21,6 +21,6 @@ public struct SeugiAppleSignInButton: UIViewControllerRepresentable {
     }
     
     public func updateUIViewController(_ uiViewController: AppleVC, context: Context) {
-        //
+        context.coordinator
     }
 }

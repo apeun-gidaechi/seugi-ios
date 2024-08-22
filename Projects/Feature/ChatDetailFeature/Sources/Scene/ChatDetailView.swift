@@ -142,7 +142,10 @@ public struct ChatDetailView: View {
             viewModel.subscribe { subject in
                 switch subject {
                 case .messageLoaded:
-                    scrollToBottom()
+                    Task {
+                        sleep(1)
+                        scrollToBottom()
+                    }
                 case .messagesFetched:
                     scrollToBottom()
                 }
@@ -173,11 +176,6 @@ public struct ChatDetailView: View {
                 switch $0 {
                 case .sendMessage:
                     viewModel.sendMessage(room: room)
-                    if scrollViewProxy != nil {
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            scrollToBottom()
-                        }
-                    }
                 case .imageMenu:
                     showPhotoPicker = true
                 case .fileMenu:
