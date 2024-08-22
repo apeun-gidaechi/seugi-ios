@@ -9,7 +9,8 @@ public struct ProfileView: View {
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
-    @ObservedObject private var viewModel = ProfileViewModel()
+    @StateObject private var viewModel = ProfileViewModel()
+    @State private var isSheetPresent = false
     
     private var profile: RetrieveProfile? {
         appState.profile.data
@@ -62,29 +63,6 @@ public struct ProfileView: View {
         .seugiBackground(.sub(.white))
         .seugiTopBar("내 프로필")
         .hideBackButton()
-        .sheet(isPresented: $viewModel.isSheetPresent) {
-            VStack(spacing: 32) {
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("\(viewModel.selectedProfleInfolabel) 수정")
-                        .padding(.leading, 4)
-                        .font(.subtitle(.s2))
-                        .seugiColor(.sub(.black))
-                    SeugiTextField(text: .init {
-                        viewModel.updateProfileContent ?? ""
-                    } set: {
-                        viewModel.updateProfileContent = $0
-                    })
-                }
-                SeugiButton.large("저장", type: .primary) {
-                    guard let selectedWorkspace = appState.selectedWorkspace else {
-                        return
-                    }
-                    viewModel.updateProfile(workspaceId: selectedWorkspace.workspaceId)
-                }
-            }
-            .padding(20)
-            .presentationDetents([.height(220)])
-        }
         .onChange(of: viewModel.updateProfileFlow) { _ in
             alertProvider.present("\(viewModel.selectedProfleInfolabel) 수정 성공")
                 .show()
@@ -102,6 +80,36 @@ public struct ProfileView: View {
         .onChangeSuccess(of: viewModel.updateProfileFlow) { _ in
             appState.fetchMyInfo()
         }
+        .onChange(of: viewModel.selectedProfleInfo) { _ in
+            self.isSheetPresent = true
+        }
+        .sheet(isPresented: $isSheetPresent) {
+            sheet
+        }
+    }
+    
+    var sheet: some View {
+        VStack(spacing: 32) {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("\(viewModel.selectedProfleInfolabel) 수정")
+                    .padding(.leading, 4)
+                    .font(.subtitle(.s2))
+                    .seugiColor(.sub(.black))
+                SeugiTextField(text: .init {
+                    viewModel.updateProfileContent ?? ""
+                } set: {
+                    viewModel.updateProfileContent = $0
+                })
+            }
+            SeugiButton.large("저장", type: .primary) {
+                guard let selectedWorkspace = appState.selectedWorkspace else {
+                    return
+                }
+                viewModel.updateProfile(workspaceId: selectedWorkspace.workspaceId)
+            }
+        }
+        .padding(20)
+        .presentationDetents([.height(220)])
     }
 }
 

@@ -17,14 +17,9 @@ final class ProfileViewModel: BaseViewModel<ProfileViewModel.ProfileSubject> {
     // MARK: - Properties
     @Inject private var profileRepo: any ProfileRepo
     
-    @Published var isSheetPresent = false
     @Published var updateProfile: RetrieveProfile?
     @Published var updateProfileFlow: IdleFlow<Bool> = .fetching
-    @Published var selectedProfleInfo: WritableKeyPath<RetrieveProfile, String>? {
-        didSet {
-            isSheetPresent = true
-        }
-    }
+    @Published var selectedProfleInfo: WritableKeyPath<RetrieveProfile, String>?
     
     var selectedProfleInfolabel: String {
         selectedProfleInfo?.label ?? ""
