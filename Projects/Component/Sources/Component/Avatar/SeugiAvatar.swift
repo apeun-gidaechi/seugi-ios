@@ -34,6 +34,7 @@ public struct SeugiAvatar: View {
                 }
             }
             .processors([.resize(size: .init(width: type.size, height: type.size), unit: .pixels)])
+            .frame(width: type.size, height: type.size)
             .clipShape(Circle())
         } else {
             /// NotFound Url

@@ -5,6 +5,7 @@ import Foundation
 struct NotificationRes: SeugiResponse {
     let id: Int
     let workspaceId: String
+    let userId: Int
     let userName: String
     let title: String
     let content: String
@@ -18,6 +19,7 @@ extension NotificationRes {
         Domain.Notification(
             id: id,
             workspaceId: workspaceId,
+            userId: userId,
             userName: userName,
             title: title,
             content: content,

@@ -5,7 +5,9 @@ import DIContainer
 
 public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewModel.CreateGroupChatSubject> {
     
-    public enum CreateGroupChatSubject {}
+    public enum CreateGroupChatSubject {
+        case createdPersonalChat(room: Room)
+    }
     
     // MARK: - Repo
     @Inject private var workspaceRepo: WorkspaceRepo
@@ -58,6 +60,24 @@ public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewMo
             self.createFlow = .fetching
         } success: { _ in
             self.createFlow = .success()
+        } failure: { error in
+            self.createFlow = .failure(error)
+        }
+    }
+    
+    func createPersonalChat(workspaceId: String) {
+        let joinUsers = selectedMembers.map { $0.member.id }
+        sub(chatRepo.createPersonal(roomName: "", workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: "")) {
+            self.createFlow = .fetching
+        } success: { [self] res in
+            let roomId = res.data
+            sub(chatRepo.searchPersonal(roomId: roomId)) {
+                self.createFlow = .fetching
+            } success: { res in
+                self.emit(.createdPersonalChat(room: res.data))
+            } failure: { error in
+                self.createFlow = .failure(error)
+            }
         } failure: { error in
             self.createFlow = .failure(error)
         }

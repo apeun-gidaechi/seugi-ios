@@ -4,6 +4,7 @@ import Component
 import Flow
 import SwiftUIUtil
 import Domain
+import ChatDetailFeatureInterface
 
 public struct FirstCreateGroupChatView: View {
     
@@ -63,6 +64,13 @@ public struct FirstCreateGroupChatView: View {
                 return
             }
             viewModel.fetchWorkspaceMembers(workspaceId: selectedWorkspace.workspaceId, memberId: member.id)
+            viewModel.subscribe { subject in
+                switch subject {
+                case .createdPersonalChat(let room):
+                    router.navigateToRoot()
+                    router.navigate(to: ChatDetailPath(room: room))
+                }
+            }
         }
         .seugiTopBar("멤버 선택")
         .subView {
@@ -70,7 +78,10 @@ public struct FirstCreateGroupChatView: View {
                 if viewModel.selectedMembers.count > 1 {
                     router.navigate(to: CreateGroupChatDestination.secondCreateGroupChat)
                 } else {
-                    // TODO: 개인 채팅방 만들기
+                    guard let selectedWorkspace = appState.selectedWorkspace else {
+                        return
+                    }
+                    viewModel.createPersonalChat(workspaceId: selectedWorkspace.workspaceId)
                 }
             }
             .disabled(viewModel.selectedMembers.isEmpty)

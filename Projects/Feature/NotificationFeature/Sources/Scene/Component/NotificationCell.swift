@@ -7,15 +7,19 @@ struct NotificationCell: View {
     
     enum Action {
         case updateNotification
+        case removeNotification
     }
     
+    private let profileId: Int
     private let notification: Domain.Notification
     private let action: (Action) -> Void
     
     init(
+        profileId: Int,
         notification: Domain.Notification,
         action: @escaping (Action) -> Void
     ) {
+        self.profileId = profileId
         self.notification = notification
         self.action = action
     }
@@ -28,10 +32,15 @@ struct NotificationCell: View {
                     .font(.body(.b2))
                 Spacer()
                 Menu {
-                    Button("알림 수정") {
-                        action(.updateNotification)
-                    }
                     Button("알림 신고") {}
+                    if profileId == notification.userId {
+                        Button("알림 수정") {
+                            action(.updateNotification)
+                        }
+                        Button("알림 삭제", role: .destructive) {
+                            action(.removeNotification)
+                        }
+                    }
                 } label: {
                     Image(icon: .detailVerticalLine)
                         .resizable()

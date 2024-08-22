@@ -15,6 +15,10 @@ public struct WorkspaceDetailView: View {
         appState.selectedWorkspace
     }
     
+    private var profile: RetrieveProfile? {
+        appState.profile.data
+    }
+    
     public var body: some View {
         ScrollView {
             VStack(spacing: 24) {
@@ -36,30 +40,33 @@ public struct WorkspaceDetailView: View {
                 }
                 LazyVStack(spacing: 0) {
                     SeugiDivider(thickness: .thick)
-                        SettingWorkspaceHeadline(icon: .settingFill)
-                            .padding(.top, 6)
-                        SeugiListItem.icon(title: "일반", icon: .expandRightLine)
-                            .button {
-                                //
-                            }
-                            .applyAnimation()
-                        SeugiListItem.icon(title: "알림 설정", icon: .expandRightLine)
-                            .button {
-                                //
-                            }
-                            .applyAnimation()
-                        SettingWorkspaceHeadline(icon: .personFill)
-                            .padding(.top, 24)
-                        SeugiListItem.icon(title: "멤버", icon: .expandRightLine)
-                            .button {
-                                router.navigate(to: WorkspaceDetailDestination.manageMember)
-                            }
-                            .applyAnimation()
+                    SettingWorkspaceHeadline(icon: .settingFill)
+                        .padding(.top, 6)
+                    SeugiListItem.icon(title: "일반", icon: .expandRightLine)
+                        .button {
+                            //
+                        }
+                        .applyAnimation()
+                    SeugiListItem.icon(title: "알림 설정", icon: .expandRightLine)
+                        .button {
+                            //
+                        }
+                        .applyAnimation()
+                    SettingWorkspaceHeadline(icon: .personFill)
+                        .padding(.top, 24)
+                    SeugiListItem.icon(title: "멤버", icon: .expandRightLine)
+                        .button {
+                            router.navigate(to: WorkspaceDetailDestination.manageMember)
+                        }
+                        .applyAnimation()
+                    if let workspaceRole = appState.workspaceRole,
+                       workspaceRole >= .teacher {
                         SeugiListItem.icon(title: "멤버 초대", icon: .expandRightLine)
                             .button {
                                 router.navigate(to: WorkspaceDetailDestination.invitationMember)
                             }
                             .applyAnimation()
+                    }
                 }
             }
             .padding(.top, 12)
@@ -68,6 +75,9 @@ public struct WorkspaceDetailView: View {
         .seugiTopBar("내 학교")
         .sheet(isPresented: $isSheetPresent) {
             sheet
+        }
+        .onChange(of: appState.selectedWorkspace) { _ in // UX - 학교 선택하면 메인 화면으로 이동
+            router.navigateToRoot()
         }
     }
     

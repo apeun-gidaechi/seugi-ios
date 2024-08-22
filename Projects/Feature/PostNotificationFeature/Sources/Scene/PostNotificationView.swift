@@ -28,8 +28,8 @@ public struct PostNotificationView: View {
     public var body: some View {
         ScrollView {
             VStack(spacing: 8) {
-                SeugiTextField(text: $viewModel.title)
-                SeugiTextField(text: $viewModel.content)
+                SeugiTextField("제목을 입력해 주세요", text: $viewModel.title)
+                SeugiTextField("내용을 입력해 주세요", text: $viewModel.content)
             }
             .padding(.horizontal, 20)
             .padding(.top, 6)
@@ -38,6 +38,7 @@ public struct PostNotificationView: View {
         .seugiTopBar(type == .createNotification ? "새 알림 작성" : "알림 수정")
         .subView {
             SeugiButton.small("완료", type: .transparent, isLoading: viewModel.fetchPostNotification == .fetching) {
+                hideKeyboard() // UX
                 switch type {
                 case .createNotification:
                     guard let selectedWorkspace = appState.selectedWorkspace else {

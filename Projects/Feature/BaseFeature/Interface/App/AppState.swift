@@ -21,7 +21,13 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
     
     /* workspace */
     @Published public var workspaces: FetchFlow<[Workspace]> = .fetching
-    @Published public var selectedWorkspace: Workspace?
+    @Published public var selectedWorkspace: Workspace? {
+        didSet {
+            if let workspaceId = selectedWorkspace?.workspaceId {
+                keyValueRepo.save(key: .selectedWorkspaceId, value: workspaceId)
+            }
+        }
+    }
     public var workspaceRole: WorkspaceRole? {
         guard let selectedWorkspace,
               let memberId = profile.data?.member.id else {
@@ -87,8 +93,11 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
         } success: { [self] workspaces in
             withAnimation(.spring(duration: 0.4)) {
                 self.workspaces = .success(workspaces.data)
-                if let workspace = workspaces.data.first,
-                   selectedWorkspace == nil {
+                if let selectedWorkspaceId = (keyValueRepo.load(key: .selectedWorkspaceId) as? String),
+                   let selectedWorkspace = workspaces.data.first(where: { $0.workspaceId == selectedWorkspaceId }) {
+                    self.selectedWorkspace = selectedWorkspace
+                } else if let workspace = workspaces.data.first,
+                          selectedWorkspace == nil {
                     selectedWorkspace = workspace
                 }
             }

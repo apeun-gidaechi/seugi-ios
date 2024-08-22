@@ -16,7 +16,6 @@ public struct MainView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var stompManager: StompManager
-    @State private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Factory
     @Inject private var homeFactory: any HomeFactory

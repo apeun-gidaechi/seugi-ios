@@ -49,33 +49,36 @@ struct InvitateMemberView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 6)
-                    viewModel.waitMembers.makeView {
-                        ProgressView()
-                    } success: { members in
-                        VStack(spacing: 12) {
-                            Text("\(members.count)명으로부터 가입 요청이 왔어요")
-                                .font(.subtitle(.s2))
-                                .seugiColor(.sub(.black))
-                                .toLeading()
-                                .padding(.leading, 4)
-                            SeugiSegmentedButton(segmentedButtonRoles, selection: $viewModel.selection)
-                        }
-                        .padding(.horizontal, 20)
-                        LazyVStack(spacing: 0) {
-                            ForEach(members, id: \.id) { member in
-                                SeugiMemberList(type: .normal(member: member)) {
-                                    let selected = viewModel.selectedMembers.contains(member)
-                                    SeugiToggle(isOn: .constant(selected), type: .checkbox(size: .large))
-                                }
-                                .button {
-                                    viewModel.selectMember(member: member)
-                                }
-                                .applyAnimation()
+                    if let workspaceRole = appState.workspaceRole,
+                       workspaceRole >= .middleAdmin {
+                        viewModel.waitMembers.makeView {
+                            ProgressView()
+                        } success: { members in
+                            VStack(spacing: 12) {
+                                Text("\(members.count)명으로부터 가입 요청이 왔어요")
+                                    .font(.subtitle(.s2))
+                                    .seugiColor(.sub(.black))
+                                    .toLeading()
+                                    .padding(.leading, 4)
+                                SeugiSegmentedButton(segmentedButtonRoles, selection: $viewModel.selection)
                             }
+                            .padding(.horizontal, 20)
+                            LazyVStack(spacing: 0) {
+                                ForEach(members, id: \.id) { member in
+                                    SeugiMemberList(type: .normal(member: member)) {
+                                        let selected = viewModel.selectedMembers.contains(member)
+                                        SeugiToggle(isOn: .constant(selected), type: .checkbox(size: .large))
+                                    }
+                                    .button {
+                                        viewModel.selectMember(member: member)
+                                    }
+                                    .applyAnimation()
+                                }
+                            }
+                            .padding(.horizontal, 4)
+                        } failure: { _ in
+                            SeugiError("불러올 수 없어요", image: .faceWithDiagonalMouth)
                         }
-                        .padding(.horizontal, 4)
-                    } failure: { _ in
-                        SeugiError("불러올 수 없어요", image: .faceWithDiagonalMouth)
                     }
                 }
             }
@@ -117,6 +120,10 @@ struct InvitateMemberView: View {
         .seugiTopBar("멤버 초대")
         .onAppear {
             fetchAll()
+        }
+        .onChangeFetchFlow(of: viewModel.waitMembers) {} failure: {
+            alertProvider.present("불러오기 실패")
+                .show()
         }
         .onChange(of: viewModel.addWorkspaceFlow) { _ in
             alertProvider.present("가입 수락 성공")

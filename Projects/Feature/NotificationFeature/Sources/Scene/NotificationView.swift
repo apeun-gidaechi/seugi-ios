@@ -2,16 +2,22 @@ import SwiftUI
 import Component
 import NotificationFeatureInterface
 import BaseFeatureInterface
+import Domain
 
 public struct NotificationView: View {
     
     @EnvironmentObject private var appState: AppState
-    @EnvironmentObject private var notificationViewModel: NotificationViewModel
+    @EnvironmentObject private var viewModel: NotificationViewModel
     @EnvironmentObject private var router: Router
+    @EnvironmentObject private var alertProvider: AlertProvider
+    
+    private var profile: RetrieveProfile? {
+        appState.profile.data
+    }
     
     public var body: some View {
         ScrollView {
-            notificationViewModel.notifications.makeView {
+            viewModel.notifications.makeView {
                 ProgressView()
             } success: { notifications in
                 LazyVStack(spacing: 8) {
@@ -21,15 +27,34 @@ public struct NotificationView: View {
                         Spacer()
                             .frame(height: 12)
                         ForEach(notifications, id: \.id) { notification in
-                            NotificationCell(notification: notification) {
+                            NotificationCell(
+                                profileId: profile?.member.id ?? 0,
+                                notification: notification
+                            ) {
                                 switch $0 {
                                 case .updateNotification: router.navigate(to: NotificationDestination.updateNotification(notification))
+                                case .removeNotification:
+                                    guard let selectedWorkspace = appState.selectedWorkspace else {
+                                        return
+                                    }
+                                    alertProvider.present("공지를 정말 삭제하시겠습니까?")
+                                        .primaryButton("삭제") {
+                                            viewModel.removeNotification(
+                                                workspaceId: selectedWorkspace.workspaceId,
+                                                notificationId: notification.id
+                                            )
+                                            viewModel.fetchNotifications(
+                                                workspaceId: selectedWorkspace.workspaceId
+                                            )
+                                        }
+                                        .secondaryButton("닫기") {}
+                                        .show()
                                 }
                             }
-                            .button {
-                                // TODO: navigate to notification detail
-                            }
-                            .applyAnimation()
+//                            .button {
+//                                // TODO: navigate to notification detail
+//                            }
+//                            .applyAnimation()
                         }
                         Spacer()
                             .frame(height: 80)
@@ -44,16 +69,25 @@ public struct NotificationView: View {
             guard let selectedWorkspace = appState.selectedWorkspace else {
                 return
             }
-            notificationViewModel.fetchNotifications(workspaceId: selectedWorkspace.workspaceId)
+            viewModel.fetchNotifications(workspaceId: selectedWorkspace.workspaceId)
         }
         .padding(.horizontal, 20)
         .seugiBackground(.primary(.p050))
         .seugiTopBar("알림", background: .seugi(.primary(.p050)))
         .hideBackButton()
-        .if(appState.workspaceRole != .teacher) {
+        .if(appState.workspaceRole != .student) {
             $0.button(.writeLine) {
                 router.navigate(to: NotificationDestination.createNotification)
             }
+        }
+        .onChange(of: viewModel.removeNotificationFlow) { _ in
+            alertProvider.present("삭제 성공")
+                .primaryButton("닫기") {}
+                .show()
+        } failure: { _ in
+            alertProvider.present("삭제 실패")
+                .primaryButton("확인") {}
+                .show()
         }
     }
 }
