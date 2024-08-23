@@ -13,7 +13,7 @@ enum ChatDetailSupporterType: Hashable {
 
 public struct ChatDetailView: View {
     
-    @InjectObject private var viewModel: ChatDetailViewModel
+    @StateObject private var viewModel = ChatDetailViewModel()
     @EnvironmentObject private var appState: AppState
     @Environment(\.dismiss) private var dismiss
     

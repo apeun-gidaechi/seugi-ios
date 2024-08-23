@@ -17,22 +17,6 @@ import Swinject
 public extension DependencyProvider {
     func register() {
         _ = Assembler([
-            // Feature
-            ChatDetailAssembly(),
-            Feature.ChatAssembly(),
-            CreateGroupChatAssembly(),
-            HomeAssembly(),
-            JoinWorkspaceAssembly(),
-            LaunchScreenAssembly(),
-            MainAssembly(),
-            OnboardingAssembly(),
-            RootAssembly(),
-            Feature.NotificationAssembly(),
-            Feature.ProfileAssembly(),
-            PostNotificationAssembly(),
-            CreateWorkspaceAssembly(),
-            SettingProfileAssembly(),
-            WorkspaceDetailAssembly(),
             // Domain
             MemberAssembly(),
             Network.ChatAssembly(),

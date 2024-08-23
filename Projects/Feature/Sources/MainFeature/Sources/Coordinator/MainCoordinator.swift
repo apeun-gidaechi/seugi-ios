@@ -10,12 +10,10 @@ import DIContainer
 
 struct MainCoordinator: View {
     
-    @Inject private var chatDetailFactory: any ChatDetailFactory
-    
     var body: some View {
         MainView()
             .navigationDestination(for: ChatDetailPath.self) { path in
-                chatDetailFactory.makeView(room: path.room).eraseToAnyView()
+                ChatDetailCoordinator(room: path.room)
             }
     }
 }

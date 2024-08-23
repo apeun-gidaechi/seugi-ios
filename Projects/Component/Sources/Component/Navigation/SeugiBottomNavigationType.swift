@@ -26,6 +26,7 @@ public struct SeugiBottomNavigationCellData: Hashable {
     }
 }
 
+@frozen
 public enum SeugiBottomNavigationType: CaseIterable {
     case home
     case chat

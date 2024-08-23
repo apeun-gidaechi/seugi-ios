@@ -3,7 +3,6 @@ import DIContainer
 
 public struct NotificationCoordinator: View {
     
-    @Inject private var postNotificationFactory: any PostNotificationFactory
     @EnvironmentObject private var notificationViewModel: NotificationViewModel
     
     public var body: some View {
@@ -11,8 +10,8 @@ public struct NotificationCoordinator: View {
             .navigationDestination(for: NotificationDestination.self) { destination in
                 Group {
                     switch destination {
-                    case .createNotification: postNotificationFactory.makeView(type: .createNotification).eraseToAnyView()
-                    case .updateNotification(let notification): postNotificationFactory.makeView(type: .updateNotification(notification)).eraseToAnyView()
+                    case .createNotification: PostNotificationCoordinator(type: .createNotification)
+                    case .updateNotification(let notification): PostNotificationCoordinator(type: .updateNotification(notification))
                     }
                 }
                 .environmentObject(notificationViewModel)

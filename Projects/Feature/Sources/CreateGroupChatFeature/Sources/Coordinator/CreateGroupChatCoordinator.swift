@@ -2,7 +2,7 @@ import SwiftUI
 import DIContainer
 
 struct CreateGroupChatCoordinator: View {
-    @InjectObject private var createGroupChatViewModel: CreateGroupChatViewModel
+    @StateObject private var createGroupChatViewModel = CreateGroupChatViewModel()
     
     var body: some View {
         FirstCreateGroupChatView()

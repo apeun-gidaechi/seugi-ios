@@ -14,12 +14,7 @@ public struct RootView: View {
     @StateObject private var alertProvider = AlertProvider()
     @StateObject private var timePickerProvider = TimePickerProvider()
     
-    @Inject private var onboardingFactory: any OnboardingFactory
-    @Inject private var joinWorkspaceFactory: any JoinWorkspaceFactory
-    @Inject private var launchScreenFactorry: any LaunchScreenFactory
-    @Inject private var mainFactory: any MainFactory
-    
-    @InjectObject private var viewModel: RootViewModel
+    @StateObject private var viewModel = RootViewModel()
     
     @State private var opacity = 1.0
     
@@ -32,14 +27,14 @@ public struct RootView: View {
         ) { // zstack
             NavigationStack(path: $router.navPath) {
                 if appState.accessToken.isEmpty {
-                    onboardingFactory.makeView().eraseToAnyView()
+                    OnboardingCoordinator()
                 } else {
-                    mainFactory.makeView().eraseToAnyView()
+                    MainCoordinator()
                 }
             }
             
             if opacity > 0 {
-                launchScreenFactorry.makeView().eraseToAnyView()
+                LaunchScreenView()
                     .opacity(opacity)
             }
         }

@@ -2,7 +2,6 @@ import Foundation
 
 public enum ModulePaths {
     case app(App)
-    case feature(Feature)
     case data(Data)
     case shared(Shared)
 }
@@ -11,25 +10,6 @@ public extension ModulePaths {
     
     enum App: String, CaseIterable {
         case iOS
-    }
-    
-    enum Feature: String, CaseIterable {
-        case Base
-        case Root
-        case Onboarding
-        case LaunchScreen
-        case JoinWorkspace
-        case Main
-        case Home
-        case Chat
-        case ChatDetail
-        case CreateGroupChat
-        case Notification
-        case Profile
-        case PostNotification
-        case CreateWorkspace
-        case SettingProfile
-        case WorkspaceDetail
     }
     
     enum Data: String, CaseIterable {

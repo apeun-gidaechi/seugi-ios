@@ -17,9 +17,7 @@ struct SeugiApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if let rootView = DependencyProvider.shared.container.resolve((any RootFactory).self) {
-                rootView.makeView().eraseToAnyView()
-            }
+            RootView()
         }
     }
 }

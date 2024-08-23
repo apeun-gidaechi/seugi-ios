@@ -11,15 +11,11 @@ public struct MainView: View {
     @EnvironmentObject private var stompManager: StompManager
     
     // MARK: - Factory
-    @Inject private var homeFactory: any HomeFactory
-    @Inject private var chatFactory: any ChatFactory
-    @Inject private var notificationFactory: any NotificationFactory
-    @Inject private var profileFactory: any ProfileFactory
     @Inject private var stompRepo: any StompRepo
 
     // MARK: - ViewModel
-    @InjectObject private var chatViewModel: ChatViewModel
-    @InjectObject private var notificationViewModel: NotificationViewModel
+    @StateObject private var chatViewModel = ChatViewModel()
+    @StateObject private var notificationViewModel = NotificationViewModel()
     
     public init() {}
     
@@ -85,11 +81,11 @@ public struct MainView: View {
         ZStack(alignment: .bottom) {
             Group {
                 switch appState.selectedMainTab {
-                case .home: homeFactory.makeView(flow: homeFetchFlow).eraseToAnyView()
-                case .chat: chatFactory.makeView(roomType: .personal).eraseToAnyView()
-                case .room: chatFactory.makeView(roomType: .group).eraseToAnyView()
-                case .notification: notificationFactory.makeView().eraseToAnyView()
-                case .profile: profileFactory.makeView().eraseToAnyView()
+                case .home: HomeCoordinator(flow: homeFetchFlow)
+                case .chat: ChatCoordinator(roomType: .personal)
+                case .room: ChatCoordinator(roomType: .group)
+                case .notification: NotificationCoordinator()
+                case .profile: ProfileCoordinator()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
