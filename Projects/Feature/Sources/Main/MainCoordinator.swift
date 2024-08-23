@@ -10,6 +10,9 @@ import DIContainer
 
 struct MainCoordinator: View {
     
+    @StateObject private var joinWorkspaceViewModel = JoinWorkspaceViewModel()
+    @StateObject private var createGroupChatViewModel = CreateGroupChatViewModel()
+    
     var body: some View {
         MainView()
             .navigationDestination(for: MainDestination.self) { destination in
@@ -17,8 +20,8 @@ struct MainCoordinator: View {
                     
                     // chat
                 case .chatDetail(let room): ChatDetailView(room: room)
-                case .firstCreateGroupChat: FirstCreateGroupChatView()
-                case .secondCreateGroupChat: SecondCreateGroupChatView()
+                case .firstCreateGroupChat: FirstCreateGroupChatView().environmentObject(createGroupChatViewModel)
+                case .secondCreateGroupChat: SecondCreateGroupChatView().environmentObject(createGroupChatViewModel)
                     
                     // notification
                 case .createNotification: PostNotificationView(type: .createNotification)
@@ -35,10 +38,10 @@ struct MainCoordinator: View {
                 case .invitationMember: InvitateMemberView()
                     
                     // join workspace
-                case .joinWorkspaceCode: JoinWorkspaceCodeView()
-                case .joinWorkspaceFinish: JoinWorkspaceRoleView()
-                case .joinWorkspaceSuccess: JoinWorkspaceSuccessView()
-                case .joinWorkspaceRole: JoinWorkspaceRoleView()
+                case .joinWorkspaceCode: JoinWorkspaceCodeView().environmentObject(joinWorkspaceViewModel)
+                case .joinWorkspaceFinish: JoinWorkspaceRoleView().environmentObject(joinWorkspaceViewModel)
+                case .joinWorkspaceSuccess: JoinWorkspaceSuccessView().environmentObject(joinWorkspaceViewModel)
+                case .joinWorkspaceRole: JoinWorkspaceRoleView().environmentObject(joinWorkspaceViewModel)
                 }
             }
     }
