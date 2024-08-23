@@ -11,9 +11,10 @@ public extension Project {
         dependency: [TargetDependency] = [],
         xcconfig: Path? = nil
     ) -> Self {
-        .makeProject(
+        Project(
             name: ModulePaths.Single.DIContainer.rawValue,
-            packages: packages, targets: [
+            packages: packages,
+            targets: [
                 .dIContainer(
                     infoPlist: infoPlist,
                     dependencies: dependency
@@ -27,10 +28,10 @@ public extension Project {
         targets: [Target] = [],
         xcconfig: Path? = nil
     ) -> Self {
-        .makeProject(
+        Project(
             name: "Seugi",
             packages: packages,
-            xcconfig: xcconfig, 
+            settings: .makeSettings(xcconfig),
             targets: targets
         )
     }
@@ -43,10 +44,10 @@ public extension Project {
         targets: [Target] = [],
         xcconfig: Path? = nil
     ) -> Self {
-        return .makeProject(
+        Project(
             name: "Shared",
             packages: packages,
-            xcconfig: xcconfig,
+            settings: .makeSettings(xcconfig),
             targets: targets
         )
     }
@@ -61,7 +62,7 @@ public extension Project {
         dependency: [TargetDependency] = [],
         xcconfig: Path? = nil
     ) -> Self {
-        .makeProject(
+        Project(
             name: ModulePaths.Single.Component.rawValue,
             packages: packages,
             targets: [
@@ -90,7 +91,7 @@ public extension Project {
         dependency: [TargetDependency] = [],
         xcconfig: Path? = nil
     ) -> Self {
-        .makeProject(
+        Project(
             name: ModulePaths.Single.Domain.rawValue,
             packages: packages,
             targets: [
@@ -112,10 +113,10 @@ public extension Project {
         targets: [Target] = [],
         xcconfig: Path? = nil
     ) -> Self {
-        .makeProject(
+        Project(
             name: "Data",
             packages: packages,
-            xcconfig: xcconfig,
+            settings: .makeSettings(xcconfig),
             targets: targets
         )
     }
