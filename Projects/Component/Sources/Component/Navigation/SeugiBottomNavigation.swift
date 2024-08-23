@@ -21,18 +21,16 @@ public struct SeugiBottomNavigation: View {
         self.tabs = tabs
     }
     public var body: some View {
-        HStack {
-            Spacer()
+        HStack(spacing: 0) {
             ForEach(tabs, id: \.self) { tab in
                 SeugiBottomNavigationCell(cellData: tab, isSelected: selectedTab == tab.type)
                     .frame(height: 64)
-                    .toHorizontal()
+                    .frame(maxWidth: .infinity)
                     .button {
                         selectedTab = tab.type
                     }
                     .applyAnimation()
             }
-            Spacer()
         }
         .frame(height: 64)
         .background(.white)
