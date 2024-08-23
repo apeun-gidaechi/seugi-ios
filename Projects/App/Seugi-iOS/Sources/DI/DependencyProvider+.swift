@@ -1,21 +1,7 @@
 import DIContainer
 
 // Feature
-import ChatDetailFeature
-import ChatFeature
-import CreateGroupChatFeature
-import HomeFeature
-import JoinWorkspaceFeature
-import LaunchScreenFeature
-import MainFeature
-import OnboardingFeature
-import RootFeature
-import NotificationFeature
-import ProfileFeature
-import PostNotificationFeature
-import CreateWorkspaceFeature
-import SettingProfileFeature
-import WorkspaceDetailFeature
+import Feature
 
 // Domain
 import Domain
@@ -33,7 +19,7 @@ public extension DependencyProvider {
         _ = Assembler([
             // Feature
             ChatDetailAssembly(),
-            ChatFeature.ChatAssembly(),
+            Feature.ChatAssembly(),
             CreateGroupChatAssembly(),
             HomeAssembly(),
             JoinWorkspaceAssembly(),
@@ -41,8 +27,8 @@ public extension DependencyProvider {
             MainAssembly(),
             OnboardingAssembly(),
             RootAssembly(),
-            NotificationFeature.NotificationAssembly(),
-            ProfileFeature.ProfileAssembly(),
+            Feature.NotificationAssembly(),
+            Feature.ProfileAssembly(),
             PostNotificationAssembly(),
             CreateWorkspaceAssembly(),
             SettingProfileAssembly(),

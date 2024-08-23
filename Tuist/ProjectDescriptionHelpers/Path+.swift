@@ -7,8 +7,8 @@ public extension ProjectDescription.Path {
     static func app(_ path: String) -> Self {
         .relativeToRoot("Projects/App/\(path)")
     }
-    static func relativeToFeature(_ path: String) -> Self {
-        .relativeToRoot("Projects/Feature/\(path)")
+    static var feature: Self {
+        .relativeToRoot("Projects/Feature")
     }
     static var component: Self {
         .relativeToRoot("Projects/Component")

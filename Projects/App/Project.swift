@@ -12,9 +12,8 @@ let project = Project.makeApp(
     targets: [
         .app(
             type: .iOS,
-            dependenceis: ModulePaths.Feature.allCases.map { TargetDependency.feature(of: $0, module: $0 == .Base ? .Interface : .Feature) }
-            + ModulePaths.Data.allCases.map { TargetDependency.data(of: $0) }
-            + [.diContainer],
+            dependenceis: ModulePaths.Data.allCases.map { TargetDependency.data(of: $0) }
+            + [.diContainer, .feature],
             infoPlist: .file(path: "Seugi-\(ModulePaths.App.iOS.rawValue)/Support/Info.plist"),
             entitlements: .file(path: "Seugi-\(ModulePaths.App.iOS.rawValue)/Support/App.entitlements")
         )

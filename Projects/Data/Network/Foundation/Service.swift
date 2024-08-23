@@ -34,7 +34,6 @@ public let decoder = JSONDecoder().then { decoder in
 }
 class Service<Target: SeugiEndpoint> {
     
-    
     func request<T: Decodable>(
         _ target: Target.Target,
         res: T.Type

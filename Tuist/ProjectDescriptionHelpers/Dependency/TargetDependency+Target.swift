@@ -8,13 +8,10 @@ public extension TargetDependency {
         )
     }
     
-    static func feature(
-        of target: ModulePaths.Feature,
-        module: MicroFeatureModule = .Interface
-    ) -> TargetDependency {
+    static var feature: TargetDependency {
         .project(
-            target: "\(target.rawValue)Feature\(module.rawValue)",
-            path: .relativeToFeature("\(target.rawValue)Feature")
+            target: "Feature",
+            path: .feature
         )
     }
     

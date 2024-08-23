@@ -1,10 +1,9 @@
 import SwiftUI
-import BaseFeatureInterface
 import Component
 import Swinject
 import DIContainer
-import RootFeatureInterface
 import SwiftUIUtil
+import Feature
 
 @main
 struct SeugiApp: App {

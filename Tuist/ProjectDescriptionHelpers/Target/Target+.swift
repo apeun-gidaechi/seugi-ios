@@ -23,23 +23,6 @@ public extension Target {
         )
     }
     
-    static func feature(
-        of target: ModulePaths.Feature,
-        module: MicroFeatureModule,
-        infoPlist: InfoPlist = .default,
-        dependencies: [TargetDependency]
-    ) -> Self {
-        .makeTarget(
-            name: "\(target.rawValue)Feature\(module.rawValue)",
-            product: module.product,
-            bundleId: "com.\(env.name).\(target.rawValue.lowercased())feature\(module.rawValue.lowercased())",
-            infoPlist: infoPlist,
-            sources: ["\(module.source)/**"],
-            scripts: [.swiftLint],
-            dependencies: dependencies
-        )
-    }
-    
     static func domain(
         name: String = ModulePaths.Single.Domain.rawValue,
         infoPlist: InfoPlist = .default,
