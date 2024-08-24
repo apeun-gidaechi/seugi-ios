@@ -1,4 +1,4 @@
-public enum WorkspaceRole: String, Codable, Comparable {
+public enum WorkspaceRole: String, Entity, Encodable, Comparable {
     public static func < (lhs: WorkspaceRole, rhs: WorkspaceRole) -> Bool {
         lhs.priority < rhs.priority
     }

@@ -3,51 +3,51 @@ import Combine
 
 final class ChatService: Service<ChatEndpoint>, ChatRepo {
     
-    func addMemberGroup(chatRoomId: String?, chatMemberUsers: [Int]) -> APIResult<BaseVoid> {
-        performRequest(.addMemberGroup(.init(chatRoomId: chatRoomId, chatMemberUsers: chatMemberUsers)))
+    func addMemberGroup(_ req: ChatMemberEventReq) -> APIResult<BaseVoid> {
+        performRequest(.addMemberGroup(req))
     }
     
-    func kickMemberGroup(chatRoomId: String?, chatMemberUsers: [Int]) -> APIResult<BaseVoid> {
-        performRequest(.kickMemberGroup(.init(chatRoomId: chatRoomId, chatMemberUsers: chatMemberUsers)))
+    func kickMemberGroup(_ req: ChatMemberEventReq) -> APIResult<BaseVoid> {
+        performRequest(.kickMemberGroup(req))
     }
     
-    func tossMemberGroup(chatRoomId: String?, chatMemberUsers: [Int]) -> APIResult<BaseVoid> {
-        performRequest(.tossMemberGroup(.init(chatRoomId: chatRoomId, chatMemberUsers: chatMemberUsers)))
+    func tossMemberGroup(_ req: ChatMemberEventReq) -> APIResult<BaseVoid> {
+        performRequest(.tossMemberGroup(req))
     }
     
-    func createGroup(roomName: String, workspaceId: String, joinUsers: [Int], chatRoomImg: String) -> APIResult<Base<String>> {
-        performRequest(.createGroup(.init(roomName: roomName, workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: chatRoomImg)), res: String.self)
+    func createGroup(_ req: CreateGroupChatReq) -> APIResult<Base<String>> {
+        performRequest(.createGroup(req), res: String.self)
     }
     
     func searchGroup(workspaceId: String, word: String) -> APIResult<Base<[Room]>> {
-        performRequest(.searchGroupByWord(workspaceId: workspaceId, word: word), res: [RoomRes].self)
+        performRequest(.searchGroupByWord(workspaceId: workspaceId, word: word), res: [Room].self)
     }
     
     func searchGroup(roomId: String) -> APIResult<Base<Room>> {
-        performRequest(.searchGroupById(roomId: roomId), res: RoomRes.self)
+        performRequest(.searchGroupById(roomId: roomId), res: Room.self)
     }
     
     func searchGroup(workspaceId: String) -> APIResult<Base<[Room]>> {
-        performRequest(.searchGroup(workspaceId: workspaceId), res: [RoomRes].self)
+        performRequest(.searchGroup(workspaceId: workspaceId), res: [Room].self)
     }
     
     func leftGroup(roomId: String) -> APIResult<BaseVoid> {
         performRequest(.leftGroup(roomId: roomId))
     }
     
-    func createPersonal(roomName: String, workspaceId: String, joinUsers: [Int], chatRoomImg: String) -> APIResult<Base<String>> {
-        performRequest(.createPersonal(.init(roomName: roomName, workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: chatRoomImg)), res: String.self)
+    func createPersonal(_ req: CreateGroupChatReq) -> APIResult<Base<String>> {
+        performRequest(.createPersonal(req), res: String.self)
     }
     
     func searchPersonal(workspaceId: String, word: String) -> APIResult<Base<[Room]>> {
-        performRequest(.searchPersonalByWord(workspaceId: workspaceId, word: word), res: [RoomRes].self)
+        performRequest(.searchPersonalByWord(workspaceId: workspaceId, word: word), res: [Room].self)
     }
     
     func searchPersonal(roomId: String) -> APIResult<Base<Room>> {
-        performRequest(.searchPersonalById(roomId: roomId), res: RoomRes.self)
+        performRequest(.searchPersonalById(roomId: roomId), res: Room.self)
     }
     
     func searchPersonal(workspaceId: String) -> APIResult<Base<[Room]>> {
-        performRequest(.searchPersonal(workspaceId: workspaceId), res: [RoomRes].self)
+        performRequest(.searchPersonal(workspaceId: workspaceId), res: [Room].self)
     }
 }

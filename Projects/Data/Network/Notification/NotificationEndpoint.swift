@@ -1,4 +1,5 @@
 import Moya
+import Domain
 
 enum NotificationEndpoint: SeugiEndpoint {
     case getNotifications(workspaceId: String)

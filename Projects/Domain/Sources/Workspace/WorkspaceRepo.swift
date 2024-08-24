@@ -13,3 +13,4 @@ public protocol WorkspaceRepo {
     func updateWorkspace(workspaceId: String, workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid>
     func getMyWaitList() -> APIResult<Base<[WorkspaceInfo]>>
 }
+

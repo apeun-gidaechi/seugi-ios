@@ -52,13 +52,15 @@ final class ProfileViewModel: BaseViewModel<ProfileViewModel.ProfileSubject> {
         sub(
             profileRepo.patchProfile(
                 workspaceId: workspaceId,
-                status: updateProfile.status,
-                nick: updateProfile.nick,
-                spot: updateProfile.spot,
-                belong: updateProfile.belong,
-                phone: updateProfile.phone,
-                wire: updateProfile.wire,
-                location: updateProfile.location
+                .init(
+                    status: updateProfile.status,
+                    nick: updateProfile.nick,
+                    spot: updateProfile.spot,
+                    belong: updateProfile.belong,
+                    phone: updateProfile.phone,
+                    wire: updateProfile.wire,
+                    location: updateProfile.location
+                )
             )
         ) {
             self.updateProfileFlow = .fetching

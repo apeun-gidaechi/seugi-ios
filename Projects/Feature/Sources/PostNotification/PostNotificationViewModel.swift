@@ -14,7 +14,7 @@ class PostNotificationViewModel: BaseViewModel<PostNotificationViewModel.PostNot
     @Published var fetchPostNotification: IdleFlow<Bool> = .idle
     
     func createNotification(workspaceId: String) {
-        sub(notificationRepo.postNotification(title: title, content: title, workspaceId: workspaceId)) {
+        sub(notificationRepo.postNotification(.init(title: title, content: title, workspaceId: workspaceId))) {
             self.fetchPostNotification = .fetching
         } success: { _ in
             self.fetchPostNotification = .success()
@@ -25,9 +25,11 @@ class PostNotificationViewModel: BaseViewModel<PostNotificationViewModel.PostNot
     
     func updateNotification(notificationId: Int) {
         sub(notificationRepo.updateNotification(
-            id: notificationId,
-            title: title,
-            content: content
+            .init(
+                id: notificationId,
+                title: title,
+                content: content
+            )
         )) {
             self.fetchPostNotification = .fetching
         } success: { _ in

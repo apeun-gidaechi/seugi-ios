@@ -3,7 +3,7 @@ import Foundation
 
 @Init()
 @Members()
-public struct Room: Entity, Hashable {
+public struct Room: Entity {
     public static func == (lhs: Room, rhs: Room) -> Bool {
         lhs.id == rhs.id
     }

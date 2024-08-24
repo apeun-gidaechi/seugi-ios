@@ -72,29 +72,27 @@ class Service<Target: SeugiEndpoint> {
                     return error
                 }
                 self.responeLog(target: target, response: response)
-                guard let error = try? decoder.decode(BaseVoidRes.self, from: response.data) else {
+                guard let error = try? decoder.decode(BaseVoid.self, from: response.data) else {
                     return APIError.unknown
                 }
-                return APIError.http(error.toEntity())
+                return APIError.http(error)
             }
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     
-    func performRequest<T: Decodable & EntityMappable>(
+    func performRequest<T: Entity>(
         _ target: Target.Target,
         res: T.Type
-    ) -> APIResult<Base<T.Entity>> {
-        return request(target, res: BaseRes<T>.self)
-            .map { $0.toEntity() }
+    ) -> APIResult<Base<T>> {
+        return request(target, res: Base<T>.self)
             .asResult()
     }
     
     func performRequest(
         _ target: Target.Target
     ) -> APIResult<BaseVoid> {
-        return request(target, res: BaseVoidRes.self)
-            .map { $0.toEntity() }
+        return request(target, res: BaseVoid.self)
             .asResult()
     }
     

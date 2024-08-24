@@ -3,26 +3,18 @@ import Combine
 
 final class ProfileService: Service<ProfileEndpoint>, ProfileRepo {
     func me(workspaceId: String) -> APIResult<Base<RetrieveProfile>> {
-        performRequest(.me(workspaceId: workspaceId), res: RetrieveProfileRes.self)
+        performRequest(.me(workspaceId: workspaceId), res: RetrieveProfile.self)
     }
     
     func others(workspaceId: String, memberId: String) -> APIResult<Base<RetrieveProfile>> {
-        performRequest(.others(workspaceId: workspaceId, memberId: memberId), res: RetrieveProfileRes.self)
+        performRequest(.others(workspaceId: workspaceId, memberId: memberId), res: RetrieveProfile.self)
     }
     
-    func patchProfile(workspaceId: String, status: String, nick: String, spot: String, belong: String, phone: String, wire: String, location: String) -> APIResult<BaseVoid> {
+    func patchProfile(workspaceId: String, _ req: PatchProfileReq) -> APIResult<BaseVoid> {
         performRequest(
             .patch(
                 workspaceId: workspaceId,
-                req: .init(
-                    status: status,
-                    nick: nick,
-                    spot: spot,
-                    belong: belong,
-                    phone: phone,
-                    wire: wire,
-                    location: location
-                )
+                req: req
             )
         )
     }

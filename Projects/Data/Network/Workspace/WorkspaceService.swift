@@ -3,7 +3,7 @@ import Domain
 final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
     
     func getWorkspaces() -> APIResult<Base<[Workspace]>> {
-        performRequest(.getWorkspaces, res: [WorkspaceRes].self)
+        performRequest(.getWorkspaces, res: [Workspace].self)
     }
     
     func getWorkspaceCode(workspaceId: String) -> APIResult<Base<String>> {
@@ -11,7 +11,7 @@ final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
     }
     
     func getWorkspace(code: String) -> APIResult<Base<WorkspaceInfo>> {
-        performRequest(.getWorkspace(code: code), res: WorkspaceInfoRes.self)
+        performRequest(.getWorkspace(code: code), res: WorkspaceInfo.self)
     }
     
     func joinWorkspace(workspaceId: String, workspaceCode: String, role: WorkspaceRole) -> APIResult<BaseVoid> {
@@ -19,11 +19,11 @@ final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
     }
     
     func getMembers(workspaceId: String) -> APIResult<Base<[RetrieveProfile]>> {
-        performRequest(.getMembers(workspaceId: workspaceId), res: [RetrieveProfileRes].self)
+        performRequest(.getMembers(workspaceId: workspaceId), res: [RetrieveProfile].self)
     }
     
     func getMembersChart(workspaceId: String) -> APIResult<Base<WorkspaceMembersChart>> {
-        performRequest(.getMembersChart(workspaceId: workspaceId), res: WorkspaceMembersChartRes.self)
+        performRequest(.getMembersChart(workspaceId: workspaceId), res: WorkspaceMembersChart.self)
     }
     
     func createWorkspace(workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid> {
@@ -43,7 +43,7 @@ final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
     }
     
     func getWaitList(workspaceId: String, workspaceRole: WorkspaceRole) -> APIResult<Base<[RetrieveMember]>> {
-        performRequest(.getWaitList(workspaceId: workspaceId, workspaceRole: workspaceRole), res: [RetrieveMemberRes].self)
+        performRequest(.getWaitList(workspaceId: workspaceId, workspaceRole: workspaceRole), res: [RetrieveMember].self)
     }
     
     func updateWorkspace(workspaceId: String, workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid> {
@@ -51,6 +51,6 @@ final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
     }
     
     func getMyWaitList() -> APIResult<Base<[WorkspaceInfo]>> {
-        performRequest(.getMyWaitList, res: [WorkspaceInfoRes].self)
+        performRequest(.getMyWaitList, res: [WorkspaceInfo].self)
     }
 }

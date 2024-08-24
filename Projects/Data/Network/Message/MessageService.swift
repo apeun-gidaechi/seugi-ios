@@ -9,7 +9,7 @@ final class MessageService: Service<MessageEndpoint> {
 // MARK: - HTTP Protocol
 extension MessageService: MessageRepo {
     public func getMessages(roomId: String, page: Int, size: Int) -> APIResult<Base<GetMessage>> {
-        performRequest(.getMessages(roomId: roomId, page: page, size: size), res: GetMessageRes.self)
+        performRequest(.getMessages(roomId: roomId, page: page, size: size), res: GetMessage.self)
     }
 }
 
@@ -37,7 +37,7 @@ extension MessageService: StompRepo {
     
     public func subSendError() -> AnyPublisher<SendStompErrorEntity, Never> {
         stomp.subSendError()
-            .map { $0.toEntity() }
+            .map { $0.toDomain() }
             .eraseToAnyPublisher()
     }
     
@@ -53,8 +53,7 @@ extension MessageService: StompMessageRepo {
     }
     
     public func subGetMessage(roomId: String) -> AnyPublisher<Message, Never> {
-        stomp.subBody(destination: "/exchange/chat.exchange/room.\(roomId)", res: MessageRes.self)
-            .map { $0.toEntity() }
+        stomp.subBody(destination: "/exchange/chat.exchange/room.\(roomId)", res: Message.self)
             .eraseToAnyPublisher()
     }
     

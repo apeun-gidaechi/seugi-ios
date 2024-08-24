@@ -55,7 +55,9 @@ public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewMo
         }
         
         let joinUsers = selectedMembers.map { $0.member.id }
-        sub(chatRepo.createGroup(roomName: roomName, workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: "")) {
+        sub(chatRepo.createGroup(
+            .init(roomName: roomName, workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: "")
+        )) {
             self.createFlow = .fetching
         } success: { _ in
             self.createFlow = .success()
@@ -66,7 +68,9 @@ public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewMo
     
     func createPersonalChat(workspaceId: String) {
         let joinUsers = selectedMembers.map { $0.member.id }
-        sub(chatRepo.createPersonal(roomName: "", workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: "")) {
+        sub(chatRepo.createPersonal(
+            .init(roomName: "", workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: "")
+        )) {
             self.createFlow = .fetching
         } success: { [self] res in
             let roomId = res.data

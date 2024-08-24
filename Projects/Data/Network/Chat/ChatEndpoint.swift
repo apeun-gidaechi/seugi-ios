@@ -1,4 +1,5 @@
 import Moya
+import Domain
 
 enum ChatEndpoint: SeugiEndpoint {
     

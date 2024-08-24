@@ -24,7 +24,11 @@ final class SettingProfileViewModel: BaseViewModel<SettingProfileViewModel.Setti
         guard let member else {
             return
         }
-        sub(memberRepo.edit(picture: picture, name: member.name, birth: member.birth)) {
+        sub(memberRepo.edit(
+            .init(
+                picture: picture, name: member.name, birth: member.birth
+            )
+        )) {
             self.editMemberFlow = .fetching
         } success: { _ in
             self.editMemberFlow = .success()

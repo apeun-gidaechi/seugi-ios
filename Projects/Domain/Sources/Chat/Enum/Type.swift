@@ -1,4 +1,4 @@
-public enum `Type`: String {
+public enum `Type`: String, Entity {
     case message = "MESSAGE"
     case img = "IMG"
     case file = "FILE"

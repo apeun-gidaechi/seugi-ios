@@ -1,7 +1,7 @@
 public protocol NotificationRepo {
     func getNotifications(workspaceId: String) -> APIResult<Base<[Notification]>>
-    func postNotification(title: String, content: String, workspaceId: String) -> APIResult<BaseVoid>
-    func updateNotification(id: Int, title: String, content: String) -> APIResult<BaseVoid>
+    func postNotification(_ req: PostNotificationReq) -> APIResult<BaseVoid>
+    func updateNotification(_ req: UpdateNotificationReq) -> APIResult<BaseVoid>
     func removeNotification(workspaceId: String, id: Int) -> APIResult<BaseVoid>
-    func emojiNotification(emoji: String, notificationId: Int) -> APIResult<BaseVoid>
+    func emojiNotification(_ req: NotificationEmojiReq) -> APIResult<BaseVoid>
 }
