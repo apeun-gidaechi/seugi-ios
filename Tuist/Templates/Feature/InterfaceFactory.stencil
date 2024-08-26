@@ -1,6 +1,0 @@
-import SwiftUI
-
-public protocol {{name}}Factory {
-    associatedtype ViewType: View
-    func makeView() -> ViewType
-}

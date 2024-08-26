@@ -7,16 +7,25 @@
 
 import ProjectDescription
 import ProjectDescriptionHelpers
+import EnvironmentPlugin
 
-let project = Project.makeApp(
+let project = Project.make(
+    name: "Seugi",
     targets: [
-        .app(
-            type: .iOS,
-            dependenceis: ModulePaths.Data.allCases.map { TargetDependency.data(of: $0) }
+        Target.target(
+            name: "Seugi-iOS",
+            destinations: env.destinations,
+            product: .app,
+            bundleId: baseBundleId,
+            deploymentTargets: env.deploymentTargets,
+            infoPlist: .file(path: "Seugi-iOS/Support/Info.plist"),
+            sources: ["Seugi-iOS/Sources/**"],
+            resources: ["Seugi-iOS/Resources/**"],
+            entitlements: .file(path: "Seugi-iOS/Support/App.entitlements"),
+            scripts: [.swiftLint],
+            dependencies: Modules.Data.allCases.map { TargetDependency.data(of: $0) }
             + [.diContainer, .feature],
-            infoPlist: .file(path: "Seugi-\(ModulePaths.App.iOS.rawValue)/Support/Info.plist"),
-            entitlements: .file(path: "Seugi-\(ModulePaths.App.iOS.rawValue)/Support/App.entitlements")
+            settings: makeSettings(xcconfig: .defaultXCConfig)
         )
-    ],
-    xcconfig: .relativeToXCConfig("Config.xcconfig")
+    ]
 )

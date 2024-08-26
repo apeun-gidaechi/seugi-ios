@@ -9,15 +9,13 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import EnvironmentPlugin
 
-let project = Project(
+let project = Project.make(
     name: "Feature",
     targets: [
-        .init(
+        .make(
             name: "Feature",
-            destinations: .iOS,
             product: .staticLibrary,
-            bundleId: "com.\(env.name).feature",
-            deploymentTargets: env.deploymentTargets,
+            bundleId: makeBundleId("Feature"),
             sources: ["Sources/**"],
             dependencies: [
                 .domain,

@@ -10,7 +10,9 @@ public struct ProjectEnvironment {
 
 public let env = ProjectEnvironment(
     name: "seugi",
-    organizationName: "apeun.gidaechi",
+    organizationName: "apeun-gidaechi",
     destinations: [.iPhone],
     deploymentTargets: .iOS("16.4")
 )
+
+public let baseBundleId = "com.\(env.name)"

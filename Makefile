@@ -2,7 +2,7 @@
 generate:
 	TUIST_ROOT_DIR=${PWD} mise exec -- tuist generate
 go:
-	mise exec -- tuist fetch
+	mise exec -- tuist install
 	make generate
 edit:
 	mise exec -- tuist edit

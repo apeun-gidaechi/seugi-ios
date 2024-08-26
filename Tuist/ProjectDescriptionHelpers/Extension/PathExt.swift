@@ -1,6 +1,6 @@
 import ProjectDescription
 
-public extension ProjectDescription.Path {
+public extension Path {
     static var dIContainer: Self {
         .relativeToRoot("Projects/DIContainer")
     }
@@ -24,5 +24,8 @@ public extension ProjectDescription.Path {
     }
     static func relativeToXCConfig(_ path: String) -> Self {
         .relativeToRoot("XCConfig/\(path)")
+    }
+    static var defaultXCConfig: Self {
+        .relativeToXCConfig("Config.xcconfig")
     }
 }

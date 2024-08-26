@@ -1,16 +1,11 @@
 import Foundation
 
-public enum ModulePaths {
-    case app(App)
+public enum Modules {
     case data(Data)
     case shared(Shared)
 }
 
-public extension ModulePaths {
-    
-    enum App: String, CaseIterable {
-        case iOS
-    }
+public extension Modules {
     
     enum Data: String, CaseIterable {
         case Core
@@ -22,11 +17,5 @@ public extension ModulePaths {
         case SwiftUIUtil
         case SwiftUtil
         case DateUtil
-    }
-    
-    enum Single: String {
-        case DIContainer
-        case Component
-        case Domain
     }
 }

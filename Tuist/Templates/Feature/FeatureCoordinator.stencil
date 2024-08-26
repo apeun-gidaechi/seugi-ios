@@ -1,7 +1,0 @@
-import SwiftUI
-
-struct {{name}}Coordinator: View {
-    var body: some View {
-        {{name}}View()
-    }
-}

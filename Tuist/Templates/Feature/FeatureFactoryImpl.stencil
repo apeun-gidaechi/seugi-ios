@@ -1,8 +1,0 @@
-import SwiftUI
-import {{name}}FeatureInterface
-
-final class {{name}}FactoryImpl: {{name}}Factory {
-    func makeView() -> some View {
-        {{name}}Coordinator()
-    }
-}

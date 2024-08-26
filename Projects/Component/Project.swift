@@ -8,17 +8,52 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
+import EnvironmentPlugin
 
-let project = Project.makeComponent(
-    resources: ["Resources/**"],
-    dependency: [
-        .SPM.Snapkit,
-        .SPM.Nuke,
-        .SPM.NukeUI,
-        .SPM.Flow,
-        .SPM.GoogleSignIn,
-        .domain,
-        .shared(of: .SwiftUIUtil)
-    ],
-    xcconfig: .relativeToXCConfig("Config.xcconfig")
+let project = Project.make(
+    name: "Component",
+    targets: [
+        component(
+            name: "Component",
+            resources: ["Resources/**"],
+            dependencies: [
+                .SPM.Snapkit,
+                .SPM.Nuke,
+                .SPM.NukeUI,
+                .SPM.Flow,
+                .SPM.GoogleSignIn,
+                .domain,
+                .shared(of: .SwiftUIUtil)
+            ]
+        ),
+        component(
+            name: "ComponentExample",
+            infoPlist: .file(path: "Support/Info.plist"),
+            product: .app,
+            sources: ["Example/**"],
+            dependencies: [
+                .component,
+                .domainTesting
+            ]
+        )
+    ]
 )
+
+func component(
+    name: String,
+    infoPlist: InfoPlist = .default,
+    product: Product = .framework,
+    sources: SourceFilesList = ["Sources/**"],
+    resources: ResourceFileElements? = nil,
+    dependencies: [TargetDependency] = []
+) -> Target {
+    .make(
+        name: name,
+        product: product,
+        bundleId: makeBundleId(name),
+        infoPlist: infoPlist,
+        sources: sources,
+        resources: resources,
+        dependencies: dependencies
+    )
+}

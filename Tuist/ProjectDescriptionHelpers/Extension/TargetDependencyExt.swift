@@ -3,7 +3,7 @@ import ProjectDescription
 public extension TargetDependency {
     static var diContainer: TargetDependency {
         .project(
-            target: ModulePaths.Single.DIContainer.rawValue,
+            target: "DIContainer",
             path: .dIContainer
         )
     }
@@ -17,27 +17,27 @@ public extension TargetDependency {
     
     static var component: TargetDependency {
         .project(
-            target: ModulePaths.Single.Component.rawValue,
+            target: "Component",
             path: .component
         )
     }
     
     static var domain: TargetDependency {
         .project(
-            target: ModulePaths.Single.Domain.rawValue,
+            target: "Domain",
             path: .domain
         )
     }
     
     static var domainTesting: TargetDependency {
         .project(
-            target: "\(ModulePaths.Single.Domain.rawValue)Testing",
+            target: "DomainTesting",
             path: .domain
         )
     }
     
     static func data(
-        of target: ModulePaths.Data
+        of target: Modules.Data
     ) -> TargetDependency {
         .project(
             target: "\(target.rawValue)",
@@ -46,7 +46,7 @@ public extension TargetDependency {
     }
     
     static func shared(
-        of target: ModulePaths.Shared
+        of target: Modules.Shared
     ) -> TargetDependency {
         .project(
             target: target.rawValue,
