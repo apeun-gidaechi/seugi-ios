@@ -6,22 +6,6 @@ public enum FetchFlow<Data: Equatable>: Equatable {
     case failure(_ error: APIError = .unknown)
     case fetching
     
-    public var isSuccess: Bool {
-        if case .success = self {
-            true
-        } else {
-            false
-        }
-    }
-    
-    public var isFailure: Bool {
-        if case .failure = self {
-            true
-        } else {
-            false
-        }
-    }
-    
     public var data: Data? {
         if case .success(let data) = self {
             data

@@ -27,7 +27,7 @@ struct NotificationCell: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text("\(notification.userName) · \(notification.creationDate?.localeMMDDEEEE ?? "")")
+                Text("\(notification.userName) · \(notification.creationDate?.parseString("M월 d일 EEEE") ?? "")")
                     .seugiColor(.gray(.g600))
                     .font(.body(.b2))
                 Spacer()

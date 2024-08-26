@@ -1,7 +1,7 @@
-import Foundation
 import Moya
+import Foundation
 
-extension Encodable {
+public extension Encodable {
     func toRequestParameters(encoding: ParameterEncoding) -> Moya.Task {
         if let data = try? JSONEncoder().encode(self),
            let object = (try? JSONSerialization.jsonObject(

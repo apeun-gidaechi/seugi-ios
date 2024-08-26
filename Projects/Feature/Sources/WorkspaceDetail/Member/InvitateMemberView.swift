@@ -39,7 +39,7 @@ struct InvitateMemberView: View {
                             .toLeading()
                             .padding(.leading, 4)
                         SeugiButton.small("학교코드 확인", type: .gray) {
-                            if viewModel.workspaceCode.isSuccess {
+                            if case .success = viewModel.workspaceCode {
                                 showWorkspaceCodeDialog = true
                                 alertProvider.present("초대코드는 \(viewModel.workspaceCode.data ?? "")입니다")
                                     .show()

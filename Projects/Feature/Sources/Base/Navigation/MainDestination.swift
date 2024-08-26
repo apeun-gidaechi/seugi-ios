@@ -8,7 +8,7 @@
 import Foundation
 import Domain
 
-enum MainDestination: Hashable {
+public enum MainDestination: Hashable {
     
     // chat
     case chatDetail(room: Room)
@@ -34,5 +34,4 @@ enum MainDestination: Hashable {
     case joinWorkspaceFinish
     case joinWorkspaceSuccess
     case joinWorkspaceRole
-
 }

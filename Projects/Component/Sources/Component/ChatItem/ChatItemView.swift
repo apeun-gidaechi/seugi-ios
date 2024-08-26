@@ -65,7 +65,7 @@ public struct ChatItemView: View {
                                         .seugiColor(.gray(.g600))
                                         .font(.caption(.c1))
                                 }
-                                Text(message.timestamp?.localeHHSS ?? "")
+                                Text(message.timestamp?.hhss ?? "")
                                     .seugiColor(.gray(.g600))
                                     .font(.caption(.c2))
                             }
