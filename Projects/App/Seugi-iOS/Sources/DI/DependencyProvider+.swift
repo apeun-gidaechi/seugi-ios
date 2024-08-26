@@ -19,12 +19,12 @@ public extension DependencyProvider {
         _ = Assembler([
             // Domain
             MemberAssembly(),
-            Network.ChatAssembly(),
+            ChatAssembly(),
             WorkspaceAssembly(),
             EmailAssembly(),
             MessageAssembly(),
-            Network.NotificationAssembly(),
-            Network.ProfileAssembly(),
+            NotificationAssembly(),
+            ProfileAssembly(),
             FileAssembly(),
             // Core
             KeyValueStoreAssembly()

@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apeun-gidaechi/apeun-stomp-kit",
       "state" : {
-        "revision" : "f55ca375f7bb371f4a7d0e7a9a4c9042384ad96a",
-        "version" : "1.2.10"
+        "revision" : "7f28bc49d1f04fbae01e42853248056efb8163e0",
+        "version" : "1.2.11"
       }
     },
     {
@@ -104,8 +104,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apeun-gidaechi/SocketRocket.git",
       "state" : {
-        "revision" : "ea0fca73f6444c29fd847ebd8a2fc5abadef093f",
-        "version" : "1.0.1"
+        "revision" : "8ffbc307b4f7ff343fad54456151b137bb57840a",
+        "version" : "0.0.1"
       }
     },
     {

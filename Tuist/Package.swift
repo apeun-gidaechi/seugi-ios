@@ -30,7 +30,7 @@ let package = Package(
         .package(url: "https://github.com/google/GoogleSignIn-iOS.git", exact: "6.1.0"),
         .package(url: "https://github.com/moya/Moya.git", exact: "15.0.3"),
         .package(url: "https://github.com/bestswlkh0310/SwiftBok", exact: "1.2.0"),
-        .package(url: "https://github.com/apeun-gidaechi/apeun-stomp-kit", exact: "1.2.10"),
+        .package(url: "https://github.com/apeun-gidaechi/apeun-stomp-kit", exact: "1.2.11"),
         .package(url: "https://github.com/devxoul/Then", exact: "3.0.0")
     ]
 )

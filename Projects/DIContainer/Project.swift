@@ -8,7 +8,7 @@ let project = Project.make(
     targets: [
         .make(
             name: "DIContainer",
-            product: .framework,
+            product: .staticFramework,
             bundleId: makeBundleId("DIContainer"),
             sources: ["Sources/**"],
             dependencies: [
