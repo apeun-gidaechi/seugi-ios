@@ -13,8 +13,8 @@ import SwiftUIUtil
 public struct SeugiCodeTextField: View {
     
     // MARK: - parameters
-    @Binding var text: String
-    let length: Int
+    @Binding private var text: String
+    private let length: Int
     
     public init(
         text: Binding<String>,

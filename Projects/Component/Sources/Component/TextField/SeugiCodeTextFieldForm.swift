@@ -11,8 +11,8 @@ import SwiftUI
 public struct SeugiCodeTextFieldForm: View {
     
     @Binding private var text: String
-    private var label: String
-    private var isForcedLabel: Bool
+    private let label: String
+    private let isForcedLabel: Bool
     private let length: Int
     
     public init(

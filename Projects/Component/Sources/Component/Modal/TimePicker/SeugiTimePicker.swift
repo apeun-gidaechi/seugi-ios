@@ -13,8 +13,8 @@ public struct SeugiTimePicker<C: View>: ModalViewProtocol {
     
     typealias P = TimePickerProvider
     
-    @StateObject var provider: TimePickerProvider
-    var content: () -> C
+    @StateObject private var provider: TimePickerProvider
+    let content: () -> C
     
     init(
         provider: TimePickerProvider,

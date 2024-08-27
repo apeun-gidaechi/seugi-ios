@@ -5,9 +5,9 @@ import SwiftUIUtil
 
 public struct SeugiRoomImage: View {
     
-    var url: String?
-    var type: SeugiRoomImageType
-    let label: String
+    private let url: String?
+    private let type: SeugiRoomImageType
+    private let label: String
     
     public init(
         _ url: String? = nil,

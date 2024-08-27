@@ -6,7 +6,11 @@ import Flow
 
 struct AppleSignInLabel: View {
     
-    var tapped: () -> Void
+    private let tapped: () -> Void
+    
+    init(tapped: @escaping () -> Void) {
+        self.tapped = tapped
+    }
     
     var body: some View {
         HStack(spacing: 8) {

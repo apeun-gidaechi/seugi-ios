@@ -10,8 +10,8 @@ import SwiftUI
 
 public struct SeugiToggle: View {
     
-    @Binding var isOn: Bool
-    var type: ToggleType
+    @Binding private var isOn: Bool
+    private let type: ToggleType
     
     public init(isOn: Binding<Bool>,
                 type: ToggleType = .default) {

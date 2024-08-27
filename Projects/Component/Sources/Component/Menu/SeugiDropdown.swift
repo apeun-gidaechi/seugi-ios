@@ -14,9 +14,9 @@ public protocol DropdownProtocol: Hashable & CustomStringConvertible {}
 public struct SeugiDropdown<T: DropdownProtocol>: View {
     
     // MARK: - parameters
-    let hint: String
-    var pickerOptions: [T]
-    @Binding var selection: T
+    private let hint: String
+    private let pickerOptions: [T]
+    @Binding private var selection: T
     
     public init(
         _ hint: String,

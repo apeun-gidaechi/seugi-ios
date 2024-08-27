@@ -3,11 +3,11 @@ import Foundation
 public final class AlertProvider: ObservableObject, ModalProvider {
     
     public struct Builder {
-        let title: String
-        let message: String?
-        let secondaryButton: AlertButton?
-        let primaryButton: AlertButton?
-        let provider: AlertProvider
+        private let title: String
+        private let message: String?
+        private let secondaryButton: AlertButton?
+        private let primaryButton: AlertButton?
+        private let provider: AlertProvider
         
         public init(
             title: String,

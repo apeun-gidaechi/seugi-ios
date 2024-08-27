@@ -12,21 +12,23 @@ import SwiftUIUtil
 public struct SeugiTextField: View {
     
     // MARK: - parameters
-    let hint: String
+    private let hint: String
     @Binding var text: String
-    let type: SeugiTextFieldType
+    private let type: SeugiTextFieldType
     
-    public init(_ hint: String = "",
-                text: Binding<String>,
-                type: SeugiTextFieldType = .none(hasXMark: true)) {
+    // MARK: - state
+    @FocusState private var isFocused: Bool
+    @State private var isHide = true
+    
+    public init(
+        _ hint: String = "",
+        text: Binding<String>,
+        type: SeugiTextFieldType = .none(hasXMark: true)
+    ) {
         self.hint = hint
         self._text = text
         self.type = type
     }
-    
-    // MARK: - local state
-    @FocusState private var isFocused: Bool
-    @State private var isHide = true
     
     // MARK: - View
     public var body: some View {

@@ -3,8 +3,8 @@ import SwiftUI
 
 struct SeugiBottomNavigationCell: View {
     
-    let cellData: SeugiBottomNavigationCellData
-    let isSelected: Bool
+    private let cellData: SeugiBottomNavigationCellData
+    private let isSelected: Bool
     
     init(
         cellData: SeugiBottomNavigationCellData,
@@ -17,7 +17,6 @@ struct SeugiBottomNavigationCell: View {
     var body: some View {
         
         let imageColor: Color = isSelected ? .seugi(.primary(.p500)) : .seugi(.gray(.g300))
-//        let textColor: Color = isSelected ? .seugi(.primary(.p500)) : .seugi(.gray(.g500))
         
         VStack(spacing: 0) {
             Image(icon: cellData.type.image)

@@ -3,8 +3,8 @@ import SwiftUIUtil
 
 public struct ChatItemViewCell: View {
     
-    private var text: String
-    private var type: ChatItemViewCellType
+    private let text: String
+    private let type: ChatItemViewCellType
     
     public init(text: String,
                 type: ChatItemViewCellType) {

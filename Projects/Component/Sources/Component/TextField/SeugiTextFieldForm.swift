@@ -10,11 +10,11 @@ import SwiftUI
 
 public struct SeugiTextFieldForm: View {
     
-    private var hint: String
+    private let hint: String
     @Binding private var text: String
-    private var type: SeugiTextFieldType
-    private var label: String
-    private var isForcedLabel: Bool
+    private let type: SeugiTextFieldType
+    private let label: String
+    private let isForcedLabel: Bool
     
     public init(
         _ hint: String,

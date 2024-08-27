@@ -9,7 +9,7 @@
 import SwiftUI
 
 public struct SeugiBadge: View {
-    var type: SeugiBadgeType
+    private let type: SeugiBadgeType
     public init(type: SeugiBadgeType) {
         self.type = type
     }

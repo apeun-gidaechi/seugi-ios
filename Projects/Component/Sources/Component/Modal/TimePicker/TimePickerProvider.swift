@@ -11,8 +11,8 @@ import Foundation
 public final class TimePickerProvider: ModalProvider {
     @Published var isPresent = false
     
-    var title: String?
-    var action: (() -> Void)?
+    @Published var title: String?
+    @Published var action: (() -> Void)?
     
     public init() {}
     

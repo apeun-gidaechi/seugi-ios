@@ -1,8 +1,8 @@
 import SwiftUI
 
 public struct SeugiBottomNavigationData: Hashable {
-    public var cellData: [SeugiBottomNavigationCellData]
-    public var selectedTab: SeugiBottomNavigationType
+    public let cellData: [SeugiBottomNavigationCellData]
+    public let selectedTab: SeugiBottomNavigationType
     
     public init(
         cellData: [SeugiBottomNavigationCellData],
@@ -14,8 +14,8 @@ public struct SeugiBottomNavigationData: Hashable {
 }
 
 public struct SeugiBottomNavigationCellData: Hashable {
-    public var type: SeugiBottomNavigationType
-    public var hasBadge: Bool
+    public let type: SeugiBottomNavigationType
+    public let hasBadge: Bool
     
     public init(
         type: SeugiBottomNavigationType,

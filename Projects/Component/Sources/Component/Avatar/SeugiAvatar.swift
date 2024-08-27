@@ -5,8 +5,8 @@ import SwiftUIUtil
 
 public struct SeugiAvatar: View {
     
-    var url: String?
-    var type: SeugiAvatarType
+    private let url: String?
+    private let type: SeugiAvatarType
     
     public init(
         _ url: String? = nil,
