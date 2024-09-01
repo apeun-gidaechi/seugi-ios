@@ -7,7 +7,10 @@ let project = Project.make(
     name: "Data",
     targets: [
         data(target: .Core),
-        data(target: .Local),
+        data(target: .Local, dependencies: [
+            .SPM.RealmSwift,
+            .SPM.Then
+        ]),
         data(target: .Network, dependencies: [
             .SPM.Moya,
             .SPM.CombineMoya,

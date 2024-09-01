@@ -17,7 +17,7 @@ import Swinject
 public extension DependencyProvider {
     func register() {
         _ = Assembler([
-            // Domain
+            // Network
             MemberAssembly(),
             ChatAssembly(),
             WorkspaceAssembly(),
@@ -26,6 +26,8 @@ public extension DependencyProvider {
             NotificationAssembly(),
             ProfileAssembly(),
             FileAssembly(),
+            // Local
+            LocalChatAssembly(),
             // Core
             KeyValueStoreAssembly()
         ], container: container)
