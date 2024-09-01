@@ -26,16 +26,19 @@ public struct ChatView: View {
         roomType == .personal ? $viewModel.personalSearchText : $viewModel.groupSearchText
     }
     
-    private var searchedRooms: [Room] {
+    private var searchedRooms: FetchFlow<[Room]> {
         roomType == .personal ? viewModel.searchedPersonalRooms : viewModel.searchedGroupRooms
+    }
+    
+    private var mergedRooms: FetchFlow<[Room]> {
+        isSearching ? searchedRooms : rooms
     }
     
     public var body: some View {
         ScrollView {
-            rooms.makeView {
+            mergedRooms.makeView {
                 ProgressView()
             } success: { rooms in
-                let rooms = isSearching ? searchedRooms : rooms
                 if rooms.isEmpty {
                     SeugiError("채팅방이 없어요", image: .kissingFaceWithClosedEyes)
                 } else {

@@ -16,27 +16,31 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
     /* personal */
     @Published public var personalRooms: FetchFlow<[Room]> = .fetching
     @Published public var personalSearchText = ""
-    public var searchedPersonalRooms: [Room] {
-        if personalSearchText.isEmpty {
-            personalRooms.data ?? []
-        } else {
-            personalRooms.data?.filter { room in
-                room.chatName.contains(personalSearchText)
-            } ?? []
+    public var searchedPersonalRooms: FetchFlow<[Room]> {
+        guard !personalSearchText.isEmpty else {
+            return personalRooms
         }
+        guard let rooms = personalRooms.data?.filter({ room in
+            room.chatName.contains(personalSearchText)
+        }) else {
+            return .fetching
+        }
+        return .success(rooms)
     }
     
     /* group */
     @Published public var groupRooms: FetchFlow<[Room]> = .fetching
     @Published public var groupSearchText = ""
-    public var searchedGroupRooms: [Room] {
-        if groupSearchText.isEmpty {
-            groupRooms.data ?? []
-        } else {
-            groupRooms.data?.filter { room in
-                room.chatName.contains(groupSearchText)
-            } ?? []
+    public var searchedGroupRooms: FetchFlow<[Room]> {
+        guard !groupSearchText.isEmpty else {
+            return groupRooms
         }
+        guard let rooms = groupRooms.data?.filter({ room in
+            room.chatName.contains(groupSearchText)
+        }) else {
+            return .fetching
+        }
+        return .success(rooms)
     }
     
     // MARK: - Method

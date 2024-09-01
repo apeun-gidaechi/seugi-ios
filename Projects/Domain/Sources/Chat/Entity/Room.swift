@@ -17,8 +17,9 @@ public struct Room: Entity {
     public let createdAt: Date?
     public let chatStatusEnum: ChatStatusEnum
     public let joinUserId: [RetrieveMember]
-//    public let lastMessage: String
-//    public let noReadCnt: Int
+    public let lastMessage: String
+    public let lastMessageTimestamp: Date
+    public let notReadCnt: Int
 }
 
 public extension Room {

@@ -21,7 +21,7 @@ public extension Date {
         }
     }
     
-    var hhss: String {
+    var adjustedString: String {
         let dateFormatter = DateFormatter()
         let calendar = Calendar.current
         let now = Date()
