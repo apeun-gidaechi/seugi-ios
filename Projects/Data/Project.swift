@@ -26,7 +26,7 @@ func data(
 ) -> Target {
     .make(
         name: target.rawValue,
-        product: .staticLibrary,
+        product: .staticFramework,
         bundleId: makeBundleId(target.rawValue),
         sources: ["\(target.rawValue)/**"],
         dependencies: dependencies + [
