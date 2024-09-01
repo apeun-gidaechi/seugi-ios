@@ -18,7 +18,7 @@ public struct ProfileView: View {
         ScrollView {
             VStack(spacing: 8) {
                 HStack(spacing: 10) {
-                    SeugiAvatar(type: .medium)
+                    SeugiAvatar(profile?.member.picture, type: .medium)
                     Text(profile?.member.name ?? "")
                         .font(.subtitle(.s2))
                         .seugiColor(.sub(.black))

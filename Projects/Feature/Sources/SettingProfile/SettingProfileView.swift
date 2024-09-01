@@ -23,11 +23,13 @@ public struct SettingProfileView: View {
             if let profile {
                 ZStack(alignment: .bottomTrailing) {
                     SeugiAvatar(profile.member.picture, type: .extraLarge)
-                    Image(icon: .addFill)
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 24, height: 24)
-                        .seugiColor(.gray(.g600))
+                    if profile.member.picture.isEmpty {
+                        Image(icon: .addFill)
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 24, height: 24)
+                            .seugiColor(.gray(.g600))
+                    }
                 }
                 .padding(.vertical, 8)
                 .button {
