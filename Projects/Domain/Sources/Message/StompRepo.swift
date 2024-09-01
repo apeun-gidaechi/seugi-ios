@@ -8,4 +8,6 @@ public protocol StompRepo {
     func subSendReciept() -> AnyPublisher<String, Never>
     func subSendError() -> AnyPublisher<SendStompErrorEntity, Never>
     func subPing() -> AnyPublisher<Void, Never>
+    func reissue(accessToken: String)
+    func reconnect(time: Double)
 }

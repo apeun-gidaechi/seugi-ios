@@ -15,11 +15,12 @@ extension MessageService: MessageRepo {
 
 // MARK: - Stomp Protocol
 extension MessageService: StompRepo {
+    
     func openSocket() {
         stomp.openSocket()
     }
     
-    func closeSocket() {
+    public func closeSocket() {
         stomp.disconnect()
     }
     
@@ -43,6 +44,14 @@ extension MessageService: StompRepo {
     
     public func subPing() -> AnyPublisher<Void, Never> {
         stomp.subPing()
+    }
+    
+    public func reissue(accessToken: String) {
+        stomp.connectionHeaders?["Authorization"] = "Bearer \(accessToken)"
+    }
+    
+    public func reconnect(time: Double) {
+        stomp.reconnect(time: time)
     }
 }
 

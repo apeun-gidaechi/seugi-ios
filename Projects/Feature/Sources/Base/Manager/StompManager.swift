@@ -9,6 +9,8 @@ public final class StompManager: BaseViewModel<StompManager.StompManagerSubject>
     // MARK: - Properties
     @Inject private var stompRepo: any StompRepo
     @Inject private var stompMessageRep: StompMessageRepo
+    @Inject private var keyValueRepo: any KeyValueRepo
+    @Inject private var memberRepo: any MemberRepo
     
     // MARK: - Method
     public func openSocket() {
@@ -25,10 +27,22 @@ public final class StompManager: BaseViewModel<StompManager.StompManagerSubject>
             }
             .store(in: &subscriptions)
         stompRepo.subDisconnect()
-            .sink { _ in
+            .sink { [self] _ in
                 log("🤩 STOMP disConnected")
-                self.stompRepo.openSocket()
-                log("🤩 STOMP reconnecting...")
+                guard let refreshToken = keyValueRepo.load(key: .refreshToken) as? String else {
+                    log("🤩 STOMP disConnected - RefreshToken not founded")
+                    return
+                }
+                sub(memberRepo.refresh(token: refreshToken)) {
+                    log("🤩 STOMP disConnected - try to reissue !")
+                } success: { res in
+                    let accessToken = String(res.data.split(separator: " ")[1])
+                    self.stompRepo.reissue(accessToken: accessToken)
+                    self.stompRepo.reconnect(time: 1)
+                    log("🤩 STOMP disConnected - reconnecting...")
+                } failure: { _ in
+                    log("🤩 STOMP disConnected - reissue failure... OTL")
+                }
             }
             .store(in: &subscriptions)
         stompRepo.subSendError()
