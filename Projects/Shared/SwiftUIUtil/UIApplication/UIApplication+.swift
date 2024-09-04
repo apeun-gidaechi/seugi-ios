@@ -16,7 +16,7 @@ public extension UIApplication {
     }
     
     var window: UIWindow? {
-        scene?.windows.first
+        scene?.keyWindow
     }
     
     var rootController: UIViewController? {

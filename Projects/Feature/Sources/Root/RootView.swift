@@ -6,6 +6,8 @@ import Component
 
 public struct RootView: View {
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     @StateObject private var timerManager = TimerManager()
     @StateObject private var appState = AppState()
     @StateObject private var router = Router()
@@ -43,6 +45,7 @@ public struct RootView: View {
         .environmentObject(appState)
         .environmentObject(stompManager)
         .environmentObject(fileManager)
+        .environmentObject(appDelegate)
         .onAppear {
             sleep(2)
             withAnimation {

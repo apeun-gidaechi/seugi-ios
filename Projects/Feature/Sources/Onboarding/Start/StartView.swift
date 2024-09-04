@@ -7,6 +7,7 @@ public struct StartView: View {
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var alertProvider: AlertProvider
+    @EnvironmentObject private var appDelegate: AppDelegate
     
     @StateObject private var viewModel = StartViewModel()
     @StateObject private var appleLoginViewModel = AppleLoginViewModel()
@@ -87,15 +88,20 @@ public struct StartView: View {
                         viewModel.signInFlow = .failure(.unknown)
                     }
                 }
-//                SeugiGoogleSignInButton { token in
-//                    isPresented = false
-//                    viewModel.signIn(token: token, provider: .google)
-//                } onFailure: {
-//                    isPresented = false
-//                    viewModel.signInFlow = .failure(.unknown)
-//                }
-//                .frame(height: 56)
-//                .frame(maxWidth: .infinity)
+                GoogleLoginButton {
+                    googleLoginViewModel.signIn { result in
+                        appDelegate.currentAuthorizationFlow = result
+                    } successCompletion: { state in
+                        isPresented = false
+                        guard let code = state.lastAuthorizationResponse.authorizationCode else {
+                            return
+                        }
+                        viewModel.signIn(token: code, provider: .google)
+                    } failureCompletion: {
+                        isPresented = false
+                        viewModel.signInFlow = .failure(.unknown)
+                    }
+                }
                 Spacer()
             }
             .padding(.horizontal, 20)

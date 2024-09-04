@@ -10,12 +10,18 @@ import Foundation
 import AppAuth
 
 let clientId = Bundle.main.object(forInfoDictionaryKey: "GoogleClientId") as? String ?? ""
+let bundleId = Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String ?? ""
 
 final class GoogleLoginViewModel: ObservableObject {
     
-    func authorize() {
+    func signIn(
+        resultCompletion: @escaping (OIDExternalUserAgentSession) -> Void,
+        successCompletion: @escaping (OIDAuthState) -> Void,
+        failureCompletion: @escaping () -> Void
+    ) {
+        
         let issuer = URL(string: "https://accounts.google.com")!
-        let redirectURI = URL(string: "com.hhhello0507.booster:/oauth2redirect/google")! // Use your actual redirect URI
+        let redirectURI = URL(string: "\(bundleId):/oauth2redirect/google")! // Use your actual redirect URI
 
         // Discovery document 가져오기
         OIDAuthorizationService.discoverConfiguration(forIssuer: issuer) { configuration, error in
@@ -36,26 +42,21 @@ final class GoogleLoginViewModel: ObservableObject {
             )
 
             // Authorization request 실행
-            
-            guard let rootViewController = UIApplication.shared.connectedScenes
-                .filter({ $0.activationState == .foregroundActive })
-                .compactMap({ $0 as? UIWindowScene })
-                .compactMap({ $0.keyWindow })
-                .first?.rootViewController else {
+            guard let rootViewController = UIApplication.shared.rootController else {
                 print("rootv not")
                 return
             }
             
-            OIDAuthState.authState(
-                byPresenting: request, presenting: rootViewController) { authState, error in
-                    if let authState = authState {
-//                        self.authState = authState
-//                        self.authorizationCode = authState.lastAuthorizationResponse.authorizationCode // wow
-//                        print("Got authorization code: \(self.authorizationCode ?? "No code")")
-                    } else {
-                        print("Authorization error: \(error?.localizedDescription ?? "Unknown error")")
-                    }
+            let result = OIDAuthState.authState(byPresenting: request, presenting: rootViewController) { authState, error in
+                if let authState = authState {
+                    successCompletion(authState)
+                } else if error != nil {
+                    failureCompletion()
+                } else {
+                    print("Authorization error: \(error?.localizedDescription ?? "Unknown error")")
                 }
+            }
+            resultCompletion(result)
         }
     }
 }

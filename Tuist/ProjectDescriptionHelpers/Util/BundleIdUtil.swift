@@ -9,5 +9,5 @@ import ProjectDescription
 import EnvironmentPlugin
 
 public func makeBundleId(_ suffix: String) -> String {
-    return "com.\(env.name).\(suffix)"
+    return "\(baseBundleId).\(suffix)"
 }
