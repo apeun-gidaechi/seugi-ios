@@ -12,7 +12,6 @@ let project = Project.make(
             bundleId: makeBundleId("Domain"),
             sources: ["Sources/**"],
             dependencies: [
-                .SPM.SwiftBok,
                 .shared(of: .DateUtil),
                 .shared(of: .SwiftUtil)
             ]

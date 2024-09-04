@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftBok
 
 public struct AlertButton {
     let title: String

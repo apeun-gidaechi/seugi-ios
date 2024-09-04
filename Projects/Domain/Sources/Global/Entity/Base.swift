@@ -1,17 +1,19 @@
-import SwiftBok
-
-@Init()
-@Members()
-public struct Base<Data: Entity>: Entity {
+public struct Base<DATA: Entity>: Entity {
     public let status: Int
     public let success: Bool
     public let state: String
     public let message: String
-    public let data: Data
+    public let data: DATA
+    
+    public init(status: Int, success: Bool, state: String, message: String, data: DATA) {
+        self.status = status
+        self.success = success
+        self.state = state
+        self.message = message
+        self.data = data
+    }
 }
 
-@Init()
-@Members()
 public struct BaseVoid: Entity, Equatable {
     public let status: Int
     public let success: Bool
