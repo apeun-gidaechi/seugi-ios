@@ -13,10 +13,6 @@ public struct StartView: View {
     @StateObject private var appleLoginViewModel = AppleLoginViewModel()
     @StateObject private var googleLoginViewModel = GoogleLoginViewModel()
     
-    @State private var offsetY1: CGFloat = 16
-    @State private var opacity1 = 0.0
-    @State private var offsetY2: CGFloat = 16
-    @State private var opacity2 = 0.0
     @State private var isPresented = false
     
     public init() {}
@@ -29,8 +25,7 @@ public struct StartView: View {
                 Spacer()
                 Image(image: .cloud1)
                     .toTrailing()
-                    .opacity(opacity1)
-                    .offset(y: offsetY1)
+                    .fadeInEffect(time: 0.25)
                 Spacer()
                 VStack(alignment: .leading, spacing: 0) {
                     Text("스기")
@@ -41,73 +36,25 @@ public struct StartView: View {
                         .font(.subtitle(.s2))
                         .seugiColor(.sub(.white))
                 }
-                .toLeading()
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, 24)
-                .opacity(opacity1)
-                .offset(y: offsetY1)
+                .fadeInEffect(time: 0.25)
                 Spacer()
                 Image(image: .cloud2)
                     .toLeading()
-                    .opacity(opacity2)
-                    .offset(y: offsetY2)
+                    .fadeInEffect(time: 0.75)
                 Spacer()
                 SeugiButton.large("시작하기", type: .shadow) {
                     isPresented = true
                 }
                 .padding(.bottom, 16)
                 .padding(.horizontal, 20)
-                .opacity(opacity2)
-                .offset(y: offsetY2)
-            }
-        }
-        .task {
-            try? await Task.sleep(for: .seconds(0.25))
-            withAnimation(.easeInOut(duration: 1)) {
-                offsetY1 = 0
-                opacity1 = 1
-            }
-            try? await Task.sleep(for: .seconds(0.75))
-            withAnimation(.easeInOut(duration: 1)) {
-                offsetY2 = 0
-                opacity2 = 1
+                .fadeInEffect(time: 0.75)
             }
         }
         .sheet(isPresented: $isPresented) {
-            VStack(spacing: 8) {
-                SeugiButton.large("이메일로 계속하기", type: .black) {
-                    isPresented = false
-                    router.navigate(to: OnboardingDestination.emailSignIn)
-                }
-                .padding(.top, 20)
-                AppleLoginButton {
-                    appleLoginViewModel.signIn { idToken, _ in
-                        isPresented = false
-                        viewModel.signIn(token: idToken, provider: .apple)
-                    } failureCompletion: {
-                        isPresented = false
-                        viewModel.signInFlow = .failure(.unknown)
-                    }
-                }
-                GoogleLoginButton {
-                    googleLoginViewModel.signIn { result in
-                        appDelegate.currentAuthorizationFlow = result
-                    } successCompletion: { state in
-                        isPresented = false
-                        guard let code = state.lastAuthorizationResponse.authorizationCode else {
-                            return
-                        }
-                        viewModel.signIn(token: code, provider: .google)
-                    } failureCompletion: {
-                        isPresented = false
-                        viewModel.signInFlow = .failure(.unknown)
-                    }
-                }
-                Spacer()
-            }
-            .padding(.horizontal, 20)
-            .presentationDetents([.height(256)])
+            sheet
         }
-        .eraseToAnyView()
         .onAppear {
             viewModel.subscribe { subject in
                 switch subject {
@@ -122,5 +69,41 @@ public struct StartView: View {
                 .message("잠시 후 다시 시도해 주세요")
                 .show()
         }
+    }
+    
+    private var sheet: some View {
+        VStack(spacing: 8) {
+            SeugiButton.large("이메일로 계속하기", type: .black) {
+                isPresented = false
+                router.navigate(to: OnboardingDestination.emailSignIn)
+            }
+            .padding(.top, 20)
+            AppleLoginButton {
+                appleLoginViewModel.signIn { idToken, _ in
+                    isPresented = false
+                    viewModel.signIn(token: idToken, provider: .apple)
+                } failureCompletion: {
+                    isPresented = false
+                    viewModel.signInFlow = .failure(.unknown)
+                }
+            }
+            GoogleLoginButton {
+                googleLoginViewModel.signIn { result in
+                    appDelegate.currentAuthorizationFlow = result
+                } successCompletion: { state in
+                    isPresented = false
+                    guard let code = state.lastAuthorizationResponse.authorizationCode else {
+                        return
+                    }
+                    viewModel.signIn(token: code, provider: .google)
+                } failureCompletion: {
+                    isPresented = false
+                    viewModel.signInFlow = .failure(.unknown)
+                }
+            }
+            Spacer()
+        }
+        .padding(.horizontal, 20)
+        .presentationDetents([.height(256)])
     }
 }
