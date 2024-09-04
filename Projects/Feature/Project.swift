@@ -21,7 +21,7 @@ let project = Project.make(
             dependencies: [
                 .domain,
                 .component,
-                .SPM.AppAuth
+                .SPM.GoogleSignIn
             ]
         )
     ]
