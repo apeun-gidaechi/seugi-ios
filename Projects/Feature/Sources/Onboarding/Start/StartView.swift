@@ -89,14 +89,12 @@ public struct StartView: View {
             }
             GoogleLoginButton {
                 googleLoginViewModel.signIn { result in
-                    appDelegate.currentAuthorizationFlow = result
-                } successCompletion: { state in
                     isPresented = false
-                    guard let code = state.lastAuthorizationResponse.authorizationCode else {
+                    guard let code = result.serverAuthCode else {
                         return
                     }
                     viewModel.signIn(token: code, provider: .google)
-                } failureCompletion: {
+                } failureCompletion: { _ in
                     isPresented = false
                     viewModel.signInFlow = .failure(.unknown)
                 }
