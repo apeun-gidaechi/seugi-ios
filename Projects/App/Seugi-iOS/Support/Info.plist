@@ -35,6 +35,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>GIDServerClientID</key>
+	<string>${GOOGLE_SERVER_CLIENT_ID}</string>
 	<key>GIDClientID</key>
 	<string>${GOOGLE_CLIENT_ID}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
