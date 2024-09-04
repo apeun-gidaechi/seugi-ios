@@ -21,7 +21,6 @@ let project = Project.make(
                 .SPM.Nuke,
                 .SPM.NukeUI,
                 .SPM.Flow,
-                .SPM.GoogleSignIn,
                 .domain,
                 .shared(of: .SwiftUIUtil)
             ]

@@ -8,13 +8,15 @@ public struct StartView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var alertProvider: AlertProvider
     
+    @StateObject private var viewModel = StartViewModel()
+    @StateObject private var appleLoginViewModel = AppleLoginViewModel()
+    @StateObject private var googleLoginViewModel = GoogleLoginViewModel()
+    
     @State private var offsetY1: CGFloat = 16
     @State private var opacity1 = 0.0
     @State private var offsetY2: CGFloat = 16
     @State private var opacity2 = 0.0
     @State private var isPresented = false
-    
-    @StateObject private var viewModel = StartViewModel()
     
     public init() {}
     
@@ -76,23 +78,24 @@ public struct StartView: View {
                     router.navigate(to: OnboardingDestination.emailSignIn)
                 }
                 .padding(.top, 20)
-                SeugiAppleSignInButton { token in
-                    isPresented = false
-                    viewModel.signIn(token: token, provider: .apple)
-                } onFailure: {
-                    isPresented = false
-                    viewModel.signInFlow = .failure(.unknown)
+                AppleLoginButton {
+                    appleLoginViewModel.signIn { idToken, _ in
+                        isPresented = false
+                        viewModel.signIn(token: idToken, provider: .apple)
+                    } failureCompletion: {
+                        isPresented = false
+                        viewModel.signInFlow = .failure(.unknown)
+                    }
                 }
-                .frame(height: 56)
-                SeugiGoogleSignInButton { token in
-                    isPresented = false
-                    viewModel.signIn(token: token, provider: .google)
-                } onFailure: {
-                    isPresented = false
-                    viewModel.signInFlow = .failure(.unknown)
-                }
-                .frame(height: 56)
-                .frame(maxWidth: .infinity)
+//                SeugiGoogleSignInButton { token in
+//                    isPresented = false
+//                    viewModel.signIn(token: token, provider: .google)
+//                } onFailure: {
+//                    isPresented = false
+//                    viewModel.signInFlow = .failure(.unknown)
+//                }
+//                .frame(height: 56)
+//                .frame(maxWidth: .infinity)
                 Spacer()
             }
             .padding(.horizontal, 20)

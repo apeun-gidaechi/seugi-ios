@@ -8,6 +8,7 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 import EnvironmentPlugin
+import DependencyPlugin
 
 let project = Project.make(
     name: "Feature",
@@ -19,7 +20,8 @@ let project = Project.make(
             sources: ["Sources/**"],
             dependencies: [
                 .domain,
-                .component
+                .component,
+                .SPM.AppAuth
             ]
         )
     ]

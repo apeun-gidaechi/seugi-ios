@@ -10,7 +10,7 @@ public extension TargetDependency.SPM {
     static let Flow = TargetDependency.external(name: "Flow")
     static let Nuke = TargetDependency.external(name: "Nuke")
     static let NukeUI = TargetDependency.external(name: "NukeUI")
-    static let GoogleSignIn = TargetDependency.external(name: "GoogleSignIn")
+    static let AppAuth = TargetDependency.external(name: "AppAuth")
     static let Moya = TargetDependency.external(name: "Moya")
     static let CombineMoya = TargetDependency.external(name: "CombineMoya")
     static let SwiftBok = TargetDependency.external(name: "SwiftBok")
