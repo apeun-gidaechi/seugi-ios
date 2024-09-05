@@ -34,9 +34,14 @@ public struct CreateWorkspaceView: View {
             SeugiTextFieldForm("학교 이름을 입력해 주세요", text: $viewModel.workspaceName, label: "학교 이름")
 
             Spacer()
-            SeugiButton.large("계속하기", type: .primary, isLoading: viewModel.createWorkspaceFlow == .fetching) {
+            SeugiButton.large(
+                "계속하기",
+                type: .primary,
+                isLoading: viewModel.createWorkspaceFlow == .fetching
+            ) {
                 viewModel.createWorkspace(imageUrl: photoUrl ?? "")
             }
+            .disabled(viewModel.workspaceName.isEmpty)
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)

@@ -28,9 +28,11 @@ public struct SeugiChatList: View {
                             .seugiColor(.gray(.g500))
                     }
                 }
-                Text(room.lastMessage)
-                    .font(.body(.b2))
-                    .seugiColor(.gray(.g600))
+                if let lastMessage = room.lastMessage {
+                    Text(lastMessage)
+                        .font(.body(.b2))
+                        .seugiColor(.gray(.g600))
+                }
             }
             Spacer()
             VStack(spacing: 4) {

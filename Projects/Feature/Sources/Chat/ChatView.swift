@@ -108,6 +108,10 @@ public struct ChatView: View {
                     appState.logout()
                 }
             }
+            guard let selectedWorkspace = appState.selectedWorkspace else {
+                return
+            }
+            viewModel.fetchChats(workspaceId: selectedWorkspace.workspaceId)
         }
         .onDisappear {
             viewModel.clearSearchText()

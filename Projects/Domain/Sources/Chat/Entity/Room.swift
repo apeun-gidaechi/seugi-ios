@@ -14,11 +14,11 @@ public struct Room: Entity {
     public let createdAt: Date?
     public let chatStatusEnum: ChatStatusEnum
     public let joinUserId: [RetrieveMember]
-    public let lastMessage: String
+    public let lastMessage: String?
     public let lastMessageTimestamp: Date
     public let notReadCnt: Int
     
-    public init(id: String, workspaceId: String, type: RoomType, roomAdmin: Int, chatName: String, chatRoomImg: String?, createdAt: Date?, chatStatusEnum: ChatStatusEnum, joinUserId: [RetrieveMember], lastMessage: String, lastMessageTimestamp: Date, notReadCnt: Int) {
+    public init(id: String, workspaceId: String, type: RoomType, roomAdmin: Int, chatName: String, chatRoomImg: String?, createdAt: Date?, chatStatusEnum: ChatStatusEnum, joinUserId: [RetrieveMember], lastMessage: String?, lastMessageTimestamp: Date, notReadCnt: Int) {
         self.id = id
         self.workspaceId = workspaceId
         self.type = type
