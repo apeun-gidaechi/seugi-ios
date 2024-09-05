@@ -2,16 +2,18 @@ import DIContainer
 import Domain
 import Foundation
 
-public final class NotificationViewModel: BaseViewModel<NotificationViewModel.NotificationSubject> {
+final class NotificationViewModel: BaseViewModel<NotificationViewModel.NotificationSubject> {
     
-    public enum NotificationSubject {}
+    enum NotificationSubject {}
     
     // MARK: - Repo
     @Inject private var notificationRepo: NotificationRepo
     
     // MARK: - State
-    @Published public var notifications: FetchFlow<[Domain.Notification]> = .fetching
-    @Published public var removeNotificationFlow: IdleFlow<Bool> = .idle
+    @Published var notifications: FetchFlow<[Domain.Notification]> = .fetching
+    @Published var removeNotificationFlow: IdleFlow<Bool> = .idle
+    @Published var selectedNotificationForAddEmoji: Domain.Notification?
+    @Published var addEmojiFlow: IdleFlow<Bool> = .idle
     
     public func fetchNotifications(workspaceId: String) {
         sub(notificationRepo.getNotifications(workspaceId: workspaceId)) {
@@ -25,13 +27,29 @@ public final class NotificationViewModel: BaseViewModel<NotificationViewModel.No
         }
     }
     
-    public func removeNotification(workspaceId: String, notificationId: Int) {
+    func removeNotification(workspaceId: String, notificationId: Int) {
         sub(notificationRepo.removeNotification(workspaceId: workspaceId, id: notificationId)) {
             self.removeNotificationFlow = .fetching
         } success: { _ in
             self.removeNotificationFlow = .success()
         } failure: {
             self.removeNotificationFlow = .failure($0)
+        }
+    }
+    
+    func patchEmoji(emoji: String, workspaceId: String) {
+        guard let selectedNotificationForAddEmoji else {
+            return
+        }
+        sub(notificationRepo.emojiNotification(
+            .init(emoji: emoji, notificationId: selectedNotificationForAddEmoji.id)
+        )) {
+            self.addEmojiFlow = .fetching
+        } success: { _ in
+            self.addEmojiFlow = .success()
+            self.fetchNotifications(workspaceId: workspaceId)
+        } failure: { err in
+            self.addEmojiFlow = .failure(err)
         }
     }
 }

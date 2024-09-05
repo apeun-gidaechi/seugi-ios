@@ -9,6 +9,8 @@ public struct NotificationView: View {
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var alertProvider: AlertProvider
     
+    @State private var addEmojiPresent = false
+    
     private var profile: RetrieveProfile? {
         appState.profile.data
     }
@@ -49,6 +51,9 @@ public struct NotificationView: View {
                                         .show()
                                 case .reportNotification:
                                     break
+                                case .addEmoji:
+                                    addEmojiPresent = true
+                                    viewModel.selectedNotificationForAddEmoji = notification
                                 }
                             }
 //                            .button {
@@ -88,6 +93,12 @@ public struct NotificationView: View {
             alertProvider.present("삭제 실패")
                 .primaryButton("확인") {}
                 .show()
+        }
+        .emojiPicker($addEmojiPresent) { emoji in
+            guard let selectedWorkspace = appState.selectedWorkspace else {
+                return
+            }
+            viewModel.patchEmoji(emoji: emoji, workspaceId: selectedWorkspace.workspaceId)
         }
     }
 }

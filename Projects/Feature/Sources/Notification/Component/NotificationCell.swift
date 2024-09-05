@@ -9,6 +9,7 @@ struct NotificationCell: View {
         case updateNotification
         case removeNotification
         case reportNotification
+        case addEmoji
     }
     
     private let profileId: Int
@@ -70,6 +71,9 @@ struct NotificationCell: View {
                     .frame(width: 28, height: 28)
                     .seugiColor(.gray(.g600))
                     .padding(4)
+                    .button {
+                        action(.addEmoji)
+                    }
                 Spacer()
             }
         }
