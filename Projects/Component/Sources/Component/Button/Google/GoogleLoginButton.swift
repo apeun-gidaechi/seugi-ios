@@ -1,7 +1,6 @@
 import UIKit
 import SwiftUI
 import AuthenticationServices
-import SnapKit
 import SwiftUIUtil
 
 public struct GoogleLoginButton: View {

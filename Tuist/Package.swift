@@ -24,7 +24,6 @@ let package = Package(
     name: "Seugi",
     dependencies: [
         .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.0"),
-        .package(url: "https://github.com/SnapKit/SnapKit.git", exact: "5.7.1"),
         .package(url: "https://github.com/tevelee/SwiftUI-Flow.git", exact: "1.1.0"),
         .package(url: "https://github.com/kean/Nuke.git", exact: "12.5.0"),
         .package(url: "https://github.com/google/GoogleSignIn-iOS.git", exact: "8.0.0"),

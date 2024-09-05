@@ -17,7 +17,6 @@ let project = Project.make(
             name: "Component",
             resources: ["Resources/**"],
             dependencies: [
-                .SPM.Snapkit,
                 .SPM.Nuke,
                 .SPM.NukeUI,
                 .SPM.Flow,
