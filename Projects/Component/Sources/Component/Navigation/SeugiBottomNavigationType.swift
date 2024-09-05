@@ -39,7 +39,7 @@ public enum SeugiBottomNavigationType: CaseIterable {
         case .home: "홈"
         case .chat: "채팅"
         case .room: "단체"
-        case .notification: "알림"
+        case .notification: "공지"
         case .profile: "프로필"
         }
     }

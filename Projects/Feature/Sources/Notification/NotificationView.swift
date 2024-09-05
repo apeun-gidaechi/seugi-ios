@@ -20,7 +20,7 @@ public struct NotificationView: View {
             } success: { notifications in
                 LazyVStack(spacing: 8) {
                     if notifications.isEmpty {
-                        SeugiError("알림이 없어요", image: .faceWithDiagonalMouth)
+                        SeugiError("공지가 없어요", image: .faceWithDiagonalMouth)
                     } else {
                         Spacer()
                             .frame(height: 12)
@@ -47,6 +47,8 @@ public struct NotificationView: View {
                                         }
                                         .secondaryButton("닫기") {}
                                         .show()
+                                case .reportNotification:
+                                    break
                                 }
                             }
 //                            .button {
@@ -71,7 +73,7 @@ public struct NotificationView: View {
         }
         .padding(.horizontal, 20)
         .seugiBackground(.primary(.p050))
-        .seugiTopBar("알림", background: .seugi(.primary(.p050)))
+        .seugiTopBar("공지", background: .seugi(.primary(.p050)))
         .hideBackButton()
         .if(appState.workspaceRole != .student) {
             $0.button(.writeLine) {

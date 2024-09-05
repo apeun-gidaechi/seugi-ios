@@ -32,7 +32,7 @@ public struct PostNotificationView: View {
             .padding(.top, 6)
         }
         .scrollIndicators(.hidden)
-        .seugiTopBar(type == .createNotification ? "새 알림 작성" : "알림 수정")
+        .seugiTopBar(type == .createNotification ? "새 공지 작성" : "공지 수정")
         .subView {
             SeugiButton.small("완료", type: .transparent, isLoading: viewModel.fetchPostNotification == .fetching) {
                 hideKeyboard() // UX
