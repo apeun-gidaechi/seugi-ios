@@ -20,6 +20,7 @@ let project = Project.make(
                 .SPM.Nuke,
                 .SPM.NukeUI,
                 .SPM.Flow,
+                .SPM.MCEmojiPicker,
                 .domain,
                 .shared(of: .SwiftUIUtil)
             ]

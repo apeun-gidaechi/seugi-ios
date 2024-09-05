@@ -15,4 +15,5 @@ public extension TargetDependency.SPM {
     static let ApeunStompKit = TargetDependency.external(name: "ApeunStompKit")
     static let Then = TargetDependency.external(name: "Then")
     static let RealmSwift = TargetDependency.external(name: "RealmSwift")
+    static let MCEmojiPicker = TargetDependency.external(name: "MCEmojiPicker")
 }
