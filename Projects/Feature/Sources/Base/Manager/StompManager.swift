@@ -9,8 +9,9 @@ public final class StompManager: BaseViewModel<StompManager.StompManagerSubject>
     // MARK: - Properties
     @Inject private var stompRepo: any StompRepo
     @Inject private var stompMessageRep: StompMessageRepo
-    @Inject private var keyValueRepo: any KeyValueRepo
     @Inject private var memberRepo: any MemberRepo
+    @Inject private var keyValueRepo: any KeyValueRepo
+    @Inject private var keychainRepo: any KeychainRepo
     
     // MARK: - Method
     public func openSocket() {
@@ -29,7 +30,7 @@ public final class StompManager: BaseViewModel<StompManager.StompManagerSubject>
         stompRepo.subDisconnect()
             .sink { [self] _ in
                 log("🤩 STOMP disConnected")
-                guard let refreshToken = keyValueRepo.load(key: .refreshToken) as? String else {
+                guard let refreshToken = keychainRepo.load(key: .refreshToken) as? String else {
                     log("🤩 STOMP disConnected - RefreshToken not founded")
                     return
                 }

@@ -11,6 +11,7 @@ import SwiftUtil
 final class AuthInterceptor: Moya.RequestInterceptor {
     
     @Inject private var keyValueStore: any KeyValueRepo
+    @Inject private var keychainRepo: any KeychainRepo
     @Inject private var memberRepo: MemberRepo
     
     private var subscriptions = Set<AnyCancellable>()
@@ -58,7 +59,7 @@ final class AuthInterceptor: Moya.RequestInterceptor {
             return
         }
         
-        let refreshToken = keyValueStore.load(key: .refreshToken) ?? ""
+        let refreshToken = keychainRepo.load(key: .refreshToken) ?? ""
         guard !refreshToken.isEmpty else {
             log("❌ AuthInterceptor - Refresh Token is Empty")
             failureReissue()
@@ -90,7 +91,7 @@ final class AuthInterceptor: Moya.RequestInterceptor {
     
     private func failureReissue() {
         keyValueStore.delete(key: .accessToken)
-        keyValueStore.delete(key: .refreshToken)
+        keychainRepo.delete(key: .refreshToken)
     }
     
     deinit {

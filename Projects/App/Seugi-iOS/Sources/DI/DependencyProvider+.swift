@@ -29,7 +29,8 @@ public extension DependencyProvider {
             // Local
             LocalChatAssembly(),
             // Core
-            KeyValueStoreAssembly()
+            KeyValueAssembly(),
+            KeychainAssembly()
         ], container: container)
     }
 }

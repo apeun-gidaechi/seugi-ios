@@ -13,6 +13,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
     
     // MARK: - Repo
     @Inject private var keyValueRepo: KeyValueRepo
+    @Inject private var keychainRepo: KeychainRepo
     @Inject private var workspaceRepo: WorkspaceRepo
     @Inject private var profileRepo: ProfileRepo
     
@@ -56,7 +57,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
     public override init() {
         super.init()
         accessToken = keyValueRepo.load(key: .accessToken) ?? ""
-        refreshToken = keyValueRepo.load(key: .refreshToken) ?? ""
+        refreshToken = keychainRepo.load(key: .refreshToken) ?? ""
         $accessToken
             .sink {
                 self.keyValueRepo.save(key: .accessToken, value: $0)
@@ -64,7 +65,7 @@ public final class AppState: BaseViewModel<AppState.AppSubject> {
             .store(in: &subscriptions)
         $refreshToken
             .sink {
-                self.keyValueRepo.save(key: .refreshToken, value: $0)
+                self.keychainRepo.save(key: .refreshToken, value: $0)
             }
             .store(in: &subscriptions)
     }
