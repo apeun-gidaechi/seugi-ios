@@ -16,4 +16,14 @@ public struct Meal: Entity {
     public let calorie: String
     public let mealInfo: [String]
     public let mealDate: String
+    
+    public init(id: Int, workspaceId: String, mealType: String, menu: [String], calorie: String, mealInfo: [String], mealDate: String) {
+        self.id = id
+        self.workspaceId = workspaceId
+        self.mealType = mealType
+        self.menu = menu
+        self.calorie = calorie
+        self.mealInfo = mealInfo
+        self.mealDate = mealDate
+    }
 }
