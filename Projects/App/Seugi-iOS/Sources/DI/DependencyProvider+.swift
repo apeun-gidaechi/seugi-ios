@@ -26,6 +26,7 @@ public extension DependencyProvider {
             NotificationAssembly(),
             ProfileAssembly(),
             FileAssembly(),
+            MealAssembly(),
             // Local
             LocalChatAssembly(),
             // Core

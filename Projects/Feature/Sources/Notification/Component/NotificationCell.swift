@@ -64,7 +64,7 @@ struct NotificationCell: View {
                     .multilineTextAlignment(.leading)
                     .seugiColor(.sub(.black))
             }
-            HStack(spacing: 10) {
+            HStack(spacing: 6) {
                 Image(icon: .addEmoji)
                     .resizable()
                     .renderingMode(.template)
@@ -74,6 +74,13 @@ struct NotificationCell: View {
                     .button {
                         action(.addEmoji)
                     }
+                    .padding(.trailing, 4)
+//                ForEach(notification.emoji, id: \.emoji) { emoji in
+//                    HStack(spacing: 4) {
+//                        Text(emoji.emoji)
+//                        Text("\(emoji.userId.count)")
+//                    }
+//                }
                 Spacer()
             }
         }
