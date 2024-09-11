@@ -42,7 +42,7 @@ public struct WorkspaceDetailView: View {
                         .padding(.top, 6)
                     SeugiListItem.icon(title: "일반", icon: .expandRightLine)
                         .button {
-                            //
+                            router.navigate(to: MainDestination.settingGeneral)
                         }
                         .applyAnimation()
                     SeugiListItem.icon(title: "알림 설정", icon: .expandRightLine)

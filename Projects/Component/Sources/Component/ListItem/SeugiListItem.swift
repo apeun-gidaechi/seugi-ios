@@ -61,7 +61,7 @@ public struct SeugiListItem: View {
     
     public static func icon(
         title: String,
-        icon: SeugiIconography,
+        icon: SeugiIconography = .expandRightLine,
         titleColor: Color.SeugiColorSystem = .sub(.black)
     ) -> Self {
         .init(title: title, icon: icon, titleColor: titleColor)

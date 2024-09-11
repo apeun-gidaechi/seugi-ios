@@ -34,6 +34,7 @@ struct MainCoordinator: View {
                 case .workspaceDetail: WorkspaceDetailView()
                 case .workspaceMembers: WorkspaceMemberView()
                 case .createWorkspace: CreateWorkspaceView()
+                case .settingGeneral: SettingGeneralView()
                 case .settingAlarm: SettingAlarmView()
                 case .manageMember: WorkspaceMemberView()
                 case .invitationMember: InvitateMemberView()

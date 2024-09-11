@@ -26,6 +26,7 @@ public enum MainDestination: Hashable {
     case workspaceDetail
     case workspaceMembers
     case createWorkspace
+    case settingGeneral
     case settingAlarm
     case manageMember
     case invitationMember
