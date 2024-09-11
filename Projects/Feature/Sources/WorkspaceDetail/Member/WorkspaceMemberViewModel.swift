@@ -15,12 +15,15 @@ final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Sub
     
     @Inject private var workspaceRepo: any WorkspaceRepo
     
+    // MARK: - State
     @Published var selection = segmentedButtonRoles[0]
     @Published var memberSearchText = ""
     @Published var members: FetchFlow<WorkspaceMembersChart> = .fetching
     @Published var searchText = ""
     @Published var isSearching = false
     @Published var selectedMenu: String?
+    
+    // MARK: - Getter
     var selectedMembers: FetchFlow<[RetrieveProfile]> {
         switch members {
         case .success(let members):
@@ -54,6 +57,7 @@ final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Sub
         }
     }
     
+    // MARK: - Method
     func fetchMembers(workspaceId: String) {
         sub(workspaceRepo.getMembersChart(workspaceId: workspaceId)) {
             self.members = .fetching
@@ -63,4 +67,6 @@ final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Sub
             self.members = .failure(error)
         }
     }
+    
+    
 }
