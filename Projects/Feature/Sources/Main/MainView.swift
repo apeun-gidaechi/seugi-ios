@@ -9,13 +9,9 @@ public struct MainView: View {
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var stompManager: StompManager
-    
-    // MARK: - Factory
-    @Inject private var stompRepo: any StompRepo
-
-    // MARK: - ViewModel
     @StateObject private var chatViewModel = ChatViewModel()
     @StateObject private var notificationViewModel = NotificationViewModel()
+    @StateObject private var homeViewModel = HomeViewModel()
     
     public init() {}
     
@@ -54,29 +50,6 @@ public struct MainView: View {
         }
     }
     
-    // TODO: Devide methods by viewModel
-    private func fetchAll() {
-        fetchChats()
-        fetchNotifications()
-        fetchMyInfo()
-    }
-    
-    private func fetchChats() {
-        log("💎 MainView.fetchChats")
-        guard let workspace = appState.selectedWorkspace else { return }
-        chatViewModel.fetchChats(workspaceId: workspace.workspaceId)
-    }
-    
-    private func fetchNotifications() {
-        log("💎 MainView.fetchNotifications")
-        guard let workspace = appState.selectedWorkspace else { return }
-        notificationViewModel.fetchNotifications(workspaceId: workspace.workspaceId)
-    }
-    
-    private func fetchMyInfo() {
-        appState.fetchMyInfo()
-    }
-    
     public var body: some View {
         ZStack(alignment: .bottom) {
             Group {
@@ -99,6 +72,7 @@ public struct MainView: View {
         .ignoresSafeArea(.keyboard)
         .environmentObject(chatViewModel)
         .environmentObject(notificationViewModel)
+        .environmentObject(homeViewModel)
         .onAppear {
             log("💎 MainView.body.onAppear")
             if case .fetching = appState.workspaces {
@@ -118,4 +92,27 @@ public struct MainView: View {
             fetchAll()
         }
     }
+    
+    private func fetchAll() {
+        fetchChats()
+        fetchNotifications()
+        fetchMyInfo()
+    }
+    
+    private func fetchChats() {
+        log("💎 MainView.fetchChats")
+        guard let workspace = appState.selectedWorkspace else { return }
+        chatViewModel.fetchChats(workspaceId: workspace.workspaceId)
+    }
+    
+    private func fetchNotifications() {
+        log("💎 MainView.fetchNotifications")
+        guard let workspace = appState.selectedWorkspace else { return }
+        notificationViewModel.fetchNotifications(workspaceId: workspace.workspaceId)
+    }
+    
+    private func fetchMyInfo() {
+        appState.fetchMyInfo()
+    }
+    
 }
