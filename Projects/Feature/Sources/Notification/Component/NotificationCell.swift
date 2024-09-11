@@ -76,7 +76,8 @@ struct NotificationCell: View {
                         action(.addEmoji)
                     }
                     .padding(.trailing, 4)
-                ForEach(notification.emoji, id: \.emoji) { emoji in
+                ForEach(notification.emoji.indices, id: \.self) { index in
+                    let emoji = notification.emoji[index]
                     let selected = emoji.userList.contains(profileId)
                     HStack(spacing: 4) {
                         Text(emoji.emoji)
