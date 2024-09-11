@@ -10,8 +10,8 @@ import Foundation
 import DIContainer
 import Domain
 
-final class InvitateMemberViewModel: BaseViewModel<InvitateMemberViewModel.InvitateMemberSubject> {
-    enum InvitateMemberSubject {}
+final class InvitateMemberViewModel: BaseViewModel<InvitateMemberViewModel.Effect> {
+    enum Effect {}
     
     @Inject private var workspaceRepo: any WorkspaceRepo
     

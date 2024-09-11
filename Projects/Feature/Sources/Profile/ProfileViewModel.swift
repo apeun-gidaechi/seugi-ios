@@ -10,8 +10,8 @@ import Foundation
 import DIContainer
 import Domain
 
-final class ProfileViewModel: BaseViewModel<ProfileViewModel.ProfileSubject> {
-    enum ProfileSubject {}
+final class ProfileViewModel: BaseViewModel<ProfileViewModel.Effect> {
+    enum Effect {}
     
     // MARK: - Properties
     @Inject private var profileRepo: any ProfileRepo

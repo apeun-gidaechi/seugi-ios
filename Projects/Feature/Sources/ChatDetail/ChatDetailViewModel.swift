@@ -4,9 +4,9 @@ import DIContainer
 import PhotosUI
 import SwiftUI
 
-public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDetailSubject> {
+public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect> {
     
-    public enum ChatDetailSubject {
+    public enum Effect {
         case messageLoaded
         case messagesFetched
     }

@@ -3,9 +3,9 @@ import Foundation
 import DIContainer
 import Domain
 
-public final class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.Subject> {
+public final class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.Effect> {
     
-    public enum Subject {
+    public enum Effect {
         case registerSuccess(Token)
     }
     

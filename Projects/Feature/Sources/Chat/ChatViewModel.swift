@@ -3,9 +3,9 @@ import Domain
 import DIContainer
 import SwiftUtil
 
-public final class ChatViewModel: BaseViewModel<ChatViewModel.ChatSubject> {
+public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
     
-    public enum ChatSubject {
+    public enum Effect {
         case refreshFailure
     }
     

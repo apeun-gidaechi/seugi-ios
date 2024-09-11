@@ -2,9 +2,9 @@ import Foundation
 import Domain
 import DIContainer
 
-public final class StartViewModel: BaseViewModel<StartViewModel.StartSubject> {
+public final class StartViewModel: BaseViewModel<StartViewModel.Effect> {
     
-    public enum StartSubject {
+    public enum Effect {
         case signInSuccess(token: Token)
     }
     

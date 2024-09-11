@@ -10,8 +10,8 @@ import Foundation
 import DIContainer
 import Domain
 
-final class HomeViewModel: BaseViewModel<HomeViewModel.HomeSubject> {
-    enum HomeSubject {}
+final class HomeViewModel: BaseViewModel<HomeViewModel.Effect> {
+    enum Effect {}
     
     @Inject private var mealRepo: MealRepo
     @Inject private var timetableRepo: TimetableRepo

@@ -10,8 +10,8 @@ import Foundation
 import DIContainer
 import Domain
 
-final class SettingAlarmViewModel: BaseViewModel<SettingAlarmViewModel.Subject> {
-    enum Subject {}
+final class SettingAlarmViewModel: BaseViewModel<SettingAlarmViewModel.Effect> {
+    enum Effect {}
     @Inject private var keyValueRepo: KeyValueRepo
     
     @Published var allowAlarm: Bool = true

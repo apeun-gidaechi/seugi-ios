@@ -13,9 +13,9 @@ struct AppState: DynamicProperty {
     }
 }
 
-public final class AppObservable: BaseViewModel<AppObservable.AppSubject> {
+public final class AppObservable: BaseViewModel<AppObservable.Effect> {
     
-    public enum AppSubject {
+    public enum Effect {
         case workspaceFetched
         case logout
     }

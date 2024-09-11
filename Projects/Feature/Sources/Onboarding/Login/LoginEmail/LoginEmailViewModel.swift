@@ -4,9 +4,9 @@ import DIContainer
 import Combine
 import SwiftUI
 
-public final class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.EmailSignInSubject> {
+public final class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.Effect> {
     
-    public enum EmailSignInSubject {}
+    public enum Effect {}
     
     // MARK: - Repo
     @Inject private var memberRepo: MemberRepo

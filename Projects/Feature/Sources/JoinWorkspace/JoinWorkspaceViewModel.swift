@@ -2,9 +2,9 @@ import Foundation
 import Domain
 import DIContainer
 
-public final class JoinWorkspaceViewModel: BaseViewModel<JoinWorkspaceViewModel.JoinWorkspaceSubject> {
+public final class JoinWorkspaceViewModel: BaseViewModel<JoinWorkspaceViewModel.Effect> {
     
-    public enum JoinWorkspaceSubject {
+    public enum Effect {
         case fetchWorkspaceSuccess
         case joinWorkspaceSuccess
     }

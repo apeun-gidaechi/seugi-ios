@@ -10,8 +10,8 @@ import Foundation
 import Domain
 import DIContainer
 
-final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Subject> {
-    enum Subject {}
+final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Effect> {
+    enum Effect {}
     
     @Inject private var workspaceRepo: any WorkspaceRepo
     

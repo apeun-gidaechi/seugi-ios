@@ -2,9 +2,9 @@ import Foundation
 import Combine
 import Domain
 
-open class BaseViewModel<Subject>: ObservableObject {
+open class BaseViewModel<Effect>: ObservableObject {
     public var subscriptions = Set<AnyCancellable>()
-    private let subject = PassthroughSubject<Subject, Never>()
+    private let subject = PassthroughSubject<Effect, Never>()
     
     public init() {}
     
@@ -36,13 +36,13 @@ open class BaseViewModel<Subject>: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    public func subscribe(_ subscriber: @escaping (Subject) -> Void) {
+    public func subscribe(_ subscriber: @escaping (Effect) -> Void) {
         subject
             .sink(receiveValue: subscriber)
             .store(in: &subscriptions)
     }
     
-    public func emit(_ value: Subject) {
+    public func emit(_ value: Effect) {
         subject.send(value)
     }
     

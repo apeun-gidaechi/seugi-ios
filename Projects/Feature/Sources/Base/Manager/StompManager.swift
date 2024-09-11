@@ -3,8 +3,8 @@ import Domain
 import DIContainer
 import SwiftUtil
 
-public final class StompManager: BaseViewModel<StompManager.StompManagerSubject> {
-    public enum StompManagerSubject {}
+public final class StompManager: BaseViewModel<StompManager.Effect> {
+    public enum Effect {}
     
     // MARK: - Properties
     @Inject private var stompRepo: any StompRepo

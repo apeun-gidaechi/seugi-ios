@@ -2,9 +2,9 @@ import Domain
 import Foundation
 import DIContainer
 
-public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewModel.CreateGroupChatSubject> {
+public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewModel.Effect> {
     
-    public enum CreateGroupChatSubject {
+    public enum Effect {
         case createdPersonalChat(room: Room)
     }
     

@@ -12,8 +12,8 @@ import PhotosUI
 import DIContainer
 import Domain
 
-public final class SeugiFileManager: BaseViewModel<SeugiFileManager.Subject> {
-    public enum Subject {}
+public final class SeugiFileManager: BaseViewModel<SeugiFileManager.Effect> {
+    public enum Effect {}
     
     @Inject private var fileRepo: any FileRepo
     

@@ -2,9 +2,9 @@ import Foundation
 import Domain
 import DIContainer
 
-class PostNotificationViewModel: BaseViewModel<PostNotificationViewModel.PostNotificationSubject> {
+class PostNotificationViewModel: BaseViewModel<PostNotificationViewModel.Effect> {
     
-    enum PostNotificationSubject {}
+    enum Effect {}
     
     @Inject private var notificationRepo: any NotificationRepo
     
