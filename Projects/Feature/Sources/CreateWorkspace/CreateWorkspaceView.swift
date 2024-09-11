@@ -4,8 +4,8 @@ import PhotosUI
 
 public struct CreateWorkspaceView: View {
     
-    @EnvironmentObject private var appState: AppState
-    @EnvironmentObject private var router: Router
+    @AppState private var appState
+    @Router private var router
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var fileManager: SeugiFileManager
     @ObservedObject private var viewModel = CreateWorkspaceViewModel()

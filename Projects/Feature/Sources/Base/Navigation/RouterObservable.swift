@@ -8,7 +8,16 @@
 
 import SwiftUI
 
-public final class Router: ObservableObject {
+@propertyWrapper
+struct Router: DynamicProperty {
+    @EnvironmentObject private var router: RouterObservable
+    
+    var wrappedValue: RouterObservable {
+        router
+    }
+}
+
+public final class RouterObservable: ObservableObject {
     @Published public var navPath = NavigationPath()
     public init() {}
 

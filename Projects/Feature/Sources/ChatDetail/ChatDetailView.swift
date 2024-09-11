@@ -14,7 +14,7 @@ enum ChatDetailSupporterType: Hashable {
 public struct ChatDetailView: View {
     
     @StateObject private var viewModel = ChatDetailViewModel()
-    @EnvironmentObject private var appState: AppState
+    @AppState private var appState
     @Environment(\.dismiss) private var dismiss
     
     // MARK: - State

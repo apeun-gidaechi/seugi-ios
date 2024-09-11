@@ -9,8 +9,8 @@ public struct RootView: View {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @StateObject private var timerManager = TimerManager()
-    @StateObject private var appState = AppState()
-    @StateObject private var router = Router()
+    @StateObject private var appState = AppObservable()
+    @StateObject private var router = RouterObservable()
     @StateObject private var stompManager = StompManager()
     @StateObject private var fileManager = SeugiFileManager()
     @StateObject private var alertProvider = AlertProvider()

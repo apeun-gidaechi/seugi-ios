@@ -4,9 +4,9 @@ import Component
 public struct RegisterEmailVerificationView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    @EnvironmentObject private var router: Router
+    @Router private var router
     @EnvironmentObject private var timerManager: TimerManager
-    @EnvironmentObject private var appState: AppState
+    @AppState private var appState
     @EnvironmentObject private var viewModel: RegisterEmailViewModel
     @FocusState private var firstTextField: Bool
     

@@ -5,8 +5,8 @@ import Domain
 public struct ProfileView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    @EnvironmentObject private var appState: AppState
-    @EnvironmentObject private var router: Router
+    @AppState private var appState
+    @Router private var router
     @StateObject private var viewModel = ProfileViewModel()
     @State private var isSheetPresent = false
     

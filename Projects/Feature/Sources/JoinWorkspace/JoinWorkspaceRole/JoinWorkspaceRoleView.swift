@@ -4,7 +4,7 @@ import Component
 public struct JoinWorkspaceRoleView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    @EnvironmentObject private var router: Router
+    @Router private var router
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
     @State private var selectedTab: JobType = .student
     

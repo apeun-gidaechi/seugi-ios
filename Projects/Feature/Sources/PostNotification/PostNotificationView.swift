@@ -5,8 +5,8 @@ public struct PostNotificationView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var notificationViewModel: NotificationViewModel
-    @EnvironmentObject private var router: Router
-    @EnvironmentObject private var appState: AppState
+    @Router private var router
+    @AppState private var appState
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var viewModel = PostNotificationViewModel()
     

@@ -4,8 +4,8 @@ import Domain
 
 public struct WorkspaceDetailView: View {
     
-    @EnvironmentObject private var appState: AppState
-    @EnvironmentObject private var router: Router
+    @AppState private var appState
+    @Router private var router
     
     @State private var isSheetPresent = false
     

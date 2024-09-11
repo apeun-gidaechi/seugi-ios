@@ -4,8 +4,8 @@ import DIContainer
 
 public struct StartView: View {
     
-    @EnvironmentObject private var router: Router
-    @EnvironmentObject private var appState: AppState
+    @Router private var router
+    @AppState private var appState
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var appDelegate: AppDelegate
     

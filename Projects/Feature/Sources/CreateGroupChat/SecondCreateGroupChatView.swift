@@ -4,10 +4,10 @@ import Domain
 
 public struct SecondCreateGroupChatView: View {
     
-    @EnvironmentObject private var router: Router
+    @Router private var router
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var viewModel: CreateGroupChatViewModel
-    @EnvironmentObject private var appState: AppState
+    @AppState private var appState
     
     public init() {}
     

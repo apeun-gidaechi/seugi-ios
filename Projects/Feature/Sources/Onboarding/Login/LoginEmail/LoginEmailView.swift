@@ -7,8 +7,8 @@ public struct LoginEmailView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
     @StateObject private var viewModel = LoginEmailViewModel()
-    @EnvironmentObject private var router: Router
-    @EnvironmentObject private var appState: AppState
+    @Router private var router
+    @AppState private var appState
     @FocusState private var firstTextField: Bool
     
     public init() {}

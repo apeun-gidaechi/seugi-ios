@@ -6,8 +6,8 @@ import Combine
 
 public struct MainView: View {
     
-    @EnvironmentObject private var appState: AppState
-    @EnvironmentObject private var router: Router
+    @EnvironmentObject private var appState: AppObservable
+    @Router private var router
     @EnvironmentObject private var stompManager: StompManager
     @StateObject private var chatViewModel = ChatViewModel()
     @StateObject private var notificationViewModel = NotificationViewModel()

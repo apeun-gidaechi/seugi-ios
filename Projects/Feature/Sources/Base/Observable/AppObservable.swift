@@ -4,7 +4,16 @@ import DIContainer
 import SwiftUI
 import Component
 
-public final class AppState: BaseViewModel<AppState.AppSubject> {
+@propertyWrapper
+struct AppState: DynamicProperty {
+    @EnvironmentObject private var appState: AppObservable
+    
+    var wrappedValue: AppObservable {
+        appState
+    }
+}
+
+public final class AppObservable: BaseViewModel<AppObservable.AppSubject> {
     
     public enum AppSubject {
         case workspaceFetched

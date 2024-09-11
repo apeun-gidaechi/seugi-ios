@@ -5,8 +5,8 @@ import SwiftUIUtil
 public struct HomeView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    @EnvironmentObject private var appState: AppState
-    @EnvironmentObject private var router: Router
+    @AppState private var appState
+    @Router private var router
     @EnvironmentObject private var viewModel: HomeViewModel
     @Namespace private var animation
     

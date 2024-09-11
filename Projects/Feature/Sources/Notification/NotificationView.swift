@@ -4,9 +4,9 @@ import Domain
 
 public struct NotificationView: View {
     
-    @EnvironmentObject private var appState: AppState
+    @AppState private var appState
     @EnvironmentObject private var viewModel: NotificationViewModel
-    @EnvironmentObject private var router: Router
+    @Router private var router
     @EnvironmentObject private var alertProvider: AlertProvider
     
     @State private var addEmojiPresent = false

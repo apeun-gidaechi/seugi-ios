@@ -5,7 +5,7 @@ import SwiftUIUtil
 public struct RegisterEmailView: View {
     
     @EnvironmentObject private var viewModel: RegisterEmailViewModel
-    @EnvironmentObject private var router: Router
+    @Router private var router
     @FocusState private var firstTextField: Bool
     
     public init() {}

@@ -12,7 +12,7 @@ import Component
 struct InvitateMemberView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    @EnvironmentObject private var appState: AppState
+    @AppState private var appState
     @StateObject private var viewModel = InvitateMemberViewModel()
     
     @State private var buttonsSize: CGSize = .zero

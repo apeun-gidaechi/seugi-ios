@@ -6,10 +6,10 @@ import Domain
 
 public struct FirstCreateGroupChatView: View {
     
-    @EnvironmentObject private var router: Router
+    @Router private var router
     @State private var contentSize: CGSize = .zero
     @EnvironmentObject private var viewModel: CreateGroupChatViewModel
-    @EnvironmentObject private var appState: AppState
+    @AppState private var appState
     
     public init() {}
     

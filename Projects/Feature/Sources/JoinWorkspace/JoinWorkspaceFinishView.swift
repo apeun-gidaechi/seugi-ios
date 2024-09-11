@@ -3,7 +3,7 @@ import Component
 
 public struct JoinWorkspaceFinishView: View {
     
-    @EnvironmentObject private var router: Router
+    @Router private var router
     
     public init() {}
     

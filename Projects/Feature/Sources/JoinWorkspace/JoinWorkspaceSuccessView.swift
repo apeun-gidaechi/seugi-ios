@@ -5,9 +5,9 @@ import Component
 
 public struct JoinWorkspaceSuccessView: View {
     
-    @EnvironmentObject private var router: Router
+    @Router private var router
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
-    @EnvironmentObject private var appState: AppState
+    @AppState private var appState
     
     public init() {}
     

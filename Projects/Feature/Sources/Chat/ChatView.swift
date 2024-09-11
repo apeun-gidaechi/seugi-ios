@@ -4,8 +4,8 @@ import Domain
 
 public struct ChatView: View {
     
-    @EnvironmentObject private var router: Router
-    @EnvironmentObject private var appState: AppState
+    @Router private var router
+    @AppState private var appState
     @EnvironmentObject private var viewModel: ChatViewModel
     
     // MARK: - State

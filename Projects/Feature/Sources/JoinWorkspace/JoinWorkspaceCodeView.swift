@@ -4,7 +4,7 @@ import Component
 public struct JoinWorkspaceCodeView: View {
     
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
-    @EnvironmentObject private var router: Router
+    @Router private var router
     @EnvironmentObject private var alertProvider: AlertProvider
     
     public init() {}
