@@ -54,6 +54,12 @@ public struct NotificationView: View {
                                 case .addEmoji:
                                     addEmojiPresent = true
                                     viewModel.selectedNotificationForAddEmoji = notification
+                                case .emojiClicked(let emoji):
+                                    guard let selectedWorkspace = appState.selectedWorkspace else {
+                                        return
+                                    }
+                                    viewModel.patchEmoji(emoji: emoji, workspaceId: selectedWorkspace.workspaceId)
+                                    viewModel.selectedNotificationForAddEmoji = notification
                                 }
                             }
 //                            .button {

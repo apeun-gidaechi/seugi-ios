@@ -10,6 +10,7 @@ struct NotificationCell: View {
         case removeNotification
         case reportNotification
         case addEmoji
+        case emojiClicked(String)
     }
     
     private let profileId: Int
@@ -52,7 +53,7 @@ struct NotificationCell: View {
                         .seugiColor(.gray(.g500))
                         .frame(width: 24, height: 24)
                 }
-                .onTapGesture {} // to stop propagation
+                .onTapGesture {} // for stop propagation
             }
             VStack(alignment: .leading, spacing: 0) {
                 Text(notification.title)
@@ -75,12 +76,28 @@ struct NotificationCell: View {
                         action(.addEmoji)
                     }
                     .padding(.trailing, 4)
-//                ForEach(notification.emoji, id: \.emoji) { emoji in
-//                    HStack(spacing: 4) {
-//                        Text(emoji.emoji)
-//                        Text("\(emoji.userId.count)")
-//                    }
-//                }
+                ForEach(notification.emoji, id: \.emoji) { emoji in
+                    let selected = emoji.userList.contains(profileId)
+                    HStack(spacing: 4) {
+                        Text(emoji.emoji)
+                            .font(.subtitle(.s2))
+                        Text("\(emoji.userList.count)")
+                            .font(.body(.b1))
+                            .seugiColor(.gray(.g600))
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .seugiBackground(
+                        selected
+                        ? .primary(.p100)
+                        : .gray(.g100)
+                    )
+                    .stroke(8, content: selected ? Color.seugi(.primary(.p300)) : Color.seugi(.gray(.g200)))
+                    .button {
+                        action(.emojiClicked(emoji.emoji))
+                    }
+                    .applyAnimation()
+                }
                 Spacer()
             }
         }

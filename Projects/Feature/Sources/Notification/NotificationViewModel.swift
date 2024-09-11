@@ -38,7 +38,7 @@ final class NotificationViewModel: BaseViewModel<NotificationViewModel.Effect> {
     }
     
     func patchEmoji(emoji: String, workspaceId: String) {
-        guard let selectedNotificationForAddEmoji else {
+        guard var selectedNotificationForAddEmoji else {
             return
         }
         notificationRepo.emojiNotification(
