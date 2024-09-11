@@ -40,13 +40,21 @@ public extension Color {
 
 public extension View {
     
+    @inlinable
     func seugiColor(_ style: Color.SeugiColorSystem) -> some View {
         self
             .foregroundStyle(Color.seugi(style))
     }
     
+    @inlinable
     func seugiBackground(_ style: Color.SeugiColorSystem) -> some View {
         self
             .background(Color.seugi(style))
+    }
+    
+    @inlinable
+    func seugiBackground<T: InsettableShape>(_ style: Color.SeugiColorSystem, in: T) -> some View {
+        self
+            .background(Color.seugi(style), in: `in`)
     }
 }

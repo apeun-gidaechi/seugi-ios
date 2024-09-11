@@ -10,9 +10,13 @@ import SwiftUI
 import Domain
 import Component
 
-private let dummyNow = 3
-
 struct HomeTimetableContainer: View {
+    
+    enum Id {
+        case current
+    }
+    
+    @State private var current = 3
     
     private let timetable: FetchFlow<[Timetable]>
     
@@ -47,38 +51,56 @@ struct HomeTimetableContainer: View {
                 if data.isEmpty {
                     SeugiError("시간표가 없어요", image: .faceWithDiagonalMouth)
                 } else {
-                    VStack(spacing: 0) {
-                        HStack(spacing: 0) {
-                            ForEach(Array(data.enumerated()), id: \.offset) { idx, _ in
-                                let now = dummyNow == idx
-                                Text("\(idx + 1)")
-                                    .font(.body(.b1))
-                                    .seugiColor(now ? .primary(.p500) : .primary(.p300))
-                                    .padding(.vertical, 8)
-                                    .toHorizontal()
+                    ScrollViewReader { proxy in
+                        ScrollView(.horizontal) {
+                            LazyHStack(spacing: 0) {
+                                ForEach(Array(data.enumerated()), id: \.offset) { idx, subject in
+                                    let now = current == idx
+                                    VStack(spacing: 0) {
+                                        Text("\(idx + 1)")
+                                            .font(.body(.b1))
+                                            .frame(maxWidth: .infinity)
+                                            .seugiColor(now ? .primary(.p500) : .primary(.p300))
+                                            .padding(.vertical, 8)
+                                        Text(subject.subject)
+                                            .font(.body(.b1))
+                                            .seugiColor(now ? .sub(.white) : current < idx ? .primary(.p200) : .primary(.p300))
+                                            .padding(8)
+                                            .lineLimit(1)
+                                            .frame(maxWidth: .infinity)
+                                            .if(current >= idx) { view in
+                                                view.seugiBackground(.primary(.p500))
+                                            }
+                                            .if(now) { view in
+                                                view.cornerRadius(16, corners: [.topRight, .bottomRight])
+                                            }
+                                            .content { view in
+                                                ZStack {
+                                                    Color.seugi(.primary(.p100))
+                                                    view
+                                                }
+                                            }
+                                            .if(idx == 0) { view in
+                                                view.cornerRadius(16, corners: [.topLeft, .bottomLeft])
+                                            }
+                                            .if(idx == data.count - 1) { view in
+                                                view.cornerRadius(16, corners: [.topRight, .bottomRight])
+                                            }
+                                    }
+                                    .if(now) {
+                                        $0.id(Id.current)
+                                    }
+                                    .frame(width: 80)
+                                }
                             }
                         }
-                        HStack(spacing: 0) {
-                            ForEach(Array(data.enumerated()), id: \.offset) { idx, subject in
-                                let now = dummyNow == idx
-                                Text(subject.subject)
-                                    .font(.body(.b1))
-                                    .seugiColor(now ? .sub(.white) : dummyNow < idx ? .primary(.p200) : .primary(.p300))
-                                    .padding(.vertical, 8)
-                                    .toHorizontal()
-                                    .if(dummyNow >= idx) { view in
-                                        view.seugiBackground(.primary(.p500))
-                                    }
-                                    .if(idx == 0) { view in
-                                        view.cornerRadius(16, corners: [.topLeft, .bottomLeft])
-                                    }
-                                    .if(now) { view in
-                                        view.cornerRadius(16, corners: [.topRight, .bottomRight])
-                                    }
-                            }
+                        .scrollIndicators(.hidden)
+                        .onChange(of: current) { _ in
+                            proxy.scrollTo(Id.current, anchor: .center)
                         }
-                        .seugiBackground(.primary(.p100))
-                        .cornerRadius(16, corners: .allCorners)
+                        .onAppear {
+                            proxy.scrollTo(Id.current, anchor: .center)
+                        }
                     }
                 }
             }

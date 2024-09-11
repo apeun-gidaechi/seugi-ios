@@ -9,6 +9,13 @@
 import SwiftUI
 
 public extension View {
+    
+    func content<Content: View>(
+        @ViewBuilder content: @escaping (Self) -> Content
+    ) -> some View {
+        return content(self)
+    }
+    
     @ViewBuilder
     func `if`<Content: View>(
         _ condition: Bool,
