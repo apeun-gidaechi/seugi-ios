@@ -27,8 +27,6 @@ public struct HomeView: View {
         "일어",
         "창체"
     ]
-    private let dummyNow = 3
-    
     private func showJoinWorkspaceAlert() {
         alertProvider.present("학교 등록하기")
             .primaryButton("기존 학교 가입") {
@@ -50,7 +48,7 @@ public struct HomeView: View {
                         router.navigate(to: MainDestination.workspaceDetail)
                     }
                     .applyAnimation()
-                todaySchedule
+                HomeTimetableContainer(for: viewModel.timetables)
                 HomeMealContainer(for: viewModel.meals)
                 catSeugi
                 commingSchedule
@@ -58,6 +56,8 @@ public struct HomeView: View {
             }
             .padding(.horizontal, 20)
         }
+        .animation(.spring(duration: 0.4), value: viewModel.meals)
+        .animation(.spring(duration: 0.4), value: viewModel.timetables)
         .scrollIndicators(.hidden)
         .seugiBackground(.primary(.p050))
         .seugiTopBar("홈", background: .seugi(.primary(.p050)))
@@ -129,94 +129,6 @@ public struct HomeView: View {
             }
         }
         .matchedGeometryEffect(id: "currentWorkspace", in: animation)
-    }
-    
-    @ViewBuilder
-    private var todaySchedule: some View {
-        Group {
-            switch flow {
-            case .fetching:
-                VStack(spacing: 12) {
-                    HStack(spacing: 8) {
-                        HeadlineIcon(icon: .bookFill)
-                        Text("오늘의 시간표")
-                            .font(.subtitle(.s2))
-                            .seugiColor(.sub(.black))
-                        Spacer()
-                    }
-                    .padding(4)
-                    ProgressView()
-                }
-                .applyCardEffect()
-            case .failure:
-                VStack(spacing: 12) {
-                    HStack(spacing: 8) {
-                        HeadlineIcon(icon: .bookFill)
-                        Text("오늘의 시간표")
-                            .font(.subtitle(.s2))
-                            .seugiColor(.sub(.black))
-                        Spacer()
-                    }
-                    .padding(4)
-                    Text("학교를 등록하고 시간표를 확인하세요")
-                        .seugiColor(.gray(.g600))
-                        .font(.body(.b2))
-                        .padding(.vertical, 12)
-                }
-                .applyCardEffect()
-            case .success:
-                VStack(spacing: 12) {
-                    HStack(spacing: 8) {
-                        HeadlineIcon(icon: .bookFill)
-                        Text("오늘의 시간표")
-                            .font(.subtitle(.s2))
-                            .seugiColor(.sub(.black))
-                        Spacer()
-                        Image(icon: .expandRightLine)
-                            .resizable()
-                            .renderingMode(.template)
-                            .seugiColor(.gray(.g500))
-                            .frame(width: 24, height: 24)
-                    }
-                    .padding(4)
-                    VStack(spacing: 0) {
-                        HStack(spacing: 0) {
-                            ForEach(Array(dummySchedule.enumerated()), id: \.offset) { idx, _ in
-                                let now = dummyNow == idx
-                                Text("\(idx + 1)")
-                                    .font(.body(.b1))
-                                    .seugiColor(now ? .primary(.p500) : .primary(.p300))
-                                    .padding(.vertical, 8)
-                                    .toHorizontal()
-                            }
-                        }
-                        HStack(spacing: 0) {
-                            ForEach(Array(dummySchedule.enumerated()), id: \.offset) { idx, subject in
-                                let now = dummyNow == idx
-                                Text(subject)
-                                    .font(.body(.b1))
-                                    .seugiColor(now ? .sub(.white) : dummyNow < idx ? .primary(.p200) : .primary(.p300))
-                                    .padding(.vertical, 8)
-                                    .toHorizontal()
-                                    .if(dummyNow >= idx) { view in
-                                        view.seugiBackground(.primary(.p500))
-                                    }
-                                    .if(idx == 0) { view in
-                                        view.cornerRadius(16, corners: [.topLeft, .bottomLeft])
-                                    }
-                                    .if(now) { view in
-                                        view.cornerRadius(16, corners: [.topRight, .bottomRight])
-                                    }
-                            }
-                        }
-                        .seugiBackground(.primary(.p100))
-                        .cornerRadius(16, corners: .allCorners)
-                    }
-                }
-                .applyCardEffect()
-            }
-        }
-        .matchedGeometryEffect(id: "todaySchedule", in: animation)
     }
     
     @ViewBuilder

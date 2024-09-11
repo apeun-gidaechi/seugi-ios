@@ -14,8 +14,10 @@ final class HomeViewModel: BaseViewModel<HomeViewModel.HomeSubject> {
     enum HomeSubject {}
     
     @Inject private var mealRepo: MealRepo
+    @Inject private var timetableRepo: TimetableRepo
     
     @Published var meals: FetchFlow<[Meal]> = .fetching
+    @Published var timetables: FetchFlow<[Timetable]> = .fetching
     
     func fetchMeals(workspaceId: String) {
         sub(mealRepo.getByDate(workspaceId: workspaceId, date: .now)) {
@@ -24,6 +26,16 @@ final class HomeViewModel: BaseViewModel<HomeViewModel.HomeSubject> {
             self.meals = .success(res.data)
         } failure: { err in
             self.meals = .failure(err)
+        }
+    }
+    
+    func fetchTimetable(workspaceId: String) {
+        sub(timetableRepo.getDay(workspaceId: workspaceId)) {
+            self.timetables = .fetching
+        } success: { res in
+            self.timetables = .success(res.data)
+        } failure: { err in
+            self.timetables = .failure(err)
         }
     }
 }

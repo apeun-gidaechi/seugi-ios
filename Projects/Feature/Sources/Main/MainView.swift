@@ -101,6 +101,7 @@ public struct MainView: View {
         log("💎 MainView.fetchChats")
         guard let workspace = appState.selectedWorkspace else { return }
         homeViewModel.fetchMeals(workspaceId: workspace.workspaceId)
+        homeViewModel.fetchTimetable(workspaceId: workspace.workspaceId)
     }
     
     private func fetchChats() {

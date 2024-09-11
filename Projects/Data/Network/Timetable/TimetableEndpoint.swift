@@ -16,8 +16,8 @@ enum TimetableEndpoint: SeugiEndpoint {
 }
 
 extension TimetableEndpoint {
-    static let authProvider: MoyaProvider<Self> = .init(session: session)
-    static let provider: MoyaProvider<Self> = .init(session: authSession)
+    static let authProvider = MoyaProvider<Self>(session: authSession)
+    static let provider = MoyaProvider<Self>(session: session)
     
     var host: String {
         "timetable"

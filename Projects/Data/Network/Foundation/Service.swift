@@ -99,7 +99,8 @@ class Service<Target: SeugiEndpoint> {
     private func requestLog(target: Target.Target) {
         log("🛰 NETWORK Reqeust LOG")
         log(
-            "URL: \(target.host)/\(target.path)\n"
+            "Method: \(target.method.rawValue)\n"
+            + "URL: \(target.host)/\(target.path)\n"
             + "Header: \(target.headers ?? [:])\n"
             + "Method: \(target.method.rawValue)"
         )
@@ -110,7 +111,7 @@ class Service<Target: SeugiEndpoint> {
             log("Body: \(String(data: json, encoding: .utf8) ?? "-")")
         } else if case .requestParameters(let parameters, _) = target.task,
                   let json = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) {
-            log("Body: \(String(data: json, encoding: .utf8) ?? "-")")
+            log("Param: \(String(data: json, encoding: .utf8) ?? "-")")
         } else if case .uploadMultipart(let multiParts) = target.task {
             Array(multiParts.enumerated()).forEach { idx, data in
                 log("MultiPart \(idx): name - \(data.name), fileName - \(data.fileName ?? ""), mimeType - \(data.mimeType ?? "")")
