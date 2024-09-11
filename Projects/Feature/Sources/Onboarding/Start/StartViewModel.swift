@@ -16,13 +16,14 @@ public final class StartViewModel: BaseViewModel<StartViewModel.StartSubject> {
     
     // MARK: - Method
     func signIn(token: String, provider: OAuth2Provider) {
-        sub(memberRepo.oauth2(code: token, provider: provider)) {
-            self.signInFlow = .fetching
-        } success: { [self] token in
-            signInFlow = .success()
-            emit(.signInSuccess(token: token.data))
-        } failure: { error in
-            self.signInFlow = .failure(error)
-        }
+//        sub(memberRepo.oauth2(code: token, provider: provider)) {
+//            self.signInFlow = .fetching
+//        } success: { [self] token in
+//            signInFlow = .success()
+//            emit(.signInSuccess(token: token.data))
+//        } failure: { error in
+//            self.signInFlow = .failure(error)
+//        }
+        // TODO: Fix
     }
 }
