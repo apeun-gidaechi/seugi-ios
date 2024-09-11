@@ -15,32 +15,42 @@ final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Sub
     
     @Inject private var workspaceRepo: any WorkspaceRepo
     
-    var selection = segmentedButtonRoles[0]
+    @Published var selection = segmentedButtonRoles[0]
     @Published var memberSearchText = ""
     @Published var members: FetchFlow<WorkspaceMembersChart> = .fetching
     @Published var searchText = ""
     @Published var isSearching = false
-    var menus: [String] {
-        let keys = selection == segmentedButtonRoles[0] ? members.data?.teachers.keys : members.data?.students.keys
-        return keys.map { Array($0) } ?? []
-    }
     @Published var selectedMenu: String?
-    var selectedMembers: [RetrieveProfile] {
-        let membersDict = selection == segmentedButtonRoles[0] ? members.data?.teachers : members.data?.students
-        let filteredMembers = membersDict?.filter { key, _ in
-            guard selectedMenu != nil else {
-                return true
+    var selectedMembers: FetchFlow<[RetrieveProfile]> {
+        switch members {
+        case .success(let members):
+            // 선생님을 선택했을 경우
+            let selectedMembers = if selection == segmentedButtonRoles[0] {
+                Array(members.admin.values) + Array(members.middleAdmin.values) + Array(members.teachers.values)
+            } else {
+                Array(members.students.values)
             }
-            return menus.contains(key)
-        }.values
-        return filteredMembers.map { $0.flatMap { $0 } } ?? []
+            print(selection)
+            return .success(selectedMembers.flatMap { $0 })
+        case .failure(let err):
+            return .failure(err)
+        case .fetching:
+            return .fetching
+        }
     }
-    var searchtedMembers: [RetrieveProfile] {
+    
+    var searchedMembers: FetchFlow<[RetrieveProfile]> {
         guard !searchText.isEmpty else {
             return selectedMembers
         }
-        return selectedMembers.filter { member in
-            member.member.name.contains(searchText)
+        switch selectedMembers {
+        case .success(let members):
+            let members = members.filter { $0.member.name.contains(searchText) }
+            return .success(members)
+        case .failure(let err):
+            return .failure(err)
+        case .fetching:
+            return .fetching
         }
     }
     

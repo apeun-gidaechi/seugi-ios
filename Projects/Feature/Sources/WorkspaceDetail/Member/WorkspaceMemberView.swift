@@ -14,11 +14,15 @@ struct WorkspaceMemberView: View {
     
     @Environment(\.dismiss) private var dismiss
     @AppState private var appState
-    @State private var viewModel = WorkspaceMemberViewModel()
+    @StateObject private var viewModel = WorkspaceMemberViewModel()
     
     @State private var isSheetPresent = false
     @State private var sheetSize: CGSize = .zero
     @FocusState private var searchFocus: Bool
+    
+    private var members: FetchFlow<[RetrieveProfile]> {
+        viewModel.isSearching ? viewModel.searchedMembers : viewModel.selectedMembers
+    }
     
     init() {}
     
@@ -27,42 +31,37 @@ struct WorkspaceMemberView: View {
             SeugiSegmentedButton(segmentedButtonRoles, selection: $viewModel.selection)
                 .padding(.top, 6)
                 .padding(.horizontal, 20)
-            Menu {
-                ForEach(viewModel.menus, id: \.self) { menu in
-                    Button(menu) {
-                        viewModel.selectedMenu = menu
-                    }
-                }
-            } label: {
-                Text(viewModel.selectedMenu ?? "전체")
-            }
-            viewModel.members.makeView {
+            members.makeView {
                 ProgressView()
-            } success: { _ in
+            } success: { members in
                 if let selectedWorkspace = appState.selectedWorkspace {
-                    ScrollView {
-                        LazyVStack(spacing: 0) {
-                            ForEach(viewModel.searchtedMembers, id: \.member.id) { member in
-                                SeugiMemberList(type: .normal(member: member.member, role: .getRole(memberId: member.member.id, workspace: selectedWorkspace))) {
-                                    Menu {
-                                        Button("부관리자 임명") {}
-                                        Button("학생 정보 수정") {
-                                            isSheetPresent = true
+                    if members.isEmpty {
+                        SeugiError("멤버가 없어요", image: .faceWithDiagonalMouth)
+                    } else {
+                        ScrollView {
+                            LazyVStack(spacing: 0) {
+                                ForEach(members, id: \.member.id) { member in
+                                    SeugiMemberList(type: .normal(member: member.member, role: .getRole(memberId: member.member.id, workspace: selectedWorkspace))) {
+                                        Menu {
+                                            Button("부관리자 임명") {}
+                                            Button("학생 정보 수정") {
+                                                isSheetPresent = true
+                                            }
+                                            Button("내보내기", role: .destructive) {}
+                                        } label: {
+                                            Image(icon: .detailVerticalLine)
+                                                .resizable()
+                                                .renderingMode(.template)
+                                                .frame(width: 24, height: 24)
+                                                .seugiColor(.gray(.g800))
                                         }
-                                        Button("내보내기", role: .destructive) {}
-                                    } label: {
-                                        Image(icon: .detailVerticalLine)
-                                            .resizable()
-                                            .renderingMode(.template)
-                                            .frame(width: 24, height: 24)
-                                            .seugiColor(.gray(.g800))
                                     }
                                 }
                             }
+                            .padding(.horizontal, 4)
                         }
-                        .padding(.horizontal, 4)
+                        .scrollIndicators(.hidden)
                     }
-                    .scrollIndicators(.hidden)
                 } else {
                     ProgressView()
                 }
@@ -94,12 +93,6 @@ struct WorkspaceMemberView: View {
                 }
             }
         }
-        .onAppear {
-            guard let selectedWorkspace = appState.selectedWorkspace else {
-                return
-            }
-            viewModel.fetchMembers(workspaceId: selectedWorkspace.workspaceId)
-        }
         .sheet(isPresented: $isSheetPresent) {
             VStack(spacing: 16) {
                 Text("학생 정보 수정")
@@ -123,6 +116,12 @@ struct WorkspaceMemberView: View {
                 sheetSize = $0
             }
             .presentationDetents([.height(sheetSize.height)])
+        }
+        .onAppear {
+            guard let selectedWorkspace = appState.selectedWorkspace else {
+                return
+            }
+            viewModel.fetchMembers(workspaceId: selectedWorkspace.workspaceId)
         }
     }
 }
