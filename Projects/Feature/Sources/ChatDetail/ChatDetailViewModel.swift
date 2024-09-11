@@ -28,6 +28,9 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
     @Published var photo: PhotosPickerItem?
     @Published var uploadFlow: IdleFlow<Bool> = .fetching
     
+    /* left room */
+    @Published var leftRoomFlow: IdleFlow<Bool> = .idle
+    
     // MARK: - Method
     func subscribe(roomId: String) {
         stompMessageRepo.subGetMessage(roomId: roomId)
@@ -68,5 +71,15 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.ChatDe
             emoticon: nil
         )
         message = ""
+    }
+    
+    func left(roomId: String) {
+        sub(chatRepo.leftGroup(roomId: roomId)) {
+            self.leftRoomFlow = .fetching
+        } success: { _ in
+            self.leftRoomFlow = .success()
+        } failure: { err in
+            self.leftRoomFlow = .failure(err)
+        }
     }
 }

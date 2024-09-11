@@ -6,13 +6,14 @@ import DIContainer
 
 let pagingInterval = 50
 
-enum ChatDetailSupporterType: Hashable {
-    case bottom
-    case top
-}
-
 public struct ChatDetailView: View {
     
+    enum Id: Hashable {
+        case bottom
+        case top
+    }
+    
+    @EnvironmentObject private var alert: AlertProvider
     @StateObject private var viewModel = ChatDetailViewModel()
     @AppState private var appState
     @Environment(\.dismiss) private var dismiss
@@ -29,6 +30,7 @@ public struct ChatDetailView: View {
     /* photo picker */
     @State private var showPhotoPicker = false
     
+    // MARK: - Properties
     private let room: Room
     
     public init(
@@ -38,66 +40,66 @@ public struct ChatDetailView: View {
     }
     
     public var body: some View {
-        ZStack {
-            viewModel.messages.makeView {
-                ProgressView()
-            } success: { messages in
-                ScrollViewReader { scrollViewProxy in
-                    ScrollView {
-                        LazyVStack(spacing: 0) {
-                            Color.clear
-                                .frame(height: 1)
-                                .id(ChatDetailSupporterType.top)
-                                .onAppear {
-//                                    let messages = viewModel.messages.data ?? []
-//                                    messages.count - 1 / pagingInterval
-//                                    guard let index = data.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
-//                                      
-//                                      if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (data.count - 1) / pagingInterval {
-//                                          await viewModel.fetchNextCommunities()
-//                                      }
-                                }
-                            ForEach(Array(messages.enumerated()), id: \.element.id) { idx, message in
-                                if message.type == .enter {
-                                    let userId = message.eventList?.first ?? -1
-                                    let firstMember = room.findUserById(id: userId)
-                                    let eventCount = message.eventList?.count
-                                    var text = "\(firstMember?.name ?? "")"
-                                    if let eventCount, eventCount > 1 {
-                                        let _ = text += " 외 \(eventCount - 1)명이 채팅방에 입장 했습니다"
-                                    }
-                                    ChatItemDetailView(text: text)
-                                } else {
-                                    let isFirst = idx == 0 || (messages[idx - 1].userId != message.userId) || ![.message, .deleteMessage].contains(messages[idx - 1].type)
-                                    let isLast = idx == messages.count - 1 || messages[idx + 1].userId != message.userId
-                                    let author = room.findUserById(id: message.userId) ?? .init(
-                                        id: message.userId,
-                                        email: "",
-                                        birth: "",
-                                        name: "(알 수 없음)",
-                                        picture: ""
-                                    )
-                                    let userId = appState.profile.data?.member.id ?? -1
-                                    let type: ChatItemViewCellType = author.id == userId ? .me : .other(isFirst: isFirst, isLast: isLast)
-                                    ChatItemView(author: author, message: message, type: type, joinedUserCount: room.joinUserId.count)
-                                }
+        viewModel.messages.makeView {
+            ProgressView()
+        } success: { messages in
+            ScrollViewReader { scrollViewProxy in
+                ScrollView {
+                    LazyVStack(spacing: 0) {
+                        Color.clear
+                            .id(Id.top)
+                            .onAppear {
+                                //                                    let messages = viewModel.messages.data ?? []
+                                //                                    messages.count - 1 / pagingInterval
+                                //                                    guard let index = data.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
+                                //
+                                //                                      if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (data.count - 1) / pagingInterval {
+                                //                                          await viewModel.fetchNextCommunities()
+                                //                                      }
                             }
-                            Color.clear
-                                .frame(height: 68)
-                                .id(ChatDetailSupporterType.bottom)
+                        ForEach(Array(messages.enumerated()), id: \.element.id) { idx, message in
+                            if message.type == .enter {
+                                let userId = message.eventList?.first ?? -1
+                                let firstMember = room.findUserById(id: userId)
+                                let eventCount = message.eventList?.count
+                                var text = "\(firstMember?.name ?? "")"
+                                if let eventCount, eventCount > 1 {
+                                    let _ = text += " 외 \(eventCount - 1)명이 채팅방에 입장 했습니다"
+                                }
+                                ChatItemDetailView(text: text)
+                            } else {
+                                let isFirst = idx == 0 || (messages[idx - 1].userId != message.userId) || ![.message, .deleteMessage].contains(messages[idx - 1].type)
+                                let isLast = idx == messages.count - 1 || messages[idx + 1].userId != message.userId
+                                let author = room.findUserById(id: message.userId) ?? .init(
+                                    id: message.userId,
+                                    email: "",
+                                    birth: "",
+                                    name: "(알 수 없음)",
+                                    picture: ""
+                                )
+                                let userId = appState.profile.data?.member.id ?? -1
+                                let type: ChatItemViewCellType = author.id == userId ? .me : .other(isFirst: isFirst, isLast: isLast)
+                                ChatItemView(author: author, message: message, type: type, joinedUserCount: room.joinUserId.count)
+                            }
                         }
-                        .onAppear {
-                            self.scrollViewProxy = scrollViewProxy
-                            scrollViewProxy.scrollTo(ChatDetailSupporterType.bottom, anchor: .bottom)
-                        }
+                        Color.clear
+                            .id(Id.bottom)
                     }
-                    .seugiBackground(.primary(.p050))
+                    .onAppear {
+                        // 시작시 아래로 스크롤
+                        self.scrollViewProxy = scrollViewProxy
+                        scrollToBottom()
+                    }
                 }
-            } failure: { _ in
-                Text("-")
+                .seugiBackground(.primary(.p050))
             }
+        } failure: { _ in
+            SeugiError("채팅 불러오기 실패", image: .sadButRelievedFace)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .safeAreaInset(edge: .bottom) {
             if !isSearching {
-                BottomTextField()
+                makeBottomTextField()
             }
         }
         .hideKeyboardWhenTap()
@@ -130,7 +132,7 @@ public struct ChatDetailView: View {
             }
         }
         .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
-            drawerBody
+            makeDrawer()
         }
         .onChange(of: isDrawerOpen) { _ in
             hideKeyboard()
@@ -157,44 +159,36 @@ public struct ChatDetailView: View {
             selection: $viewModel.photo,
             matching: .any(of: [.images, .screenshots, .livePhotos])
         )
-        .onChange(of: viewModel.photo) { _ in }
+        .onChange(of: viewModel.photo) { _ in } // TODO: impl
     }
     
     @ViewBuilder
-    private func BottomTextField() -> some View {
-        GeometryReader { reader in
-            VStack {
-                Spacer()
-                Color.seugi(.primary(.p050))
-                    .frame(maxWidth: .infinity)
-                    .frame(height: reader.safeAreaInsets.bottom + 56 - 12, alignment: .bottom) // 56: bottom nav height, 12: just margin
+    private func makeBottomTextField() -> some View {
+        SeugiChatTextField("메세지 보내기", text: $viewModel.message) {
+            switch $0 {
+            case .sendMessage:
+                viewModel.sendMessage(room: room)
+            case .imageMenu:
+                showPhotoPicker = true
+            case .fileMenu:
+                break
             }
-            .ignoresSafeArea()
-            SeugiChatTextField("메세지 보내기", text: $viewModel.message) {
-                switch $0 {
-                case .sendMessage:
-                    viewModel.sendMessage(room: room)
-                case .imageMenu:
-                    showPhotoPicker = true
-                case .fileMenu:
-                    break
-                }
-            }
-            .toBottom()
-            .padding(.horizontal, 8)
-            .padding(.bottom, 8)
-            .onTapGesture {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    withAnimation {
-                        scrollToBottom()
-                    }
+        }
+        .onTapGesture {
+            Task {
+                try? await Task.sleep(for: .seconds(0.3))
+                withAnimation {
+                    scrollToBottom()
                 }
             }
         }
+        .padding(.horizontal, 8)
+        .padding(.bottom, 8)
+        .seugiBackground(.primary(.p050))
     }
     
     @ViewBuilder
-    private var drawerBody: some View {
+    private func makeDrawer() -> some View {
         VStack(spacing: 0) {
             Text("멤버")
                 .padding(.leading, 16)
@@ -216,15 +210,20 @@ public struct ChatDetailView: View {
             SeugiDivider(thickness: .thin)
             HStack(spacing: 16) {
                 makeImageButton(.logoutLine) {
-                    // handle
+                    alert.present("채팅방을 나가시겠습니까?")
+                        .primaryButton("나가기") {
+                            viewModel.left(roomId: room.id)
+                        }
+                        .secondaryButton("닫기") {}
+                        .show()
                 }
                 
                 Spacer()
                 makeImageButton(.notificationFill) {
-                    // handle
+                    // TODO: handle
                 }
                 makeImageButton(.settingFill) {
-                    // handle
+                    // TODO: handle
                 }
             }
             .padding(.horizontal, 16)
@@ -249,6 +248,6 @@ public struct ChatDetailView: View {
     }
     
     private func scrollToBottom() {
-        scrollViewProxy?.scrollTo(ChatDetailSupporterType.bottom)
+        scrollViewProxy?.scrollTo(Id.bottom)
     }
 }
