@@ -10,20 +10,26 @@ public final class StartViewModel: BaseViewModel<StartViewModel.StartSubject> {
     
     // MARK: - Repo
     @Inject private var memberRepo: MemberRepo
+    @Inject private var oauthRepo: OAuthRepo
     
     // MARK: - State
-    @Published var signInFlow: IdleFlow<Bool> = .fetching
+    @Published var signInFlow: IdleFlow<Token> = .idle
     
     // MARK: - Method
     func signIn(token: String, provider: OAuth2Provider) {
-//        sub(memberRepo.oauth2(code: token, provider: provider)) {
-//            self.signInFlow = .fetching
-//        } success: { [self] token in
-//            signInFlow = .success()
-//            emit(.signInSuccess(token: token.data))
-//        } failure: { error in
-//            self.signInFlow = .failure(error)
-//        }
-        // TODO: Fix
+        switch provider {
+        case .google:
+            sub(oauthRepo.authenticateGoogle(
+                .init(code: token)
+            )) {
+                self.signInFlow = .fetching
+            } success: { res in
+                self.signInFlow = .success(res.data)
+            } failure: { err in
+                self.signInFlow = .failure(err)
+            }
+        case .apple:
+            break
+        }
     }
 }

@@ -57,7 +57,6 @@ public struct LoginEmailView: View {
                 .show()
         }
         .onAppear {
-            
             firstTextField = true
         }
     }

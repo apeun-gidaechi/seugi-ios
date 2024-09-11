@@ -69,6 +69,21 @@ public struct StartView: View {
                 .message("잠시 후 다시 시도해 주세요")
                 .show()
         }
+        .onChange(of: viewModel.signInFlow) { token in
+            log("✅ StartView - 로그인 성공")
+            let accessToken = String(token.accessToken.split(separator: " ")[1])
+            let refreshToken = String(token.refreshToken.split(separator: " ")[1])
+            withAnimation {
+                appState.accessToken = accessToken
+                appState.refreshToken = refreshToken
+                appState.login()
+                router.navigateToRoot()
+            }
+        } failure: { _ in
+            alertProvider.present("로그인 실패")
+                .message("아이디 혹은 비밀번호를 다시 확인해 주세요")
+                .show()
+        }
     }
     
     private var sheet: some View {
