@@ -13,6 +13,8 @@ import Component
 struct HomeMealContainer: View {
     
     private let meals: FetchFlow<[Meal]>
+    @State private var maxHeight: CGFloat?
+    @State private var selection = 0
     
     init(for meals: FetchFlow<[Meal]>) {
         self.meals = meals
@@ -35,40 +37,45 @@ struct HomeMealContainer: View {
                     .seugiColor(.gray(.g600))
                     .font(.body(.b2))
                     .padding(.vertical, 12)
-            case .success(let data):
-                HStack(spacing: 0) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("""
-                             오리훈제볶음밥
-                             간장두부조립
-                             배추김치
-                             초코첵스시리얼+우유
-                             오렌지
-                             """)
-                        .multilineTextAlignment(.leading)
-                        .font(.body(.b2))
-                        .seugiColor(.gray(.g700))
-                        Text("872kcal")
-                            .font(.caption(.c1))
-                            .seugiColor(.sub(.white))
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .seugiBackground(.primary(.p500))
-                            .cornerRadius(100)
+            case .success(let meals):
+                TabView(selection: $selection) {
+                    ForEach(meals.indices, id: \.self) { mealIndex in
+                        let meal = meals[mealIndex]
+                        VStack(spacing: 8) {
+                            HStack {
+                                Text(meal.mealType.rawValue)
+                                    .font(.caption(.c1))
+                                    .padding(.horizontal, 10)
+                                    .seugiColor(.sub(.white))
+                                    .frame(height: 24)
+                                    .seugiBackground(.primary(.p500))
+                                    .cornerRadius(12, corners: .allCorners)
+                                Spacer()
+                                Text(meal.calorie)
+                                    .font(.caption(.c1))
+                                    .seugiColor(.gray(.g500))
+                            }
+                            VStack(spacing: 0) {
+                                ForEach(meal.menu.indices, id: \.self) { index in
+                                    Text(meal.menu[index])
+                                        .font(.body(.b2))
+                                        .seugiColor(.gray(.g700))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                            }
+                        }
+                        .onReadSize { size in
+                            self.maxHeight = max(size.height, self.maxHeight ?? 0)
+                        }
                     }
-                    Spacer()
-                    VStack(spacing: 4) {
-                        Image(image: .apple1)
-                            .resizable()
-                            .frame(width: 94, height: 94)
-                        Text("아침")
-                            .font(.caption(.c1))
-                            .seugiColor(.gray(.g500))
-                    }
-                    .frame(maxWidth: .infinity)
                 }
+                .animation(.spring(duration: 0.4), value: selection)
+                .frame(height: maxHeight ?? 300)
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                // Indicator
             }
         }
+        .padding(.horizontal, 4)
         .applyCardEffect()
     }
 }

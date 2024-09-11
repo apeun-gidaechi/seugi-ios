@@ -21,4 +21,3 @@ extension View {
             .shadow(.evBlack(.ev1))
     }
 }
-
