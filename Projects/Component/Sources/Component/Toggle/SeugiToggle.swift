@@ -13,8 +13,10 @@ public struct SeugiToggle: View {
     @Binding private var isOn: Bool
     private let type: ToggleType
     
-    public init(isOn: Binding<Bool>,
-                type: ToggleType = .default) {
+    public init(
+        isOn: Binding<Bool>,
+        type: ToggleType = .default
+    ) {
         self._isOn = isOn
         self.type = type
     }

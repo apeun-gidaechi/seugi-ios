@@ -6,4 +6,7 @@ public enum StorableKeys: String {
     
     // workspace
     case selectedWorkspaceId = "SELECTED_WORKSPACE"
+    
+    case fcmToken
+    case allowAlarm
 }

@@ -47,7 +47,7 @@ public struct WorkspaceDetailView: View {
                         .applyAnimation()
                     SeugiListItem.icon(title: "알림 설정", icon: .expandRightLine)
                         .button {
-                            //
+                            router.navigate(to: MainDestination.settingAlarm)
                         }
                         .applyAnimation()
                     SettingWorkspaceHeadline(icon: .personFill)
