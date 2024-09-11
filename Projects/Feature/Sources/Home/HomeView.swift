@@ -7,12 +7,8 @@ public struct HomeView: View {
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var router: Router
-    @StateObject private var viewModel = HomeViewModel()
-    @Namespace private var currentWorkspaceNamespace
-    @Namespace private var todayScheduleNamespace
-    @Namespace private var todayMealNamespace
-    @Namespace private var catSeugiNamespace
-    @Namespace private var commingScheduleNamespace
+    @EnvironmentObject private var viewModel: HomeViewModel
+    @Namespace private var animation
     
     private let flow: HomeFetchFlow
     
@@ -132,7 +128,7 @@ public struct HomeView: View {
                 .applyCardEffect()
             }
         }
-        .matchedGeometryEffect(id: "currentWorkspace", in: currentWorkspaceNamespace)
+        .matchedGeometryEffect(id: "currentWorkspace", in: animation)
     }
     
     @ViewBuilder
@@ -220,7 +216,7 @@ public struct HomeView: View {
                 .applyCardEffect()
             }
         }
-        .matchedGeometryEffect(id: "todaySchedule", in: todayScheduleNamespace)
+        .matchedGeometryEffect(id: "todaySchedule", in: animation)
     }
     
     @ViewBuilder
@@ -304,7 +300,7 @@ public struct HomeView: View {
                 .applyCardEffect()
             }
         }
-        .matchedGeometryEffect(id: "todayMeal", in: todayMealNamespace)
+        .matchedGeometryEffect(id: "todayMeal", in: animation)
     }
     
     @ViewBuilder
@@ -380,7 +376,7 @@ public struct HomeView: View {
                 .applyCardEffect()
             }
         }
-        .matchedGeometryEffect(id: "catSeugi", in: catSeugiNamespace)
+        .matchedGeometryEffect(id: "catSeugi", in: animation)
     }
     
     @ViewBuilder
@@ -452,7 +448,7 @@ public struct HomeView: View {
                 .applyCardEffect()
             }
         }
-        .matchedGeometryEffect(id: "commingSchedule", in: commingScheduleNamespace)
+        .matchedGeometryEffect(id: "commingSchedule", in: animation)
     }
     
     private func makeAIHistory() -> some View {
