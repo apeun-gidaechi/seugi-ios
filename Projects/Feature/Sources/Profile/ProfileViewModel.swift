@@ -49,25 +49,23 @@ final class ProfileViewModel: BaseViewModel<ProfileViewModel.Effect> {
         guard let updateProfile else {
             return
         }
-        sub(
-            profileRepo.patchProfile(
-                workspaceId: workspaceId,
-                .init(
-                    status: updateProfile.status,
-                    nick: updateProfile.nick,
-                    spot: updateProfile.spot,
-                    belong: updateProfile.belong,
-                    phone: updateProfile.phone,
-                    wire: updateProfile.wire,
-                    location: updateProfile.location
-                )
+        profileRepo.patchProfile(
+            workspaceId: workspaceId,
+            .init(
+                status: updateProfile.status,
+                nick: updateProfile.nick,
+                spot: updateProfile.spot,
+                belong: updateProfile.belong,
+                phone: updateProfile.phone,
+                wire: updateProfile.wire,
+                location: updateProfile.location
             )
-        ) {
+        ).fetching {
             self.updateProfileFlow = .fetching
-        } success: { _ in
+        }.success { _ in
             self.updateProfileFlow = .success()
-        } failure: { error in
+        }.failure { error in
             self.updateProfileFlow = .failure(error)
-        }
+        }.observe(&subscriptions)
     }
 }

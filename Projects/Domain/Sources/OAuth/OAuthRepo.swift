@@ -9,6 +9,6 @@
 import Foundation
 
 public protocol OAuthRepo {
-    func authenticateGoogle(_ req: GoogleCodeReq) -> APIResult<Base<Token>>
-    func connectGoogle(_ req: GoogleCodeReq) -> APIResult<BaseVoid>
+    func authenticateGoogle(_ req: GoogleCodeReq) -> ObservableResult<Base<Token>>
+    func connectGoogle(_ req: GoogleCodeReq) -> ObservableResult<BaseVoid>
 }

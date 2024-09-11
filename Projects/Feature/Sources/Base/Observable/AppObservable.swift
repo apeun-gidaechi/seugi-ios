@@ -98,9 +98,9 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
             emit(.workspaceFetched)
             return
         }
-        sub(workspaceRepo.getWorkspaces()) {
+        workspaceRepo.getWorkspaces().fetching {
             self.workspaces = .fetching
-        } success: { [self] workspaces in
+        }.success { [self] workspaces in
             withAnimation(.spring(duration: 0.4)) {
                 self.workspaces = .success(workspaces.data)
                 if let selectedWorkspaceId = (keyValueRepo.load(key: .selectedWorkspaceId) as? String),
@@ -111,7 +111,7 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
                     selectedWorkspace = workspace
                 }
             }
-        } failure: { [self] error in
+        }.failure { [self] error in
             log("💎 AppState.fetchWorkspaces - \(error)")
             if case .refreshFailure = error {
                 logout()
@@ -119,22 +119,22 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
             withAnimation(.spring(duration: 0.4)) {
                 workspaces = .failure(error)
             }
-        } finished: { [self] in
+        }.finished { [self] in
             log("💎 workspace fetched")
             emit(.workspaceFetched)
-        }
+        }.observe(&subscriptions)
     }
     
     public func fetchMyInfo() {
         guard let selectedWorkspace else {
             return
         }
-        sub(profileRepo.me(workspaceId: selectedWorkspace.workspaceId)) {
+        profileRepo.me(workspaceId: selectedWorkspace.workspaceId).fetching {
             self.profile = .fetching
-        } success: { profile in
+        }.success { profile in
             self.profile = .success(profile.data)
-        } failure: { error in
+        }.failure { error in
             self.profile = .failure(error)
-        }
+        }.observe(&subscriptions)
     }
 }

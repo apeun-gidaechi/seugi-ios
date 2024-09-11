@@ -45,24 +45,25 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
     
     // MARK: - Method
     public func fetchChats(workspaceId: String) {
-        sub(chatRepo.searchPersonal(workspaceId: workspaceId)) {
+        chatRepo.searchPersonal(workspaceId: workspaceId).fetching {
             self.personalRooms = .fetching
-        } success: { res in
+        }.success { res in
             self.personalRooms = .success(res.data)
-        } failure: { error in
+        }.failure { error in
             log(error)
             self.personalRooms = .failure(error)
             self.emit(.refreshFailure)
-        }
-        sub(chatRepo.searchGroup(workspaceId: workspaceId)) {
+        }.observe(&subscriptions)
+        
+        chatRepo.searchGroup(workspaceId: workspaceId).fetching {
             self.groupRooms = .fetching
-        } success: { res in
+        }.success { res in
             self.groupRooms = .success(res.data)
-        } failure: { error in
+        }.failure { error in
             log(error)
             self.groupRooms = .failure(error)
             self.emit(.refreshFailure)
-        }
+        }.observe(&subscriptions)
     }
     
     public func clearSearchText() {

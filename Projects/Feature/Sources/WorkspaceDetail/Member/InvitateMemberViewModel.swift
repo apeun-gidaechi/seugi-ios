@@ -33,30 +33,33 @@ final class InvitateMemberViewModel: BaseViewModel<InvitateMemberViewModel.Effec
     
     // MARK: - Method
     func fetchWaitMembers(workspaceId: String) {
-        sub(workspaceRepo.getWaitList(workspaceId: workspaceId, workspaceRole: .student)) {
-            self.studentWaitMembers = .fetching
-        } success: { response in
-            self.studentWaitMembers = .success(response.data)
-        } failure: { error in
-            self.studentWaitMembers = .failure(error)
-        }
-        sub(workspaceRepo.getWaitList(workspaceId: workspaceId, workspaceRole: .teacher)) {
-            self.teacherWaitMembers = .fetching
-        } success: { response in
-            self.teacherWaitMembers = .success(response.data)
-        } failure: { error in
-            self.teacherWaitMembers = .failure(error)
-        }
+        workspaceRepo.getWaitList(workspaceId: workspaceId, workspaceRole: .student)
+            .fetching {
+                self.studentWaitMembers = .fetching
+            }.success { response in
+                self.studentWaitMembers = .success(response.data)
+            }.failure { error in
+                self.studentWaitMembers = .failure(error)
+            }.observe(&subscriptions)
+        workspaceRepo.getWaitList(workspaceId: workspaceId, workspaceRole: .teacher)
+            .fetching {
+                self.teacherWaitMembers = .fetching
+            }.success { response in
+                self.teacherWaitMembers = .success(response.data)
+            }.failure { error in
+                self.teacherWaitMembers = .failure(error)
+            }.observe(&subscriptions)
     }
     
     func fetchWorkspaceCode(workspaceId: String) {
-        sub(workspaceRepo.getWorkspaceCode(workspaceId: workspaceId)) {
-            self.workspaceCode = .fetching
-        } success: { response in
-            self.workspaceCode = .success(response.data)
-        } failure: { error in
-            self.workspaceCode = .failure(error)
-        }
+        workspaceRepo.getWorkspaceCode(workspaceId: workspaceId)
+            .fetching {
+                self.workspaceCode = .fetching
+            }.success { response in
+                self.workspaceCode = .success(response.data)
+            }.failure { error in
+                self.workspaceCode = .failure(error)
+            }.observe(&subscriptions)
     }
     
     func selectMember(member: RetrieveMember) {
@@ -68,30 +71,30 @@ final class InvitateMemberViewModel: BaseViewModel<InvitateMemberViewModel.Effec
     }
     
     func addWorkspace(workspaceId: String) {
-        sub(workspaceRepo.addWorkspace(
+        workspaceRepo.addWorkspace(
             workspaceId: workspaceId,
             userSet: selectedMembers.map { $0.id },
             role: selection.role
-        )) {
+        ).fetching {
             self.addWorkspaceFlow = .fetching
-        } success: { _ in
+        }.success { _ in
             self.addWorkspaceFlow = .success()
-        } failure: { error in
+        }.failure { error in
             self.addWorkspaceFlow = .failure(error)
-        }
+        }.observe(&subscriptions)
     }
     
     func cancelWorkspace(workspaceId: String) {
-        sub(workspaceRepo.cancelWorkspace(
+        workspaceRepo.cancelWorkspace(
             workspaceId: workspaceId,
             userSet: selectedMembers.map { $0.id },
             role: selection.role
-        )) {
+        ).fetching {
             self.cancelWorkspaceFlow = .fetching
-        } success: { _ in
+        }.success { _ in
             self.cancelWorkspaceFlow = .success()
-        } failure: { error in
+        }.failure { error in
             self.cancelWorkspaceFlow = .failure(error)
-        }
+        }.observe(&subscriptions)
     }
 }

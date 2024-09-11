@@ -1,3 +1,3 @@
 public protocol EmailRepo {
-    func send(email: String) -> APIResult<BaseVoid>
+    func send(email: String) -> ObservableResult<BaseVoid>
 }

@@ -9,15 +9,15 @@
 import Domain
 
 final class TimetableService: Service<TimetableEndpoint>, TimetableRepo {
-    func getWeekend(workspaceId: String) -> APIResult<Base<[Timetable]>> {
+    func getWeekend(workspaceId: String) -> ObservableResult<Base<[Timetable]>> {
         performRequest(.getWeekend(workspaceId: workspaceId), res: [Timetable].self)
     }
     
-    func getDay(workspaceId: String) -> APIResult<Base<[Timetable]>> {
+    func getDay(workspaceId: String) -> ObservableResult<Base<[Timetable]>> {
         performRequest(.getDay(workspaceId: workspaceId), res: [Timetable].self)
     }
     
-    func reset(workspaceId: String) -> APIResult<BaseVoid> {
+    func reset(workspaceId: String) -> ObservableResult<BaseVoid> {
         performRequest(.reset(workspaceId: workspaceId))
     }
 }

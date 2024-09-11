@@ -23,15 +23,15 @@ public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewMo
         workspaceId: String,
         memberId: Int
     ) {
-        sub(workspaceRepo.getMembers(workspaceId: workspaceId)) {
+        workspaceRepo.getMembers(workspaceId: workspaceId).fetching {
             self.isFetchMembers = true
             self.members = .fetching
-        } success: { response in
+        }.success { response in
             let members = response.data.filter { $0.member.id != memberId }
             self.members = .success(members)
-        } failure: {
+        }.failure {
             self.members = .failure($0)
-        }
+        }.observe(&subscriptions)
     }
     
     func selectMember(member: RetrieveProfile, selected: Bool) {
@@ -55,34 +55,34 @@ public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewMo
         }
         
         let joinUsers = selectedMembers.map { $0.member.id }
-        sub(chatRepo.createGroup(
+        chatRepo.createGroup(
             .init(roomName: roomName, workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: "")
-        )) {
+        ).fetching {
             self.createFlow = .fetching
-        } success: { _ in
+        }.success { _ in
             self.createFlow = .success()
-        } failure: { error in
+        }.failure { error in
             self.createFlow = .failure(error)
-        }
+        }.observe(&subscriptions)
     }
     
     func createPersonalChat(workspaceId: String) {
         let joinUsers = selectedMembers.map { $0.member.id }
-        sub(chatRepo.createPersonal(
+        chatRepo.createPersonal(
             .init(roomName: "", workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: "")
-        )) {
+        ).fetching {
             self.createFlow = .fetching
-        } success: { [self] res in
+        }.success { [self] res in
             let roomId = res.data
-            sub(chatRepo.searchPersonal(roomId: roomId)) {
+            chatRepo.searchPersonal(roomId: roomId).fetching {
                 self.createFlow = .fetching
-            } success: { res in
+            }.success { res in
                 self.emit(.createdPersonalChat(room: res.data))
-            } failure: { error in
+            }.failure { error in
                 self.createFlow = .failure(error)
-            }
-        } failure: { error in
+            }.observe(&subscriptions)
+        }.failure { error in
             self.createFlow = .failure(error)
-        }
+        }.observe(&subscriptions)
     }
 }

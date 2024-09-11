@@ -2,55 +2,55 @@ import Domain
 
 final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
     
-    func getWorkspaces() -> APIResult<Base<[Workspace]>> {
+    func getWorkspaces() -> ObservableResult<Base<[Workspace]>> {
         performRequest(.getWorkspaces, res: [Workspace].self)
     }
     
-    func getWorkspaceCode(workspaceId: String) -> APIResult<Base<String>> {
+    func getWorkspaceCode(workspaceId: String) -> ObservableResult<Base<String>> {
         performRequest(.getWorkspaceCode(workspaceId: workspaceId), res: String.self)
     }
     
-    func getWorkspace(code: String) -> APIResult<Base<WorkspaceInfo>> {
+    func getWorkspace(code: String) -> ObservableResult<Base<WorkspaceInfo>> {
         performRequest(.getWorkspace(code: code), res: WorkspaceInfo.self)
     }
     
-    func joinWorkspace(workspaceId: String, workspaceCode: String, role: WorkspaceRole) -> APIResult<BaseVoid> {
+    func joinWorkspace(workspaceId: String, workspaceCode: String, role: WorkspaceRole) -> ObservableResult<BaseVoid> {
         performRequest(.joinWorkspace(.init(workspaceId: workspaceId, workspaceCode: workspaceCode, role: role)))
     }
     
-    func getMembers(workspaceId: String) -> APIResult<Base<[RetrieveProfile]>> {
+    func getMembers(workspaceId: String) -> ObservableResult<Base<[RetrieveProfile]>> {
         performRequest(.getMembers(workspaceId: workspaceId), res: [RetrieveProfile].self)
     }
     
-    func getMembersChart(workspaceId: String) -> APIResult<Base<WorkspaceMembersChart>> {
+    func getMembersChart(workspaceId: String) -> ObservableResult<Base<WorkspaceMembersChart>> {
         performRequest(.getMembersChart(workspaceId: workspaceId), res: WorkspaceMembersChart.self)
     }
     
-    func createWorkspace(workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid> {
+    func createWorkspace(workspaceName: String, workspaceImageUrl: String) -> ObservableResult<BaseVoid> {
         performRequest(.createWorkspace(.init(workspaceName: workspaceName, workspaceImageUrl: workspaceImageUrl)))
     }
     
-    func removeWorkspace(workspaceId: String) -> APIResult<BaseVoid> {
+    func removeWorkspace(workspaceId: String) -> ObservableResult<BaseVoid> {
         performRequest(.removeWorkspace(workspaceId: workspaceId))
     }
     
-    func addWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> APIResult<BaseVoid> {
+    func addWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> ObservableResult<BaseVoid> {
         performRequest(.addWorkspace(.init(workspaceId: workspaceId, userSet: userSet, role: role)))
     }
     
-    func cancelWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> APIResult<BaseVoid> {
+    func cancelWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> ObservableResult<BaseVoid> {
         performRequest(.cancelWorkspace(.init(workspaceId: workspaceId, userSet: userSet, role: role)))
     }
     
-    func getWaitList(workspaceId: String, workspaceRole: WorkspaceRole) -> APIResult<Base<[RetrieveMember]>> {
+    func getWaitList(workspaceId: String, workspaceRole: WorkspaceRole) -> ObservableResult<Base<[RetrieveMember]>> {
         performRequest(.getWaitList(workspaceId: workspaceId, workspaceRole: workspaceRole), res: [RetrieveMember].self)
     }
     
-    func updateWorkspace(workspaceId: String, workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid> {
+    func updateWorkspace(workspaceId: String, workspaceName: String, workspaceImageUrl: String) -> ObservableResult<BaseVoid> {
         performRequest(.updateWorkspace(.init(workspaceId: workspaceId, workspaceName: workspaceName, workspaceImgUrl: workspaceImageUrl)))
     }
     
-    func getMyWaitList() -> APIResult<Base<[WorkspaceInfo]>> {
+    func getMyWaitList() -> ObservableResult<Base<[WorkspaceInfo]>> {
         performRequest(.getMyWaitList, res: [WorkspaceInfo].self)
     }
 }

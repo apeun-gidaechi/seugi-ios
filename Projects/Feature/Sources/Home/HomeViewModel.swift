@@ -20,22 +20,22 @@ final class HomeViewModel: BaseViewModel<HomeViewModel.Effect> {
     @Published var timetables: FetchFlow<[Timetable]> = .fetching
     
     func fetchMeals(workspaceId: String) {
-        sub(mealRepo.getByDate(workspaceId: workspaceId, date: .now)) {
+        mealRepo.getByDate(workspaceId: workspaceId, date: .now).fetching {
             self.meals = .fetching
-        } success: { res in
+        }.success { res in
             self.meals = .success(res.data)
-        } failure: { err in
+        }.failure { err in
             self.meals = .failure(err)
-        }
+        }.observe(&subscriptions)
     }
     
     func fetchTimetable(workspaceId: String) {
-        sub(timetableRepo.getDay(workspaceId: workspaceId)) {
+        timetableRepo.getDay(workspaceId: workspaceId).fetching {
             self.timetables = .fetching
-        } success: { res in
+        }.success { res in
             self.timetables = .success(res.data)
-        } failure: { err in
+        }.failure { err in
             self.timetables = .failure(err)
-        }
+        }.observe(&subscriptions)
     }
 }

@@ -24,16 +24,16 @@ final class SettingProfileViewModel: BaseViewModel<SettingProfileViewModel.Effec
         guard let member else {
             return
         }
-        sub(memberRepo.edit(
+        memberRepo.edit(
             .init(
                 picture: picture, name: member.name, birth: member.birth
             )
-        )) {
+        ).fetching {
             self.editMemberFlow = .fetching
-        } success: { _ in
+        }.success { _ in
             self.editMemberFlow = .success()
-        } failure: { error in
+        }.failure { error in
             self.editMemberFlow = .failure(error)
-        }
+        }.observe(&subscriptions)
     }
 }

@@ -8,7 +8,7 @@ final class MessageService: Service<MessageEndpoint> {
 
 // MARK: - HTTP Protocol
 extension MessageService: MessageRepo {
-    public func getMessages(roomId: String, page: Int, size: Int) -> APIResult<Base<GetMessage>> {
+    public func getMessages(roomId: String, page: Int, size: Int) -> ObservableResult<Base<GetMessage>> {
         performRequest(.getMessages(roomId: roomId, page: page, size: size), res: GetMessage.self)
     }
 }

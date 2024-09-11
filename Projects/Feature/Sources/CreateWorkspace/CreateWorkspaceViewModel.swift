@@ -20,12 +20,13 @@ final class CreateWorkspaceViewModel: BaseViewModel<CreateWorkspaceViewModel.Eff
     
     func createWorkspace(imageUrl: String) {
         // TODO: Add workspace image url
-        sub(workspaceRepo.createWorkspace(workspaceName: workspaceName, workspaceImageUrl: imageUrl)) {
-            self.createWorkspaceFlow = .fetching
-        } success: { _ in
-            self.createWorkspaceFlow = .success()
-        } failure: { error in
-            self.createWorkspaceFlow = .failure(error)
-        }
+        workspaceRepo.createWorkspace(workspaceName: workspaceName, workspaceImageUrl: imageUrl)
+            .fetching {
+                self.createWorkspaceFlow = .fetching
+            }.success { _ in
+                self.createWorkspaceFlow = .success()
+            }.failure { error in
+                self.createWorkspaceFlow = .failure(error)
+            }.observe(&subscriptions)
     }
 }

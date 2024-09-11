@@ -22,12 +22,18 @@ public final class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.Effect
     
     // MARK: - Method
     func signIn() {
-        sub(memberRepo.login(.init(email: email, password: password))) {
+        memberRepo.login(
+            .init(
+                email: email,
+                password: password
+            )
+        )
+        .fetching {
             self.signInFlow = .fetching
-        } success: { res in
+        }.success { res in
             self.signInFlow = .success(res.data)
-        } failure: { error in
+        }.failure { error in
             self.signInFlow = .failure(error)
-        }
+        }.observe(&subscriptions)
     }
 }

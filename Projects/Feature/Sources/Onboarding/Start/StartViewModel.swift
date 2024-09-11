@@ -19,15 +19,15 @@ public final class StartViewModel: BaseViewModel<StartViewModel.Effect> {
     func signIn(token: String, provider: OAuth2Provider) {
         switch provider {
         case .google:
-            sub(oauthRepo.authenticateGoogle(
+            oauthRepo.authenticateGoogle(
                 .init(code: token)
-            )) {
+            ).fetching {
                 self.signInFlow = .fetching
-            } success: { res in
+            }.success { res in
                 self.signInFlow = .success(res.data)
-            } failure: { err in
+            }.failure { err in
                 self.signInFlow = .failure(err)
-            }
+            }.observe(&subscriptions)
         case .apple:
             break
         }

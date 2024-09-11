@@ -10,8 +10,8 @@ import SwiftUtil
 
 final class AuthInterceptor: Moya.RequestInterceptor {
     
-    @Inject private var keyValueStore: any KeyValueRepo
-    @Inject private var keychainRepo: any KeychainRepo
+    @Inject private var keyValueStore: KeyValueRepo
+    @Inject private var keychainRepo: KeychainRepo
     @Inject private var memberRepo: MemberRepo
     
     private var subscriptions = Set<AnyCancellable>()
@@ -70,23 +70,18 @@ final class AuthInterceptor: Moya.RequestInterceptor {
         log("✅ AuthInterceptor - Try refresh with token - \(refreshToken)")
         
         memberRepo.refresh(token: refreshToken)
-            .sink { [self] result in
-                switch result {
-                case .success(let res):
-                    log("✅ AuthInterceptor - Refresh Success")
-                    let accessToken = String(res.data.split(separator: " ")[1])
-                    keyValueStore.save(key: .accessToken, value: accessToken)
-                    completion(.retry)
-                case .failure(let error):
-                    log(error)
-                    failureReissue()
-                    log("❌ AuthInterceptor - Refresh Failure")
-                    completion(.doNotRetryWithError(APIError.refreshFailure))
-                case .fetching:
-                    break
-                }
+            .success { res in
+                log("✅ AuthInterceptor - Refresh Success")
+                let accessToken = String(res.data.split(separator: " ")[1])
+                self.keyValueStore.save(key: .accessToken, value: accessToken)
+                completion(.retry)
             }
-            .store(in: &subscriptions)
+            .failure { _ in
+                log(error)
+                self.failureReissue()
+                log("❌ AuthInterceptor - Refresh Failure")
+                completion(.doNotRetryWithError(APIError.refreshFailure))
+            }.observe(&subscriptions)
     }
     
     private func failureReissue() {

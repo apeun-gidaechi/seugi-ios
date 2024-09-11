@@ -30,20 +30,20 @@ public final class StompManager: BaseViewModel<StompManager.Effect> {
         stompRepo.subDisconnect()
             .sink { [self] _ in
                 log("🤩 STOMP disConnected")
-                guard let refreshToken = keychainRepo.load(key: .refreshToken) as? String else {
+                guard let refreshToken = keychainRepo.load(key: .refreshToken) else {
                     log("🤩 STOMP disConnected - RefreshToken not founded")
                     return
                 }
-                sub(memberRepo.refresh(token: refreshToken)) {
+                memberRepo.refresh(token: refreshToken).fetching {
                     log("🤩 STOMP disConnected - try to reissue !")
-                } success: { res in
+                }.success { res in
                     let accessToken = String(res.data.split(separator: " ")[1])
                     self.stompRepo.reissue(accessToken: accessToken)
                     self.stompRepo.reconnect(time: 1)
                     log("🤩 STOMP disConnected - reconnecting...")
-                } failure: { _ in
+                }.failure { _ in
                     log("🤩 STOMP disConnected - reissue failure... OTL")
-                }
+                }.observe(&subscriptions)
             }
             .store(in: &subscriptions)
         stompRepo.subSendError()

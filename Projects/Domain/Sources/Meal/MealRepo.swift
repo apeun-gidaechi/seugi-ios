@@ -8,7 +8,7 @@
 
 import Foundation
 public protocol MealRepo {
-    func getAll(workspaceId: String) -> APIResult<Base<[Meal]>>
-    func getByDate(workspaceId: String, date: Date) -> APIResult<Base<[Meal]>>
-    func reset(workspaceId: String) -> APIResult<BaseVoid>
+    func getAll(workspaceId: String) -> ObservableResult<Base<[Meal]>>
+    func getByDate(workspaceId: String, date: Date) -> ObservableResult<Base<[Meal]>>
+    func reset(workspaceId: String) -> ObservableResult<BaseVoid>
 }

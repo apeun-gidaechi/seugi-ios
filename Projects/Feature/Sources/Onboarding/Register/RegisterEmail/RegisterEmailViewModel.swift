@@ -33,29 +33,30 @@ public final class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.
     }
     
     func sendEmail() {
-        sub(emailRepo.send(email: email)) { [self] in
-            isWaiting = true
-            sendEmailFlow = .fetching
-        } success: { _ in
-            self.sendEmailFlow = .success()
-        } failure: { error in
-            self.sendEmailFlow = .failure(error)
-        }
+        emailRepo.send(email: email)
+            .fetching{ [self] in
+                isWaiting = true
+                sendEmailFlow = .fetching
+            }.success { _ in
+                self.sendEmailFlow = .success()
+            }.failure { error in
+                self.sendEmailFlow = .failure(error)
+            }.observe(&subscriptions)
     }
     
     func signUp() {
-        sub(memberRepo.register(
+        memberRepo.register(
             .init(
                 name: name, email: email, password: password, code: verificationCode
             )
-        )) {
+        ).fetching {
             self.signUpFlow = .fetching
-        } success: { token in
+        }.success { token in
             self.emit(.registerSuccess(token.data))
             self.signUpFlow = .success()
-        } failure: { error in
+        }.failure { error in
             log(error)
             self.signUpFlow = .failure(error)
-        }
+        }.observe(&subscriptions)
     }
 }

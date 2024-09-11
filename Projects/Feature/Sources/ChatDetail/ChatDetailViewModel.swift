@@ -49,16 +49,16 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect
     }
     
     func fetchMessages(roomId: String) {
-        sub(messageRepo.getMessages(roomId: roomId, page: page, size: 50)) {
+        messageRepo.getMessages(roomId: roomId, page: page, size: 50).fetching {
             self.messages = .fetching
-        } success: { res in
+        }.success { res in
             let messages = res.data.messages
                 .sorted { $0.timestamp ?? .now < $1.timestamp ?? .now }
             self.messages = .success(messages)
             self.emit(.messagesFetched)
-        } failure: { error in
+        }.failure { error in
             log("❌", error)
-        }
+        }.observe(&subscriptions)
     }
     
     func sendMessage(room: Room) {
@@ -74,12 +74,12 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect
     }
     
     func left(roomId: String) {
-        sub(chatRepo.leftGroup(roomId: roomId)) {
+        chatRepo.leftGroup(roomId: roomId).fetching {
             self.leftRoomFlow = .fetching
-        } success: { _ in
+        }.success { _ in
             self.leftRoomFlow = .success()
-        } failure: { err in
+        }.failure { err in
             self.leftRoomFlow = .failure(err)
-        }
+        }.observe(&subscriptions)
     }
 }

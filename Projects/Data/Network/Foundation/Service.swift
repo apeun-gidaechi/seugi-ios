@@ -37,7 +37,7 @@ class Service<Target: SeugiEndpoint> {
     func request<T: Decodable>(
         _ target: Target.Target,
         res: T.Type
-    ) -> AnyPublisher<T, APIError> {
+    ) -> APIResult<T> {
         self.requestLog(target: target)
         
         let provider = switch target.authorization {
@@ -84,16 +84,14 @@ class Service<Target: SeugiEndpoint> {
     func performRequest<T: Entity>(
         _ target: Target.Target,
         res: T.Type
-    ) -> APIResult<Base<T>> {
-        return request(target, res: Base<T>.self)
-            .asResult()
+    ) -> ObservableResult<Base<T>> {
+        return request(target, res: Base<T>.self).observe()
     }
     
     func performRequest(
         _ target: Target.Target
-    ) -> APIResult<BaseVoid> {
-        return request(target, res: BaseVoid.self)
-            .asResult()
+    ) -> ObservableResult<BaseVoid> {
+        return request(target, res: BaseVoid.self).observe()
     }
     
     private func requestLog(target: Target.Target) {

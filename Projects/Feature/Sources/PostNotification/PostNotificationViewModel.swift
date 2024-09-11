@@ -14,29 +14,30 @@ class PostNotificationViewModel: BaseViewModel<PostNotificationViewModel.Effect>
     @Published var fetchPostNotification: IdleFlow<Bool> = .idle
     
     func createNotification(workspaceId: String) {
-        sub(notificationRepo.postNotification(.init(title: title, content: title, workspaceId: workspaceId))) {
-            self.fetchPostNotification = .fetching
-        } success: { _ in
-            self.fetchPostNotification = .success()
-        } failure: { error in
-            self.fetchPostNotification = .failure(error)
-        }
+        notificationRepo.postNotification(.init(title: title, content: title, workspaceId: workspaceId))
+            .fetching {
+                self.fetchPostNotification = .fetching
+            }.success { _ in
+                self.fetchPostNotification = .success()
+            }.failure { error in
+                self.fetchPostNotification = .failure(error)
+            }.observe(&subscriptions)
     }
     
     func updateNotification(notificationId: Int) {
-        sub(notificationRepo.updateNotification(
+        notificationRepo.updateNotification(
             .init(
                 id: notificationId,
                 title: title,
                 content: content
             )
-        )) {
+        ).fetching {
             self.fetchPostNotification = .fetching
-        } success: { _ in
+        }.success { _ in
             self.fetchPostNotification = .success()
-        } failure: { error in
+        }.failure { error in
             self.fetchPostNotification = .failure(error)
-        }
+        }.observe(&subscriptions)
     }
     
 //    func removeNotification(notificationId: Int) {

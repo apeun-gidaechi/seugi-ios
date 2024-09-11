@@ -25,12 +25,16 @@ public final class SeugiFileManager: BaseViewModel<SeugiFileManager.Effect> {
                     failure(.unknown)
                     return
                 }
-                sub(fileRepo.upload(type: .image, file: data)) {
-                } success: { response in
+                fileRepo.upload(
+                    type: .image,
+                    file: data
+                )
+                .success { response in
                     completion(response.data)
-                } failure: { error in
+                }.failure { error in
                     failure(error)
                 }
+                .observe(&subscriptions)
             case .failure:
                 failure(.unknown)
             }

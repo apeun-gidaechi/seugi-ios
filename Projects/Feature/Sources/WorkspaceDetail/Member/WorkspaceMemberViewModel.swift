@@ -59,14 +59,13 @@ final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Eff
     
     // MARK: - Method
     func fetchMembers(workspaceId: String) {
-        sub(workspaceRepo.getMembersChart(workspaceId: workspaceId)) {
-            self.members = .fetching
-        } success: {
-            self.members = .success($0.data)
-        } failure: { error in
-            self.members = .failure(error)
-        }
+        workspaceRepo.getMembersChart(workspaceId: workspaceId)
+            .fetching {
+                self.members = .fetching
+            }.success {
+                self.members = .success($0.data)
+            }.failure { error in
+                self.members = .failure(error)
+            }.observe(&subscriptions)
     }
-    
-    
 }
