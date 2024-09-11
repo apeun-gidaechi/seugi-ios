@@ -81,7 +81,7 @@ public struct HomeView: View {
             case .fetching:
                 VStack(spacing: 12) {
                     HStack(spacing: 8) {
-                        makeHeadlineIcon(icon: .schoolFill)
+                        HeadlineIcon(icon: .schoolFill)
                         Text("내 학교")
                             .font(.subtitle(.s2))
                             .seugiColor(.sub(.black))
@@ -93,7 +93,7 @@ public struct HomeView: View {
             case .failure:
                 VStack(spacing: 12) {
                     HStack(spacing: 8) {
-                        makeHeadlineIcon(icon: .schoolFill)
+                        HeadlineIcon(icon: .schoolFill)
                         Text("내 학교")
                             .font(.subtitle(.s2))
                             .seugiColor(.sub(.black))
@@ -107,7 +107,7 @@ public struct HomeView: View {
             case .success:
                 VStack(spacing: 12) {
                     HStack(spacing: 8) {
-                        makeHeadlineIcon(icon: .schoolFill)
+                        HeadlineIcon(icon: .schoolFill)
                         Text("내 학교")
                             .font(.subtitle(.s2))
                             .seugiColor(.sub(.black))
@@ -138,7 +138,7 @@ public struct HomeView: View {
             case .fetching:
                 VStack(spacing: 12) {
                     HStack(spacing: 8) {
-                        makeHeadlineIcon(icon: .bookFill)
+                        HeadlineIcon(icon: .bookFill)
                         Text("오늘의 시간표")
                             .font(.subtitle(.s2))
                             .seugiColor(.sub(.black))
@@ -151,7 +151,7 @@ public struct HomeView: View {
             case .failure:
                 VStack(spacing: 12) {
                     HStack(spacing: 8) {
-                        makeHeadlineIcon(icon: .bookFill)
+                        HeadlineIcon(icon: .bookFill)
                         Text("오늘의 시간표")
                             .font(.subtitle(.s2))
                             .seugiColor(.sub(.black))
@@ -167,7 +167,7 @@ public struct HomeView: View {
             case .success:
                 VStack(spacing: 12) {
                     HStack(spacing: 8) {
-                        makeHeadlineIcon(icon: .bookFill)
+                        HeadlineIcon(icon: .bookFill)
                         Text("오늘의 시간표")
                             .font(.subtitle(.s2))
                             .seugiColor(.sub(.black))
@@ -222,24 +222,11 @@ public struct HomeView: View {
     @ViewBuilder
     private var todayMeal: some View {
         Group {
-            switch flow {
-            case .fetching:
+            switch (flow, viewModel.meals) {
+            case (.failure, _), (_, .failure):
                 VStack(spacing: 12) {
                     HStack(spacing: 8) {
-                        makeHeadlineIcon(icon: .utensilsLine)
-                        Text("오늘의 급식")
-                            .font(.subtitle(.s2))
-                            .seugiColor(.sub(.black))
-                        Spacer()
-                    }
-                    ProgressView()
-                }
-                .applyCardEffect()
-            case .failure:
-                
-                VStack(spacing: 12) {
-                    HStack(spacing: 8) {
-                        makeHeadlineIcon(icon: .utensilsLine)
+                        HeadlineIcon(icon: .utensilsLine)
                         Text("오늘의 급식")
                             .font(.subtitle(.s2))
                             .seugiColor(.sub(.black))
@@ -251,10 +238,10 @@ public struct HomeView: View {
                         .padding(.vertical, 12)
                 }
                 .applyCardEffect()
-            case .success:
+            case (.success, .success(let data)):
                 VStack(spacing: 12) {
                     HStack(spacing: 8) {
-                        makeHeadlineIcon(icon: .utensilsLine)
+                        HeadlineIcon(icon: .utensilsLine)
                         Text("오늘의 급식")
                             .font(.subtitle(.s2))
                             .seugiColor(.sub(.black))
@@ -296,6 +283,18 @@ public struct HomeView: View {
                         }
                         .frame(maxWidth: .infinity)
                     }
+                }
+                .applyCardEffect()
+            default:
+                VStack(spacing: 12) {
+                    HStack(spacing: 8) {
+                        HeadlineIcon(icon: .utensilsLine)
+                        Text("오늘의 급식")
+                            .font(.subtitle(.s2))
+                            .seugiColor(.sub(.black))
+                        Spacer()
+                    }
+                    ProgressView()
                 }
                 .applyCardEffect()
             }
@@ -386,7 +385,7 @@ public struct HomeView: View {
             case .fetching:
                 VStack(spacing: 12) {
                     HStack(spacing: 8) {
-                        makeHeadlineIcon(icon: .calendarLine)
+                        HeadlineIcon(icon: .calendarLine)
                         Text("다가오는 일정")
                             .seugiColor(.sub(.black))
                             .font(.subtitle(.s2))
@@ -399,7 +398,7 @@ public struct HomeView: View {
             case .failure:
                 VStack(spacing: 12) {
                     HStack(spacing: 8) {
-                        makeHeadlineIcon(icon: .calendarLine)
+                        HeadlineIcon(icon: .calendarLine)
                         Text("다가오는 일정")
                             .seugiColor(.sub(.black))
                             .font(.subtitle(.s2))
@@ -415,7 +414,7 @@ public struct HomeView: View {
             case .success:
                 VStack(spacing: 12) {
                     HStack(spacing: 8) {
-                        makeHeadlineIcon(icon: .calendarLine)
+                        HeadlineIcon(icon: .calendarLine)
                         Text("다가오는 일정")
                             .seugiColor(.sub(.black))
                             .font(.subtitle(.s2))
@@ -464,28 +463,5 @@ public struct HomeView: View {
         .padding(12)
         .seugiBackground(.gray(.g200))
         .cornerRadius(4)
-    }
-    
-    private func makeHeadlineIcon(icon: SeugiIconography) -> some View {
-        Image(icon: icon)
-            .resizable()
-            .renderingMode(.template)
-            .seugiColor(.gray(.g600))
-            .frame(width: 24, height: 24)
-            .padding(4)
-            .seugiBackground(.gray(.g100))
-            .cornerRadius(8, corners: .allCorners)
-    }
-}
-
-private extension View {
-    func applyCardEffect() -> some View {
-        self
-            .padding(.horizontal, 12)
-            .padding(.top, 12)
-            .padding(.bottom, 16)
-            .seugiBackground(.sub(.white))
-            .cornerRadius(12, corners: .allCorners)
-            .shadow(.evBlack(.ev1))
     }
 }

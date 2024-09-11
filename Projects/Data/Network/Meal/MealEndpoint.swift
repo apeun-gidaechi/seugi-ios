@@ -21,7 +21,7 @@ extension MealEndpoint {
         case .getAll(let workspaceId):
                 .get - "all" - ["workspaceId": workspaceId].toURLParameters()
         case .getByDate(let workspaceId, let date):
-                .get - "" - ["workspaceId": workspaceId].toURLParameters()
+                .get - "" - ["workspaceId": workspaceId, "date": date].toURLParameters()
         case .reset(let workspaceId):
                 .post - "reset/\(workspaceId)" - .requestPlain
         }

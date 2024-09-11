@@ -7,8 +7,8 @@ final class MealService: Service<MealEndpoint>, MealRepo {
         performRequest(.getAll(workspaceId: workspaceId), res: [Meal].self)
     }
     
-    func getByDate(workspaceId: String, date: Date) -> APIResult<Base<Meal>> {
-        performRequest(.getByDate(workspaceId: workspaceId, date: date.parseString("yyyyMMdd")), res: Meal.self)
+    func getByDate(workspaceId: String, date: Date) -> APIResult<Base<[Meal]>> {
+        performRequest(.getByDate(workspaceId: workspaceId, date: date.parseString("yyyyMMdd")), res: [Meal].self)
     }
     
     func reset(workspaceId: String) -> APIResult<BaseVoid> {

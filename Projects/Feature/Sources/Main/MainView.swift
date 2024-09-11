@@ -88,15 +88,19 @@ public struct MainView: View {
                 }
             }
         }
-        .onChange(of: appState.selectedWorkspace) { _ in
-            fetchAll()
-        }
     }
     
     private func fetchAll() {
+        fetchHome()
         fetchChats()
         fetchNotifications()
         fetchMyInfo()
+    }
+    
+    private func fetchHome() {
+        log("💎 MainView.fetchChats")
+        guard let workspace = appState.selectedWorkspace else { return }
+        homeViewModel.fetchMeals(workspaceId: workspace.workspaceId)
     }
     
     private func fetchChats() {
@@ -114,5 +118,4 @@ public struct MainView: View {
     private func fetchMyInfo() {
         appState.fetchMyInfo()
     }
-    
 }
