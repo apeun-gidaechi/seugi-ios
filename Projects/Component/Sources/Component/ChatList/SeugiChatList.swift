@@ -35,7 +35,7 @@ public struct SeugiChatList: View {
                 }
             }
             Spacer()
-            VStack(spacing: 4) {
+            VStack(alignment: .trailing, spacing: 4) {
                 Text(room.lastMessageTimestamp.adjustedString)
                     .font(.body(.b2))
                     .seugiColor(.gray(.g500))
