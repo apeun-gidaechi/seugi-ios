@@ -29,12 +29,24 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
         }
     }
     
-    private var searchRooms: FetchFlow<[Room]> {
-        guard let roomType else { return .fetching }
-        guard !searchText.isEmpty else {
-            return rooms
+    private var sortedRooms: FetchFlow<[Room]> {
+        switch rooms {
+        case .success(var rooms):
+            rooms.sort { $0.lastMessageTimestamp > $1.lastMessageTimestamp }
+            return .success(rooms)
+        case .failure(let err):
+            return .failure(err)
+        case .fetching:
+            return .fetching
         }
-        guard let rooms = rooms.data?.filter({ room in
+    }
+    
+    private var searchRooms: FetchFlow<[Room]> {
+        guard roomType != nil else { return .fetching }
+        guard !searchText.isEmpty else {
+            return sortedRooms
+        }
+        guard let rooms = sortedRooms.data?.filter({ room in
             room.chatName.contains(searchText)
         }) else {
             return .fetching
@@ -43,7 +55,7 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
     }
     
     var mergedRooms: FetchFlow<[Room]> {
-        isSearching ? searchRooms : rooms
+        isSearching ? searchRooms : sortedRooms
     }
     
     // MARK: - Method
