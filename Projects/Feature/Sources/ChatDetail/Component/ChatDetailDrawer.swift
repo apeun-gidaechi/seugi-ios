@@ -15,8 +15,6 @@ struct ChatDetailDrawer: View {
         case leftRoom
     }
     
-    @AppState private var appState
-    
     let room: Room
     let action: (Action) -> Void
     
@@ -28,13 +26,11 @@ struct ChatDetailDrawer: View {
                 .font(.subtitle(.s2))
                 .frame(height: 40)
             SeugiDivider(thickness: .thin)
-            if let selectedWorkspace = appState.selectedWorkspace {
-                ScrollView {
-                    LazyVStack(spacing: 0) {
-                        SeugiMemberList(type: .invitation)
-                        ForEach(room.joinUserId, id: \.id) { member in
-                            SeugiMemberList(type: .normal(member: member, role: .getRole(memberId: member.id, workspace: selectedWorkspace)))
-                        }
+            ScrollView {
+                LazyVStack(spacing: 0) {
+                    SeugiMemberList(type: .invitation)
+                    ForEach(room.joinUserId, id: \.id) { member in
+                        SeugiMemberList(type: .normal(member: member, role: member.id == room.roomAdmin ? .admin : .student))
                     }
                 }
             }
