@@ -9,7 +9,6 @@ public struct ChatView: View {
     @EnvironmentObject private var viewModel: ChatViewModel
     
     // MARK: - State
-    @State private var isSearching = false
     @FocusState private var searchFocus: Bool
     
     private let roomType: RoomType
@@ -18,24 +17,8 @@ public struct ChatView: View {
         self.roomType = roomType
     }
     
-    private var rooms: FetchFlow<[Room]> {
-        roomType == .personal ? viewModel.personalRooms : viewModel.groupRooms
-    }
-    
-    private var searchText: Binding<String> {
-        roomType == .personal ? $viewModel.personalSearchText : $viewModel.groupSearchText
-    }
-    
-    private var searchedRooms: FetchFlow<[Room]> {
-        roomType == .personal ? viewModel.searchedPersonalRooms : viewModel.searchedGroupRooms
-    }
-    
-    private var mergedRooms: FetchFlow<[Room]> {
-        isSearching ? searchedRooms : rooms
-    }
-    
     public var body: some View {
-        mergedRooms.makeView {
+        viewModel.mergedRooms.makeView {
             ProgressView()
         } success: { rooms in
             if rooms.isEmpty {
@@ -44,12 +27,11 @@ public struct ChatView: View {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         ForEach(rooms, id: \.id) { room in
-                            Button {
-                                router.navigate(to: MainDestination.chatDetail(room: room))
-                            } label: {
-                                SeugiChatList(type: roomType, room: room)
-                            }
-                            .applyAnimation()
+                            SeugiChatList(type: roomType, room: room)
+                                .button {
+                                    router.navigate(to: MainDestination.chatDetail(room: room))
+                                }
+                                .applyAnimation()
                         }
                     }
                 }
@@ -58,8 +40,7 @@ public struct ChatView: View {
         } failure: { _ in
             SeugiError("불러오기 실패", image: .faceWithDiagonalMouth)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.clear)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .hideKeyboardWhenTap()
         .refreshable {
             if let selectedWorkspace = appState.selectedWorkspace {
@@ -67,30 +48,30 @@ public struct ChatView: View {
             }
         }
         .onTapGesture {
-            if isSearching {
+            if viewModel.isSearching {
                 withAnimation {
-                    isSearching = false
-                    viewModel.clearSearchText()
+                    viewModel.isSearching = false
+                    viewModel.searchText = ""
                 }
             }
         }
-        .seugiTopBar(roomType == .personal ? "채팅" : "그룹") {
+        .seugiTopBar(roomType.text) {
             withAnimation {
-                isSearching = false
+                viewModel.isSearching = false
             }
         }
-        .hideTitle(isSearching)
+        .hideTitle(viewModel.isSearching)
         .subView {
-            if isSearching {
-                TextField("채팅방 검색", text: searchText)
+            if viewModel.isSearching {
+                TextField("채팅방 검색", text: $viewModel.searchText)
                     .focused($searchFocus)
             }
         }
-        .if(!isSearching) { view in
+        .if(!viewModel.isSearching) { view in
             view.hideBackButton()
                 .button(.searchLine) {
                     withAnimation {
-                        isSearching = true
+                        viewModel.isSearching = true
                         searchFocus = true
                     }
                 }
@@ -108,9 +89,11 @@ public struct ChatView: View {
                     appState.logout()
                 }
             }
+            viewModel.searchText = ""
+            self.viewModel.roomType = roomType
         }
         .onDisappear {
-            viewModel.clearSearchText()
+            viewModel.searchText = ""
         }
     }
 }

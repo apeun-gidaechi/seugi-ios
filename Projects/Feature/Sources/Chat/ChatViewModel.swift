@@ -14,37 +14,40 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
     
     // MARK: - State
     /* personal */
-    @Published public var personalRooms: FetchFlow<[Room]> = .fetching
-    @Published public var personalSearchText = ""
-    public var searchedPersonalRooms: FetchFlow<[Room]> {
-        guard !personalSearchText.isEmpty else {
-            return personalRooms
+    @Published var personalRooms: FetchFlow<[Room]> = .fetching
+    @Published var groupRooms: FetchFlow<[Room]> = .fetching
+    @Published var searchText = ""
+    @Published var isSearching = false
+    
+    var roomType: RoomType?
+    
+    private var rooms: FetchFlow<[Room]> {
+        guard let roomType else { return .fetching }
+        return switch roomType {
+        case .personal: personalRooms
+        case .group: groupRooms
         }
-        guard let rooms = personalRooms.data?.filter({ room in
-            room.chatName.contains(personalSearchText)
+    }
+    
+    private var searchRooms: FetchFlow<[Room]> {
+        guard let roomType else { return .fetching }
+        guard !searchText.isEmpty else {
+            return rooms
+        }
+        guard let rooms = rooms.data?.filter({ room in
+            room.chatName.contains(searchText)
         }) else {
             return .fetching
         }
         return .success(rooms)
     }
     
-    /* group */
-    @Published public var groupRooms: FetchFlow<[Room]> = .fetching
-    @Published public var groupSearchText = ""
-    public var searchedGroupRooms: FetchFlow<[Room]> {
-        guard !groupSearchText.isEmpty else {
-            return groupRooms
-        }
-        guard let rooms = groupRooms.data?.filter({ room in
-            room.chatName.contains(groupSearchText)
-        }) else {
-            return .fetching
-        }
-        return .success(rooms)
+    var mergedRooms: FetchFlow<[Room]> {
+        isSearching ? searchRooms : rooms
     }
     
     // MARK: - Method
-    public func fetchChats(workspaceId: String) {
+    func fetchChats(workspaceId: String) {
         chatRepo.searchPersonal(workspaceId: workspaceId).fetching {
             self.personalRooms = .fetching
         }.success { res in
@@ -64,10 +67,5 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
             self.groupRooms = .failure(error)
             self.emit(.refreshFailure)
         }.observe(&subscriptions)
-    }
-    
-    public func clearSearchText() {
-        personalSearchText = ""
-        groupSearchText = ""
     }
 }
