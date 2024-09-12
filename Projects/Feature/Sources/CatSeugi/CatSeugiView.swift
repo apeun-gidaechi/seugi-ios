@@ -15,8 +15,8 @@ public struct CatSeugiView: View {
     @StateObject private var viewModel = CatSeugiViewModel()
     
     // MARK: - State
-    /* scroll */
     @State private var scrollViewProxy: ScrollViewProxy?
+    @FocusState private var focused
     
     public init() {}
     
@@ -77,6 +77,7 @@ public struct CatSeugiView: View {
                     scrollToBottom()
                 }
             }
+            focused = true
         }
     }
     
@@ -93,6 +94,7 @@ public struct CatSeugiView: View {
                 break
             }
         }
+        .focused($focused)
         .padding(.horizontal, 8)
         .padding(.bottom, 8)
         .seugiBackground(.primary(.p050))
