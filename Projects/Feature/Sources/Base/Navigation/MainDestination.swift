@@ -10,6 +10,9 @@ import Domain
 
 public enum MainDestination: Hashable {
     
+    // catseugi
+    case catSeugi
+    
     // chat
     case chatDetail(room: Room)
     case firstCreateGroupChat

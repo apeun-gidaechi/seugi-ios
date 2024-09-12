@@ -50,7 +50,12 @@ public struct HomeView: View {
                     .applyAnimation()
                 HomeTimetableContainer(for: viewModel.timetables)
                 HomeMealContainer(for: viewModel.meals)
-                catSeugi
+                HomeCatSeugiContainer(for: flow) { action in
+                    switch action {
+                    case .clicked:
+                        router.navigate(to: MainDestination.catSeugi)
+                    }
+                }
                 commingSchedule
                     .padding(.bottom, 80)
             }
@@ -132,82 +137,6 @@ public struct HomeView: View {
     }
     
     @ViewBuilder
-    private var catSeugi: some View {
-        Group {
-            switch flow {
-            case .fetching:
-                VStack(spacing: 16) {
-                    HStack(spacing: 8) {
-                        SeugiAppIcon(type: .extraSmall)
-                        Text("캣스기")
-                            .seugiColor(.sub(.black))
-                            .font(.subtitle(.s2))
-                        Spacer()
-                    }
-                    .padding(4)
-                    ProgressView()
-                }
-                .applyCardEffect()
-            case .failure:
-                VStack(spacing: 16) {
-                    HStack(spacing: 8) {
-                        SeugiAppIcon(type: .extraSmall)
-                        Text("캣스기")
-                            .seugiColor(.sub(.black))
-                            .font(.subtitle(.s2))
-                        Spacer()
-                    }
-                    .padding(4)
-                    Text("학교를 등록하고 캣스기와 대화해 보세요")
-                        .seugiColor(.gray(.g600))
-                        .font(.body(.b2))
-                        .padding(.vertical, 12)
-                }
-                .applyCardEffect()
-            case .success:
-                VStack(spacing: 16) {
-                    HStack(spacing: 8) {
-                        SeugiAppIcon(type: .extraSmall)
-                        Text("캣스기")
-                            .seugiColor(.sub(.black))
-                            .font(.subtitle(.s2))
-                        Spacer()
-                    }
-                    .padding(4)
-                    HStack {
-                        Text("2학년 4반에서 아무나 한명 뽑아줘...")
-                            .font(.subtitle(.s2))
-                            .seugiColor(.gray(.g500))
-                        Spacer()
-                        Image(icon: .searchLine)
-                            .renderingMode(.template)
-                            .resizable()
-                            .foregroundStyle(SeugiGradientSystem.primary)
-                            .frame(width: 28, height: 28)
-                    }
-                    .padding(.horizontal, 12)
-                    .frame(height: 52)
-                    .overlay {
-                        RoundedCornerShape(radius: 26)
-                            .stroke(SeugiGradientSystem.primary, lineWidth: 1.5)
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("지난주")
-                            .padding(.leading, 4)
-                            .seugiColor(.gray(.g600))
-                            .font(.body(.b2))
-                        makeAIHistory()
-                        makeAIHistory()
-                    }
-                }
-                .applyCardEffect()
-            }
-        }
-        .matchedGeometryEffect(id: "catSeugi", in: animation)
-    }
-    
-    @ViewBuilder
     private var commingSchedule: some View {
         Group {
             switch flow {
@@ -277,20 +206,5 @@ public struct HomeView: View {
             }
         }
         .matchedGeometryEffect(id: "commingSchedule", in: animation)
-    }
-    
-    private func makeAIHistory() -> some View {
-        HStack {
-            Text("급식에 복어가 나오는 날이 언제...")
-                .font(.body(.b1))
-                .seugiColor(.sub(.black))
-            Spacer()
-            Text("6월 21일")
-                .font(.body(.b2))
-                .seugiColor(.gray(.g600))
-        }
-        .padding(12)
-        .seugiBackground(.gray(.g200))
-        .cornerRadius(4)
     }
 }

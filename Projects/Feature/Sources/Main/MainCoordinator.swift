@@ -17,6 +17,8 @@ struct MainCoordinator: View {
         MainView()
             .navigationDestination(for: MainDestination.self) { destination in
                 switch destination {
+                    // catSeugi
+                case .catSeugi: CatSeugiView()
                     
                     // chat
                 case .chatDetail(let room): ChatDetailView(room: room)
