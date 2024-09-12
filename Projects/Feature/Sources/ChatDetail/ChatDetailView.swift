@@ -49,6 +49,7 @@ public struct ChatDetailView: View {
                         Color.clear
                             .id(Id.top)
                             .onAppear {
+                                // TODO: Handle paging
                                 //                                    let messages = viewModel.messages.data ?? []
                                 //                                    messages.count - 1 / pagingInterval
                                 //                                    guard let index = data.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
@@ -57,7 +58,8 @@ public struct ChatDetailView: View {
                                 //                                          await viewModel.fetchNextCommunities()
                                 //                                      }
                             }
-                        ForEach(Array(messages.enumerated()), id: \.element.id) { idx, message in
+                        ForEach(messages.indices, id: \.self) { idx in
+                            let message = messages[idx]
                             if message.type == .enter {
                                 let userId = message.eventList?.first ?? -1
                                 let firstMember = room.findUserById(id: userId)
@@ -132,7 +134,17 @@ public struct ChatDetailView: View {
             }
         }
         .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
-            makeDrawer()
+            ChatDetailDrawer(room: room) { action in
+                switch action {
+                case .leftRoom:
+                    alert.present("채팅방을 나가시겠습니까?")
+                        .primaryButton("나가기") {
+                            viewModel.left(roomId: room.id)
+                        }
+                        .secondaryButton("닫기") {}
+                        .show()
+                }
+            }
         }
         .onChange(of: isDrawerOpen) { _ in
             hideKeyboard()
@@ -185,67 +197,6 @@ public struct ChatDetailView: View {
         .padding(.horizontal, 8)
         .padding(.bottom, 8)
         .seugiBackground(.primary(.p050))
-    }
-    
-    @ViewBuilder
-    private func makeDrawer() -> some View {
-        VStack(spacing: 0) {
-            Text("멤버")
-                .padding(.leading, 16)
-                .toLeading()
-                .font(.subtitle(.s2))
-                .frame(height: 40)
-            SeugiDivider(thickness: .thin)
-            if let selectedWorkspace = appState.selectedWorkspace {
-                ScrollView {
-                    LazyVStack(spacing: 0) {
-                        SeugiMemberList(type: .invitation)
-                        ForEach(room.joinUserId, id: \.id) { member in
-                            SeugiMemberList(type: .normal(member: member, role: .getRole(memberId: member.id, workspace: selectedWorkspace)))
-                        }
-                    }
-                }
-            }
-            Spacer()
-            SeugiDivider(thickness: .thin)
-            HStack(spacing: 16) {
-                if room.type == .group {
-                    makeImageButton(.logoutLine) {
-                        alert.present("채팅방을 나가시겠습니까?")
-                            .primaryButton("나가기") {
-                                viewModel.left(roomId: room.id)
-                            }
-                            .secondaryButton("닫기") {}
-                            .show()
-                    }
-                }
-                Spacer()
-                makeImageButton(.notificationFill) {
-                    // TODO: handle
-                }
-                makeImageButton(.settingFill) {
-                    // TODO: handle
-                }
-            }
-            .padding(.horizontal, 16)
-            .frame(height: 40)
-        }
-    }
-    
-    @ViewBuilder
-    private func makeImageButton(
-        _ icon: SeugiIconography,
-        action: @escaping () -> Void
-    ) -> some View {
-        Button {
-            action()
-        } label: {
-            Image(icon: icon)
-                .resizable()
-                .renderingMode(.template)
-                .frame(width: 28, height: 28)
-                .seugiColor(.gray(.g600))
-        }
     }
     
     private func scrollToBottom() {
