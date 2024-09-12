@@ -35,13 +35,13 @@ public struct ChatView: View {
     }
     
     public var body: some View {
-        ScrollView {
-            mergedRooms.makeView {
-                ProgressView()
-            } success: { rooms in
-                if rooms.isEmpty {
-                    SeugiError("채팅방이 없어요", image: .kissingFaceWithClosedEyes)
-                } else {
+        mergedRooms.makeView {
+            ProgressView()
+        } success: { rooms in
+            if rooms.isEmpty {
+                SeugiError("채팅방이 없어요", image: .kissingFaceWithClosedEyes)
+            } else {
+                ScrollView {
                     LazyVStack(spacing: 0) {
                         ForEach(rooms, id: \.id) { room in
                             Button {
@@ -53,11 +53,11 @@ public struct ChatView: View {
                         }
                     }
                 }
-            } failure: { _ in
-                SeugiError("불러오기 실패", image: .faceWithDiagonalMouth)
+                .scrollIndicators(.hidden)
             }
+        } failure: { _ in
+            SeugiError("불러오기 실패", image: .faceWithDiagonalMouth)
         }
-        .scrollIndicators(.hidden)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.clear)
         .hideKeyboardWhenTap()

@@ -16,6 +16,7 @@ public struct ChatDetailView: View {
     @EnvironmentObject private var alert: AlertProvider
     @StateObject private var viewModel = ChatDetailViewModel()
     @AppState private var appState
+    @Router private var router
     @Environment(\.dismiss) private var dismiss
     
     // MARK: - State
@@ -172,6 +173,17 @@ public struct ChatDetailView: View {
             matching: .any(of: [.images, .screenshots, .livePhotos])
         )
         .onChange(of: viewModel.photo) { _ in } // TODO: impl
+        .onChange(of: viewModel.leftRoomFlow) { _ in
+            router.popToStack()
+        } failure: { err in
+            if case .http(let res) = err {
+                alert.present(res.message)
+                    .show()
+            } else {
+                alert.present("알 수 없는 에러")
+                    .show()
+            }
+        }
     }
     
     @ViewBuilder
