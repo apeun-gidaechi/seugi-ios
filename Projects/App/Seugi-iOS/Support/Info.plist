@@ -80,5 +80,7 @@
 	<string>Light</string>
 	<key>WssBaseUrl</key>
 	<string>${WSS_BASE_URL}</string>
+	<key>AIBaseUrl</key>
+	<string>${AI_BASE_URL}</string>
 </dict>
 </plist>

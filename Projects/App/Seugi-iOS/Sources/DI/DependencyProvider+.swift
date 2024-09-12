@@ -29,6 +29,7 @@ public extension DependencyProvider {
             MealAssembly(),
             TimetableAssembly(),
             OAuthAssembly(),
+            CatSeugiAssembly(),
             // Local
             LocalChatAssembly(),
             // Core

@@ -65,9 +65,9 @@ public struct CatSeugiView: View {
         .seugiTopBar("캣스기")
         .showShadow()
         .onAppear {
-            viewModel.subscribe { effect in
-                
-            }
+//            viewModel.subscribe { effect in
+//                
+//            }
         }
     }
     
@@ -76,8 +76,7 @@ public struct CatSeugiView: View {
         SeugiChatTextField("메세지 보내기", text: $viewModel.message) { action in
             switch action {
             case .sendMessage:
-//                viewModel.sendMessage(room: room)
-                break
+                viewModel.sendMessage()
             case .imageMenu:
 //                showPhotoPicker = true
                 break

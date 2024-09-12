@@ -10,11 +10,6 @@ public protocol SeugiEndpoint: TargetType {
     static var authProvider: MoyaProvider<Target> { get }
 }
 
-public enum Authorization {
-    case authorization
-    case none
-}
-
 public extension SeugiEndpoint {
     static var session: Session {
         Session()
@@ -51,13 +46,4 @@ public extension SeugiEndpoint {
     var authorization: Authorization {
         .authorization
     }
-}
-
-infix operator - : AdditionPrecedence
-func - (method: Moya.Method, path: String) -> (Moya.Method, String) {
-    return (method, path)
-}
-
-func - (m: (Moya.Method, String), task: Moya.Task) -> (Moya.Method, String, Moya.Task) {
-    return (m.0, m.1, task)
 }

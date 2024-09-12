@@ -13,6 +13,10 @@ final class CatSeugiViewModel: BaseViewModel<CatSeugiViewModel.Effect> {
     enum Effect {}
     
     /* message */
-    @Published var messages: FetchFlow<[Message]> = .fetching
+    @Published var messages: FetchFlow<[Message]> = .success([])
     @Published var message = ""
+    
+    func sendMessage() {
+        
+    }
 }
