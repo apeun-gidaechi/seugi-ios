@@ -15,13 +15,17 @@ public struct NotificationView: View {
         appState.profile.data
     }
     
-    func handleNotificationAction(for notification: Domain.Notification, action: NotificationCell.Action) {
+    func handleNotificationAction(
+        for notification: Domain.Notification,
+        action: NotificationCell.Action
+    ) {
+        guard let selectedWorkspace = appState.selectedWorkspace else {
+            return
+        }
         switch action {
-        case .updateNotification: router.navigate(to: MainDestination.updateNotification(notification))
+        case .updateNotification:
+            router.navigate(to: MainDestination.updateNotification(notification))
         case .removeNotification:
-            guard let selectedWorkspace = appState.selectedWorkspace else {
-                return
-            }
             alertProvider.present("공지를 정말 삭제하시겠습니까?")
                 .primaryButton("삭제") {
                     viewModel.removeNotification(
@@ -40,11 +44,8 @@ public struct NotificationView: View {
             addEmojiPresent = true
             viewModel.selectedNotificationForAddEmoji = notification
         case .emojiClicked(let emoji):
-            guard let selectedWorkspace = appState.selectedWorkspace else {
-                return
-            }
-            viewModel.patchEmoji(emoji: emoji, workspaceId: selectedWorkspace.workspaceId)
             viewModel.selectedNotificationForAddEmoji = notification
+            viewModel.patchEmoji(emoji: emoji, workspaceId: selectedWorkspace.workspaceId, profileId: profile?.member.id ?? 0)
         }
     }
     
@@ -101,7 +102,7 @@ public struct NotificationView: View {
             guard let selectedWorkspace = appState.selectedWorkspace else {
                 return
             }
-            viewModel.patchEmoji(emoji: emoji, workspaceId: selectedWorkspace.workspaceId)
+            viewModel.patchEmoji(emoji: emoji, workspaceId: selectedWorkspace.workspaceId, profileId: profile?.member.id ?? 0)
         }
     }
 }

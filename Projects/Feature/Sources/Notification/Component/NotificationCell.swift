@@ -91,9 +91,10 @@ struct NotificationCell: View {
                     .seugiBackground(
                         selected
                         ? .primary(.p100)
-                        : .gray(.g100)
+                        : .gray(.g100),
+                        in: RoundedRectangle(cornerRadius: 8)
                     )
-                    .stroke(8, content: selected ? Color.seugi(.primary(.p300)) : Color.seugi(.gray(.g200)))
+                    // TODO: Add stroke
                     .button {
                         action(.emojiClicked(emoji.emoji))
                     }
