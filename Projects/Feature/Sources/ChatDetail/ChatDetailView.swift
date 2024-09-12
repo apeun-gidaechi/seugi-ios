@@ -209,15 +209,16 @@ public struct ChatDetailView: View {
             Spacer()
             SeugiDivider(thickness: .thin)
             HStack(spacing: 16) {
-                makeImageButton(.logoutLine) {
-                    alert.present("채팅방을 나가시겠습니까?")
-                        .primaryButton("나가기") {
-                            viewModel.left(roomId: room.id)
-                        }
-                        .secondaryButton("닫기") {}
-                        .show()
+                if room.type == .group {
+                    makeImageButton(.logoutLine) {
+                        alert.present("채팅방을 나가시겠습니까?")
+                            .primaryButton("나가기") {
+                                viewModel.left(roomId: room.id)
+                            }
+                            .secondaryButton("닫기") {}
+                            .show()
+                    }
                 }
-                
                 Spacer()
                 makeImageButton(.notificationFill) {
                     // TODO: handle
