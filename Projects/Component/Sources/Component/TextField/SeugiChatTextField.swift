@@ -2,28 +2,25 @@ import SwiftUIUtil
 import SwiftUI
 import PhotosUI
 
-public enum ChatTextFieldAction {
-    case sendMessage
-    case imageMenu
-    case fileMenu
-}
-
 public struct SeugiChatTextField: View {
     
-    // MARK: - State
-    /* textfield */
+    public enum Action {
+        case sendMessage
+        case imageMenu
+        case fileMenu
+    }
+    
     @Binding private var text: String
     
-    // MARK: - Parameters
-    private let action: (ChatTextFieldAction) -> Void
+    private let action: (Action) -> Void
     private let hint: String
     
     public init(
         _ hint: String,
         text: Binding<String>,
-        action: @escaping (ChatTextFieldAction) -> Void
+        action: @escaping (Action) -> Void
     ) {
-            self.hint = hint
+        self.hint = hint
         self._text = text
         self.action = action
     }

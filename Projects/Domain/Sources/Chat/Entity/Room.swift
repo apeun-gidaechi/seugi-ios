@@ -35,9 +35,13 @@ public struct Room: Entity {
 }
 
 public extension Room {
-    func findUserById(id: Int) -> RetrieveMember? {
+    func findUser(id: Int) -> RetrieveMember? {
         self.joinUserId.first {
             $0.id == id
         }
+    }
+    
+    func findUserOrUnknownUser(id: Int) -> RetrieveMember {
+        findUser(id: id) ?? .invalidMember(id: id)
     }
 }

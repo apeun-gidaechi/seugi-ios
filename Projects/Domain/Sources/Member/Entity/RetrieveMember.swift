@@ -13,3 +13,15 @@ public struct RetrieveMember: Entity, Hashable {
         self.picture = picture
     }
 }
+
+public extension RetrieveMember {
+    static func invalidMember(id: Int) -> RetrieveMember {
+        RetrieveMember(
+            id: id,
+            email: "",
+            birth: "",
+            name: "(알 수 없음)",
+            picture: ""
+        )
+    }
+}

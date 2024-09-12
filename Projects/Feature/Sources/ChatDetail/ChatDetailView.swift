@@ -59,29 +59,22 @@ public struct ChatDetailView: View {
                                 //                                          await viewModel.fetchNextCommunities()
                                 //                                      }
                             }
-                        ForEach(messages.indices, id: \.self) { idx in
-                            let message = messages[idx]
-                            if message.type == .enter {
-                                let userId = message.eventList?.first ?? -1
-                                let firstMember = room.findUserById(id: userId)
-                                let eventCount = message.eventList?.count
-                                var text = "\(firstMember?.name ?? "")"
-                                if let eventCount, eventCount > 1 {
-                                    let _ = text += " 외 \(eventCount - 1)명이 채팅방에 입장 했습니다"
+                        ForEach(messages.indices, id: \.self) { index in
+                            let message = messages[index]
+                            if message.isDetailText {
+                                if let text = message.getDetailText(room: room) {
+                                    ChatItemDetailView(text: text)
                                 }
-                                ChatItemDetailView(text: text)
-                            } else {
-                                let isFirst = idx == 0 || (messages[idx - 1].userId != message.userId) || ![.message, .deleteMessage].contains(messages[idx - 1].type)
-                                let isLast = idx == messages.count - 1 || messages[idx + 1].userId != message.userId
-                                let author = room.findUserById(id: message.userId) ?? .init(
-                                    id: message.userId,
-                                    email: "",
-                                    birth: "",
-                                    name: "(알 수 없음)",
-                                    picture: ""
-                                )
-                                let userId = appState.profile.data?.member.id ?? -1
-                                let type: ChatItemViewCellType = author.id == userId ? .me : .other(isFirst: isFirst, isLast: isLast)
+                            } else if let member = appState.profile.data?.member {
+                                let author = room.findUserOrUnknownUser(id: message.userId)
+                                let type: ChatItemViewCellType = if author.id == member.id {
+                                    .me
+                                } else {
+                                    .other(
+                                        isFirst: messages.isFirstMessage(at: index),
+                                        isLast: messages.isLastMessage(at: index)
+                                    )
+                                }
                                 ChatItemView(author: author, message: message, type: type, joinedUserCount: room.joinUserId.count)
                             }
                         }
@@ -188,8 +181,8 @@ public struct ChatDetailView: View {
     
     @ViewBuilder
     private func makeBottomTextField() -> some View {
-        SeugiChatTextField("메세지 보내기", text: $viewModel.message) {
-            switch $0 {
+        SeugiChatTextField("메세지 보내기", text: $viewModel.message) { action in
+            switch action {
             case .sendMessage:
                 viewModel.sendMessage(room: room)
             case .imageMenu:
@@ -198,6 +191,9 @@ public struct ChatDetailView: View {
                 break
             }
         }
+        .padding(.horizontal, 8)
+        .padding(.bottom, 8)
+        .seugiBackground(.primary(.p050))
         .onTapGesture {
             Task {
                 try? await Task.sleep(for: .seconds(0.3))
@@ -206,9 +202,6 @@ public struct ChatDetailView: View {
                 }
             }
         }
-        .padding(.horizontal, 8)
-        .padding(.bottom, 8)
-        .seugiBackground(.primary(.p050))
     }
     
     private func scrollToBottom() {
