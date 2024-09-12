@@ -10,36 +10,40 @@ public struct SeugiChatTextField: View {
         case fileMenu
     }
     
-    @Binding private var text: String
-    
-    private let action: (Action) -> Void
     private let hint: String
-    
+    @Binding private var text: String
+    private let hasMenu: Bool
+    private let action: (Action) -> Void
+
     public init(
         _ hint: String,
         text: Binding<String>,
+        hasMenu: Bool = true,
         action: @escaping (Action) -> Void
     ) {
         self.hint = hint
         self._text = text
+        self.hasMenu = hasMenu
         self.action = action
     }
     
     public var body: some View {
-        HStack {
-            Menu {
-                Button("이미지", systemImage: "photo") {
-                    action(.imageMenu)
+        HStack(spacing: 8) {
+            if hasMenu {
+                Menu {
+                    Button("이미지", systemImage: "photo") {
+                        action(.imageMenu)
+                    }
+                    Button("파일", systemImage: "folder") {
+                        action(.fileMenu)
+                    }
+                } label: {
+                    Image(icon: .addFill)
+                        .resizable()
+                        .renderingMode(.template)
+                        .seugiColor(.gray(.g400))
+                        .frame(width: 32, height: 32)
                 }
-                Button("파일", systemImage: "folder") {
-                    action(.fileMenu)
-                }
-            } label: {
-                Image(icon: .addFill)
-                    .resizable()
-                    .renderingMode(.template)
-                    .seugiColor(.gray(.g400))
-                    .frame(width: 32, height: 32)
             }
             TextField(hint, text: $text)
                 .autocorrectionDisabled()

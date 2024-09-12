@@ -32,7 +32,8 @@ public struct CatSeugiView: View {
                         ForEach(messages.indices, id: \.self) { index in
                             let message = messages[index]
                             if let member = appState.profile.data?.member {
-                                let type: ChatItemViewCellType = if message.userId == member.id {
+                                let isMe = message.userId == member.id
+                                let type: ChatItemViewCellType = if isMe {
                                     .me
                                 } else {
                                     .ai(
@@ -40,7 +41,12 @@ public struct CatSeugiView: View {
                                         isLast: messages.isLastMessage(at: index)
                                     )
                                 }
-                                ChatItemView(author: member, message: message, type: type, joinedUserCount: 2)
+                                let author = if isMe {
+                                    member
+                                } else {
+                                    RetrieveMember.just(name: "캣스기")
+                                }
+                                ChatItemView(author: author, message: message, type: type, joinedUserCount: 2)
                             }
                         }
                         Color.clear
@@ -65,22 +71,25 @@ public struct CatSeugiView: View {
         .seugiTopBar("캣스기")
         .showShadow()
         .onAppear {
-//            viewModel.subscribe { effect in
-//                
-//            }
+            viewModel.subscribe { effect in
+                switch effect {
+                case .messagesFetched:
+                    scrollToBottom()
+                }
+            }
         }
     }
     
     @ViewBuilder
     private func makeBottomTextField() -> some View {
-        SeugiChatTextField("메세지 보내기", text: $viewModel.message) { action in
+        SeugiChatTextField("메세지 보내기", text: $viewModel.message, hasMenu: false) { action in
             switch action {
             case .sendMessage:
-                viewModel.sendMessage()
-            case .imageMenu:
-//                showPhotoPicker = true
-                break
-            case .fileMenu:
+                guard let member = appState.profile.data?.member else {
+                    return
+                }
+                viewModel.sendMessage(userId: member.id)
+            default:
                 break
             }
         }

@@ -33,6 +33,26 @@ public struct Message: Entity {
 }
 
 public extension Message {
+    static func just(userId: Int, message: String) -> Self {
+        Message(
+            id: nil,
+            chatRoomId: "",
+            type: .message,
+            userId: userId,
+            message: message,
+            eventList: [],
+            emoticon: nil,
+            emojiList: [],
+            mention: [],
+            mentionAll: false,
+            timestamp: .now,
+            read: [],
+            messageStatus: .alive
+        )
+    }
+}
+
+public extension Message {
     
     var isDetailText: Bool {
         switch type {

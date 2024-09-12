@@ -1,12 +1,7 @@
 import Moya
 import Foundation
 
-public protocol AIEndpoint: TargetType {
-    associatedtype Target: AIEndpoint
-    var host: String { get }
-    var route: (Moya.Method, String, Moya.Task) { get }
-    static var provider: MoyaProvider<Target> { get }
-}
+public protocol AIEndpoint: BaseEndpoint {}
 
 public extension AIEndpoint {
     static var session: Session {

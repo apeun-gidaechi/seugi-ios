@@ -24,4 +24,14 @@ public extension RetrieveMember {
             picture: ""
         )
     }
+    
+    static func just(name: String) -> RetrieveMember {
+        RetrieveMember(
+            id: -1,
+            email: "",
+            birth: "",
+            name: name,
+            picture: ""
+        )
+    }
 }

@@ -24,8 +24,8 @@ enum ChatEndpoint: SeugiEndpoint {
 
 extension ChatEndpoint {
     
-    static let provider = MoyaProvider<ChatEndpoint>(session: session)
-    static let authProvider = MoyaProvider<ChatEndpoint>(session: authSession)
+    static let provider = MoyaProvider<Self>(session: session)
+    static let authProvider = MoyaProvider<Self>(session: authSession)
     
     var host: String {
         "chat"

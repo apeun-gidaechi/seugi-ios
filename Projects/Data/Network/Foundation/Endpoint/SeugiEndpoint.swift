@@ -1,14 +1,7 @@
 import Moya
 import Foundation
 
-public protocol SeugiEndpoint: TargetType {
-    associatedtype Target: SeugiEndpoint
-    var host: String { get }
-    var route: (Moya.Method, String, Moya.Task) { get }
-    var authorization: Authorization { get }
-    static var provider: MoyaProvider<Target> { get }
-    static var authProvider: MoyaProvider<Target> { get }
-}
+public protocol SeugiEndpoint: BaseEndpoint {}
 
 public extension SeugiEndpoint {
     static var session: Session {

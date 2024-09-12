@@ -9,13 +9,13 @@
 import Moya
 import Domain
 
-enum CatSeugiEndpoint: SeugiEndpoint {
+enum CatSeugiEndpoint: AIEndpoint {
     case sendMessage(CatSeugiSendMessageReq)
 }
 
 extension CatSeugiEndpoint {
-    static let authProvider: MoyaProvider<Self> = .init(session: session)
-    static let provider: MoyaProvider<Self> = .init(session: authSession)
+    static let provider: MoyaProvider<Self> = .init(session: session)
+    static var authProvider: MoyaProvider<Self> = provider
     
     var host: String {
         "ai"
@@ -26,5 +26,9 @@ extension CatSeugiEndpoint {
         case .sendMessage(let req):
                 .post - "" - req.toJSONParameters()
         }
+    }
+    
+    var authorization: Authorization {
+        .none
     }
 }
