@@ -45,6 +45,41 @@ public enum FetchFlow<Data: Equatable>: Equatable {
             fetching()
         }
     }
+    
+    @inlinable
+    func map<N: Equatable>(_ data: N) -> FetchFlow<N> {
+        switch self {
+        case .success: .success(data)
+        case .failure(let err): .failure(err)
+        case .fetching: .fetching
+        }
+    }
+    
+    @inlinable func map<N: Equatable>(_ transform: (Data) throws -> N) rethrows -> FetchFlow<N> {
+        switch self {
+        case .success(let data): .success(try transform(data))
+        case .failure(let err): .failure(err)
+        case .fetching: .fetching
+        }
+    }
+    
+    @inlinable
+    func mapError(_ error: APIError) -> FetchFlow<Data> {
+        switch self {
+        case .success(let data): .success(data)
+        case .failure: .failure(error)
+        case .fetching: .fetching
+        }
+    }
+    
+    @inlinable
+    func mapError(_ transform: (APIError) throws -> APIError) rethrows -> FetchFlow<Data> {
+        switch self {
+        case .success(let data): .success(data)
+        case .failure(let err): .failure(try transform(err))
+        case .fetching: .fetching
+        }
+    }
 }
 
 public extension View {

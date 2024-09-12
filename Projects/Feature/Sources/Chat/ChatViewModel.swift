@@ -30,14 +30,8 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
     }
     
     private var sortedRooms: FetchFlow<[Room]> {
-        switch rooms {
-        case .success(var rooms):
-            rooms.sort { $0.lastMessageTimestamp > $1.lastMessageTimestamp }
-            return .success(rooms)
-        case .failure(let err):
-            return .failure(err)
-        case .fetching:
-            return .fetching
+        rooms.map {
+            $0.sorted { $0.lastMessageTimestamp > $1.lastMessageTimestamp }
         }
     }
     

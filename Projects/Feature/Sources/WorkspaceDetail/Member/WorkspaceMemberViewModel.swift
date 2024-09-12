@@ -25,20 +25,14 @@ final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Eff
     
     // MARK: - Getter
     var selectedMembers: FetchFlow<[RetrieveProfile]> {
-        switch members {
-        case .success(let members):
+        members.map {
             // 선생님을 선택했을 경우
             let selectedMembers = if selection == segmentedButtonRoles[0] {
-                Array(members.admin.values) + Array(members.middleAdmin.values) + Array(members.teachers.values)
+                Array($0.admin.values) + Array($0.middleAdmin.values) + Array($0.teachers.values)
             } else {
-                Array(members.students.values)
+                Array($0.students.values)
             }
-            print(selection)
-            return .success(selectedMembers.flatMap { $0 })
-        case .failure(let err):
-            return .failure(err)
-        case .fetching:
-            return .fetching
+            return selectedMembers.flatMap { $0 }
         }
     }
     
@@ -46,14 +40,8 @@ final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Eff
         guard !searchText.isEmpty else {
             return selectedMembers
         }
-        switch selectedMembers {
-        case .success(let members):
-            let members = members.filter { $0.member.name.contains(searchText) }
-            return .success(members)
-        case .failure(let err):
-            return .failure(err)
-        case .fetching:
-            return .fetching
+        return selectedMembers.map {
+            $0.filter { $0.member.name.contains(searchText) }
         }
     }
     

@@ -30,6 +30,45 @@ public enum IdleFlow<Data: Equatable>: Equatable {
             nil
         }
     }
+    
+    @inlinable
+    func map<N: Equatable>(_ data: N) -> IdleFlow<N> {
+        switch self {
+        case .idle: .idle
+        case .success: .success(data)
+        case .failure(let err): .failure(err)
+        case .fetching: .fetching
+        }
+    }
+    
+    @inlinable func map<N: Equatable>(_ transform: (Data) throws -> N) rethrows -> IdleFlow<N> {
+        switch self {
+        case .idle: .idle
+        case .success(let data): .success(try transform(data))
+        case .failure(let err): .failure(err)
+        case .fetching: .fetching
+        }
+    }
+    
+    @inlinable
+    func mapError(_ error: APIError) -> IdleFlow<Data> {
+        switch self {
+        case .idle: .idle
+        case .success(let data): .success(data)
+        case .failure: .failure(error)
+        case .fetching: .fetching
+        }
+    }
+    
+    @inlinable
+    func mapError(_ transform: (APIError) throws -> APIError) rethrows -> IdleFlow<Data> {
+        switch self {
+        case .idle: .idle
+        case .success(let data): .success(data)
+        case .failure(let err): .failure(try transform(err))
+        case .fetching: .fetching
+        }
+    }
 }
 
 public extension View {
