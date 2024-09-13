@@ -8,7 +8,7 @@ public struct PostNotificationView: View {
     @Router private var router
     @AppState private var appState
     @Environment(\.dismiss) private var dismiss
-    @ObservedObject private var viewModel = PostNotificationViewModel()
+    @StateObject private var viewModel = PostNotificationViewModel()
     
     private let type: PostNotificationType
     

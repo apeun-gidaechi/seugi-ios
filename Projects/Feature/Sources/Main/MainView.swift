@@ -10,7 +10,7 @@ public struct MainView: View {
     @Router private var router
     @EnvironmentObject private var stompManager: StompManager
     @StateObject private var chatViewModel = ChatViewModel()
-    @StateObject private var notificationViewModel = NotificationViewModel()
+    @EnvironmentObject private var notificationViewModel: NotificationViewModel
     @StateObject private var homeViewModel = HomeViewModel()
     
     public init() {}
@@ -71,7 +71,6 @@ public struct MainView: View {
         }
         .ignoresSafeArea(.keyboard)
         .environmentObject(chatViewModel)
-        .environmentObject(notificationViewModel)
         .environmentObject(homeViewModel)
         .onAppear {
             log("💎 MainView.body.onAppear")
