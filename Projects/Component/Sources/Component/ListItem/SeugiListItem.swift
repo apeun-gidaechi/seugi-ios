@@ -72,7 +72,7 @@ public struct SeugiListItem: View {
         titleColor: Color.SeugiColorSystem = .sub(.black),
         @ViewBuilder content: @escaping () -> Content
     ) -> Self {
-        .init(title: title, content: content().eraseToAnyView(), titleColor: titleColor)
+        .init(title: title, content: AnyView(content()), titleColor: titleColor)
     }
     
     public func leadingIcon(_ icon: SeugiIconography) -> Self {

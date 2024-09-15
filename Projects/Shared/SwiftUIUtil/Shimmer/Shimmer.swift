@@ -2,14 +2,14 @@ import SwiftUI
 
 public struct Shimmer<C: View>: View {
     
+    @State private var startPoint: UnitPoint = .init(x: -1.8, y: -1.2)
+    @State private var endPoint: UnitPoint = .init(x: 0, y: -0.2)
+    
     private let content: () -> C
     
     public init(@ViewBuilder content: @escaping () -> C) {
         self.content = content
     }
-    
-    @State private var startPoint: UnitPoint = .init(x: -1.8, y: -1.2)
-    @State private var endPoint: UnitPoint = .init(x: 0, y: -0.2)
     
     public var body: some View {
         content()

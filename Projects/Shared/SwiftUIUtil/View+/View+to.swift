@@ -10,58 +10,30 @@ import SwiftUI
 
 public extension View {
     func toLeading() -> some View {
-        HStack(spacing: 0) {
-            self
-            Spacer()
-        }
+        self.frame(maxWidth: .infinity, alignment: .leading)
     }
     
     func toTrailing() -> some View {
-        HStack(spacing: 0) {
-            Spacer()
-            self
-        }
+        self.frame(maxWidth: .infinity, alignment: .trailing)
     }
     
     func toTop() -> some View {
-        VStack(spacing: 0) {
-            self
-            Spacer()
-        }
+        self.frame(maxHeight: .infinity, alignment: .top)
     }
     
     func toBottom() -> some View {
-        VStack(spacing: 0) {
-            Spacer()
-            self
-        }
+        self.frame(maxHeight: .infinity, alignment: .bottom)
     }
     
     func toCenter() -> some View {
-        VStack(spacing: 0) {
-            Spacer()
-            HStack(spacing: 0) {
-                Spacer()
-                self
-                Spacer()
-            }
-            Spacer()
-        }
+        self.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
     
     func toHorizontal() -> some View {
-        HStack(spacing: 0) {
-            Spacer()
-            self
-            Spacer()
-        }
+        self.frame(maxWidth: .infinity, alignment: .center)
     }
     
     func toVertical() -> some View {
-        VStack(spacing: 0) {
-            Spacer()
-            self
-            Spacer()
-        }
+        self.frame(maxHeight: .infinity, alignment: .center)
     }
 }

@@ -32,9 +32,9 @@ public enum FetchFlow<Data: Equatable>: Equatable {
     
     @ViewBuilder
     public func makeView(
-        @ViewBuilder fetching: @escaping () -> some View,
-        @ViewBuilder success: @escaping (Data) -> some View,
-        @ViewBuilder failure: @escaping (APIError) -> some View
+        @ViewBuilder fetching: () -> some View,
+        @ViewBuilder success: (Data) -> some View,
+        @ViewBuilder failure: (APIError) -> some View
     ) -> some View {
         switch self {
         case .success(let data):
@@ -83,17 +83,15 @@ public enum FetchFlow<Data: Equatable>: Equatable {
 }
 
 public extension View {
-    
     func onChangeFetchFlow<T: Equatable>(
         of value: FetchFlow<T>,
         success: @escaping () -> Void
     ) -> some View {
-        self
-            .onChange(of: value) {
-                if case .success = $0 {
-                    success()
-                }
+        self.onChange(of: value) {
+            if case .success = $0 {
+                success()
             }
+        }
     }
     
     func onChangeFetchFlow<T: Equatable>(
@@ -101,13 +99,12 @@ public extension View {
         success: @escaping () -> Void,
         failure: @escaping () -> Void
     ) -> some View {
-        self
-            .onChange(of: value) {
-                if case .success = $0 {
-                    success()
-                } else if case .failure = $0 {
-                    failure()
-                }
+        self.onChange(of: value) {
+            if case .success = $0 {
+                success()
+            } else if case .failure = $0 {
+                failure()
             }
+        }
     }
 }

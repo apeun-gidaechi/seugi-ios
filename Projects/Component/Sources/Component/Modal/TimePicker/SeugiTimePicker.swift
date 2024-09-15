@@ -37,7 +37,7 @@ public struct SeugiTimePicker<C: View>: ModalViewProtocol {
                         Text(title)
                             .font(.subtitle(.s1))
                             .seugiColor(.sub(.black))
-                            .toLeading()
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     DatePicker("", selection: .constant(.now))
                         .datePickerStyle(.wheel)

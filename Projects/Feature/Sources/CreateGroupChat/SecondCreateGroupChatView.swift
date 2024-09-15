@@ -27,7 +27,7 @@ public struct SecondCreateGroupChatView: View {
             }
             VStack(spacing: 4) {
                 Text("채팅방 이름")
-                    .toLeading()
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.subtitle(.s2))
                     .seugiColor(.sub(.black))
                     .padding(.top, 6)

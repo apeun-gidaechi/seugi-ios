@@ -36,7 +36,7 @@ struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
                                 .seugiColor(.sub(.black))
                         }
                     }
-                    .toLeading()
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(4)
                     HStack(spacing: 8) {
                         if let secondaryButton = provider.secondaryButton {

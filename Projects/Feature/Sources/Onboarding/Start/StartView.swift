@@ -41,7 +41,7 @@ public struct StartView: View {
                 .fadeInEffect(time: 0.25)
                 Spacer()
                 Image(image: .cloud2)
-                    .toLeading()
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .fadeInEffect(time: 0.75)
                 Spacer()
                 SeugiButton.large("시작하기", type: .shadow) {

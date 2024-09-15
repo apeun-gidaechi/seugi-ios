@@ -12,30 +12,34 @@ struct LaunchScreenViewModifier<C: View>: ViewModifier {
     
     @State private var opacity = 1.0
     
+    private let duration: Double
     private let content: () -> C
     
-    init(content: @escaping () -> C) {
+    init(duration: Double, content: @escaping () -> C) {
+        self.duration = duration
         self.content = content
     }
     
     func body(content: Content) -> some View {
-        content.overlay {
-            if opacity > 0 {
-                self.content()
-                    .opacity(opacity)
-            }
-        }
-        .task {
-            try? await Task.sleep(for: .seconds(2))
-            withAnimation {
-                opacity = 0
-            }
+        if opacity == 0 {
+            content
+        } else {
+            self.content()
+                .opacity(opacity)
+                .task {
+                    try? await Task.sleep(for: .seconds(duration))
+                    withAnimation {
+                        opacity = 0
+                    }
+                }
         }
     }
 }
 
+let defaultDuration = 1.5
+
 extension View {
-    func launchScreen<C: View>(_ content: @escaping () -> C) -> some View {
-        self.modifier(LaunchScreenViewModifier(content: content))
+    func launchScreen<C: View>(duration: Double = defaultDuration, _ content: @escaping () -> C) -> some View {
+        self.modifier(LaunchScreenViewModifier(duration: duration, content: content))
     }
 }

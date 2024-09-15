@@ -16,7 +16,7 @@ public struct JoinWorkspaceRoleView: View {
             VStack {
                 Text("학생이신가요?\n아니면 선생님이신가요?")
                     .font(.subtitle(.s1))
-                    .toLeading()
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 4)
                 HStack {
                     ForEach(JobType.allCases, id: \.self) { tab in

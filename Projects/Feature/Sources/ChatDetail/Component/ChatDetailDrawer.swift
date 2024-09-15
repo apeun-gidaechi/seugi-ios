@@ -22,9 +22,9 @@ struct ChatDetailDrawer: View {
         VStack(spacing: 0) {
             Text("멤버")
                 .padding(.leading, 16)
-                .toLeading()
                 .font(.subtitle(.s2))
                 .frame(height: 40)
+                .frame(maxWidth: .infinity, alignment: .leading)
             SeugiDivider(thickness: .thin)
             ScrollView {
                 LazyVStack(spacing: 0) {

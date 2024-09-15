@@ -11,7 +11,6 @@ struct HomeWorkspaceContainer: View {
     }
     
     var body: some View {
-        
         VStack(spacing: 12) {
             HStack(spacing: 8) {
                 HomeHeadlineIcon(icon: .schoolFill)
@@ -38,7 +37,7 @@ struct HomeWorkspaceContainer: View {
                     Text(workspace.workspaceName)
                         .font(.subtitle(.s2))
                         .seugiColor(.gray(.g600))
-                        .toLeading()
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
         }

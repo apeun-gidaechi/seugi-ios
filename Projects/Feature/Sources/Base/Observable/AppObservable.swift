@@ -14,7 +14,6 @@ struct AppState: DynamicProperty {
 }
 
 public final class AppObservable: BaseViewModel<AppObservable.Effect> {
-    
     public enum Effect {
         case logout
     }
@@ -36,11 +35,8 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
         }
         return .getRole(memberId: memberId, workspace: selectedWorkspace)
     }
-    
-    // token
     @Published public var accessToken: String?
     @Published public var refreshToken: String?
-    
     @Published public var profile: FetchFlow<RetrieveProfile> = .fetching
     
     // MARK: - Method
@@ -52,7 +48,7 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
     }
     
     private func observeState() {
-        $accessToken.sink {
+        $accessToken.removeDuplicates().sink {
             if let token = $0 {
                 self.keyValueRepo.save(key: .accessToken, value: token)
             } else {
@@ -60,7 +56,7 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
             }
         }.store(in: &subscriptions)
         
-        $refreshToken.sink {
+        $refreshToken.removeDuplicates().sink {
             if let token = $0 {
                 self.keychainRepo.save(key: .refreshToken, value: token)
             } else {
@@ -68,12 +64,14 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
             }
         }.store(in: &subscriptions)
         
-        $selectedWorkspace.sink { _ in
-            if let id = self.selectedWorkspace?.workspaceId {
-                self.keyValueRepo.save(key: .selectedWorkspaceId, value: id)
-                self.fetchWorkspaces()
-            }
-        }.store(in: &subscriptions)
+        $selectedWorkspace
+            .removeDuplicates()
+            .sink { _ in
+                if let id = self.selectedWorkspace?.workspaceId {
+                    self.keyValueRepo.save(key: .selectedWorkspaceId, value: id)
+                    self.fetchWorkspaces()
+                }
+            }.store(in: &subscriptions)
     }
     
     public func login() {
@@ -81,8 +79,8 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
     }
     
     public func logout() {
-        accessToken = ""
-        refreshToken = ""
+        accessToken = nil
+        refreshToken = nil
         selectedWorkspace = nil
         profile = .fetching
         emit(.logout)
@@ -102,7 +100,6 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
                 // 아니면 첫 번째 workspace
                 selectedWorkspace = workspace
             }
-            fetchMyInfo()
         }.failure { [self] error in
             log("💎 AppState.fetchWorkspaces - \(error)")
             if case .refreshFailure = error {
