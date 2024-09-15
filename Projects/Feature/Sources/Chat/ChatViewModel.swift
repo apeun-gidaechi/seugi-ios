@@ -56,24 +56,29 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
     
     // MARK: - Method
     func fetchChats(workspaceId: String) {
-        chatRepo.searchPersonal(workspaceId: workspaceId).fetching {
-            self.personalRooms = .fetching
-        }.success { res in
-            self.personalRooms = .success(res.data)
-        }.failure { error in
-            log(error)
-            self.personalRooms = .failure(error)
-            self.emit(.refreshFailure)
-        }.observe(&subscriptions)
-        
-        chatRepo.searchGroup(workspaceId: workspaceId).fetching {
-            self.groupRooms = .fetching
-        }.success { res in
-            self.groupRooms = .success(res.data)
-        }.failure { error in
-            log(error)
-            self.groupRooms = .failure(error)
-            self.emit(.refreshFailure)
-        }.observe(&subscriptions)
+        switch roomType {
+        case .personal:
+            chatRepo.searchPersonal(workspaceId: workspaceId).fetching {
+                self.personalRooms = .fetching
+            }.success { res in
+                self.personalRooms = .success(res.data)
+            }.failure { error in
+                self.personalRooms = .failure(error)
+                if case .refreshFailure = error {
+                    self.emit(.refreshFailure)
+                }
+            }.observe(&subscriptions)
+        case .group:
+            chatRepo.searchGroup(workspaceId: workspaceId).fetching {
+                self.groupRooms = .fetching
+            }.success { res in
+                self.groupRooms = .success(res.data)
+            }.failure { error in
+                self.groupRooms = .failure(error)
+                if case .refreshFailure = error {
+                    self.emit(.refreshFailure)
+                }
+            }.observe(&subscriptions)
+        }
     }
 }
