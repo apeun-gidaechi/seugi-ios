@@ -16,14 +16,13 @@ final class SettingProfileViewModel: BaseViewModel<SettingProfileViewModel.Effec
     @Inject private var memberRepo: any MemberRepo
     
     @Published var editMemberFlow: IdleFlow<Bool> = .idle
+    @Published var removeMemberFlow: IdleFlow<Bool> = .idle
     var member: RetrieveMember?
     
     func editMember(
         picture: String
     ) {
-        guard let member else {
-            return
-        }
+        guard let member else { return }
         memberRepo.edit(
             .init(
                 picture: picture, name: member.name, birth: member.birth
@@ -34,6 +33,16 @@ final class SettingProfileViewModel: BaseViewModel<SettingProfileViewModel.Effec
             self.editMemberFlow = .success()
         }.failure { error in
             self.editMemberFlow = .failure(error)
+        }.observe(&subscriptions)
+    }
+    
+    func removeMember() {
+        memberRepo.remove().fetching {
+            self.removeMemberFlow = .idle
+        }.success { _ in
+            self.removeMemberFlow = .success()
+        }.failure { err in
+            self.removeMemberFlow = .failure(err)
         }.observe(&subscriptions)
     }
 }

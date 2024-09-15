@@ -14,6 +14,6 @@ let project = Project.make(
             dependencies: [
                 .SPM.Swinject
             ]
-        ),
+        )
     ]
 )

@@ -102,7 +102,6 @@ struct NotificationCell: View {
                                 lineWidth: 1
                             )
                     }
-                    // TODO: Add stroke
                     .button {
                         action(.emojiClicked(emoji.emoji))
                     }

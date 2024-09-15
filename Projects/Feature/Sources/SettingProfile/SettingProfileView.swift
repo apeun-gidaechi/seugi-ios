@@ -7,7 +7,7 @@ public struct SettingProfileView: View {
     
     @AppState private var appState
     @EnvironmentObject private var fileManager: FileManager
-    @EnvironmentObject private var alertProvider: AlertProvider
+    @EnvironmentObject private var alert: AlertProvider
     @ObservedObject private var viewModel = SettingProfileViewModel()
     
     // photo
@@ -50,7 +50,7 @@ public struct SettingProfileView: View {
             LazyVStack(spacing: 0) {
                 SeugiListItem.icon(title: "로그아웃", icon: .expandRightLine)
                     .button {
-                        alertProvider.present("로그아웃 하시겠습니까?")
+                        alert.present("로그아웃 하시겠습니까?")
                             .primaryButton("로그아웃") {
                                 appState.logout()
                             }
@@ -58,9 +58,15 @@ public struct SettingProfileView: View {
                             .show()
                     }
                     .applyAnimation()
-                SeugiListItem.icon(title: "회원탈퇴", icon: .expandRightLine, titleColor: .red(.r500))
+                SeugiListItem.icon(title: "회원 탈퇴", icon: .expandRightLine, titleColor: .red(.r500))
                     .button {
-                        // TODO: Handle remove member
+                        alert.present("정말 회원 탈퇴하시겠습니까?")
+                            .message("회원 탈퇴 시 모든 정보가 삭제 됩니다")
+                            .primaryButton("탈퇴") {
+                                viewModel.removeMember()
+                            }
+                            .secondaryButton("취소")
+                            .show()
                     }
                     .applyAnimation()
                 SeugiDivider(thickness: .thick)
@@ -101,12 +107,19 @@ public struct SettingProfileView: View {
         }
         .onChange(of: viewModel.editMemberFlow) { _ in
             appState.fetchMyInfo()
-            alertProvider.present("정보 수정 성공")
+            alert.present("정보 수정 성공")
                 .show()
         } failure: { _ in
-            alertProvider.present("정보 수정 실패")
-                .primaryButton("확인") {}
+            alert.present("정보 수정 실패")
+                .primaryButton("확인")
                 .message("잠시 후 다시 시도해 주세요")
+                .show()
+        }
+        .onChange(of: viewModel.removeMemberFlow) { _ in
+            appState.logout()
+        } failure: { _ in
+            alert.present("탈퇴 실패")
+                .primaryButton("잠시 후 다시 시도해 주세요")
                 .show()
         }
     }

@@ -38,11 +38,11 @@ public final class AlertProvider: ObservableObject, ModalProvider {
             .init(title: title, message: message, secondaryButton: secondaryButton, primaryButton: primaryButton, provider: provider)
         }
         
-        public func secondaryButton(_ title: String, action: @escaping () -> Void) -> Self {
+        public func secondaryButton(_ title: String, action: @escaping () -> Void = {}) -> Self {
             .init(title: self.title, message: message, secondaryButton: .init(title, action: action), primaryButton: primaryButton, provider: provider)
         }
         
-        public func primaryButton(_ title: String, action: @escaping () -> Void) -> Self {
+        public func primaryButton(_ title: String, action: @escaping () -> Void = {}) -> Self {
             .init(title: self.title, message: message, secondaryButton: secondaryButton, primaryButton: .init(title, action: action), provider: provider)
         }
         
