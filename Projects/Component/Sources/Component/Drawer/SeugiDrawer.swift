@@ -8,47 +8,52 @@
 
 import SwiftUI
 import SwiftUIUtil
+import UIKit
 
 public extension View {
     func seugiDrawer<Body>(
-        isDrawerOpen: Binding<Bool>,
-        @ViewBuilder body: @escaping () -> Body = { EmptyView() }
+        isOpen: Binding<Bool>,
+        @ViewBuilder content: @escaping () -> Body = { EmptyView() }
     ) -> some View where Body: View {
-        self.modifier(SeugiDrawerModifier(isDrawerOpen: isDrawerOpen, body: body))
+        self.modifier(SeugiDrawerModifier(isOpen: isOpen, content: content))
     }
 }
 
-public struct SeugiDrawerModifier<Body>: ViewModifier where Body: View {
+public struct SeugiDrawerModifier<C>: ViewModifier where C: View {
     
-    @Binding private var isDrawerOpen: Bool
-    private var body: () -> Body
+    @Binding private var isOpen: Bool
+    private var content: () -> C
     
-    private let width = UIScreen.main.bounds.width - 80
+    private let width: CGFloat = min(320, (UIApplication.shared.screen?.bounds.width ?? .infinity) - 80)
     
     public init(
-        isDrawerOpen: Binding<Bool>,
-        @ViewBuilder body: @escaping () -> Body
+        isOpen: Binding<Bool>,
+        @ViewBuilder content: @escaping () -> C
     ) {
-        self._isDrawerOpen = isDrawerOpen
-        self.body = body
+        self._isOpen = isOpen
+        self.content = content
     }
     
     public func body(content: Content) -> some View {
         content
             .overlay {
-                Color.black.opacity(isDrawerOpen ? 0.3 : 0)
-                    .animation(.default)
+                Color.black.opacity(isOpen ? 0.3 : 0)
+                    .animation(.default, value: isOpen)
                     .ignoresSafeArea()
                     .onTapGesture {
-                        isDrawerOpen = false
+                        isOpen = false
                     }
-                body()
-                    .toTop()
+                self.content()
+                    .frame(maxHeight: .infinity, alignment: .top)
                     .frame(width: width)
                     .background(Color.seugi(.sub(.white)))
-                    .offset(x: isDrawerOpen ? UIScreen.main.bounds.width - width : UIScreen.main.bounds.width)
-                    .animation(.default, value: isDrawerOpen)
-                    .toLeading()
+                    .offset(
+                        x: isOpen
+                        ? 0
+                        : width
+                    )
+                    .animation(.default, value: isOpen)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
             }
     }
 }

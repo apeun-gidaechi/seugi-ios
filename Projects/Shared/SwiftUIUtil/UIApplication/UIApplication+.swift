@@ -15,6 +15,10 @@ public extension UIApplication {
         connectedScenes.first as? UIWindowScene
     }
     
+    var screen: UIScreen? {
+        scene?.screen
+    }
+    
     var window: UIWindow? {
         scene?.keyWindow
     }

@@ -127,7 +127,7 @@ public struct ChatDetailView: View {
                 isDrawerOpen = true
             }
         }
-        .seugiDrawer(isDrawerOpen: $isDrawerOpen) {
+        .seugiDrawer(isOpen: $isDrawerOpen) {
             ChatDetailDrawer(room: room) { action in
                 switch action {
                 case .leftRoom:
