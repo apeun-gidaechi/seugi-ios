@@ -2,6 +2,7 @@ import SwiftUI
 import Component
 import Domain
 import DateUtil
+import Flow
 
 struct NotificationCell: View {
     
@@ -65,7 +66,7 @@ struct NotificationCell: View {
                     .multilineTextAlignment(.leading)
                     .seugiColor(.sub(.black))
             }
-            HStack(spacing: 6) {
+            HFlow(spacing: 6) {
                 Image(icon: .addEmoji)
                     .resizable()
                     .renderingMode(.template)
