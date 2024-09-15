@@ -12,6 +12,7 @@ public struct CatSeugiView: View {
     }
     
     @AppState private var appState
+    @EnvironmentObject private var alert: AlertProvider
     @StateObject private var viewModel = CatSeugiViewModel()
     
     // MARK: - State
@@ -75,6 +76,10 @@ public struct CatSeugiView: View {
                 switch effect {
                 case .messagesFetched:
                     scrollToBottom()
+                case .sendMessageFailure:
+                    alert.present("전송 실패")
+                        .message("다시 시도해 주세요")
+                        .show()
                 }
             }
             focused = true

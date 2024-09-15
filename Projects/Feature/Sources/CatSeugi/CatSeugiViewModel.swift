@@ -13,6 +13,7 @@ import DIContainer
 final class CatSeugiViewModel: BaseViewModel<CatSeugiViewModel.Effect> {
     enum Effect {
         case messagesFetched
+        case sendMessageFailure
     }
     
     @Inject private var catSeugiRepo: CatSeugiRepo
@@ -34,8 +35,8 @@ final class CatSeugiViewModel: BaseViewModel<CatSeugiViewModel.Effect> {
                 $0 + [.just(userId: -1, message: res.data)]
             }
             self.emit(.messagesFetched)
-        }.failure { err in
-            // TODO: Catch
+        }.failure { _ in
+            self.emit(.sendMessageFailure)
         }.observe(&subscriptions)
         
         self.message = ""
