@@ -100,6 +100,7 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
                 // 아니면 첫 번째 workspace
                 selectedWorkspace = workspace
             }
+            fetchMyInfo()
         }.failure { [self] error in
             log("💎 AppState.fetchWorkspaces - \(error)")
             if case .refreshFailure = error {
