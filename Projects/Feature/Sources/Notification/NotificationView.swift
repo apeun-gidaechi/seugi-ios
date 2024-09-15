@@ -39,6 +39,7 @@ public struct NotificationView: View {
                 .secondaryButton("닫기") {}
                 .show()
         case .reportNotification:
+            // TODO: Impl
             break
         case .addEmoji:
             addEmojiPresent = true

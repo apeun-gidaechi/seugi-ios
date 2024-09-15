@@ -94,6 +94,13 @@ struct NotificationCell: View {
                         : .gray(.g100),
                         in: RoundedRectangle(cornerRadius: 8)
                     )
+                    .overlay {
+                        RoundedCornerShape(radius: 8, corners: .allCorners)
+                            .stroke(
+                                Color.seugi(selected ? .primary(.p300) : .gray(.g200)),
+                                lineWidth: 1
+                            )
+                    }
                     // TODO: Add stroke
                     .button {
                         action(.emojiClicked(emoji.emoji))
