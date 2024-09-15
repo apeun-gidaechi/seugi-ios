@@ -14,14 +14,14 @@ final class SettingAlarmViewModel: BaseViewModel<SettingAlarmViewModel.Effect> {
     enum Effect {}
     @Inject private var keyValueRepo: KeyValueRepo
     
-    @Published var allowAlarm: Bool = true
+    @Published var allowAlarm = true
     
     override init() {
         super.init()
         if let allowAlarm = keyValueRepo.load(key: .allowAlarm) as? Bool {
             self.allowAlarm = allowAlarm
         }
-        $allowAlarm.sink { allowAlarm in
+        $allowAlarm.sink { _ in
             self.fetchAllowAlarm()
         }.store(in: &subscriptions)
     }

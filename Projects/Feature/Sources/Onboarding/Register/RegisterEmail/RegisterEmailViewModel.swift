@@ -33,15 +33,14 @@ public final class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.
     }
     
     func sendEmail() {
-        emailRepo.send(email: email)
-            .fetching{ [self] in
-                isWaiting = true
-                sendEmailFlow = .fetching
-            }.success { _ in
-                self.sendEmailFlow = .success()
-            }.failure { error in
-                self.sendEmailFlow = .failure(error)
-            }.observe(&subscriptions)
+        emailRepo.send(email: email).fetching { [self] in
+            isWaiting = true
+            sendEmailFlow = .fetching
+        }.success { _ in
+            self.sendEmailFlow = .success()
+        }.failure { error in
+            self.sendEmailFlow = .failure(error)
+        }.observe(&subscriptions)
     }
     
     func signUp() {

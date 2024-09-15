@@ -39,7 +39,6 @@ public extension View {
     }
 }
 
-
 struct MCEmojiPicker: UIViewControllerRepresentable {
     
     private let action: (_ emoji: String) -> Void

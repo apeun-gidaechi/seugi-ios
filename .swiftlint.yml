@@ -25,11 +25,11 @@ disabled_rules:
 - implicitly_unwrapped_optional
 - large_tuple
 - function_parameter_count
+- closure_end_indentation
 
 opt_in_rules:
 - empty_count
 - empty_string
-- closure_end_indentation
 - closure_spacing
 - collection_alignment
 - colon
