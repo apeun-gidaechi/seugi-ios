@@ -10,7 +10,7 @@ import SwiftUI
 import Component
 
 struct BottomNavigationPreview: View {
-    private var tabs: [SeugiBottomNavigationCellData] = [
+    private var tabs: [BottomNavigationTab] = [
         .init(type: .home, hasBadge: true),
         .init(type: .chat, hasBadge: true),
         .init(type: .room, hasBadge: false),

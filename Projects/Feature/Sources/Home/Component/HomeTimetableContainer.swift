@@ -27,7 +27,7 @@ struct HomeTimetableContainer: View {
     var body: some View {
         VStack(spacing: 12) {
             HStack(spacing: 8) {
-                HeadlineIcon(icon: .bookFill)
+                HomeHeadlineIcon(icon: .bookFill)
                 Text("오늘의 시간표")
                     .font(.subtitle(.s2))
                     .seugiColor(.sub(.black))

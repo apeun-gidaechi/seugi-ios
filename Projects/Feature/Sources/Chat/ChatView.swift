@@ -6,15 +6,15 @@ public struct ChatView: View {
     
     @Router private var router
     @AppState private var appState
-    @EnvironmentObject private var viewModel: ChatViewModel
+    @StateObject private var viewModel: ChatViewModel
     
-    // MARK: - State
     @FocusState private var searchFocus: Bool
     
     private let roomType: RoomType
     
     public init(roomType: RoomType) {
         self.roomType = roomType
+        self._viewModel = .init(wrappedValue: .init(roomType: roomType))
     }
     
     public var body: some View {
@@ -89,11 +89,10 @@ public struct ChatView: View {
                     appState.logout()
                 }
             }
-            viewModel.searchText = ""
-            self.viewModel.roomType = roomType
         }
-        .onDisappear {
-            viewModel.searchText = ""
+        .onChange(of: appState.selectedWorkspace) {
+            guard let id = $0?.workspaceId else { return }
+            viewModel.fetchChats(workspaceId: id)
         }
     }
 }

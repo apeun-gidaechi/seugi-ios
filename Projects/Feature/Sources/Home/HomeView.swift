@@ -4,19 +4,31 @@ import SwiftUIUtil
 
 public struct HomeView: View {
     
+    @StateObject private var viewModel = HomeViewModel()
     @EnvironmentObject private var alertProvider: AlertProvider
     @AppState private var appState
     @Router private var router
-    @EnvironmentObject private var viewModel: HomeViewModel
-    @Namespace private var animation
     
-    private let flow: HomeFetchFlow
-    
-    public init(
-        flow: HomeFetchFlow
-    ) {
-        self.flow = flow
+    private var isWorkspaceEmpty: Bool {
+        if let workspaces = appState.workspaces.data,
+           !workspaces.isEmpty {
+            false
+        } else {
+            true
+        }
     }
+    
+    private var flow: HomeFetchFlow {
+        if appState.workspaces == .fetching {
+            .fetching
+        } else if isWorkspaceEmpty {
+            .failure
+        } else {
+            .success
+        }
+    }
+    
+    public init() {}
     
     private let dummySchedule = [
         "국어",
@@ -42,8 +54,7 @@ public struct HomeView: View {
     public var body: some View {
         ScrollView {
             VStack(spacing: 8) {
-                currentWorkspace
-                    .padding(.top, 8)
+                HomeWorkspaceContainer(for: flow)
                     .button {
                         router.navigate(to: MainDestination.workspaceDetail)
                     }
@@ -56,17 +67,18 @@ public struct HomeView: View {
                         router.navigate(to: MainDestination.catSeugi)
                     }
                 }
-                commingSchedule
-                    .padding(.bottom, 80)
+                HomeScheduleContainer(for: flow)
             }
+            .padding(.top, 8)
+            .padding(.bottom, 80)
             .padding(.horizontal, 20)
         }
-        .animation(.spring(duration: 0.4), value: viewModel.meals)
-        .animation(.spring(duration: 0.4), value: viewModel.timetables)
         .scrollIndicators(.hidden)
         .seugiBackground(.primary(.p050))
         .seugiTopBar("홈", background: .seugi(.primary(.p050)))
         .hideBackButton()
+        .animation(.spring(duration: 0.4), value: viewModel.meals)
+        .animation(.spring(duration: 0.4), value: viewModel.timetables)
         .onAppear {
             if flow == .failure {
                 showJoinWorkspaceAlert()
@@ -77,134 +89,10 @@ public struct HomeView: View {
                 showJoinWorkspaceAlert()
             }
         }
-    }
-    
-    @ViewBuilder
-    private var currentWorkspace: some View {
-        Group {
-            switch flow {
-            case .fetching:
-                VStack(spacing: 12) {
-                    HStack(spacing: 8) {
-                        HeadlineIcon(icon: .schoolFill)
-                        Text("내 학교")
-                            .font(.subtitle(.s2))
-                            .seugiColor(.sub(.black))
-                        Spacer()
-                    }
-                    ProgressView()
-                }
-                .applyCardEffect()
-            case .failure:
-                VStack(spacing: 12) {
-                    HStack(spacing: 8) {
-                        HeadlineIcon(icon: .schoolFill)
-                        Text("내 학교")
-                            .font(.subtitle(.s2))
-                            .seugiColor(.sub(.black))
-                        Spacer()
-                    }
-                    Text("내 학교를 등록해주세요")
-                        .seugiColor(.gray(.g600))
-                        .font(.body(.b2))
-                }
-                .applyCardEffect()
-            case .success:
-                VStack(spacing: 12) {
-                    HStack(spacing: 8) {
-                        HeadlineIcon(icon: .schoolFill)
-                        Text("내 학교")
-                            .font(.subtitle(.s2))
-                            .seugiColor(.sub(.black))
-                        Spacer()
-                        Image(icon: .expandRightLine)
-                            .resizable()
-                            .renderingMode(.template)
-                            .seugiColor(.gray(.g500))
-                            .frame(width: 24, height: 24)
-                    }
-                    if let workspace = appState.selectedWorkspace {
-                        Text(workspace.workspaceName)
-                            .font(.subtitle(.s2))
-                            .seugiColor(.gray(.g600))
-                            .toLeading()
-                    }
-                }
-                .applyCardEffect()
-            }
+        .onChange(of: appState.selectedWorkspace) {
+            guard let id = $0?.workspaceId else { return }
+            viewModel.fetchMeals(workspaceId: id)
+            viewModel.fetchTimetable(workspaceId: id)
         }
-        .matchedGeometryEffect(id: "currentWorkspace", in: animation)
-    }
-    
-    @ViewBuilder
-    private var commingSchedule: some View {
-        Group {
-            switch flow {
-            case .fetching:
-                VStack(spacing: 12) {
-                    HStack(spacing: 8) {
-                        HeadlineIcon(icon: .calendarLine)
-                        Text("다가오는 일정")
-                            .seugiColor(.sub(.black))
-                            .font(.subtitle(.s2))
-                        Spacer()
-                    }
-                    .padding(4)
-                    ProgressView()
-                }
-                .applyCardEffect()
-            case .failure:
-                VStack(spacing: 12) {
-                    HStack(spacing: 8) {
-                        HeadlineIcon(icon: .calendarLine)
-                        Text("다가오는 일정")
-                            .seugiColor(.sub(.black))
-                            .font(.subtitle(.s2))
-                        Spacer()
-                    }
-                    .padding(4)
-                    Text("학교를 등록하고 일정을 확인하세요")
-                        .seugiColor(.gray(.g600))
-                        .font(.body(.b2))
-                        .padding(.vertical, 12)
-                }
-                .applyCardEffect()
-            case .success:
-                VStack(spacing: 12) {
-                    HStack(spacing: 8) {
-                        HeadlineIcon(icon: .calendarLine)
-                        Text("다가오는 일정")
-                            .seugiColor(.sub(.black))
-                            .font(.subtitle(.s2))
-                        Spacer()
-                        Image(icon: .expandRightLine)
-                            .resizable()
-                            .renderingMode(.template)
-                            .seugiColor(.gray(.g500))
-                            .frame(width: 24, height: 24)
-                    }
-                    .padding(4)
-                    VStack(spacing: 16) {
-                        ForEach(0..<3, id: \.self) { _ in
-                            HStack(spacing: 0) {
-                                Text("7/21")
-                                    .font(.body(.b1))
-                                    .seugiColor(.primary(.p500))
-                                Text("체육대회")
-                                    .font(.body(.b2))
-                                    .seugiColor(.sub(.black))
-                                    .padding(.leading, 10)
-                                Spacer()
-                                Text("D-3")
-                                    .font(.caption(.c1))
-                                    .seugiColor(.gray(.g600))
-                            }
-                        }
-                    }
-                }
-                .applyCardEffect()
-            }
-        }
-        .matchedGeometryEffect(id: "commingSchedule", in: animation)
     }
 }

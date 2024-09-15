@@ -9,7 +9,7 @@
 import SwiftUI
 import Component
 
-struct HeadlineIcon: View {
+struct HomeHeadlineIcon: View {
     private let icon: SeugiIconography
     
     init(icon: SeugiIconography) {

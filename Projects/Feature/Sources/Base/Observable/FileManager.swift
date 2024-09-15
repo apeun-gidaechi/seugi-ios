@@ -25,16 +25,12 @@ public final class FileManager: BaseViewModel<FileManager.Effect> {
                     failure(.unknown)
                     return
                 }
-                fileRepo.upload(
-                    type: .image,
-                    file: data
-                )
-                .success { response in
+                fileRepo.upload(type: .image,file: data
+                ).success { response in
                     completion(response.data)
                 }.failure { error in
                     failure(error)
-                }
-                .observe(&subscriptions)
+                }.observe(&subscriptions)
             case .failure:
                 failure(.unknown)
             }

@@ -19,11 +19,14 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
     @Published var searchText = ""
     @Published var isSearching = false
     
-    var roomType: RoomType?
+    private let roomType: RoomType
+    
+    init(roomType: RoomType) {
+        self.roomType = roomType
+    }
     
     private var rooms: FetchFlow<[Room]> {
-        guard let roomType else { return .fetching }
-        return switch roomType {
+        switch roomType {
         case .personal: personalRooms
         case .group: groupRooms
         }
@@ -36,7 +39,6 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
     }
     
     private var searchRooms: FetchFlow<[Room]> {
-        guard roomType != nil else { return .fetching }
         guard !searchText.isEmpty else {
             return sortedRooms
         }

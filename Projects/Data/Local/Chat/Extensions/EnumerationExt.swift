@@ -7,7 +7,7 @@
 //
 
 import Domain
-import RealmSwift
+//import RealmSwift
 
-extension ChatStatusEnum: PersistableEnum {}
-extension RoomType: PersistableEnum {}
+//extension ChatStatusEnum: PersistableEnum {}
+//extension RoomType: PersistableEnum {}

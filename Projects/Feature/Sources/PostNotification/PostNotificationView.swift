@@ -4,7 +4,6 @@ import Component
 public struct PostNotificationView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    @EnvironmentObject private var notificationViewModel: NotificationViewModel
     @Router private var router
     @AppState private var appState
     @Environment(\.dismiss) private var dismiss
@@ -52,10 +51,10 @@ public struct PostNotificationView: View {
             alertProvider.present(type == .createNotification ? "공지 작성 성공" : "공지 수정 성공")
                 .primaryButton("닫기") {
                     dismiss()
-                    guard let selectedWorkspace = appState.selectedWorkspace else {
-                        return
-                    }
-                    notificationViewModel.fetchNotifications(workspaceId: selectedWorkspace.workspaceId)
+//                    guard let selectedWorkspace = appState.selectedWorkspace else {
+//                        return
+//                    }
+//                    notificationViewModel.fetchNotifications(workspaceId: selectedWorkspace.workspaceId)
                 }
                 .show()
         } failure: { _ in

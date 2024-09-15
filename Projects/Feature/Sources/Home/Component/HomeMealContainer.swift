@@ -23,7 +23,7 @@ struct HomeMealContainer: View {
     var body: some View {
         VStack(spacing: 12) {
             HStack(spacing: 8) {
-                HeadlineIcon(icon: .utensilsLine)
+                HomeHeadlineIcon(icon: .utensilsLine)
                 Text("오늘의 급식")
                     .font(.subtitle(.s2))
                     .seugiColor(.sub(.black))

@@ -6,8 +6,8 @@ public struct NotificationView: View {
     
     @AppState private var appState
     @Router private var router
-    @EnvironmentObject private var viewModel: NotificationViewModel
-    @EnvironmentObject private var alertProvider: AlertProvider
+    @StateObject private var viewModel = NotificationViewModel()
+    @Component.Alert private var alert
     
     @State private var addEmojiPresent = false
     
@@ -26,7 +26,7 @@ public struct NotificationView: View {
         case .updateNotification:
             router.navigate(to: MainDestination.updateNotification(notification))
         case .removeNotification:
-            alertProvider.present("공지를 정말 삭제하시겠습니까?")
+            alert.present("공지를 정말 삭제하시겠습니까?")
                 .primaryButton("삭제") {
                     viewModel.removeNotification(
                         workspaceId: selectedWorkspace.workspaceId,
@@ -91,11 +91,11 @@ public struct NotificationView: View {
             }
         }
         .onChange(of: viewModel.removeNotificationFlow) { _ in
-            alertProvider.present("삭제 성공")
+            alert.present("삭제 성공")
                 .primaryButton("닫기") {}
                 .show()
         } failure: { _ in
-            alertProvider.present("삭제 실패")
+            alert.present("삭제 실패")
                 .primaryButton("확인") {}
                 .show()
         }
@@ -104,6 +104,10 @@ public struct NotificationView: View {
                 return
             }
             viewModel.patchEmoji(emoji: emoji, workspaceId: selectedWorkspace.workspaceId, profileId: profile?.member.id ?? 0)
+        }
+        .onChange(of: appState.selectedWorkspace) {
+            guard let id = $0?.workspaceId else { return }
+            viewModel.fetchNotifications(workspaceId: id)
         }
     }
 }

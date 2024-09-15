@@ -1,31 +1,30 @@
 import SwiftUIUtil
 import SwiftUI
 
-struct SeugiBottomNavigationCell: View {
+struct BottomNavigationCell: View {
     
-    private let cellData: SeugiBottomNavigationCellData
-    private let isSelected: Bool
+    private let page: Page
+    private let selected: Bool
     
     init(
-        cellData: SeugiBottomNavigationCellData,
-        isSelected: Bool
+        page: Page,
+        selected: Bool
     ) {
-        self.cellData = cellData
-        self.isSelected = isSelected
+        self.page = page
+        self.selected = selected
     }
     
     var body: some View {
-        
-        let imageColor: Color = isSelected ? .seugi(.primary(.p500)) : .seugi(.gray(.g300))
+        let imageColor: Color = selected ? .seugi(.primary(.p500)) : .seugi(.gray(.g300))
         
         VStack(spacing: 0) {
-            Image(icon: cellData.type.image)
+            Image(icon: page.icon)
                 .renderingMode(.template)
                 .resizable()
                 .frame(width: 30, height: 30)
                 .foregroundStyle(imageColor)
                 .overlay {
-                    if cellData.hasBadge {
+                    if page.hasBadge {
                         SeugiBadge(type: .normal)
                             .toTop()
                             .toTrailing()

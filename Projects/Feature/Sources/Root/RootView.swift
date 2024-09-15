@@ -6,7 +6,6 @@ import Component
 
 public struct RootView: View {
     
-    @StateObject private var timerManager = TimerManager()
     @StateObject private var appState = AppObservable()
     @StateObject private var router = RouterObservable()
     @StateObject private var stompManager = StompManager()
@@ -16,7 +15,7 @@ public struct RootView: View {
     
     public var body: some View {
         NavigationStack(path: $router.navPath) {
-            if appState.accessToken.isEmpty {
+            if appState.accessToken == nil {
                 OnboardingCoordinator()
             } else {
                 MainCoordinator()
@@ -25,21 +24,10 @@ public struct RootView: View {
         .launchScreen {
             LaunchScreenView()
         }
-        .environmentObject(timerManager)
         .environmentObject(router)
         .environmentObject(appState)
         .environmentObject(stompManager)
         .environmentObject(fileManager)
-        .onAppear {
-            appState.subscribe { subject in
-                switch subject {
-                case .logout:
-                    router.navigateToRoot()
-                default:
-                    break
-                }
-            }
-        }
         // 디버그일 경우 3번 탭할 시 세션 초기화
         #if DEBUG
         .onTapGesture(count: 3) {

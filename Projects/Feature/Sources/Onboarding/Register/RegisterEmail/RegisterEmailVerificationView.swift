@@ -5,7 +5,7 @@ public struct RegisterEmailVerificationView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
     @Router private var router
-    @EnvironmentObject private var timerManager: TimerManager
+    @StateObject private var timerManager = TimerManager()
     @AppState private var appState
     @EnvironmentObject private var viewModel: RegisterEmailViewModel
     @FocusState private var firstTextField: Bool
@@ -53,7 +53,7 @@ public struct RegisterEmailVerificationView: View {
         }
     }
     
-    func convertSecondsToTime(timeInSeconds: Int) -> String {
+    private func convertSecondsToTime(timeInSeconds: Int) -> String {
         let minutes = timeInSeconds / 60
         let seconds = timeInSeconds % 60
         return String(format: "%02i분 %02i초 남음", minutes, seconds)

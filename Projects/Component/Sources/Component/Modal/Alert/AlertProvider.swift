@@ -1,4 +1,17 @@
 import Foundation
+import SwiftUI
+
+@propertyWrapper
+public struct Alert: DynamicProperty {
+    
+    @EnvironmentObject private var provider: AlertProvider
+    
+    public init() {}
+    
+    public var wrappedValue: AlertProvider {
+        provider
+    }
+}
 
 public final class AlertProvider: ObservableObject, ModalProvider {
     
