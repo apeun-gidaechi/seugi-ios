@@ -6,7 +6,7 @@ import PhotosUI
 public struct SettingProfileView: View {
     
     @AppState private var appState
-    @EnvironmentObject private var fileManager: SeugiFileManager
+    @EnvironmentObject private var fileManager: FileManager
     @EnvironmentObject private var alertProvider: AlertProvider
     @ObservedObject private var viewModel = SettingProfileViewModel()
     

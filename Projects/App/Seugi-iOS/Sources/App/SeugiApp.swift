@@ -8,6 +8,11 @@ import Feature
 @main
 struct SeugiApp: App {
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    @StateObject private var alertProvider = AlertProvider()
+    @StateObject private var timePickerProvider = TimePickerProvider()
+    
     init() {
         Pretendard.register()
         DependencyProvider.shared.register()
@@ -15,7 +20,13 @@ struct SeugiApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RootView()
+            SeugiModalProvider(
+                alertProvider: alertProvider,
+                timePickerProvider: timePickerProvider
+            ) {
+                RootView()
+            }
+            .environmentObject(appDelegate)
         }
     }
 }

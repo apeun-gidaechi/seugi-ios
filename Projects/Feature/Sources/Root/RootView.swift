@@ -6,51 +6,31 @@ import Component
 
 public struct RootView: View {
     
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    
     @StateObject private var timerManager = TimerManager()
     @StateObject private var appState = AppObservable()
     @StateObject private var router = RouterObservable()
     @StateObject private var stompManager = StompManager()
-    @StateObject private var fileManager = SeugiFileManager()
-    @StateObject private var alertProvider = AlertProvider()
-    @StateObject private var timePickerProvider = TimePickerProvider()
-    
-    @StateObject private var viewModel = RootViewModel()
-    
-    @State private var opacity = 1.0
+    @StateObject private var fileManager = FileManager()
     
     public init() {}
     
     public var body: some View {
-        SeugiModalProvider(
-            alertProvider: alertProvider,
-            timePickerProvider: timePickerProvider
-        ) { // zstack
-            NavigationStack(path: $router.navPath) {
-                if appState.accessToken.isEmpty {
-                    OnboardingCoordinator()
-                } else {
-                    MainCoordinator()
-                }
+        NavigationStack(path: $router.navPath) {
+            if appState.accessToken.isEmpty {
+                OnboardingCoordinator()
+            } else {
+                MainCoordinator()
             }
-            
-            if opacity > 0 {
-                LaunchScreenView()
-                    .opacity(opacity)
-            }
+        }
+        .launchScreen {
+            LaunchScreenView()
         }
         .environmentObject(timerManager)
         .environmentObject(router)
         .environmentObject(appState)
         .environmentObject(stompManager)
         .environmentObject(fileManager)
-        .environmentObject(appDelegate)
         .onAppear {
-            sleep(2)
-            withAnimation {
-                opacity = 0
-            }
             appState.subscribe { subject in
                 switch subject {
                 case .logout:

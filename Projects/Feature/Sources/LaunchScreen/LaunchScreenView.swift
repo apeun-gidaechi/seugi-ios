@@ -9,11 +9,8 @@
 import SwiftUI
 import Component
 
-public struct LaunchScreenView: View {
-    
-    public init() {}
-    
-    public var body: some View {
+struct LaunchScreenView: View {
+    var body: some View {
         SeugiAppIcon(type: .extraLarge)
             .toCenter()
             .seugiBackground(.sub(.white))

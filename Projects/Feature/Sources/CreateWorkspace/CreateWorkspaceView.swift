@@ -7,7 +7,7 @@ public struct CreateWorkspaceView: View {
     @AppState private var appState
     @Router private var router
     @EnvironmentObject private var alertProvider: AlertProvider
-    @EnvironmentObject private var fileManager: SeugiFileManager
+    @EnvironmentObject private var fileManager: FileManager
     @ObservedObject private var viewModel = CreateWorkspaceViewModel()
     
     @State private var photo: PhotosPickerItem?
