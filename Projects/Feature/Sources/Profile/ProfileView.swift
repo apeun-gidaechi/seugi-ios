@@ -69,10 +69,7 @@ public struct ProfileView: View {
                 .primaryButton("확인") {}
                 .show()
         }
-        .onAppear {
-            viewModel.updateProfile = profile
-        }
-        .onChange(of: profile) {
+        .onChange(of: profile, initial: true) {
             viewModel.updateProfile = $0
         }
         .onChangeSuccess(of: viewModel.updateProfileFlow) { _ in

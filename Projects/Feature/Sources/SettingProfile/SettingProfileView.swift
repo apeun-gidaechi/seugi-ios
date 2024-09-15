@@ -99,10 +99,7 @@ public struct SettingProfileView: View {
                 viewModel.editMemberFlow = .failure(error)
             }
         }
-        .onAppear {
-            viewModel.member = appState.profile.data?.member
-        }
-        .onChange(of: appState.profile) {
+        .onChange(of: appState.profile, initial: true) {
             viewModel.member = $0.data?.member
         }
         .onChange(of: viewModel.editMemberFlow) { _ in

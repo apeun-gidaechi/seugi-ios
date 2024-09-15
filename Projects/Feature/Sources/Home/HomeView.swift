@@ -30,15 +30,6 @@ public struct HomeView: View {
     
     public init() {}
     
-    private let dummySchedule = [
-        "국어",
-        "수학",
-        "음악",
-        "사회",
-        "과학",
-        "일어",
-        "창체"
-    ]
     private func showJoinWorkspaceAlert() {
         alertProvider.present("학교 등록하기")
             .primaryButton("기존 학교 가입") {
@@ -79,12 +70,7 @@ public struct HomeView: View {
         .hideBackButton()
         .animation(.spring(duration: 0.4), value: viewModel.meals)
         .animation(.spring(duration: 0.4), value: viewModel.timetables)
-        .onAppear {
-            if flow == .failure {
-                showJoinWorkspaceAlert()
-            }
-        }
-        .onChange(of: flow) {
+        .onChange(of: flow, initial: true) {
             if $0 == .failure {
                 showJoinWorkspaceAlert()
             }
