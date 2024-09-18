@@ -28,8 +28,6 @@ public struct MainView: View {
         }
         .ignoresSafeArea(.keyboard)
         .onAppear {
-            stompManager.openSocket()
-            appState.fetchWorkspaces()
             appState.subscribe { subject in
                 switch subject {
                 case .logout:
@@ -37,6 +35,9 @@ public struct MainView: View {
                     router.navigateToRoot()
                 }
             }
+        }
+        .onChange(of: appState.selectedWorkspace) { _ in
+            appState.fetchWorkspaces()
         }
     }
 }

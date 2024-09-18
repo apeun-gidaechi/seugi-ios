@@ -27,28 +27,34 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
     // MARK: - State
     // workspace
     @Published public var workspaces: FetchFlow<[Workspace]> = .fetching
-    @Published public var selectedWorkspace: Workspace?
-    public var workspaceRole: WorkspaceRole? {
-        guard let selectedWorkspace,
-              let memberId = profile.data?.member.id else {
-            return nil
+    @Published public var selectedWorkspace: Workspace? {
+        willSet {
+            guard let id = newValue?.workspaceId else { return }
+            keyValueRepo.save(key: .selectedWorkspaceId, value: id)
         }
-        return .getRole(memberId: memberId, workspace: selectedWorkspace)
     }
     @Published public var accessToken: String?
     @Published public var refreshToken: String?
     @Published public var profile: FetchFlow<RetrieveProfile> = .fetching
+    public var workspaceRole: WorkspaceRole? {
+        guard let selectedWorkspace,
+              let member = profile.data?.member else {
+            return nil
+        }
+        return .getRole(memberId: member.id, workspace: selectedWorkspace)
+    }
     
     // MARK: - Method
     public override init() {
         super.init()
         accessToken = keyValueRepo.load(key: .accessToken)
         refreshToken = keychainRepo.load(key: .refreshToken)
+        fetchWorkspaces()
         observeState()
     }
     
     private func observeState() {
-        $accessToken.removeDuplicates().sink {
+        $accessToken.sink {
             if let token = $0 {
                 self.keyValueRepo.save(key: .accessToken, value: token)
             } else {
@@ -56,22 +62,13 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
             }
         }.store(in: &subscriptions)
         
-        $refreshToken.removeDuplicates().sink {
+        $refreshToken.sink {
             if let token = $0 {
                 self.keychainRepo.save(key: .refreshToken, value: token)
             } else {
                 self.keychainRepo.delete(key: .refreshToken)
             }
         }.store(in: &subscriptions)
-        
-        $selectedWorkspace
-            .removeDuplicates()
-            .sink { _ in
-                if let id = self.selectedWorkspace?.workspaceId {
-                    self.keyValueRepo.save(key: .selectedWorkspaceId, value: id)
-                    self.fetchWorkspaces()
-                }
-            }.store(in: &subscriptions)
     }
     
     public func login() {
@@ -98,15 +95,15 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
                 self.selectedWorkspace = selectedWorkspace
             } else if let workspace = workspaces.data.first {
                 // 아니면 첫 번째 workspace
-                selectedWorkspace = workspace
+                self.selectedWorkspace = workspace
             }
             fetchMyInfo()
         }.failure { [self] error in
+            workspaces = .failure(error)
             log("💎 AppState.fetchWorkspaces - \(error)")
             if case .refreshFailure = error {
                 logout()
             }
-            workspaces = .failure(error)
         }.observe(&subscriptions)
     }
     

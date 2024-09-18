@@ -13,6 +13,11 @@ public final class StompManager: BaseViewModel<StompManager.Effect> {
     @Inject private var keyValueRepo: any KeyValueRepo
     @Inject private var keychainRepo: any KeychainRepo
     
+    public override init() {
+        super.init()
+        openSocket()
+    }
+    
     // MARK: - Method
     public func openSocket() {
         log("💎 StompManager.subscribe")
