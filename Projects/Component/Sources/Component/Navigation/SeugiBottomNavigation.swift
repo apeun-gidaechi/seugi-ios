@@ -36,6 +36,7 @@ public struct SeugiBottomNavigation: View {
                     BottomNavigationCell(page: tabs[index], selected: selection == index)
                         .frame(height: 64)
                         .frame(maxWidth: .infinity)
+                        .background(.white)
                         .button {
                             selection = index
                         }
