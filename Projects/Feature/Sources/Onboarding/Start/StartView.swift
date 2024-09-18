@@ -117,6 +117,6 @@ public struct StartView: View {
             Spacer()
         }
         .padding(.horizontal, 20)
-        .presentationDetents([.height(256)])
+        .adjustedHeightSheet()
     }
 }

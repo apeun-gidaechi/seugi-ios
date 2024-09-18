@@ -196,7 +196,7 @@ public struct ChatDetailView: View {
         .seugiBackground(.primary(.p050))
         .onTapGesture {
             Task {
-                try? await Task.sleep(for: .seconds(0.3))
+                try? await Task.sleep(for: .seconds(0.1))
                 withAnimation {
                     scrollToBottom()
                 }
