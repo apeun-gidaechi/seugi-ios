@@ -149,7 +149,8 @@ public struct ChatDetailView: View {
             viewModel.subscribe { subject in
                 switch subject {
                 case .messageLoaded:
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    Task {
+                        try? await Task.sleep(for: .seconds(0.2))
                         scrollToBottom()
                     }
                 case .messagesFetched:

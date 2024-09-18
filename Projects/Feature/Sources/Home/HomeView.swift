@@ -75,7 +75,7 @@ public struct HomeView: View {
                 showJoinWorkspaceAlert()
             }
         }
-        .onChange(of: appState.selectedWorkspace) {
+        .onReceive(appState.$selectedWorkspace) {
             guard let id = $0?.workspaceId else { return }
             viewModel.fetchMeals(workspaceId: id)
             viewModel.fetchTimetable(workspaceId: id)

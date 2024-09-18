@@ -105,7 +105,7 @@ public struct NotificationView: View {
             }
             viewModel.patchEmoji(emoji: emoji, workspaceId: selectedWorkspace.workspaceId, profileId: profile?.member.id ?? 0)
         }
-        .onChange(of: appState.selectedWorkspace) {
+        .onReceive(appState.$selectedWorkspace) {
             guard let id = $0?.workspaceId else { return }
             viewModel.fetchNotifications(workspaceId: id)
         }
