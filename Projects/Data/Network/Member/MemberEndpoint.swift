@@ -4,8 +4,6 @@ import Domain
 enum MemberEndpoint: SeugiEndpoint {
     case edit(_ req: EditMemberReq)
     case login(_ req: LoginMemberReq)
-    case oauth2(code: String, provider: OAuth2Provider)
-    case oauth2Complete(_ req: OAuth2MemberReq)
     case refresh(token: String)
     case register(_ req: RegisterMemberReq)
     case remove
@@ -27,10 +25,6 @@ extension MemberEndpoint {
                 .patch - "edit" - req.toJSONParameters()
         case .login(let req):
                 .post - "login" - req.toJSONParameters()
-        case .oauth2(let code, let provider):
-                .post - "oauth2" - ["code": code, "provider": provider.rawValue].toURLParameters()
-        case .oauth2Complete(let req):
-                .post - "oauth2/complete" - .requestJSONEncodable(req)
         case .refresh(let token):
                 .get - "refresh" - ["token": "Bearer " + token].toURLParameters()
         case .register(let req):
@@ -46,8 +40,6 @@ extension MemberEndpoint {
         switch self {
         case .edit: .authorization
         case .login: .none
-        case .oauth2: .none
-        case .oauth2Complete: .none
         case .refresh: .none
         case .register: .none
         case .remove: .authorization

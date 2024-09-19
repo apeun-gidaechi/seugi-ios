@@ -10,6 +10,7 @@ public final class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.Effect
     
     // MARK: - Repo
     @Inject private var memberRepo: MemberRepo
+    @Inject private var keyValueRepo: KeyValueRepo
     
     // MARK: - State
     @Published var email = ""
@@ -22,10 +23,15 @@ public final class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.Effect
     
     // MARK: - Method
     func signIn() {
+        guard let fcmToken = keyValueRepo.load(key: .fcmToken) as? String else {
+            print("LoginEmailViewModel.signIn - fcmToken is nil")
+            return
+        }
         memberRepo.login(
             .init(
                 email: email,
-                password: password
+                password: password,
+                token: fcmToken
             )
         )
         .fetching {

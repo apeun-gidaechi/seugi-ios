@@ -3,10 +3,13 @@ import AuthenticationServices
 import FirebaseCore
 import FirebaseMessaging
 import DIContainer
+import Domain
 
 public final class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     
-    let gcmMessageIDKey = "gcm.message_id"
+    @Inject private var keyValueRepo: KeyValueRepo
+    
+    private let gcmMessageIDKey = "gcm.message_id"
 
     // 앱이 켜졌을 때
     public func application(
@@ -44,7 +47,10 @@ public final class AppDelegate: NSObject, UIApplicationDelegate, ObservableObjec
     }
     
     // fcm 토큰이 등록 되었을 때
-    public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    public func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
         print("✅ AppDelegate.application - fcm token registed")
         Messaging.messaging().apnsToken = deviceToken
     }
@@ -59,9 +65,12 @@ extension AppDelegate: MessagingDelegate {
         _ messaging: Messaging,
         didReceiveRegistrationToken fcmToken: String?
     ) {
-        
-        let dataDict: [String: String] = ["token": fcmToken ?? ""]
+        guard let fcmToken else {
+            print("❌ AppDelegate.messaging - FCM is nil")
+            return
+        }
         print("✅ AppDelegate.messaging - token \(fcmToken)")
+        keyValueRepo.save(key: .fcmToken, value: fcmToken)
         Task {
             do {
 //                _ = try await NotificationApi.shared.postFcmToken(req: .init(fcmToken: fcmToken ?? ""))
