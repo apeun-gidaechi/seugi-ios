@@ -16,4 +16,7 @@ public extension TargetDependency.SPM {
     static let Then = TargetDependency.external(name: "Then")
     static let RealmSwift = TargetDependency.external(name: "RealmSwift")
     static let MCEmojiPicker = TargetDependency.external(name: "MCEmojiPicker")
+    static let FirebaseAnalytics = TargetDependency.external(name: "FirebaseAnalytics")
+    static let FirebaseCrashlytics = TargetDependency.external(name: "FirebaseCrashlytics")
+    static let FirebaseMessaging = TargetDependency.external(name: "FirebaseMessaging")
 }

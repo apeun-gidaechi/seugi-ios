@@ -8,6 +8,7 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 import EnvironmentPlugin
+import DependencyPlugin
 
 let project = Project.make(
     name: "Seugi",

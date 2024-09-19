@@ -21,7 +21,10 @@ let project = Project.make(
             dependencies: [
                 .domain,
                 .component,
-                .SPM.GoogleSignIn
+                .SPM.GoogleSignIn,
+                .SPM.FirebaseMessaging,
+                .SPM.FirebaseAnalytics,
+                .SPM.FirebaseCrashlytics
             ]
         )
     ]
