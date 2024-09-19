@@ -6,4 +6,5 @@ public protocol MemberRepo {
     func register(_ req: RegisterMemberReq) -> ObservableResult<Base<Token>>
     func remove() -> ObservableResult<BaseVoid>
     func myInfo() -> ObservableResult<Base<RetrieveMember>>
+    func logout(_ req: LogoutReq) -> ObservableResult<BaseVoid>
 }

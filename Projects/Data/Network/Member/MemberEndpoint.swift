@@ -8,6 +8,7 @@ enum MemberEndpoint: SeugiEndpoint {
     case register(_ req: RegisterMemberReq)
     case remove
     case myInfo
+    case logout(_ req: LogoutReq)
 }
 
 extension MemberEndpoint {
@@ -33,6 +34,8 @@ extension MemberEndpoint {
                 .delete - "remove" - .requestPlain
         case .myInfo:
                 .patch - "myInfo" - .requestPlain
+        case .logout(let req):
+                .post - "logout" - req.toJSONParameters()
         }
     }
     
@@ -44,6 +47,7 @@ extension MemberEndpoint {
         case .register: .none
         case .remove: .authorization
         case .myInfo: .authorization
+        case .logout: .authorization
         }
     }
 }

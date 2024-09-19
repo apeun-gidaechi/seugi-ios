@@ -23,6 +23,7 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
     @Inject private var keychainRepo: KeychainRepo
     @Inject private var workspaceRepo: WorkspaceRepo
     @Inject private var profileRepo: ProfileRepo
+    @Inject private var memberRepo: MemberRepo
     
     // MARK: - State
     // workspace
@@ -80,6 +81,11 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
         refreshToken = nil
         selectedWorkspace = nil
         profile = .fetching
+        if let fcmToken = keyValueRepo.load(key: .fcmToken) as? String {
+            memberRepo.logout(
+                .init(fcmToken: fcmToken)
+            ).observe(&subscriptions)
+        }
         emit(.logout)
     }
     

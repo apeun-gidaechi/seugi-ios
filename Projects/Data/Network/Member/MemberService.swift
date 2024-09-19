@@ -26,4 +26,8 @@ final class MemberService: Service<MemberEndpoint>, MemberRepo {
     func myInfo() -> ObservableResult<Base<RetrieveMember>> {
         performRequest(.myInfo, res: RetrieveMember.self)
     }
+    
+    func logout(_ req: LogoutReq) -> ObservableResult<BaseVoid> {
+        performRequest(.logout(req))
+    }
 }
