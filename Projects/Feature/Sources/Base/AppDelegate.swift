@@ -5,16 +5,22 @@ import FirebaseMessaging
 import DIContainer
 import Domain
 
-public final class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
+public final class AppDelegate: NSObject, UIApplicationDelegate {
     
     @Inject private var keyValueRepo: KeyValueRepo
     
     private let gcmMessageIDKey = "gcm.message_id"
 
+    public func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        
+        // 세로방향 고정
+        return UIInterfaceOrientationMask.portrait
+    }
+    
     // 앱이 켜졌을 때
     public func application(
         _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
         // remove Constraint warning
         UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
@@ -22,42 +28,33 @@ public final class AppDelegate: NSObject, UIApplicationDelegate, ObservableObjec
         // 파이어베이스 설정
         FirebaseApp.configure()
         
-        // Setting Up Notifications...
-        // 원격 알림 등록
-        let authOption: UNAuthorizationOptions = [.alert, .badge, .sound]
-        if #available(iOS 10.0, *) {
-            // For iOS 10 display notification (sent via APNS)
-            UNUserNotificationCenter.current().delegate = self
-            UNUserNotificationCenter.current().requestAuthorization(
-                options: authOption,
-                completionHandler: { _, _ in }
-            )
-        } else {
-            let settings: UIUserNotificationSettings =
-            UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            application.registerUserNotificationSettings(settings)
-        }
+        Messaging.messaging().delegate = self
+        Messaging.messaging().isAutoInitEnabled = true
         
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in }
         application.registerForRemoteNotifications()
         
-        // Setting Up Cloud Messaging...
-        Messaging.messaging().delegate = self
+        UIApplication.shared.registerForRemoteNotifications()
+        
         return true
     }
     
-    // fcm 토큰이 등록 되었을 때
+    // 백그라운드에서 푸시 알림을 탭했을 때 실행
     public func application(
         _ application: UIApplication,
         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
     ) {
-        print("✅ AppDelegate.application - fcm token registed")
+        print("✅ AppDelegate.didRegisterForRemoteNotificationsWithDeviceToken - fcm token registed")
         Messaging.messaging().apnsToken = deviceToken
+    }
+    
+    public func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("✅ AppDelegate.didFailToRegisterForRemoteNotificationsWithError : \(error)")
     }
 }
 
 extension AppDelegate: MessagingDelegate {
-    
-//    @Inject private var
     
     public func messaging(
         _ messaging: Messaging,
@@ -67,6 +64,7 @@ extension AppDelegate: MessagingDelegate {
             print("❌ AppDelegate.messaging - FCM is nil")
             return
         }
+        let dataDict: [String: String] = ["token": fcmToken]
         print("✅ AppDelegate.messaging - token \(fcmToken)")
         keyValueRepo.save(key: .fcmToken, value: fcmToken)
         Task {
@@ -77,35 +75,31 @@ extension AppDelegate: MessagingDelegate {
                 print(error)
             }
         }
+        NotificationCenter.default.post(
+          name: Notification.Name("FCMToken"),
+          object: nil,
+          userInfo: dataDict
+        )
     }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
-    // 푸시 메세지가 앱이 켜져있을 때 나올때
-    public func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
-        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
-    ) {
-        
+    public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         let userInfo = notification.request.content.userInfo
-        
-        // Do Something With MSG Data...
         if let messageID = userInfo[gcmMessageIDKey] {
-            print("✅ AppDelegate.userNotificationCenter - MessageID \(messageID)")
+            print("MessageId: \(messageID)")
         }
-        print("✅ AppDelegate.userInfo - MessageID \(userInfo)")
-        completionHandler([[.banner, .badge, .sound]])
+        Messaging.messaging().appDidReceiveMessage(userInfo)
+        return if #available(iOS 14.0, *) {
+            [[.list, .banner, .sound]]
+        } else {
+            [[.alert, .sound]]
+        }
     }
-    
+
     // 푸시메세지를 받았을 때
-    public func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        didReceive response: UNNotificationResponse,
-        withCompletionHandler completionHandler: @escaping () -> Void
-    ) {
+    public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         print("✅ AppDelegate.userNotificationCenter - \(response)")
-        completionHandler()
     }
 }

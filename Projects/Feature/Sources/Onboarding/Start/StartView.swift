@@ -7,7 +7,6 @@ public struct StartView: View {
     @Router private var router
     @AppState private var appState
     @EnvironmentObject private var alertProvider: AlertProvider
-    @EnvironmentObject private var appDelegate: AppDelegate
     
     @StateObject private var viewModel = StartViewModel()
     @StateObject private var appleLoginViewModel = AppleLoginViewModel()
