@@ -18,7 +18,6 @@ public final class AppDelegate: NSObject, UIApplicationDelegate, ObservableObjec
     ) -> Bool {
         // remove Constraint warning
         UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-        return true // TODO: Remove return true
         
         // 파이어베이스 설정
         FirebaseApp.configure()
@@ -55,7 +54,6 @@ public final class AppDelegate: NSObject, UIApplicationDelegate, ObservableObjec
         Messaging.messaging().apnsToken = deviceToken
     }
 }
-
 
 extension AppDelegate: MessagingDelegate {
     
