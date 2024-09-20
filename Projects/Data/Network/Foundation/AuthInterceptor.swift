@@ -33,8 +33,8 @@ final class AuthInterceptor: Moya.RequestInterceptor {
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         
         log("✅ AuthInterceptor - Start refresh")
-        guard request.retryCount <= 3 else {
-            log("❌ AuthInterceptor - RetryCount가 3보다 큽니다")
+        guard request.retryCount <= 2 else {
+            log("❌ AuthInterceptor - RetryCount가 2보다 큽니다")
             return
         }
         
