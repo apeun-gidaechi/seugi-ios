@@ -54,7 +54,7 @@ public final class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.
             self.emit(.registerSuccess(token.data))
             self.signUpFlow = .success()
         }.failure { error in
-            log(error)
+            Log.error(error)
             self.signUpFlow = .failure(error)
         }.observe(&subscriptions)
     }

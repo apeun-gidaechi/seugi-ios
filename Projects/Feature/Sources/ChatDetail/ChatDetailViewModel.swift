@@ -57,7 +57,7 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect
             self.messages = .success(messages)
             self.emit(.messagesFetched)
         }.failure { error in
-            log("❌", error)
+            Log.error("❌", error)
         }.observe(&subscriptions)
     }
     

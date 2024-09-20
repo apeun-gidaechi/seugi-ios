@@ -106,7 +106,7 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
             fetchMyInfo()
         }.failure { [self] error in
             workspaces = .failure(error)
-            log("💎 AppState.fetchWorkspaces - \(error)")
+            Log.error("AppState.fetchWorkspaces - \(error)")
             if case .refreshFailure = error {
                 logout()
             }

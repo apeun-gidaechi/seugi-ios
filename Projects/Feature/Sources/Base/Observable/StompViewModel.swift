@@ -20,46 +20,46 @@ public final class StompManager: BaseViewModel<StompManager.Effect> {
     
     // MARK: - Method
     public func openSocket() {
-        log("💎 StompManager.subscribe")
+        Log.info("💎 StompManager.subscribe")
         stompRepo.openSocket()
         stompRepo.subConnect()
             .sink { _ in
-                log("🤩 STOMP connected")
+                Log.info("🤩 STOMP connected")
                 self.stompRepo.subPing()
                     .sink { _ in
-                        log("🤩 STOMP ping")
+                        Log.info("🤩 STOMP ping")
                     }
                     .store(in: &self.subscriptions)
             }
             .store(in: &subscriptions)
         stompRepo.subDisconnect()
             .sink { [self] _ in
-                log("🤩 STOMP disConnected")
+                Log.info("🤩 STOMP disConnected")
                 guard let refreshToken = keychainRepo.load(key: .refreshToken) else {
-                    log("🤩 STOMP disConnected - RefreshToken not founded")
+                    Log.error("🤩 STOMP disConnected - RefreshToken not founded")
                     return
                 }
                 memberRepo.refresh(token: refreshToken).fetching {
-                    log("🤩 STOMP disConnected - try to reissue !")
+                    Log.info("🤩 STOMP disConnected - try to reissue !")
                 }.success { res in
                     let accessToken = String(res.data.split(separator: " ")[1])
                     self.stompRepo.reissue(accessToken: accessToken)
                     self.stompRepo.reconnect(time: 1)
-                    log("🤩 STOMP disConnected - reconnecting...")
+                    Log.info("🤩 STOMP disConnected - reconnecting...")
                 }.failure { _ in
-                    log("🤩 STOMP disConnected - reissue failure... OTL")
+                    Log.error("🤩 STOMP disConnected - reissue failure... OTL")
                 }.observe(&subscriptions)
             }
             .store(in: &subscriptions)
         stompRepo.subSendError()
             .sink { error in
-                log("🤩 STOMP error")
+                Log.error("🤩 STOMP error")
                 dump(error)
             }
             .store(in: &subscriptions)
         stompRepo.subSendReciept()
             .sink { recieptId in
-                log("🤩 STOMP recieptId \(recieptId)")
+                Log.info("🤩 STOMP recieptId \(recieptId)")
             }
             .store(in: &subscriptions)
     }

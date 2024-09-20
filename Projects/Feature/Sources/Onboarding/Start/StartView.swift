@@ -69,7 +69,7 @@ public struct StartView: View {
                 .show()
         }
         .onChange(of: viewModel.signInFlow) { token in
-            log("✅ StartView - 로그인 성공")
+            Log.info("StartView - 로그인 성공")
             let accessToken = String(token.accessToken.split(separator: " ")[1])
             let refreshToken = String(token.refreshToken.split(separator: " ")[1])
             withAnimation {

@@ -41,7 +41,7 @@ public final class JoinWorkspaceViewModel: BaseViewModel<JoinWorkspaceViewModel.
     
     public func joinWorkspace() {
         guard case .success(let w) = workspace else {
-            log("💎 JoinWorkspaceViewModel.joinWorkspace - workspace not founded")
+            Log.info("💎 JoinWorkspaceViewModel.joinWorkspace - workspace not founded")
             return
         }
         workspaceRepo.joinWorkspace(workspaceId: w.workspaceId, workspaceCode: code, role: roleType).fetching {

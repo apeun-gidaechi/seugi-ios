@@ -28,7 +28,7 @@ class Service<Target: BaseEndpoint> {
                 do {
                     value = try decoder.decode(T.self, from: result.data)
                 } catch {
-                   log("❌ Decoding Error - cause: \(error)")
+                    Log.error("❌ Service - Decoding Error cause: \(error)")
                    throw APIError.unknown
                 }
                 return value
@@ -36,7 +36,7 @@ class Service<Target: BaseEndpoint> {
             .mapError { error in // map error
                 guard let error = error as? MoyaError,
                       let response = error.response else {
-                    log("❌ Unknown Error")
+                    Log.error("❌ Service - Unknown Error")
                     return APIError.unknown
                 }
                 if case .underlying(let error, _) = error,
@@ -69,8 +69,8 @@ class Service<Target: BaseEndpoint> {
     }
     
     private func requestLog(target: Target.Target) {
-        log("🛰 NETWORK Reqeust LOG")
-        log(
+        Log.network("🛰 NETWORK Reqeust LOG")
+        Log.network(
             "Method: \(target.method.rawValue)\n"
             + "URL: \(target.host)/\(target.path)\n"
             + "Header: \(target.headers ?? [:])\n"
@@ -80,20 +80,20 @@ class Service<Target: BaseEndpoint> {
         encoder.outputFormatting = .prettyPrinted
         if case .requestJSONEncodable(let req) = target.task,
            let json = try? encoder.encode(req) {
-            log("Body: \(String(data: json, encoding: .utf8) ?? "-")")
+            Log.network("Body: \(String(data: json, encoding: .utf8) ?? "-")")
         } else if case .requestParameters(let parameters, _) = target.task,
                   let json = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) {
-            log("Param: \(String(data: json, encoding: .utf8) ?? "-")")
+            Log.network("Param: \(String(data: json, encoding: .utf8) ?? "-")")
         } else if case .uploadMultipart(let multiParts) = target.task {
             Array(multiParts.enumerated()).forEach { idx, data in
-                log("MultiPart \(idx): name - \(data.name), fileName - \(data.fileName ?? ""), mimeType - \(data.mimeType ?? "")")
+                Log.network("MultiPart \(idx): name - \(data.name), fileName - \(data.fileName ?? ""), mimeType - \(data.mimeType ?? "")")
             }
         }
     }
     
     private func responeLog(target: Target.Target, response: Moya.Response) {
-        log("🛰 NETWORK Response LOG")
-        log(
+        Log.network("🛰 NETWORK Response LOG")
+        Log.network(
             "URL: \(target.host)/\(target.path)" + "\n"
             + "StatusCode: " + "\(response.response?.statusCode ?? 0)" + "\n"
             + "Data: \(response.data.toPrettyPrintedString ?? "")"
