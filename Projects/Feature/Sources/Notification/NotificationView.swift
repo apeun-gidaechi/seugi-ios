@@ -74,6 +74,7 @@ public struct NotificationView: View {
             } failure: { _ in
                 SeugiError("불러오기 실패", image: .faceWithDiagonalMouth)
             }
+            .padding(.horizontal, 20)
         }
         .refreshable {
             guard let selectedWorkspace = appState.selectedWorkspace else {
@@ -81,7 +82,6 @@ public struct NotificationView: View {
             }
             viewModel.fetchNotifications(workspaceId: selectedWorkspace.workspaceId)
         }
-        .padding(.horizontal, 20)
         .seugiBackground(.primary(.p050))
         .seugiTopBar("공지", background: .seugi(.primary(.p050)))
         .hideBackButton()
