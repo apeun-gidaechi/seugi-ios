@@ -11,9 +11,7 @@ public extension Project {
             developmentRegion: "ko"
         ),
         packages: [Package] = [],
-        settings: Settings? = makeSettings(
-            xcconfig: .defaultXCConfig
-        ),
+        settings: Settings? = makeSettings(),
         targets: [Target] = [],
         schemes: [Scheme] = [],
         fileHeaderTemplate: FileHeaderTemplate? = nil,

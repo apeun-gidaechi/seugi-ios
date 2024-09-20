@@ -5,7 +5,7 @@
 .LSOverride
 
 GoogleService-Info.plist
-*.xcconfig
+Secret.xcconfig
 
 # Thumbnails
 ._*

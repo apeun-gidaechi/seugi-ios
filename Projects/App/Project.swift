@@ -26,7 +26,7 @@ let project = Project.make(
             scripts: [.swiftLint],
             dependencies: Modules.Data.allCases.map { TargetDependency.data(of: $0) }
             + [.diContainer, .feature],
-            settings: makeSettings(xcconfig: .defaultXCConfig)
+            settings: makeSettings()
         )
     ]
 )

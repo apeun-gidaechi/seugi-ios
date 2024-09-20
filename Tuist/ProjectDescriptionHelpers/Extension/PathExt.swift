@@ -25,7 +25,10 @@ public extension Path {
     static func relativeToXCConfig(_ path: String) -> Self {
         .relativeToRoot("XCConfig/\(path)")
     }
-    static var defaultXCConfig: Self {
-        .relativeToXCConfig("Config.xcconfig")
+    static var releaseConfig: Path {
+        .relativeToXCConfig("Release.xcconfig")
+    }
+    static var debugConfig: Path {
+        .relativeToXCConfig("Debug.xcconfig")
     }
 }

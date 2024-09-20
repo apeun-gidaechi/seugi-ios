@@ -25,7 +25,7 @@ public extension Target {
         entitlements: Entitlements? = nil,
         scripts: [TargetScript] = [.swiftLint],
         dependencies: [TargetDependency] = [],
-        settings: Settings? = makeSettings(xcconfig: .defaultXCConfig),
+        settings: Settings? = makeSettings(),
         coreDataModels: [CoreDataModel] = [],
         environmentVariables: [String : EnvironmentVariable] = [:],
         launchArguments: [LaunchArgument] = [],
