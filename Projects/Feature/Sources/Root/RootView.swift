@@ -28,7 +28,6 @@ public struct RootView: View {
         .environmentObject(appState)
         .environmentObject(stompManager)
         .environmentObject(fileManager)
-//        .environmentObject(appDelegate)
         // 디버그일 경우 3번 탭할 시 세션 초기화
         #if DEBUG
         .onTapGesture(count: 3) {

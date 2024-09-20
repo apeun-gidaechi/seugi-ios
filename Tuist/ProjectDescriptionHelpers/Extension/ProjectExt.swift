@@ -27,10 +27,27 @@ public extension Project {
             packages: packages,
             settings: settings,
             targets: targets,
-            schemes: schemes,
+            schemes: schemes + [
+                .makeScheme(target: .debug, name: name),
+                .makeScheme(target: .release, name: name)
+            ],
             fileHeaderTemplate: fileHeaderTemplate,
             additionalFiles: additionalFiles,
             resourceSynthesizers: resourceSynthesizers
+        )
+    }
+}
+
+extension Scheme {
+    static func makeScheme(target: ConfigurationName, name: String) -> Scheme {
+        return Scheme.scheme(
+            name: name,
+            shared: true,
+            buildAction: .buildAction(targets: ["\(name)"]),
+            runAction: .runAction(configuration: target),
+            archiveAction: .archiveAction(configuration: target),
+            profileAction: .profileAction(configuration: target),
+            analyzeAction: .analyzeAction(configuration: target)
         )
     }
 }

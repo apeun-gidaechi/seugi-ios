@@ -22,9 +22,7 @@ let project = Project.make(
                 .domain,
                 .component,
                 .SPM.GoogleSignIn,
-                .SPM.FirebaseMessaging,
-                .SPM.FirebaseAnalytics,
-                .SPM.FirebaseCrashlytics
+                .SPM.FirebaseMessaging
             ]
         )
     ]

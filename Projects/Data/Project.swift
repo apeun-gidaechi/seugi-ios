@@ -8,7 +8,8 @@ let project = Project.make(
     targets: [
         data(target: .Core),
         data(target: .Local, dependencies: [
-//            .SPM.RealmSwift,
+            .SPM.RealmSwift,
+            .SPM.Realm,
             .SPM.Then
         ]),
         data(target: .Network, dependencies: [
