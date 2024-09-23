@@ -17,6 +17,16 @@ public enum ArrayUtil {
     }
 }
 
+public extension Array {
+    func getOrNil(idx: Int) -> Element? {
+        let strLength = self.count
+        guard strLength > idx else {
+            return nil
+        }
+        return self[idx]
+    }
+}
+
 public extension Array where Element: Equatable {
     // 항목이 있으면 제거하고, 없으면 추가
     mutating func toggle(element: Element) {

@@ -48,6 +48,8 @@ public enum SeugiIconography: String {
     case expandStopRightLine = "expand_stop_right_line"
     case expandStopUpLine = "expand_stop_up_line"
     
+    case fileLine = "file_line"
+    
     case hamburgerHorizontalLine = "hamburger_horizontal_line"
     
     case showFill = "show_fill"

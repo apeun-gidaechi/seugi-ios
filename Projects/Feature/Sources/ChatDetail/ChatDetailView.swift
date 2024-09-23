@@ -68,6 +68,7 @@ public struct ChatDetailView: View {
                         Color.clear
                             .id(Id.bottom)
                     }
+                    .padding(.horizontal, 8)
                     .onAppear {
                         // 시작시 아래로 스크롤
                         self.scrollViewProxy = scrollViewProxy

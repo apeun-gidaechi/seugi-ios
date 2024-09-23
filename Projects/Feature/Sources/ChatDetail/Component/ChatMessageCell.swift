@@ -56,9 +56,14 @@ struct ChatMessageCell: View {
                 config: config
             )
         case .image:
-            EmptyView()
+            ChatItemImageView(config: config)
         case .file:
-            EmptyView()
+            ChatItemFileView(
+                type: type,
+                config: config
+            ) {
+                //
+            }
         case .detail:
             if let text = message.getDetailText(room: room) {
                 ChatItemDetailView(text: text)

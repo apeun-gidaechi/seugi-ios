@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftUIUtil
 
 public struct ChatItemDetailView: View {
     
@@ -17,16 +18,13 @@ public struct ChatItemDetailView: View {
     }
     
     public var body: some View {
-        HStack {
-            Spacer()
-            Text(text)
-                .font(.caption(.c2))
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(Color.seugi(.gray(.g100)))
-                .cornerRadius(24, corners: .allCorners)
-                .padding(.vertical, 12)
-            Spacer()
-        }
+        Text(text)
+            .font(.caption(.c2))
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+            .background(Color.seugi(.gray(.g100)))
+            .cornerRadius(24, corners: .allCorners)
+            .padding(.vertical, 12)
+            .toHorizontal()
     }
 }

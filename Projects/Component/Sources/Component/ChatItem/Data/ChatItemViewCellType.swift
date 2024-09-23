@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 public enum ChatItemViewCellType: Equatable {
     case other
     case ai

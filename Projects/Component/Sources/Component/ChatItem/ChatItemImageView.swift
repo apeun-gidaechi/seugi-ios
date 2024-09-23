@@ -13,12 +13,14 @@ import NukeUI
 
 public struct ChatItemImageView: View {
     
-    private let imageUrl: String
     private let config: ChatItemConfig
     
-    public init(imageUrl: String, config: ChatItemConfig) {
-        self.imageUrl = imageUrl
+    public init(config: ChatItemConfig) {
         self.config = config
+    }
+    
+    private var imageUrl: String {
+        config.message.message.split(separator: MessageConstant.fileSeparator).first.map(String.init) ?? ""
     }
     
     public var body: some View {
@@ -27,7 +29,10 @@ public struct ChatItemImageView: View {
                 ProgressView()
             } else if let image = state.image {
                 image
+                    .resizable()
             }
         }
+        .frame(minWidth: 128, maxWidth: 320)
+        .padding(.top, 8)
     }
 }

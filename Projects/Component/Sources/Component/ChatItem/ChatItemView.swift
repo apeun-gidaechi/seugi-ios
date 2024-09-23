@@ -37,7 +37,6 @@ public struct ChatItemView: View {
                     .padding(.leading, !config.isFirst && type.alignent == .leading ? 40 : 0)
             }
         }
-        .padding(.horizontal, 8)
         .padding(.top, 8)
         .frame(maxWidth: .infinity, alignment: .init(horizontal: type.alignent.rawValue, vertical: .center))
     }
