@@ -8,9 +8,7 @@ public final class StompManager: BaseViewModel<StompManager.Effect> {
     
     // MARK: - Properties
     @Inject private var stompRepo: any StompRepo
-    @Inject private var stompMessageRep: StompMessageRepo
     @Inject private var memberRepo: any MemberRepo
-    @Inject private var keyValueRepo: any KeyValueRepo
     @Inject private var keychainRepo: any KeychainRepo
     
     public override init() {
@@ -62,9 +60,5 @@ public final class StompManager: BaseViewModel<StompManager.Effect> {
                 Log.info("🤩 STOMP recieptId \(recieptId)")
             }
             .store(in: &subscriptions)
-    }
-    
-    func closeSocket() {
-        stompRepo.closeSocket()
     }
 }

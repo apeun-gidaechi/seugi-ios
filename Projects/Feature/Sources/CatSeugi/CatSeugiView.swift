@@ -2,7 +2,6 @@ import SwiftUI
 import PhotosUI
 import Component
 import Domain
-import DIContainer
 
 public struct CatSeugiView: View {
     

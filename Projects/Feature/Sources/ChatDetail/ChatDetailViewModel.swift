@@ -14,9 +14,7 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect
     // MARK: - Repo
     @Inject private var messageRepo: MessageRepo
     @Inject private var chatRepo: ChatRepo
-    @Inject private var stompRepo: StompRepo
     @Inject private var stompMessageRepo: StompMessageRepo
-    @Inject private var fileRepo: FileRepo
     
     // MARK: - State
     @Published private var page = 0
@@ -26,7 +24,6 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect
     
     /* photo */
     @Published var photo: PhotosPickerItem?
-    @Published var uploadFlow: IdleFlow<Bool> = .fetching
     
     /* left room */
     @Published var leftRoomFlow: IdleFlow<Bool> = .idle

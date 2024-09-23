@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Component
-import DIContainer
 import Domain
 
 struct SettingAlarmView: View {

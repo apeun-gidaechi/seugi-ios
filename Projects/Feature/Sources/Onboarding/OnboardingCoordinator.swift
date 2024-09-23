@@ -1,6 +1,5 @@
 import SwiftUI
 import SwiftUIUtil
-import DIContainer
 
 public struct OnboardingCoordinator: View {
     @StateObject private var registerEmailViewModel = RegisterEmailViewModel()

@@ -46,7 +46,7 @@ public struct NotificationView: View {
             viewModel.selectedNotificationForAddEmoji = notification
         case .emojiClicked(let emoji):
             viewModel.selectedNotificationForAddEmoji = notification
-            viewModel.patchEmoji(emoji: emoji, workspaceId: selectedWorkspace.workspaceId, profileId: profile?.member.id ?? 0)
+            viewModel.patchEmoji(emoji: emoji, profileId: profile?.member.id ?? 0)
         }
     }
     
@@ -103,7 +103,7 @@ public struct NotificationView: View {
             guard let selectedWorkspace = appState.selectedWorkspace else {
                 return
             }
-            viewModel.patchEmoji(emoji: emoji, workspaceId: selectedWorkspace.workspaceId, profileId: profile?.member.id ?? 0)
+            viewModel.patchEmoji(emoji: emoji, profileId: profile?.member.id ?? 0)
         }
         .onReceive(appState.$selectedWorkspace) {
             guard let id = $0?.workspaceId else { return }

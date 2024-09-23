@@ -1,8 +1,5 @@
 import DIContainer
 
-// Feature
-import Feature
-
 // Domain
 import Domain
 

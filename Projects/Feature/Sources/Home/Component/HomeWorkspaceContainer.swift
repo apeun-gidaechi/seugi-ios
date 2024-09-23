@@ -18,12 +18,7 @@ struct HomeWorkspaceContainer: View {
                     .font(.subtitle(.s2))
                     .seugiColor(.sub(.black))
                 Spacer()
-                
-                Image(icon: .expandRightLine)
-                    .resizable()
-                    .renderingMode(.template)
-                    .seugiColor(.gray(.g500))
-                    .frame(width: 24, height: 24)
+                HomeArrowIcon()
             }
             switch flow {
             case .fetching:

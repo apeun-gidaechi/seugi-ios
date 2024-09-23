@@ -2,7 +2,6 @@ import Foundation
 import Domain
 import DIContainer
 import SwiftUI
-import Component
 
 @propertyWrapper
 struct AppState: DynamicProperty {

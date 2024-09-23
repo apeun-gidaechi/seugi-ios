@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import DIContainer
 
 struct MainCoordinator: View {
     

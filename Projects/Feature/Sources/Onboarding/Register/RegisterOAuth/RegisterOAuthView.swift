@@ -15,7 +15,7 @@ public struct RegisterOAuthView: View {
         VStack(spacing: 16) {
             SeugiTextFieldForm("이름을 입력해 주세요", text: $viewModel.name, label: "이름")
                 .padding(.top, 16)
-            
+                .focused($firstTextField)
             Spacer()
             Button {
                 router.navigateToRoot()

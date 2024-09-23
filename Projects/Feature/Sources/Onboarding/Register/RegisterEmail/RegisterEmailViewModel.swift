@@ -1,4 +1,3 @@
-import Component
 import Foundation
 import DIContainer
 import Domain

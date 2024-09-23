@@ -17,11 +17,9 @@ final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Eff
     
     // MARK: - State
     @Published var selection = segmentedButtonRoles[0]
-    @Published var memberSearchText = ""
     @Published var members: FetchFlow<WorkspaceMembersChart> = .fetching
     @Published var searchText = ""
     @Published var isSearching = false
-    @Published var selectedMenu: String?
     
     // MARK: - Getter
     var selectedMembers: FetchFlow<[RetrieveProfile]> {

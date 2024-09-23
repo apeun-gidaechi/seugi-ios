@@ -33,9 +33,11 @@ public struct SeugiCodeTextFieldForm: View {
                 Text(label)
                     .font(.subtitle(.s2))
                     .seugiColor(.sub(.black))
-                Text("*")
-                    .font(.subtitle(.s2))
-                    .seugiColor(.red(.r500))
+                if isForcedLabel {
+                    Text("*")
+                        .font(.subtitle(.s2))
+                        .seugiColor(.red(.r500))
+                }
             }
             .padding(.leading, 4)
             SeugiCodeTextField(text: $text, length: length)

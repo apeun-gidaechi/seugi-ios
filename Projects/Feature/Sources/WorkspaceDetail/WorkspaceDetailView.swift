@@ -13,10 +13,6 @@ public struct WorkspaceDetailView: View {
         appState.selectedWorkspace
     }
     
-    private var profile: RetrieveProfile? {
-        appState.profile.data
-    }
-    
     public var body: some View {
         ScrollView {
             VStack(spacing: 24) {

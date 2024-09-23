@@ -27,7 +27,8 @@ public struct ObservableResult<T> {
     
     public func observe(_ subscriptions: inout Set<AnyCancellable>) {
         fetching?()
-        result.sink { completion in
+        result
+            .sink { completion in
             switch completion {
             case .failure(let error): failure?(error)
             case .finished:

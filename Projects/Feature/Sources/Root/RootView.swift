@@ -1,8 +1,6 @@
 import SwiftUI
-import DIContainer
 import SwiftUIUtil
 import Domain
-import Component
 
 public struct RootView: View {
     

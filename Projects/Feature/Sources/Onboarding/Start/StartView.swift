@@ -1,6 +1,5 @@
 import SwiftUI
 import Component
-import DIContainer
 
 public struct StartView: View {
     

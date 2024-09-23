@@ -2,7 +2,6 @@ import SwiftUI
 import PhotosUI
 import Component
 import Domain
-import DIContainer
 
 let pagingInterval = 50
 

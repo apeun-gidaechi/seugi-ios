@@ -14,7 +14,6 @@ final class NotificationViewModel: BaseViewModel<NotificationViewModel.Effect> {
     @Published var notifications: FetchFlow<[Domain.Notification]> = .fetching
     @Published var removeNotificationFlow: IdleFlow<Bool> = .idle
     @Published var selectedNotificationForAddEmoji: Domain.Notification?
-    @Published var addEmojiFlow: IdleFlow<Bool> = .idle
     
     public func fetchNotifications(workspaceId: String) {
         notificationRepo.getNotifications(workspaceId: workspaceId).fetching {
@@ -40,7 +39,6 @@ final class NotificationViewModel: BaseViewModel<NotificationViewModel.Effect> {
     
     func patchEmoji(
         emoji: String,
-        workspaceId: String,
         profileId: Int
     ) {
         guard let oldNotification = selectedNotificationForAddEmoji else { return }
@@ -70,12 +68,7 @@ final class NotificationViewModel: BaseViewModel<NotificationViewModel.Effect> {
         // Request
         notificationRepo.emojiNotification(
             .init(emoji: emoji, notificationId: oldNotification.id)
-        ).fetching {
-            self.addEmojiFlow = .fetching
-        }.success { _ in
-            self.addEmojiFlow = .success()
-        }.failure { err in
-            self.addEmojiFlow = .failure(err)
+        ).failure { err in
             // Handle result
             // 실패 시 원래 Notification
             resultNotifications.replace(element: oldNotification) { notification in

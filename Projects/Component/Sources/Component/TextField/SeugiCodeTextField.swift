@@ -32,7 +32,7 @@ public struct SeugiCodeTextField: View {
         ZStack {
             TextField("", text: $text)
                 .labelsHidden()
-                .textFieldStyle(SeugiCodeTextFieldStyle(isFocused: isFocused))
+                .textFieldStyle(SeugiCodeTextFieldStyle())
                 .focused($isFocused)
                 .autocorrectionDisabled()
             HStack {
@@ -53,7 +53,6 @@ public struct SeugiCodeTextField: View {
 struct SeugiCodeTextFieldStyle: TextFieldStyle {
     
     @Environment(\.isEnabled) var isEnabled
-    var isFocused: Bool
     
     func _body(configuration: TextField<Self._Label>) -> some View {
         

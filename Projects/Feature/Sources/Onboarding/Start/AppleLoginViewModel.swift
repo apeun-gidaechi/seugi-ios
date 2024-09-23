@@ -12,8 +12,6 @@ import Then
 
 final class AppleLoginViewModel: NSObject, ObservableObject {
     
-    @Published var error: Error?
-    
     private var successCompletion: ((_ idToken: String, _ nickname: String) -> Void)?
     private var failureCompletion: (() -> Void)?
     
@@ -59,7 +57,6 @@ extension AppleLoginViewModel: ASAuthorizationControllerDelegate {
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: any Error) {
-        self.error = error
         print("AppleSignInObservable - failure \(error)")
         failureCompletion?()
     }

@@ -1,6 +1,5 @@
 import SwiftUI
 import Component
-import DIContainer
 import Domain
 import Combine
 
@@ -8,7 +7,6 @@ public struct MainView: View {
     
     @Router private var router
     @AppState private var appState
-    @EnvironmentObject private var stompManager: StompManager
     @State private var selection = 0
     
     public init() {}

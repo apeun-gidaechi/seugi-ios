@@ -7,7 +7,6 @@ public struct JoinWorkspaceSuccessView: View {
     
     @Router private var router
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
-    @AppState private var appState
     
     public init() {}
     

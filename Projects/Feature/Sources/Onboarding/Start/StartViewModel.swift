@@ -9,7 +9,6 @@ public final class StartViewModel: BaseViewModel<StartViewModel.Effect> {
     }
     
     // MARK: - Repo
-    @Inject private var memberRepo: MemberRepo
     @Inject private var oauthRepo: OAuthRepo
     
     // MARK: - State

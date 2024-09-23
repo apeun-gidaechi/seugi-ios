@@ -10,7 +10,7 @@ import SwiftUI
 
 struct FadeInEffectViewModifier: ViewModifier {
     
-    @State private var offsetY: CGFloat = 16
+    @State private var offsetY: CGFloat
     @State private var opacity = 0.0
     
     private let time: Double
@@ -20,6 +20,7 @@ struct FadeInEffectViewModifier: ViewModifier {
         initialOffsetY: CGFloat = 16
     ) {
         self.time = time
+        self.offsetY = initialOffsetY
     }
     
     func body(content: Content) -> some View {
