@@ -60,21 +60,28 @@ public struct ChatDetailView: View {
                             }
                         ForEach(messages.indices, id: \.self) { index in
                             let message = messages[index]
-                            if message.isDetailText {
+                            switch message.viewType! {
+                            case .text:
+                                if let member = appState.profile.data?.member {
+                                    let author = room.findUserOrUnknownUser(id: message.userId)
+                                    let type: ChatItemViewCellType = if author.id == member.id {
+                                        .me
+                                    } else {
+                                        .other(
+                                            isFirst: messages.isFirstMessage(at: index),
+                                            isLast: messages.isLastMessage(at: index)
+                                        )
+                                    }
+                                    ChatItemView(author: author, message: message, type: type, joinedUserCount: room.joinUserId.count)
+                                }
+                            case .image:
+                                EmptyView()
+                            case .file:
+                                EmptyView()
+                            case .detail:
                                 if let text = message.getDetailText(room: room) {
                                     ChatItemDetailView(text: text)
                                 }
-                            } else if let member = appState.profile.data?.member {
-                                let author = room.findUserOrUnknownUser(id: message.userId)
-                                let type: ChatItemViewCellType = if author.id == member.id {
-                                    .me
-                                } else {
-                                    .other(
-                                        isFirst: messages.isFirstMessage(at: index),
-                                        isLast: messages.isLastMessage(at: index)
-                                    )
-                                }
-                                ChatItemView(author: author, message: message, type: type, joinedUserCount: room.joinUserId.count)
                             }
                         }
                         Color.clear

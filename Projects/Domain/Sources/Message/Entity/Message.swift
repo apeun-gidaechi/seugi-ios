@@ -54,10 +54,25 @@ public extension Message {
 
 public extension Message {
     
-    var isDetailText: Bool {
-        switch type {
-        case .enter, .left, .transferAdmin: true
-        default: false
+    enum ViewType: Entity {
+        case text
+        case image
+        case file
+        case detail
+    }
+    
+    var viewType: ViewType? {
+        switch self.type {
+        case .message, .deleteMessage:
+                .text
+        case .img:
+                .image
+        case .file:
+                .file
+        case .enter, .left, .transferAdmin:
+                .detail
+        default:
+            nil
         }
     }
     
