@@ -4,6 +4,7 @@ extension BaseVoid: Mock {
     public static func mock() -> BaseVoid {
         self.mock(status: 200)
     }
+    
     public static func mock(status: Int) -> BaseVoid {
         BaseVoid(
             status: status,

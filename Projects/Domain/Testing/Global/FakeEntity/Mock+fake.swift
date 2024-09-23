@@ -3,17 +3,23 @@ import Combine
 import Foundation
 
 extension Entity {
-    var successResult: APIResult<Self> {
-        Just(.fetching)
-            .append(Just(.success(self)).delay(for: .seconds(1), scheduler: DispatchQueue.main))
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
+    var successResult: ObservableResult<Self> {
+        Future { completion in
+            completion(.success(self))
+        }
+        .delay(for: .seconds(1), scheduler: DispatchQueue.main)
+        .receive(on: DispatchQueue.main)
+        .eraseToAnyPublisher()
+        .observe()
     }
     
-    var successBaseResult: APIResult<Base<Self>> {
-        Just(.fetching)
-            .append(Just(.success(withFakeBase())).delay(for: .seconds(1), scheduler: DispatchQueue.main))
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
+    var successBaseResult: ObservableResult<Base<Self>> {
+        Future { completion in
+            completion(.success(self.withFakeBase()))
+        }
+        .delay(for: .seconds(1), scheduler: DispatchQueue.main)
+        .receive(on: DispatchQueue.main)
+        .eraseToAnyPublisher()
+        .observe()
     }
 }

@@ -8,9 +8,10 @@
 
 import SwiftUI
 
+
 public enum ChatItemViewCellType: Equatable {
-    case other(isFirst: Bool, isLast: Bool)
-    case ai(isFirst: Bool, isLast: Bool)
+    case other
+    case ai
     case me
     
     public var backgroundColor: Color.SeugiColorSystem {
@@ -31,41 +32,20 @@ public enum ChatItemViewCellType: Equatable {
     
     public var corners: UIRectCorner {
         switch self {
-        case .other: [.bottomLeft, .bottomRight, .topRight]
-        case .ai: [.bottomLeft, .bottomRight, .topRight]
+        case .other, .ai: [.bottomLeft, .bottomRight, .topRight]
         case .me: [.bottomLeft, .bottomRight, .topLeft]
         }
     }
     
-    public var isLeft: Bool {
+    public var alignent: ChatItemHorizontalAlignment {
         switch self {
-        case .other:
-            true
-        case .ai:
-            true
-        case .me:
-            false
+        case .other, .ai: .leading
+        case .me: .trailing
         }
     }
     
     public var isAi: Bool {
         if case .ai = self {
-            true
-        } else {
-            false
-        }
-    }
-    
-    public var isOther: Bool {
-        if case .other = self {
-            true
-        } else {
-            false
-        }
-    }
-    
-    public var isMe: Bool {
-        if case .me = self {
             true
         } else {
             false

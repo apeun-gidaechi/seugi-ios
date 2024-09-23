@@ -33,20 +33,16 @@ public struct CatSeugiView: View {
                             let message = messages[index]
                             if let member = appState.profile.data?.member {
                                 let isMe = message.userId == member.id
-                                let type: ChatItemViewCellType = if isMe {
-                                    .me
-                                } else {
-                                    .ai(
+                                ChatItemView(
+                                    author: isMe ? member : .just(name: "캣스기"),
+                                    type: isMe ? .me : .ai,
+                                    config: ChatItemConfig(
+                                        message: message,
                                         isFirst: messages.isFirstMessage(at: index),
-                                        isLast: messages.isLastMessage(at: index)
+                                        isLast: messages.isLastMessage(at: index),
+                                        joinUserCount: 2
                                     )
-                                }
-                                let author = if isMe {
-                                    member
-                                } else {
-                                    RetrieveMember.just(name: "캣스기")
-                                }
-                                ChatItemView(author: author, message: message, type: type, joinedUserCount: 2)
+                                )
                             }
                         }
                         Color.clear

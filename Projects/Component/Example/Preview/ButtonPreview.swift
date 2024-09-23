@@ -29,16 +29,16 @@ struct ButtonPreview: View {
             VStack {
                 ForEach(SeugiButtonType.allCases, id: \.self) { type in
                     SeugiButton.large("계속하기", type: type) {
-                        log("\(type) large")
+                        Log.info("\(type) large")
                     }
                     SeugiButton.small("계속하기", type: type) {
-                        log("\(type) small")
+                        Log.info("\(type) small")
                     }
                     SeugiButton.large("계속하기", type: type, isLoading: true) {
-                        log("\(type) large")
+                        Log.info("\(type) large")
                     }
                     SeugiButton.small("계속하기", type: type, isLoading: true) {
-                        log("\(type) small")
+                        Log.info("\(type) small")
                     }
                 }
                 SeugiToggle(isOn: .constant(true))

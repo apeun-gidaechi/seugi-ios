@@ -17,6 +17,9 @@ struct ChatMessageCell: View {
     private let messages: [Message]
     private let currentIndex: Int
     private let room: Room
+    private let author: RetrieveMember
+    private let message: Message
+    private let config: ChatItemConfig
     
     init(
         messages: [Message],
@@ -26,27 +29,32 @@ struct ChatMessageCell: View {
         self.messages = messages
         self.currentIndex = currentIndex
         self.room = room
+        self.message = messages[currentIndex]
+        self.author = room.findUserOrUnknownUser(id: message.userId)
+        self.config = ChatItemConfig(
+            message: message,
+            isFirst: messages.isFirstMessage(at: currentIndex),
+            isLast: messages.isLastMessage(at: currentIndex),
+            joinUserCount: room.joinUserId.count
+        )
     }
     
-    private var message: Message {
-        messages[currentIndex]
+    private var me: RetrieveMember? {
+        appState.profile.data?.member
+    }
+    
+    private var type: ChatItemViewCellType {
+        author.id == me?.id ? .me : .other
     }
     
     var body: some View {
         switch message.viewType {
         case .text:
-            if let member = appState.profile.data?.member {
-                let author = room.findUserOrUnknownUser(id: message.userId)
-                let type: ChatItemViewCellType = if author.id == member.id {
-                    .me
-                } else {
-                    .other(
-                        isFirst: messages.isFirstMessage(at: currentIndex),
-                        isLast: messages.isLastMessage(at: currentIndex)
-                    )
-                }
-                ChatItemView(author: author, message: message, type: type, joinedUserCount: room.joinUserId.count)
-            }
+            ChatItemView(
+                author: author,
+                type: type,
+                config: config
+            )
         case .image:
             EmptyView()
         case .file:

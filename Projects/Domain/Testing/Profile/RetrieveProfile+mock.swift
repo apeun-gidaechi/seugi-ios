@@ -11,7 +11,10 @@ extension RetrieveProfile: Mock {
             belong: "",
             phone: "temp phone",
             wire: "temp wire",
-            location: "temp location"
+            location: "temp location",
+            schGrade: 1,
+            schClass: 2,
+            schNumber: 12
         )
     }
 }

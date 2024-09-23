@@ -18,17 +18,88 @@ public struct ChatItemPreview: View {
             VStack(spacing: 0) {
                 ChatItemDetailView(text: "2024년 3월 21일 목요일")
                 // MARK: - Other
-                ChatItemView(author: .mock(), message: .mock(), type: .other(isFirst: true, isLast: false), joinedUserCount: 100)
-                ChatItemView(author: .mock(), message: .mock(), type: .other(isFirst: false, isLast: false), joinedUserCount: 100)
-                ChatItemView(author: .mock(), message: .mock(), type: .other(isFirst: false, isLast: true), joinedUserCount: 100)
+//                ChatItemView(author: .mock(), message: .mock(), type: .other, joinedUserCount: 100)
+                ChatItemView(
+                    author: .mock(),
+                    type: .other,
+                    config: .init(
+                        message: .mock(),
+                        isFirst: true,
+                        isLast: false,
+                        joinUserCount: 10
+                    )
+                )
+                ChatItemView(
+                    author: .mock(),
+                    type: .other,
+                    config: .init(
+                        message: .mock(),
+                        isFirst: false,
+                        isLast: false,
+                        joinUserCount: 10
+                    )
+                )
+                ChatItemView(
+                    author: .mock(),
+                    type: .other,
+                    config: .init(
+                        message: .mock(),
+                        isFirst: false,
+                        isLast: true,
+                        joinUserCount: 10
+                    )
+                )
+                ChatItemView(
+                    author: .mock(),
+                    type: .me,
+                    config: .init(
+                        message: .mock(),
+                        isFirst: true,
+                        isLast: false,
+                        joinUserCount: 10
+                    )
+                )
+                ChatItemView(
+                    author: .mock(),
+                    type: .me,
+                    config: .init(
+                        message: .mock(),
+                        isFirst: false,
+                        isLast: false,
+                        joinUserCount: 10
+                    )
+                )
+                ChatItemView(
+                    author: .mock(),
+                    type: .me,
+                    config: .init(
+                        message: .mock(),
+                        isFirst: false,
+                        isLast: true,
+                        joinUserCount: 10
+                    )
+                )
                 
-                // MARK: - Me
-                ChatItemView(author: .mock(), message: .mock(), type: .me, joinedUserCount: 100)
-                
-                // MARK: - AI
-                ChatItemView(author: .mock(), message: .mock(), type: .ai(isFirst: true, isLast: false), joinedUserCount: 100)
-                ChatItemView(author: .mock(), message: .mock(), type: .ai(isFirst: false, isLast: false), joinedUserCount: 100)
-                ChatItemView(author: .mock(), message: .mock(), type: .ai(isFirst: false, isLast: true), joinedUserCount: 100)
+                ChatItemView(
+                    author: .mock(),
+                    type: .ai,
+                    config: .init(
+                        message: .mock(),
+                        isFirst: true,
+                        isLast: false,
+                        joinUserCount: 10
+                    )
+                )
+                ChatItemView(
+                    author: .mock(),
+                    type: .ai,
+                    config: .init(
+                        message: .mock(),
+                        isFirst: false,
+                        isLast: true,
+                        joinUserCount: 10
+                    )
+                )
             }
         }
     }

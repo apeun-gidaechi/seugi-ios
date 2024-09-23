@@ -2,36 +2,33 @@ import Domain
 import Combine
 
 public final class FakeMemberRepo: MemberRepo {
+    
     public init() {}
-    public func edit(picture: String, name: String, birth: String) -> APIResult<BaseVoid> {
+    public func edit(_ req: EditMemberReq) -> ObservableResult<BaseVoid> {
         BaseVoid.mock().successResult
     }
     
-    public func login(email: String, password: String) -> APIResult<Base<Token>> {
+    public func login(_ req: LoginMemberReq) -> ObservableResult<Base<Token>> {
         Token.mock().successBaseResult
     }
     
-    public func oauth2(code: String, provider: OAuth2Provider) -> APIResult<Base<Token>> {
-        Token.mock().successBaseResult
-    }
-    
-    public func oauth2Complete(email: String, name: String) -> APIResult<BaseVoid> {
-        BaseVoid.mock().successResult
-    }
-    
-    public func refresh(token: String) -> APIResult<Base<String>> {
+    public func refresh(token: String) -> ObservableResult<Base<String>> {
         "token".successBaseResult
     }
     
-    public func register(name: String, email: String, password: String, code: String) -> APIResult<Base<Token>> {
+    public func register(_ req: RegisterMemberReq) -> ObservableResult<Base<Token>> {
         Token.mock().successBaseResult
     }
     
-    public func remove() -> APIResult<BaseVoid> {
+    public func remove() -> ObservableResult<BaseVoid> {
         BaseVoid.mock().successResult
     }
     
-    public func myInfo() -> APIResult<Base<RetrieveMember>> {
+    public func myInfo() -> ObservableResult<Base<RetrieveMember>> {
         RetrieveMember.mock().successBaseResult
+    }
+    
+    public func logout(_ req: LogoutReq) -> ObservableResult<BaseVoid> {
+        BaseVoid.mock().successResult
     }
 }

@@ -19,4 +19,11 @@ public struct BaseVoid: Entity, Equatable {
     public let success: Bool
     public let state: String
     public let message: String
+    
+    public init(status: Int, success: Bool, state: String, message: String) {
+        self.status = status
+        self.success = success
+        self.state = state
+        self.message = message
+    }
 }

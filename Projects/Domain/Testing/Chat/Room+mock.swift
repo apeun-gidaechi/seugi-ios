@@ -11,7 +11,10 @@ extension Room: Mock {
             chatRoomImg: "",
             createdAt: .now,
             chatStatusEnum: .alive,
-            joinUserId: (0..<10).map { _ in .mock() }
+            joinUserId: (0..<10).map { _ in .mock() },
+            lastMessage: "wow",
+            lastMessageTimestamp: .now,
+            notReadCnt: 10
         )
     }
 }

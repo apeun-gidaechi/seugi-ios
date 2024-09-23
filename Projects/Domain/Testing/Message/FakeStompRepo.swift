@@ -2,12 +2,8 @@ import Domain
 import Combine
 
 public final class FakeStompRepo: StompRepo {
-    public func closeSocket() {
-        //
-    }
-    
     public func openSocket() {
-        log("🤩 FakeStompRepo.openSocket")
+        Log.info("🤩 FakeStompRepo.openSocket")
     }
     
     public func subDisconnect() -> AnyPublisher<Void, Never> {
@@ -22,12 +18,26 @@ public final class FakeStompRepo: StompRepo {
         [].publisher.eraseToAnyPublisher()
     }
     
-    public func subSendError() -> AnyPublisher<Domain.SendStompErrorEntity, Never> {
-        [].publisher.eraseToAnyPublisher()
+    public func subSendError() -> AnyPublisher<SendStompErrorEntity, Never> {
+        Log.info("🤩 FakeStompRepo.subSendError")
+        return [].publisher.eraseToAnyPublisher()
     }
     
     public func subPing() -> AnyPublisher<Void, Never> {
-        [].publisher.eraseToAnyPublisher()
+        Log.info("🤩 FakeStompRepo.subPing")
+        return [].publisher.eraseToAnyPublisher()
+    }
+    
+    public func reissue(accessToken: String) {
+        Log.info("🤩 FakeStompRepo.reissue")
+    }
+    
+    public func reconnect(time: Double) {
+        Log.info("🤩 FakeStompRepo.reconned")
+    }
+    
+    public func closeSocket() {
+        Log.info("🤩 FakeStompRepo.closeSocket")
     }
     
     public init() {}

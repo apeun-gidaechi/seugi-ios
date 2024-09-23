@@ -20,7 +20,10 @@ let project = Project.make(
             name: "DomainTesting",
             product: .framework,
             bundleId: makeBundleId("DomainTesting"),
-            sources: ["Testing/**"]
+            sources: ["Testing/**"],
+            dependencies: [
+                .domain
+            ]
         )
     ]
 )

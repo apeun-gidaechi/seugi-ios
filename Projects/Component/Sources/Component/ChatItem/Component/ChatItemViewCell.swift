@@ -6,8 +6,10 @@ public struct ChatItemViewCell: View {
     private let text: String
     private let type: ChatItemViewCellType
     
-    public init(text: String,
-                type: ChatItemViewCellType) {
+    public init(
+        text: String,
+        type: ChatItemViewCellType
+    ) {
         self.text = text
         self.type = type
     }
