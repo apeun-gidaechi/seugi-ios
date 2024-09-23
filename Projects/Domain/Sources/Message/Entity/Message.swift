@@ -100,12 +100,12 @@ public extension [Message] {
     func isFirstMessage(at currentIndex: Int) -> Bool {
         let message = self[currentIndex]
         return currentIndex == 0
-        || (self[currentIndex - 1].userId != message.userId)
-        || ![.message, .deleteMessage].contains(self[currentIndex - 1].type)
+        || self[currentIndex - 1].userId != message.userId
     }
     
     func isLastMessage(at currentIndex: Int) -> Bool {
         let message = self[currentIndex]
-        return currentIndex == self.count - 1 || self[currentIndex + 1].userId != message.userId
+        return currentIndex == self.count - 1 
+        || self[currentIndex + 1].userId != message.userId
     }
 }

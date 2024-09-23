@@ -56,9 +56,14 @@ struct ChatMessageCell: View {
                 config: config
             )
         case .image:
-            ChatItemImageView(config: config)
+            ChatItemImageView(
+                author: author,
+                type: type,
+                config: config
+            )
         case .file:
             ChatItemFileView(
+                author: author,
                 type: type,
                 config: config
             ) {
