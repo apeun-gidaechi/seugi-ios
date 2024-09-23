@@ -22,6 +22,7 @@ public struct SeugiChatList: View {
                     Text(room.chatName)
                         .font(.subtitle(.s2))
                         .seugiColor(.sub(.black))
+                        .lineLimit(1)
                     if case .group = type {
                         Text(String(room.joinUserId.count))
                             .font(.body(.b2))
@@ -32,6 +33,7 @@ public struct SeugiChatList: View {
                     Text(lastMessage)
                         .font(.body(.b2))
                         .seugiColor(.gray(.g600))
+                        .lineLimit(1)
                 }
             }
             Spacer()
