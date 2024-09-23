@@ -15,4 +15,10 @@ ${ROOT_DIR}/swiftlint --config ${ROOT_DIR}/.swiftlint.yml
         name: "SwiftLint",
         basedOnDependencyAnalysis: false
     )
+    
+    static let periphery = TargetScript.pre(
+        path: .relativeToScript("PeripheryRunScript.sh"),
+        name: "Periphery",
+        basedOnDependencyAnalysis: false
+    )
 }

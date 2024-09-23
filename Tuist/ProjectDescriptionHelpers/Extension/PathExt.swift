@@ -25,6 +25,9 @@ public extension Path {
     static func relativeToXCConfig(_ path: String) -> Self {
         .relativeToRoot("XCConfig/\(path)")
     }
+    static func relativeToScript(_ path: String) -> Self {
+        .relativeToRoot("Script/\(path)")
+    }
     static var releaseConfig: Path {
         .relativeToXCConfig("Release.xcconfig")
     }

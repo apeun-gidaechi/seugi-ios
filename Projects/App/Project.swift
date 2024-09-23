@@ -27,6 +27,13 @@ let project = Project.make(
             dependencies: Modules.Data.allCases.map { TargetDependency.data(of: $0) }
             + [.diContainer, .feature],
             settings: makeSettings()
+        ),
+        Target.target(
+            name: "Aggregate",
+            destinations: [.iPhone],
+            product: .bundle,
+            bundleId: "\(baseBundleId).aggregate",
+            scripts: [.periphery]
         )
     ]
 )
