@@ -5,6 +5,7 @@ import PhotosUI
 
 public struct SettingProfileView: View {
     
+    @Environment(\.openURL) private var openURL
     @AppState private var appState
     @EnvironmentObject private var fileManager: FileManager
     @EnvironmentObject private var alert: AlertProvider
@@ -72,12 +73,12 @@ public struct SettingProfileView: View {
                 SeugiDivider(thickness: .thick)
                 SeugiListItem.icon(title: "개인정보 처리 방침", icon: .expandRightLine)
                     .button {
-                        // TODO: Handle to open url
+                        openURL.callAsFunction(URL(string: "https://byungjjun.notion.site/58f95c1209fb48b4b74434701290f838?pvs=74") ?? .aboutBlank)
                     }
                     .applyAnimation()
                 SeugiListItem.icon(title: "서비스 운영 정책", icon: .expandRightLine)
                     .button {
-                        // TODO: Handle to open url
+                        openURL.callAsFunction(URL(string: "https://byungjjun.notion.site/5ba79e224f53439bbfa3607e581fe6bf?pvs=74") ?? .aboutBlank)
                     }
                     .applyAnimation()
             }
