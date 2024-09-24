@@ -92,9 +92,9 @@ public struct StartView: View {
             }
             .padding(.top, 20)
             AppleLoginButton {
-                appleLoginViewModel.signIn { idToken, _ in
+                appleLoginViewModel.signIn { code, _ in
                     isPresented = false
-                    viewModel.signIn(token: idToken, provider: .apple)
+                    viewModel.signIn(code: code, provider: .apple)
                 } failureCompletion: {
                     isPresented = false
                     viewModel.signInFlow = .failure(.unknown)
@@ -106,7 +106,7 @@ public struct StartView: View {
                     guard let code = result.serverAuthCode else {
                         return
                     }
-                    viewModel.signIn(token: code, provider: .google)
+                    viewModel.signIn(code: code, provider: .google)
                 } failureCompletion: { _ in
                     isPresented = false
                     viewModel.signInFlow = .failure(.unknown)

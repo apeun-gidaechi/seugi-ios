@@ -12,7 +12,7 @@ import Then
 
 final class AppleLoginViewModel: NSObject, ObservableObject {
     
-    private var successCompletion: ((_ idToken: String, _ nickname: String) -> Void)?
+    private var successCompletion: ((_ code: String, _ nickname: String) -> Void)?
     private var failureCompletion: (() -> Void)?
     
     func signIn(
@@ -43,8 +43,8 @@ extension AppleLoginViewModel: ASAuthorizationControllerDelegate {
             failureCompletion?()
             return
         }
-        guard let identityToken = credential.identityToken,
-              let identityTokenString = String(data: identityToken, encoding: .utf8) else {
+        guard let authorizationCode = credential.authorizationCode,
+              let authorizationCodeString = String(data: authorizationCode, encoding: .utf8) else {
             print("AppleSignInObservable - identityToken not found")
             failureCompletion?()
             return
@@ -53,7 +53,7 @@ extension AppleLoginViewModel: ASAuthorizationControllerDelegate {
         let fullName = credential.fullName
         let nickname = (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
         
-        successCompletion?(identityTokenString, nickname)
+        successCompletion?(authorizationCodeString, nickname)
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: any Error) {

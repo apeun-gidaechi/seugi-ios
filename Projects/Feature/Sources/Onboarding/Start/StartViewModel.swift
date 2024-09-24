@@ -15,11 +15,11 @@ public final class StartViewModel: BaseViewModel<StartViewModel.Effect> {
     @Published var signInFlow: IdleFlow<Token> = .idle
     
     // MARK: - Method
-    func signIn(token: String, provider: OAuth2Provider) {
+    func signIn(code: String, provider: OAuth2Provider) {
         switch provider {
         case .google:
             oauthRepo.authenticateGoogle(
-                .init(code: token)
+                .init(code: code)
             ).fetching {
                 self.signInFlow = .fetching
             }.success { res in
