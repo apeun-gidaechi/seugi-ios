@@ -49,43 +49,47 @@ public struct ChatDetailView: View {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         Color.clear
-                            .id(Id.top)
+                            .id(Id.bottom)
                             .onAppear {
-                                // TODO: Handle paging
-                                //                                    let messages = viewModel.messages.data ?? []
-                                //                                    messages.count - 1 / pagingInterval
-                                //                                    guard let index = data.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
-                                //
-                                //                                      if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (data.count - 1) / pagingInterval {
-                                //                                          await viewModel.fetchNextCommunities()
-                                //                                      }
+                                // 시작시 아래로 스크롤
+                                self.scrollViewProxy = scrollViewProxy
+                                scrollToBottom()
                             }
-                        ForEach(messages.indices, id: \.self) { index in
-                            ChatMessageCell(
-                                messages: messages,
-                                currentIndex: index,
-                                room: room
-                            ) {
-                                switch $0 {
-                                case .clickImage:
-                                    if let url = messages[index].message.split(separator: MessageConstant.fileSeparator) // TODO: refactor
-                                        .first
-                                        .map(String.init) {
-                                        router.navigate(to: MainDestination.imagePreview(URL(string: url) ?? .aboutBlank))
+                        Group {
+                            ForEach(messages.indices, id: \.self) { index in
+                                ChatMessageCell(
+                                    messages: messages,
+                                    currentIndex: index,
+                                    room: room
+                                ) {
+                                    switch $0 {
+                                    case .clickImage:
+                                        if let url = messages[index].message.split(separator: MessageConstant.fileSeparator) // TODO: refactor
+                                            .first
+                                            .map(String.init) {
+                                            router.navigate(to: MainDestination.imagePreview(URL(string: url) ?? .aboutBlank))
+                                        }
                                     }
                                 }
                             }
                         }
-                        Color.clear
-                            .id(Id.bottom)
+                        .rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
                     }
                     .padding(.horizontal, 8)
-                    .onAppear {
-                        // 시작시 아래로 스크롤
-                        self.scrollViewProxy = scrollViewProxy
-                        scrollToBottom()
-                    }
+                    Color.clear
+                        .id(Id.top)
+                        .onAppear {
+                            // TODO: Handle paging
+                            //                                    let messages = viewModel.messages.data ?? []
+                            //                                    messages.count - 1 / pagingInterval
+                            //                                    guard let index = data.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
+                            //
+                            //                                      if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (data.count - 1) / pagingInterval {
+                            //                                          await viewModel.fetchNextCommunities()
+                            //                                      }
+                        }
                 }
+                .rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center) //
                 .seugiBackground(.primary(.p050))
             }
         } failure: { _ in
