@@ -2,6 +2,7 @@ import SwiftUI
 import PhotosUI
 import Component
 import Domain
+import SwiftUtil
 
 let pagingInterval = 50
 
@@ -66,8 +67,11 @@ public struct ChatDetailView: View {
                             ) {
                                 switch $0 {
                                 case .clickImage:
-                                    router.navigate(to: MainDestination.imagePreview)
-                                    break
+                                    if let url = messages[index].message.split(separator: MessageConstant.fileSeparator) // TODO: refactor
+                                        .first
+                                        .map(String.init) {
+                                        router.navigate(to: MainDestination.imagePreview(URL(string: url) ?? .aboutBlank))
+                                    }
                                 }
                             }
                         }

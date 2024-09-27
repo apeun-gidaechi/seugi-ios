@@ -10,8 +10,10 @@ import Component
 import UIKit
 import NukeUI
 
+// TODO: fix inner content가 ouuter content를 overflow 함
+// 왜이런지 모르겠음
 struct ImagePreview: View {
-    let url = URL(string: "https://seugi.s3.ap-northeast-2.amazonaws.com/IMG/68574c9d-0860-442a-b918-75bc7e049513-1000010272.jpg.jpg")!
+    let url: URL
     var body: some View {
         PinchScrollView {
             LazyImage(url: url) { phase in
@@ -22,7 +24,9 @@ struct ImagePreview: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                 } else {
-                    SeugiError("이미지 로딩 실패")
+                    Text("이미지 로딩 실패")
+                        .font(.body(.b2))
+                        .seugiColor(.sub(.white))
                 }
             }
         }

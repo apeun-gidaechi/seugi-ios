@@ -41,5 +41,5 @@ public enum MainDestination: Hashable {
     case joinWorkspaceRole
     
     // preview
-    case imagePreview
+    case imagePreview(URL)
 }

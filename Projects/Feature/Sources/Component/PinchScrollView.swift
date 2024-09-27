@@ -9,6 +9,7 @@
 import Foundation
 import SwiftUI
 import Then
+import Combine
 
 struct PinchScrollView<Content: View>: UIViewControllerRepresentable {
     @ViewBuilder let content: Content
@@ -32,43 +33,36 @@ struct PinchScrollView<Content: View>: UIViewControllerRepresentable {
         private var hostedView: UIView { coordinator.hostingController.view! }
         
         private var contentSizeConstraints: [NSLayoutConstraint] = [] {
-              willSet { NSLayoutConstraint.deactivate(contentSizeConstraints) }
-              didSet { NSLayoutConstraint.activate(contentSizeConstraints) }
+            willSet { NSLayoutConstraint.deactivate(contentSizeConstraints) }
+            didSet { NSLayoutConstraint.activate(contentSizeConstraints) }
         }
         
         init(coordinator: Coordinator) {
             self.coordinator = coordinator
             super.init(nibName: nil, bundle: nil)
             self.view = scrollView
-
-            scrollView.do {
-                $0.delegate = self
-                $0.maximumZoomScale = 3.0
-                $0.minimumZoomScale = 0.8
-                $0.bouncesZoom = true
-                $0.showsHorizontalScrollIndicator = false
-                $0.showsVerticalScrollIndicator = false
-                $0.backgroundColor = .black
-            }
+            
+            scrollView.delegate = self
+            scrollView.maximumZoomScale = 3.0
+            scrollView.minimumZoomScale = 1.0
+            scrollView.bouncesZoom = true
+            scrollView.showsHorizontalScrollIndicator = false
+            scrollView.showsVerticalScrollIndicator = false
+            scrollView.clipsToBounds = false
+            scrollView.backgroundColor = .black
             
             /* Manual hostedView from SwiftUI */
             let hostedView = coordinator.hostingController.view!
             hostedView.translatesAutoresizingMaskIntoConstraints = false
+            hostedView.backgroundColor = .black
             hostedView.alpha = 0
             scrollView.addSubview(hostedView)
-            alignment()
             
-            recenter()
             view.setNeedsUpdateConstraints()
         }
-        required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented")}
         
-        override func viewDidAppear(_ animated: Bool) {
-            hostedView.sizeToFit()
-            recenter()
-            hostedView.alpha = 1
-        }
-                
+        required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+        
         func update(content: Content) {
             coordinator.hostingController.rootView = content
             scrollView.setNeedsUpdateConstraints()
@@ -80,8 +74,19 @@ struct PinchScrollView<Content: View>: UIViewControllerRepresentable {
                 hostedView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
                 hostedView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
                 hostedView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-                hostedView.bounds.width >= hostedView.bounds.height ? hostedView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor) : hostedView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor)
+                hostedView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+                hostedView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor)
             ])
+        }
+        
+        override func viewDidAppear(_ animated: Bool) {
+            scrollView.zoomScale = 1.0
+            alignment()
+            view.setNeedsUpdateConstraints()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                self?.recenter()
+                self?.hostedView.alpha = 1
+            }
         }
         
         func recenter() {

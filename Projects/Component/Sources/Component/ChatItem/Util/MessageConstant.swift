@@ -8,6 +8,6 @@
 
 import Foundation
 
-enum MessageConstant {
-    static let fileSeparator = "::"
+public enum MessageConstant {
+    public static let fileSeparator = "::"
 }

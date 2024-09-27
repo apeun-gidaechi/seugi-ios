@@ -49,7 +49,7 @@ struct MainCoordinator: View {
                 case .joinWorkspaceRole: JoinWorkspaceRoleView().environmentObject(joinWorkspaceViewModel)
                     
                     // preview
-                case .imagePreview: ImagePreview()
+                case .imagePreview(let url): ImagePreview(url: url)
                 }
             }
     }
