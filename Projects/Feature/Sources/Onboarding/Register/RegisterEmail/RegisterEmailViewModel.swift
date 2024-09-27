@@ -13,13 +13,13 @@ public final class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.
     @Inject private var memberRepo: MemberRepo
     
     // MARK: - State
-    @Published var name = ""
-    @Published var email = ""
-    @Published var password = ""
-    @Published var passwordCheck = ""
+    @Published var name: String = ""
+    @Published var email: String = ""
+    @Published var password: String = ""
+    @Published var passwordCheck: String = ""
     
-    @Published var verificationCode = ""
-    @Published var isWaiting = false
+    @Published var verificationCode: String = ""
+    @Published var isWaiting: Bool = false
     @Published var sendEmailFlow: IdleFlow<Bool> = .idle
     @Published var signUpFlow: IdleFlow<Bool> = .idle
     

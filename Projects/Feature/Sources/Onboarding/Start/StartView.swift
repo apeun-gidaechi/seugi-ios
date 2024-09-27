@@ -1,5 +1,6 @@
 import SwiftUI
 import Component
+import SwiftUtil
 
 public struct StartView: View {
     
@@ -11,7 +12,7 @@ public struct StartView: View {
     @StateObject private var appleLoginViewModel = AppleLoginViewModel()
     @StateObject private var googleLoginViewModel = GoogleLoginViewModel()
     
-    @State private var isPresented = false
+    @State private var isPresented: Bool = false
     
     public init() {}
     

@@ -19,7 +19,7 @@ public final class JoinWorkspaceViewModel: BaseViewModel<JoinWorkspaceViewModel.
     // join
     @Published public var joinFlow: IdleFlow<Bool> = .idle
     @Published var roleType = WorkspaceRole.student
-    @Published public var code = ""
+    @Published public var code: String = ""
     public var isFetchJoinWorkspace: Bool {
         joinFlow == .fetching
     }

@@ -7,7 +7,7 @@ public struct WorkspaceDetailView: View {
     @AppState private var appState
     @Router private var router
     
-    @State private var isSheetPresent = false
+    @State private var isSheetPresent: Bool = false
     
     private var workspace: Workspace? {
         appState.selectedWorkspace

@@ -16,7 +16,7 @@ struct WorkspaceMemberView: View {
     @AppState private var appState
     @StateObject private var viewModel = WorkspaceMemberViewModel()
     
-    @State private var isSheetPresent = false
+    @State private var isSheetPresent: Bool = false
     @State private var sheetSize: CGSize = .zero
     @FocusState private var searchFocus: Bool
     

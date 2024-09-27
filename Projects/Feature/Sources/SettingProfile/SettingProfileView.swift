@@ -12,7 +12,7 @@ public struct SettingProfileView: View {
     @ObservedObject private var viewModel = SettingProfileViewModel()
     
     // photo
-    @State private var showPhotoPicker = false
+    @State private var showPhotoPicker: Bool = false
     @State private var profileImagePhoto: PhotosPickerItem?
     
     private var profile: RetrieveProfile? {

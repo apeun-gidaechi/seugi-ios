@@ -13,8 +13,8 @@ public final class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.Effect
     @Inject private var keyValueRepo: KeyValueRepo
     
     // MARK: - State
-    @Published var email = ""
-    @Published var password = ""
+    @Published var email: String = ""
+    @Published var password: String = ""
     @Published var signInFlow: IdleFlow<Token> = .idle
     
     public override init() {

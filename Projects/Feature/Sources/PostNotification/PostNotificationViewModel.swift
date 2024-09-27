@@ -8,8 +8,8 @@ class PostNotificationViewModel: BaseViewModel<PostNotificationViewModel.Effect>
     
     @Inject private var notificationRepo: any NotificationRepo
     
-    @Published var title = ""
-    @Published var content = ""
+    @Published var title: String = ""
+    @Published var content: String = ""
     
     @Published var fetchPostNotification: IdleFlow<Bool> = .idle
     

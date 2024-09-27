@@ -10,7 +10,7 @@ import Foundation
 
 public final class RegisterOAuthViewModel: ObservableObject {
     
-    @Published var name = ""
+    @Published var name: String = ""
     
     public init() {}
 }

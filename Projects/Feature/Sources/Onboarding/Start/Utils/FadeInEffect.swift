@@ -11,7 +11,7 @@ import SwiftUI
 struct FadeInEffectViewModifier: ViewModifier {
     
     @State private var offsetY: CGFloat
-    @State private var opacity = 0.0
+    @State private var opacity: Double = 0.0
     
     private let time: Double
     

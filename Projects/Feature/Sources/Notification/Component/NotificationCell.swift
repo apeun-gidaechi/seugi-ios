@@ -2,6 +2,7 @@ import SwiftUI
 import Component
 import Domain
 import DateUtil
+import SwiftUIUtil
 import Flow
 
 struct NotificationCell: View {

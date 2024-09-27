@@ -11,7 +11,7 @@ public struct CreateWorkspaceView: View {
     @ObservedObject private var viewModel = CreateWorkspaceViewModel()
     
     @State private var photo: PhotosPickerItem?
-    @State private var isPhotoPresent = false
+    @State private var isPhotoPresent: Bool = false
     @State private var photoUrl: String?
     
     public var body: some View {

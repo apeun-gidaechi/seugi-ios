@@ -26,6 +26,7 @@ disabled_rules:
 - large_tuple
 - function_parameter_count
 - closure_end_indentation
+- redundant_type_annotation
 
 opt_in_rules:
 - empty_count
@@ -43,7 +44,6 @@ opt_in_rules:
 - literal_expression_end_indentation
 - operator_usage_whitespace
 - redundant_nil_coalescing
-- redundant_type_annotation
 - strict_fileprivate
 - toggle_bool
 - trailing_closure

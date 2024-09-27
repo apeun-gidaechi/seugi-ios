@@ -9,7 +9,7 @@ public final class AppDelegate: NSObject, UIApplicationDelegate {
     
     @Inject private var keyValueRepo: KeyValueRepo
     
-    private let gcmMessageIDKey = "gcm.message_id"
+    private let gcmMessageIDKey: String = "gcm.message_id"
 
     public func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         

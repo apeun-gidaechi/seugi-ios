@@ -20,7 +20,7 @@ final class CatSeugiViewModel: BaseViewModel<CatSeugiViewModel.Effect> {
     
     /* message */
     @Published var messages: FetchFlow<[Message]> = .success([])
-    @Published var message = ""
+    @Published var message: String = ""
     
     func sendMessage(userId: Int) {
         self.messages = self.messages.map {

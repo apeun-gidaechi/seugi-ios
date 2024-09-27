@@ -17,10 +17,10 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect
     @Inject private var stompMessageRepo: StompMessageRepo
     
     // MARK: - State
-    @Published private var page = 0
+    @Published private var page: Int = 0
     /* message */
     @Published var messages: FetchFlow<[Message]> = .fetching
-    @Published var message = ""
+    @Published var message: String = ""
     
     /* photo */
     @Published var photo: PhotosPickerItem?

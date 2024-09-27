@@ -8,7 +8,7 @@ public struct ProfileView: View {
     @AppState private var appState
     @Router private var router
     @StateObject private var viewModel = ProfileViewModel()
-    @State private var isSheetPresent = false
+    @State private var isSheetPresent: Bool = false
     
     private var profile: RetrieveProfile? {
         appState.profile.data

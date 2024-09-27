@@ -15,7 +15,7 @@ final class CreateWorkspaceViewModel: BaseViewModel<CreateWorkspaceViewModel.Eff
     
     @Inject private var workspaceRepo: any WorkspaceRepo
     
-    @Published var workspaceName = ""
+    @Published var workspaceName: String = ""
     @Published var createWorkspaceFlow: IdleFlow<Bool> = .idle
     
     func createWorkspace(imageUrl: String) {

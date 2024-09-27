@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 public extension View {
     func hideKeyboardWhenTap() -> some View {
@@ -28,7 +29,7 @@ extension UIApplication {
     }
 }
 
-extension UIApplication: UIGestureRecognizerDelegate {
+extension UIApplication: @retroactive UIGestureRecognizerDelegate {
     public func gestureRecognizer(
         _ gestureRecognizer: UIGestureRecognizer,
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer

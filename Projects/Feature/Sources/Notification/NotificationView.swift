@@ -9,7 +9,7 @@ public struct NotificationView: View {
     @StateObject private var viewModel = NotificationViewModel()
     @Component.Alert private var alert
     
-    @State private var addEmojiPresent = false
+    @State private var addEmojiPresent: Bool = false
     
     private var profile: RetrieveProfile? {
         appState.profile.data

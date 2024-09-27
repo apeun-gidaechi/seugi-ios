@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Component
+import SwiftUIUtil
 
 struct HomeCatSeugiContainer: View {
     

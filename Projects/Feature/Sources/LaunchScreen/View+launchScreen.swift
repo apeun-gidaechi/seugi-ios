@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LaunchScreenViewModifier<C: View>: ViewModifier {
     
-    @State private var opacity = 1.0
+    @State private var opacity: Double = 1.0
     
     private let duration: Double
     private let content: () -> C

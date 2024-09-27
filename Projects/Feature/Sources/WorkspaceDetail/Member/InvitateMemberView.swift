@@ -16,7 +16,7 @@ struct InvitateMemberView: View {
     @StateObject private var viewModel = InvitateMemberViewModel()
     
     @State private var buttonsSize: CGSize = .zero
-    @State private var showWorkspaceCodeDialog = false
+    @State private var showWorkspaceCodeDialog: Bool = false
     
     init() {}
     

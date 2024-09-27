@@ -10,12 +10,14 @@ import SwiftUI
 
 public extension View {
     
+    @inlinable
     func content<Content: View>(
         @ViewBuilder content: @escaping (Self) -> Content
     ) -> some View {
         return content(self)
     }
     
+    @inlinable
     @ViewBuilder
     func `if`<Content: View>(
         _ condition: Bool,
@@ -28,6 +30,7 @@ public extension View {
         }
     }
     
+    @inlinable
     @ViewBuilder
     func `if`<Content: View>(
         _ condition: Bool,

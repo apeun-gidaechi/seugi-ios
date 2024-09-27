@@ -7,7 +7,7 @@ public struct MainView: View {
     
     @Router private var router
     @AppState private var appState
-    @State private var selection = 0
+    @State private var selection: Int = 0
     
     public init() {}
     

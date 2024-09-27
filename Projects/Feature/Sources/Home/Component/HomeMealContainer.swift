@@ -14,7 +14,7 @@ struct HomeMealContainer: View {
     
     private let meals: FetchFlow<[Meal]>
     @State private var maxHeight: CGFloat?
-    @State private var selection = 0
+    @State private var selection: Int = 0
     
     init(for meals: FetchFlow<[Meal]>) {
         self.meals = meals

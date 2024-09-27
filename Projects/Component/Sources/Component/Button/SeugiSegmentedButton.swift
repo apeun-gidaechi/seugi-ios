@@ -59,9 +59,7 @@ public struct SeugiSegmentedButton<T: SegmentedButtonProtocol>: View {
                         }
                     }
                     .applyAnimation()
-                    .if(isSelected) {
-                        $0.zIndex(1)
-                    }
+                    .zIndex(isSelected ? 1 : 0)
             }
         }
         .padding(4)

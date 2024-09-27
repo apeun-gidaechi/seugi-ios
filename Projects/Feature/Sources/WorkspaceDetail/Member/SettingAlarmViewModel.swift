@@ -14,7 +14,7 @@ final class SettingAlarmViewModel: BaseViewModel<SettingAlarmViewModel.Effect> {
     enum Effect {}
     @Inject private var keyValueRepo: KeyValueRepo
     
-    @Published var allowAlarm = true
+    @Published var allowAlarm: Bool = true
     
     override init() {
         super.init()
