@@ -11,9 +11,9 @@ import SwiftUI
 import Nuke
 import NukeUI
 import Domain
+import SwiftUIUtil
 
 public struct ChatItemImageView: View {
-    
     private let author: RetrieveMember
     private let type: ChatItemViewCellType
     private let config: ChatItemConfig
@@ -40,9 +40,11 @@ public struct ChatItemImageView: View {
                 } else if let image = state.image {
                     image
                         .resizable()
+                        .adjustFrame(minWidth: 128, maxWidth: 320, minHeight: 40, maxHeight: 300)
                 }
             }
-            .frame(minWidth: 128, maxWidth: 320)
+            .processors([.roundedCorners(radius: 12)])
+            .addTimeLabel(alignment: type.alignent, config: config)
         }
     }
 }

@@ -68,7 +68,7 @@ final class NotificationViewModel: BaseViewModel<NotificationViewModel.Effect> {
         // Request
         notificationRepo.emojiNotification(
             .init(emoji: emoji, notificationId: oldNotification.id)
-        ).failure { err in
+        ).failure { _ in
             // Handle result
             // 실패 시 원래 Notification
             resultNotifications.replace(element: oldNotification) { notification in

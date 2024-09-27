@@ -100,9 +100,6 @@ public struct NotificationView: View {
                 .show()
         }
         .emojiPicker($addEmojiPresent) { emoji in
-            guard let selectedWorkspace = appState.selectedWorkspace else {
-                return
-            }
             viewModel.patchEmoji(emoji: emoji, profileId: profile?.member.id ?? 0)
         }
         .onReceive(appState.$selectedWorkspace) {
