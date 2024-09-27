@@ -28,6 +28,17 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect
     /* left room */
     @Published var leftRoomFlow: IdleFlow<Bool> = .idle
     
+    // MARK: - Parameter
+    private let room: Room
+    
+    // MARK: - Initializer
+    init(room: Room) {
+        self.room = room
+        super.init()
+        self.fetchMessages(roomId: room.id)
+        self.subscribe(roomId: room.id)
+    }
+    
     // MARK: - Method
     func subscribe(roomId: String) {
         stompMessageRepo.subGetMessage(roomId: roomId)
@@ -78,5 +89,9 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect
         }.failure { err in
             self.leftRoomFlow = .failure(err)
         }.observe(&subscriptions)
+    }
+    
+    deinit {
+        self.unsubscribe(roomId: room.id)
     }
 }

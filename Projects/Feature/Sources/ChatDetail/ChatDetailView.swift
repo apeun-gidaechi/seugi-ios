@@ -14,7 +14,7 @@ public struct ChatDetailView: View {
     }
     
     @EnvironmentObject private var alert: AlertProvider
-    @StateObject private var viewModel = ChatDetailViewModel()
+    @StateObject private var viewModel: ChatDetailViewModel
     @AppState private var appState
     @Router private var router
     @Environment(\.dismiss) private var dismiss
@@ -38,6 +38,7 @@ public struct ChatDetailView: View {
         room: Room
     ) {
         self.room = room
+        self._viewModel = StateObject(wrappedValue: ChatDetailViewModel(room: room))
     }
     
     public var body: some View {
@@ -142,8 +143,6 @@ public struct ChatDetailView: View {
             hideKeyboard()
         }
         .onAppear {
-            viewModel.fetchMessages(roomId: room.id)
-            viewModel.subscribe(roomId: room.id)
             viewModel.subscribe { subject in
                 switch subject {
                 case .messageLoaded:
@@ -155,9 +154,6 @@ public struct ChatDetailView: View {
                     scrollToBottom()
                 }
             }
-        }
-        .onDisappear {
-            viewModel.unsubscribe(roomId: room.id)
         }
         .photosPicker(
             isPresented: $showPhotoPicker,
