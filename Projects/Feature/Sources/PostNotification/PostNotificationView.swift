@@ -25,7 +25,7 @@ public struct PostNotificationView: View {
         ScrollView {
             VStack(spacing: 8) {
                 SeugiTextField("제목을 입력해 주세요", text: $viewModel.title)
-                SeugiTextField("내용을 입력해 주세요", text: $viewModel.content)
+                SeugiTextEditor(text: $viewModel.content)
             }
             .padding(.horizontal, 20)
             .padding(.top, 6)

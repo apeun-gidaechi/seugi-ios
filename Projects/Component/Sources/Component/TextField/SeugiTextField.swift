@@ -32,7 +32,6 @@ public struct SeugiTextField: View {
     
     // MARK: - View
     public var body: some View {
-        
         Group {
             if type == .password && isHide {
                 SecureField(hint,

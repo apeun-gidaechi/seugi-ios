@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Component
+import SwiftUtil
 
 struct Role: SegmentedButtonProtocol {
     var label: String

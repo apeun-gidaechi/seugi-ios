@@ -25,6 +25,8 @@ struct TextFieldPreview: View {
                 SeugiChatTextField("하이", text: $tf1) { _ in }
                 SeugiCodeTextField(text: $tf1, length: 6)
                 SeugiCodeTextField(text: $tf1, length: 6).disabled(true)
+                SeugiTextEditor(text: $tf1)
+                SeugiTextEditor(text: $tf1).disabled(true)
             }
         }
         .background(Color.white)
