@@ -49,12 +49,12 @@ struct PinchScrollView<Content: View>: UIViewControllerRepresentable {
             scrollView.showsHorizontalScrollIndicator = false
             scrollView.showsVerticalScrollIndicator = false
             scrollView.clipsToBounds = false
-            scrollView.backgroundColor = .black
+            scrollView.backgroundColor = .clear
             
             /* Manual hostedView from SwiftUI */
             let hostedView = coordinator.hostingController.view!
             hostedView.translatesAutoresizingMaskIntoConstraints = false
-            hostedView.backgroundColor = .black
+            hostedView.backgroundColor = .clear
             hostedView.alpha = 0
             scrollView.addSubview(hostedView)
             

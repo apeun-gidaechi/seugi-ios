@@ -22,7 +22,7 @@ struct ImagePreview: View {
                 } else if let image = phase.image {
                     image
                         .resizable()
-                        .aspectRatio(contentMode: .fill)
+                        .aspectRatio(contentMode: .fit)
                 } else {
                     Text("이미지 로딩 실패")
                         .font(.body(.b2))
