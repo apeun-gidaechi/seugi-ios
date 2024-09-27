@@ -11,11 +11,11 @@ import SwiftUI
 public struct SeugiError: View {
     
     private let title: String
-    private let image: SeugiImage
+    private let image: SeugiImage?
     
     public init(
         _ title: String,
-        image: SeugiImage
+        image: SeugiImage? = nil
     ) {
         self.title = title
         self.image = image
@@ -23,9 +23,11 @@ public struct SeugiError: View {
     
     public var body: some View {
         VStack(spacing: 8) {
-            Image(image: image)
-                .resizable()
-                .frame(width: 64, height: 64)
+            if let image {
+                Image(image: image)
+                    .resizable()
+                    .frame(width: 64, height: 64)
+            }
             Text(title)
                 .font(.subtitle(.s2))
                 .seugiColor(.sub(.black))

@@ -11,6 +11,7 @@ public struct SeugiTopBarView: View {
     private let showBackButton: Bool
     private let showTitle: Bool
     private let background: Color
+    private let tintColor: Color
     private let subView: AnyView?
     private let buttons: [SeugiTopBarButton]
     private let onBackAction: (() -> Void)?
@@ -26,6 +27,7 @@ public struct SeugiTopBarView: View {
         showBackButton: Bool,
         showTitle: Bool,
         background: Color,
+        tintColor: Color,
         subView: AnyView? = nil,
         buttons: [SeugiTopBarButton],
         onBackAction: (() -> Void)?,
@@ -36,6 +38,7 @@ public struct SeugiTopBarView: View {
         self.showBackButton = showBackButton
         self.showTitle = showTitle
         self.background = background
+        self.tintColor = tintColor
         self.subView = subView
         self.buttons = buttons
         self.onBackAction = onBackAction
@@ -51,7 +54,7 @@ public struct SeugiTopBarView: View {
                         Image(icon: .expandLeftLine)
                             .resizable()
                             .renderingMode(.template)
-                            .seugiColor(.sub(.black))
+                            .foregroundStyle(tintColor)
                             .frame(width: 24, height: 24)
                             .button {
                                 if let onBackAction {
@@ -67,7 +70,7 @@ public struct SeugiTopBarView: View {
                     if showTitle {
                         Text(title)
                             .font(showMergedBackButton ? .subtitle(.s2) : .title(.t2))
-                            .seugiColor(.sub(.black))
+                            .foregroundStyle(tintColor)
                             .if(showMergedBackButton) {
                                 $0.padding(.leading, 12)
                             } else: {
@@ -89,7 +92,7 @@ public struct SeugiTopBarView: View {
                                 Image(icon: button.icon)
                                     .resizable()
                                     .renderingMode(.template)
-                                    .seugiColor(.sub(.black))
+                                    .foregroundStyle(tintColor)
                                     .frame(width: 28, height: 28)
                             }
                         }
@@ -114,6 +117,7 @@ public struct SeugiTopBarView: View {
                          showBackButton: showBackButton,
                          showTitle: showTitle,
                          background: background,
+                         tintColor: tintColor,
                          subView: subView,
                          buttons: buttons + [button],
                          onBackAction: onBackAction,
@@ -127,6 +131,7 @@ public struct SeugiTopBarView: View {
                   showBackButton: showBackButton,
                   showTitle: showTitle,
                   background: background,
+                  tintColor: tintColor,
                   subView: subView,
                   buttons: buttons,
                   onBackAction: onBackAction,
@@ -140,6 +145,7 @@ public struct SeugiTopBarView: View {
                   showBackButton: showBackButton,
                   showTitle: showTitle,
                   background: background,
+                  tintColor: tintColor,
                   subView: AnyView(content()),
                   buttons: buttons,
                   onBackAction: onBackAction,
@@ -153,6 +159,7 @@ public struct SeugiTopBarView: View {
                   showBackButton: !condition,
                   showTitle: showTitle,
                   background: background,
+                  tintColor: tintColor,
                   subView: subView,
                   buttons: buttons,
                   onBackAction: onBackAction,
@@ -166,6 +173,7 @@ public struct SeugiTopBarView: View {
                   showBackButton: showBackButton,
                   showTitle: !condition,
                   background: background,
+                  tintColor: tintColor,
                   subView: subView,
                   buttons: buttons,
                   onBackAction: onBackAction,
@@ -178,6 +186,7 @@ public extension View {
     func seugiTopBar(
         _ title: String,
         background: Color = Color.seugi(.sub(.white)),
+        tintColor: Color = Color.seugi(.sub(.black)),
         onBackAction: (() -> Void)? = nil
     ) -> SeugiTopBarView {
         SeugiTopBarView(
@@ -186,6 +195,7 @@ public extension View {
             showBackButton: true,
             showTitle: true,
             background: background,
+            tintColor: tintColor,
             buttons: [],
             onBackAction: onBackAction,
             content: AnyView(self)

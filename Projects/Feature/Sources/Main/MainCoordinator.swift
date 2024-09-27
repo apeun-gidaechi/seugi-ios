@@ -47,6 +47,9 @@ struct MainCoordinator: View {
                 case .joinWorkspaceFinish: JoinWorkspaceRoleView().environmentObject(joinWorkspaceViewModel)
                 case .joinWorkspaceSuccess: JoinWorkspaceSuccessView().environmentObject(joinWorkspaceViewModel)
                 case .joinWorkspaceRole: JoinWorkspaceRoleView().environmentObject(joinWorkspaceViewModel)
+                    
+                    // preview
+                case .imagePreview: ImagePreview()
                 }
             }
     }

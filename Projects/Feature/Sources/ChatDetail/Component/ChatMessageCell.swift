@@ -14,17 +14,23 @@ struct ChatMessageCell: View {
     
     @AppState private var appState
     
+    enum Action {
+        case clickImage
+    }
+    
     private let messages: [Message]
     private let currentIndex: Int
     private let room: Room
     private let author: RetrieveMember
     private let message: Message
     private let config: ChatItemConfig
+    private let action: (Action) -> Void
     
     init(
         messages: [Message],
         currentIndex: Int,
-        room: Room
+        room: Room,
+        action: @escaping (Action) -> Void
     ) {
         self.messages = messages
         self.currentIndex = currentIndex
@@ -37,6 +43,7 @@ struct ChatMessageCell: View {
             isLast: messages.isLastMessage(at: currentIndex),
             joinUserCount: room.joinUserId.count
         )
+        self.action = action
     }
     
     private var me: RetrieveMember? {
@@ -60,14 +67,16 @@ struct ChatMessageCell: View {
                 author: author,
                 type: type,
                 config: config
-            )
+            ).button {
+                action(.clickImage)
+            }
         case .file:
             ChatItemFileView(
                 author: author,
                 type: type,
                 config: config
             ) {
-                //
+                // TODO: Download this
             }
         case .detail:
             if let text = message.getDetailText(room: room) {

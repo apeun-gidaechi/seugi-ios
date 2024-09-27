@@ -63,7 +63,13 @@ public struct ChatDetailView: View {
                                 messages: messages,
                                 currentIndex: index,
                                 room: room
-                            )
+                            ) {
+                                switch $0 {
+                                case .clickImage:
+                                    router.navigate(to: MainDestination.imagePreview)
+                                    break
+                                }
+                            }
                         }
                         Color.clear
                             .id(Id.bottom)

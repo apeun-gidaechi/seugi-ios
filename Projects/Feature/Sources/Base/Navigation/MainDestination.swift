@@ -39,4 +39,7 @@ public enum MainDestination: Hashable {
     case joinWorkspaceFinish
     case joinWorkspaceSuccess
     case joinWorkspaceRole
+    
+    // preview
+    case imagePreview
 }
