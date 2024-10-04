@@ -69,18 +69,20 @@ final class AuthInterceptor: Moya.RequestInterceptor {
         Log.network("✅ AuthInterceptor - Try refresh with token - \(refreshToken)")
         
         memberRepo.refresh(token: refreshToken)
-            .success { res in
+            .map(\.data)
+            .sink {
+                if case .failure = $0 {
+                    Log.network(error)
+                    self.failureReissue()
+                    Log.network("❌ AuthInterceptor - Refresh Failure")
+                    completion(.doNotRetryWithError(APIError.refreshFailure))
+                }
+            } receiveValue: {
                 Log.network("✅ AuthInterceptor - Refresh Success")
-                let accessToken = String(res.data.split(separator: " ")[1])
+                let accessToken = String($0.split(separator: " ")[1])
                 self.keyValueStore.save(key: .accessToken, value: accessToken)
                 completion(.retry)
-            }
-            .failure { _ in
-                Log.network(error)
-                self.failureReissue()
-                Log.network("❌ AuthInterceptor - Refresh Failure")
-                completion(.doNotRetryWithError(APIError.refreshFailure))
-            }.observe(&subscriptions)
+            }.store(in: &subscriptions)
     }
     
     private func failureReissue() {

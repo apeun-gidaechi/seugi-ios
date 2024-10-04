@@ -12,11 +12,11 @@ import Component
 
 struct HomeMealContainer: View {
     
-    private let meals: FetchFlow<[Meal]>
+    private let meals: Flow<[Meal]>
     @State private var maxHeight: CGFloat?
     @State private var selection: Int = 0
     
-    init(for meals: FetchFlow<[Meal]>) {
+    init(for meals: Flow<[Meal]>) {
         self.meals = meals
     }
     
@@ -29,15 +29,9 @@ struct HomeMealContainer: View {
                     .seugiColor(.sub(.black))
                 Spacer()
             }
-            switch meals {
-            case .fetching:
+            meals.makeView {
                 ProgressView()
-            case .failure:
-                Text("학교를 등록하고 급식을 확인하세요")
-                    .seugiColor(.gray(.g600))
-                    .font(.body(.b2))
-                    .padding(.vertical, 12)
-            case .success(let meals):
+            } success: { meals in
                 if meals.isEmpty {
                     SeugiError("급식이 없어요", image: .sadButRelievedFace)
                 } else {
@@ -76,8 +70,13 @@ struct HomeMealContainer: View {
                     .frame(height: maxHeight ?? 300)
                     .tabViewStyle(.page(indexDisplayMode: .never))
                 }
-                // Indicator
+            } failure: { _ in
+                Text("학교를 등록하고 급식을 확인하세요")
+                    .seugiColor(.gray(.g600))
+                    .font(.body(.b2))
+                    .padding(.vertical, 12)
             }
+            // Indicator
         }
         .padding(.horizontal, 4)
         .applyCardEffect()

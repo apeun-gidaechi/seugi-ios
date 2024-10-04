@@ -7,7 +7,6 @@ import Feature
 
 @main
 struct SeugiApp: App {
-    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @StateObject private var alertProvider = AlertProvider()

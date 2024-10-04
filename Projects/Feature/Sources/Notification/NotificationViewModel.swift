@@ -11,30 +11,27 @@ final class NotificationViewModel: BaseViewModel<NotificationViewModel.Effect> {
     @Inject private var notificationRepo: NotificationRepo
     
     // MARK: - State
-    @Published var notifications: FetchFlow<[Domain.Notification]> = .fetching
-    @Published var removeNotificationFlow: IdleFlow<Bool> = .idle
+    @Published var notifications: Flow<[Domain.Notification]> = .fetching
+    @Published var removeNotificationFlow: Flow<Bool> = .idle
     @Published var selectedNotificationForAddEmoji: Domain.Notification?
     
     public func fetchNotifications(workspaceId: String) {
-        notificationRepo.getNotifications(workspaceId: workspaceId).fetching {
-            self.notifications = .fetching
-        }.success { notifications in
-            let notifications = notifications.data
-                .sorted { $0.creationDate ?? .now > $1.creationDate ?? .now }
-            self.notifications = .success(notifications)
-        }.failure { error in
-            self.notifications = .failure(error)
-        }.observe(&subscriptions)
+        notificationRepo.getNotifications(workspaceId: workspaceId)
+            .map { $0.data.sorted { $0.creationDate ?? .now > $1.creationDate ?? .now } }
+            .flow(\.notifications, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
     
     func removeNotification(workspaceId: String, notificationId: Int) {
-        notificationRepo.removeNotification(workspaceId: workspaceId, id: notificationId).fetching {
-            self.removeNotificationFlow = .fetching
-        }.success { _ in
-            self.removeNotificationFlow = .success()
-        }.failure {
-            self.removeNotificationFlow = .failure($0)
-        }.observe(&subscriptions)
+        notificationRepo.removeNotification(
+            workspaceId: workspaceId,
+            id: notificationId
+        )
+        .map { _ in true }
+        .flow(\.removeNotificationFlow, on: self)
+        .silentSink()
+        .store(in: &subscriptions)
     }
     
     func patchEmoji(
@@ -68,13 +65,16 @@ final class NotificationViewModel: BaseViewModel<NotificationViewModel.Effect> {
         // Request
         notificationRepo.emojiNotification(
             .init(emoji: emoji, notificationId: oldNotification.id)
-        ).failure { _ in
-            // Handle result
-            // 실패 시 원래 Notification
-            resultNotifications.replace(element: oldNotification) { notification in
-                notification.id == oldNotification.id
+        )
+        .sink { _ in
+            if case .failure = self.notifications {
+                resultNotifications.replace(element: oldNotification) { notification in
+                    notification.id == oldNotification.id
+                }
+                self.notifications = .success(resultNotifications)
             }
-            self.notifications = .success(resultNotifications)
-        }.observe(&subscriptions)
+        } receiveValue: { _ in
+        }
+        .store(in: &subscriptions)
     }
 }

@@ -4,31 +4,31 @@ import Combine
 public final class FakeMemberRepo: MemberRepo {
     
     public init() {}
-    public func edit(_ req: EditMemberReq) -> ObservableResult<BaseVoid> {
+    public func edit(_ req: EditMemberReq) -> APIResult<BaseVoid> {
         BaseVoid.mock().successResult
     }
     
-    public func login(_ req: LoginMemberReq) -> ObservableResult<Base<Token>> {
+    public func login(_ req: LoginMemberReq) -> APIResult<Base<Token>> {
         Token.mock().successBaseResult
     }
     
-    public func refresh(token: String) -> ObservableResult<Base<String>> {
+    public func refresh(token: String) -> APIResult<Base<String>> {
         "token".successBaseResult
     }
     
-    public func register(_ req: RegisterMemberReq) -> ObservableResult<Base<Token>> {
+    public func register(_ req: RegisterMemberReq) -> APIResult<Base<Token>> {
         Token.mock().successBaseResult
     }
     
-    public func remove() -> ObservableResult<BaseVoid> {
+    public func remove() -> APIResult<BaseVoid> {
         BaseVoid.mock().successResult
     }
     
-    public func myInfo() -> ObservableResult<Base<RetrieveMember>> {
+    public func myInfo() -> APIResult<Base<RetrieveMember>> {
         RetrieveMember.mock().successBaseResult
     }
     
-    public func logout(_ req: LogoutReq) -> ObservableResult<BaseVoid> {
+    public func logout(_ req: LogoutReq) -> APIResult<BaseVoid> {
         BaseVoid.mock().successResult
     }
 }

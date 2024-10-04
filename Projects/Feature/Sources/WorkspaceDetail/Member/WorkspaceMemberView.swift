@@ -13,14 +13,14 @@ import Domain
 struct WorkspaceMemberView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @AppState private var appState
+    @EnvironmentObject private var appState: AppViewModel
     @StateObject private var viewModel = WorkspaceMemberViewModel()
     
     @State private var isSheetPresent: Bool = false
     @State private var sheetSize: CGSize = .zero
     @FocusState private var searchFocus: Bool
     
-    private var members: FetchFlow<[RetrieveProfile]> {
+    private var members: Flow<[RetrieveProfile]> {
         viewModel.isSearching ? viewModel.searchedMembers : viewModel.selectedMembers
     }
     

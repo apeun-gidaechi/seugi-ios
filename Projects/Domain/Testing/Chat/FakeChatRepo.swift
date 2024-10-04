@@ -3,51 +3,51 @@ import Domain
 public final class FakeChatRepo: ChatRepo {
     
     public init() {}
-    public func addMemberGroup(_ req: ChatMemberEventReq) -> ObservableResult<BaseVoid> {
+    public func addMemberGroup(_ req: ChatMemberEventReq) -> APIResult<BaseVoid> {
         BaseVoid.mock().successResult
     }
     
-    public func kickMemberGroup(_ req: ChatMemberEventReq) -> ObservableResult<BaseVoid> {
+    public func kickMemberGroup(_ req: ChatMemberEventReq) -> APIResult<BaseVoid> {
         BaseVoid.mock().successResult
     }
     
-    public func tossMemberGroup(_ req: ChatMemberEventReq) -> ObservableResult<BaseVoid> {
+    public func tossMemberGroup(_ req: ChatMemberEventReq) -> APIResult<BaseVoid> {
         BaseVoid.mock().successResult
     }
     
-    public func createGroup(_ req: CreateGroupChatReq) -> ObservableResult<Base<String>> {
+    public func createGroup(_ req: CreateGroupChatReq) -> APIResult<Base<String>> {
         "success".successBaseResult
     }
     
-    public func searchGroup(workspaceId: String, word: String) -> ObservableResult<Base<[Room]>> {
+    public func searchGroup(workspaceId: String, word: String) -> APIResult<Base<[Room]>> {
         (0..<3).map { _ in Room.mock() }.successBaseResult
     }
     
-    public func searchGroup(roomId: String) -> ObservableResult<Base<Room>> {
+    public func searchGroup(roomId: String) -> APIResult<Base<Room>> {
         Room.mock().successBaseResult
     }
     
-    public func searchGroup(workspaceId: String) -> ObservableResult<Base<[Room]>> {
+    public func searchGroup(workspaceId: String) -> APIResult<Base<[Room]>> {
         (0..<10).map { _ in Room.mock() }.successBaseResult
     }
     
-    public func leftGroup(roomId: String) -> ObservableResult<BaseVoid> {
+    public func leftGroup(roomId: String) -> APIResult<BaseVoid> {
         BaseVoid.mock().successResult
     }
     
-    public func createPersonal(_ req: CreateGroupChatReq) -> ObservableResult<Base<String>> {
+    public func createPersonal(_ req: CreateGroupChatReq) -> APIResult<Base<String>> {
         "success".successBaseResult
     }
     
-    public func searchPersonal(workspaceId: String, word: String) -> ObservableResult<Base<[Room]>> {
+    public func searchPersonal(workspaceId: String, word: String) -> APIResult<Base<[Room]>> {
         (0..<10).map { _ in Room.mock() }.successBaseResult
     }
     
-    public func searchPersonal(roomId: String) -> ObservableResult<Base<Room>> {
+    public func searchPersonal(roomId: String) -> APIResult<Base<Room>> {
         Room.mock().successBaseResult
     }
     
-    public func searchPersonal(workspaceId: String) -> ObservableResult<Base<[Room]>> {
+    public func searchPersonal(workspaceId: String) -> APIResult<Base<[Room]>> {
         (0..<100).map { _ in Room.mock() }.successBaseResult
     }
 }

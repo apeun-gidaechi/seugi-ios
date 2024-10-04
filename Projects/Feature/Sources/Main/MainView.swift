@@ -1,16 +1,19 @@
+import Combine
 import SwiftUI
+
 import Component
 import Domain
-import Combine
 
-public struct MainView: View {
+public struct MainView {
+    @EnvironmentObject private var router: RouterViewModel
+    @EnvironmentObject private var appState: AppViewModel
     
-    @Router private var router
-    @AppState private var appState
     @State private var selection: Int = 0
     
     public init() {}
-    
+}
+
+extension MainView: View {
     public var body: some View {
         SeugiBottomNavigation(selection: $selection) {
             HomeView()

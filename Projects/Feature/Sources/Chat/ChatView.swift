@@ -3,9 +3,8 @@ import Component
 import Domain
 
 public struct ChatView: View {
-    
-    @Router private var router
-    @AppState private var appState
+    @EnvironmentObject private var router: RouterViewModel
+    @EnvironmentObject private var appState: AppViewModel
     @StateObject private var viewModel: ChatViewModel
     
     @FocusState private var searchFocus: Bool

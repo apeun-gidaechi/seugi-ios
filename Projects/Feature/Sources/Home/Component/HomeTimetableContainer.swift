@@ -11,16 +11,15 @@ import Domain
 import Component
 
 struct HomeTimetableContainer: View {
-    
     enum Id {
         case current
     }
     
     @State private var current = 3
     
-    private let timetable: FetchFlow<[Timetable]>
+    private let timetable: Flow<[Timetable]>
     
-    init(for timetable: FetchFlow<[Timetable]>) {
+    init(for timetable: Flow<[Timetable]>) {
         self.timetable = timetable
     }
     
@@ -35,15 +34,9 @@ struct HomeTimetableContainer: View {
                 HomeArrowIcon()
             }
             .padding(4)
-            switch timetable {
-            case .fetching:
+            timetable.makeView {
                 ProgressView()
-            case .failure:
-                Text("학교를 등록하고 시간표를 확인하세요")
-                    .seugiColor(.gray(.g600))
-                    .font(.body(.b2))
-                    .padding(.vertical, 12)
-            case .success(let data):
+            } success: { data in
                 if data.isEmpty {
                     SeugiError("시간표가 없어요", image: .faceWithDiagonalMouth)
                 } else {
@@ -99,6 +92,11 @@ struct HomeTimetableContainer: View {
                         }
                     }
                 }
+            } failure: { _ in
+                Text("학교를 등록하고 시간표를 확인하세요")
+                    .seugiColor(.gray(.g600))
+                    .font(.body(.b2))
+                    .padding(.vertical, 12)
             }
         }
         .applyCardEffect()

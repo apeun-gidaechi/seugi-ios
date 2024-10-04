@@ -9,5 +9,5 @@
 import Foundation
 
 public protocol CatSeugiRepo {
-    func sendMessage(_ req: CatSeugiSendMessageReq) -> ObservableResult<Base<String>>
+    func sendMessage(_ req: CatSeugiSendMessageReq) -> APIResult<Base<String>>
 }

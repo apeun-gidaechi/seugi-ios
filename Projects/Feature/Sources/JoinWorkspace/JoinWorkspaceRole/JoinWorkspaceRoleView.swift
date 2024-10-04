@@ -4,7 +4,7 @@ import Component
 public struct JoinWorkspaceRoleView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    @Router private var router
+    @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
     @State private var selectedTab: JobType = .student
     
@@ -39,19 +39,18 @@ public struct JoinWorkspaceRoleView: View {
             .padding(.bottom, 16)
         }
         .seugiTopBar("학교 가입")
-        .onChange(of: viewModel.joinFlow) { _ in } failure: { _ in
-            alertProvider.present("가입 요청 실패")
-                .message("잠시 후 다시 시도해 주세요")
-                .show()
-        }
-        .onAppear {
-            viewModel.subscribe { subject in
-                switch subject {
-                case .joinWorkspaceSuccess:
-                    router.navigate(to: MainDestination.joinWorkspaceCode)
-                default:
-                    break
-                }
+        .onReceive(viewModel.$joinFlow) {
+            switch $0 {
+            case .success:
+                router.navigate(to: MainDestination.joinWorkspaceCode)
+            case .failure:
+                alertProvider.present("가입 요청 실패")
+                    .message("잠시 후 다시 시도해 주세요")
+                    .show()
+            default:
+                break
+            }
+            if case .failure = $0 {
             }
         }
     }

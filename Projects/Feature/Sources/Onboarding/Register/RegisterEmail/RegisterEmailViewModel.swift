@@ -1,12 +1,11 @@
 import Foundation
 import DIContainer
 import Domain
+import SwiftUtil
 
 public final class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.Effect> {
     
-    public enum Effect {
-        case registerSuccess(Token)
-    }
+    public enum Effect {}
     
     // MARK: - Repo
     @Inject private var emailRepo: EmailRepo
@@ -20,8 +19,8 @@ public final class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.
     
     @Published var verificationCode: String = ""
     @Published var isWaiting: Bool = false
-    @Published var sendEmailFlow: IdleFlow<Bool> = .idle
-    @Published var signUpFlow: IdleFlow<Bool> = .idle
+    @Published var sendEmailFlow: Flow<Bool> = .idle
+    @Published var signUpFlow: Flow<Token> = .idle
     
     var isInValidInput: Bool {
         name.isEmpty || email.isEmpty || password.isEmpty || passwordCheck.isEmpty || password != passwordCheck
@@ -32,14 +31,12 @@ public final class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.
     }
     
     func sendEmail() {
-        emailRepo.send(email: email).fetching { [self] in
-            isWaiting = true
-            sendEmailFlow = .fetching
-        }.success { _ in
-            self.sendEmailFlow = .success()
-        }.failure { error in
-            self.sendEmailFlow = .failure(error)
-        }.observe(&subscriptions)
+        isWaiting = true
+        emailRepo.send(email: email)
+            .map { _ in true }
+            .flow(\.sendEmailFlow, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
     
     func signUp() {
@@ -47,14 +44,10 @@ public final class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.
             .init(
                 name: name, email: email, password: password, code: verificationCode
             )
-        ).fetching {
-            self.signUpFlow = .fetching
-        }.success { token in
-            self.emit(.registerSuccess(token.data))
-            self.signUpFlow = .success()
-        }.failure { error in
-            Log.error(error)
-            self.signUpFlow = .failure(error)
-        }.observe(&subscriptions)
+        )
+        .map(\.data)
+        .flow(\.signUpFlow, on: self)
+        .silentSink()
+        .store(in: &subscriptions)
     }
 }

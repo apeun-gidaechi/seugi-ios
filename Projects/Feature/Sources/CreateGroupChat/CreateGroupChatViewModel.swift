@@ -1,37 +1,31 @@
 import Domain
 import Foundation
 import DIContainer
+import SwiftUtil
 
 public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewModel.Effect> {
     
-    public enum Effect {
-        case createdPersonalChat(room: Room)
-    }
+    public enum Effect {}
     
     // MARK: - Repo
     @Inject private var workspaceRepo: WorkspaceRepo
     @Inject private var chatRepo: ChatRepo
     
     // MARK: - State
-    @Published var isFetchMembers = false
-    @Published var members: FetchFlow<[RetrieveProfile]> = .fetching
+    @Published var members: Flow<[RetrieveProfile]> = .fetching
     @Published var selectedMembers: [RetrieveProfile] = []
     @Published var roomName: String = ""
-    @Published var createFlow: IdleFlow<Bool> = .idle
+    @Published var createRoomFlow: Flow<String> = .idle
     
     func fetchWorkspaceMembers(
         workspaceId: String,
         memberId: Int
     ) {
-        workspaceRepo.getMembers(workspaceId: workspaceId).fetching {
-            self.isFetchMembers = true
-            self.members = .fetching
-        }.success { response in
-            let members = response.data.filter { $0.member.id != memberId }
-            self.members = .success(members)
-        }.failure {
-            self.members = .failure($0)
-        }.observe(&subscriptions)
+        workspaceRepo.getMembers(workspaceId: workspaceId)
+            .map { $0.data.filter { $0.member.id != memberId } }
+            .flow(\.members, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
     
     func selectMember(member: RetrieveProfile, selected: Bool) {
@@ -57,32 +51,22 @@ public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewMo
         let joinUsers = selectedMembers.map { $0.member.id }
         chatRepo.createGroup(
             .init(roomName: roomName, workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: "")
-        ).fetching {
-            self.createFlow = .fetching
-        }.success { _ in
-            self.createFlow = .success()
-        }.failure { error in
-            self.createFlow = .failure(error)
-        }.observe(&subscriptions)
+        )
+        .map(\.data)
+        .flow(\.createRoomFlow, on: self)
+        .silentSink()
+        .store(in: &subscriptions)
     }
     
     func createPersonalChat(workspaceId: String) {
         let joinUsers = selectedMembers.map { $0.member.id }
+        self.createRoomFlow = .fetching
         chatRepo.createPersonal(
             .init(roomName: "", workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: "")
-        ).fetching {
-            self.createFlow = .fetching
-        }.success { [self] res in
-            let roomId = res.data
-            chatRepo.searchPersonal(roomId: roomId).fetching {
-                self.createFlow = .fetching
-            }.success { res in
-                self.emit(.createdPersonalChat(room: res.data))
-            }.failure { error in
-                self.createFlow = .failure(error)
-            }.observe(&subscriptions)
-        }.failure { error in
-            self.createFlow = .failure(error)
-        }.observe(&subscriptions)
+        )
+        .map(\.data)
+        .flow(\.createRoomFlow, on: self)
+        .silentSink()
+        .store(in: &subscriptions)
     }
 }

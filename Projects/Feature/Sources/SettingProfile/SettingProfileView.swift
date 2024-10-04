@@ -6,7 +6,7 @@ import PhotosUI
 public struct SettingProfileView: View {
     
     @Environment(\.openURL) private var openURL
-    @AppState private var appState
+    @EnvironmentObject private var appState: AppViewModel
     @EnvironmentObject private var fileManager: FileManager
     @EnvironmentObject private var alert: AlertProvider
     @ObservedObject private var viewModel = SettingProfileViewModel()
@@ -103,22 +103,32 @@ public struct SettingProfileView: View {
         .onChange(of: appState.profile, initial: true) {
             viewModel.member = $0.data?.member
         }
-        .onChange(of: viewModel.editMemberFlow) { _ in
-            appState.fetchMyInfo()
-            alert.present("정보 수정 성공")
-                .show()
-        } failure: { _ in
-            alert.present("정보 수정 실패")
-                .primaryButton("확인")
-                .message("잠시 후 다시 시도해 주세요")
-                .show()
+        .onReceive(viewModel.$editMemberFlow) { flow in
+            switch flow {
+            case .success:
+                appState.fetchMyInfo()
+                alert.present("정보 수정 성공")
+                    .show()
+            case .failure:
+                alert.present("정보 수정 실패")
+                    .primaryButton("확인")
+                    .message("잠시 후 다시 시도해 주세요")
+                    .show()
+            default:
+                break
+            }
         }
-        .onChange(of: viewModel.removeMemberFlow) { _ in
-            appState.logout()
-        } failure: { _ in
-            alert.present("탈퇴 실패")
-                .primaryButton("잠시 후 다시 시도해 주세요")
-                .show()
+        .onReceive(viewModel.$removeMemberFlow) { flow in
+            switch flow {
+            case .success:
+                appState.logout()
+            case .failure:
+                alert.present("탈퇴 실패")
+                    .primaryButton("잠시 후 다시 시도해 주세요")
+                    .show()
+            default:
+                break
+            }
         }
     }
 }

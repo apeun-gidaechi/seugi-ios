@@ -5,7 +5,7 @@ import Component
 
 public struct JoinWorkspaceSuccessView: View {
     
-    @Router private var router
+    @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
     
     public init() {}

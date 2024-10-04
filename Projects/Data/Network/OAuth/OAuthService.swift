@@ -10,11 +10,11 @@ import Foundation
 import Domain
 
 final class OAuthService: Service<OAuthEndpoint>, OAuthRepo {
-    func authenticateGoogle(_ req: GoogleCodeReq) -> ObservableResult<Base<Token>> {
+    func authenticateGoogle(_ req: GoogleCodeReq) -> APIResult<Base<Token>> {
         performRequest(.authenticateGoogle(req), res: Token.self)
     }
     
-    func connectGoogle(_ req: GoogleCodeReq) -> ObservableResult<BaseVoid> {
+    func connectGoogle(_ req: GoogleCodeReq) -> APIResult<BaseVoid> {
         performRequest(.connectGoogle(req))
     }
 }

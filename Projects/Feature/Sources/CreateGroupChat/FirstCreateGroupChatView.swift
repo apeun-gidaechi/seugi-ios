@@ -6,10 +6,10 @@ import Domain
 
 public struct FirstCreateGroupChatView: View {
     
-    @Router private var router
+    @EnvironmentObject private var router: RouterViewModel
     @State private var contentSize: CGSize = .zero
     @EnvironmentObject private var viewModel: CreateGroupChatViewModel
-    @AppState private var appState
+    @EnvironmentObject private var appState: AppViewModel
     
     public init() {}
     
@@ -62,13 +62,13 @@ public struct FirstCreateGroupChatView: View {
                 return
             }
             viewModel.fetchWorkspaceMembers(workspaceId: selectedWorkspace.workspaceId, memberId: member.id)
-            viewModel.subscribe { subject in
-                switch subject {
-                case .createdPersonalChat(let room):
-                    router.navigateToRoot()
-                    router.navigate(to: MainDestination.chatDetail(room: room))
-                }
-            }
+//            viewModel.subscribe { subject in
+//                switch subject {
+//                case .createdPersonalChat(let room):
+//                    router.navigateToRoot()
+//                    router.navigate(to: MainDestination.chatDetail(room: room))
+//                }
+//            }
         }
         .seugiTopBar("멤버 선택")
         .subView {

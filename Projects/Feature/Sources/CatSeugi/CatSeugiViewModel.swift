@@ -1,43 +1,36 @@
-//
-//  CatSeugiViewModel.swift
-//  Feature
-//
-//  Created by hhhello0507 on 9/12/24.
-//  Copyright © 2024 apeun-gidaechi. All rights reserved.
-//
-
 import Foundation
+
 import Domain
 import DIContainer
+import SwiftUtil
 
 final class CatSeugiViewModel: BaseViewModel<CatSeugiViewModel.Effect> {
-    enum Effect {
-        case messagesFetched
-        case sendMessageFailure
-    }
+    enum Effect {}
     
     @Inject private var catSeugiRepo: CatSeugiRepo
     
-    /* message */
-    @Published var messages: FetchFlow<[Message]> = .success([])
+    @Published var messages: Flow<[Message]> = .success([])
     @Published var message: String = ""
+    @Published var sendMessageFlow = Flow<String>.idle
     
     func sendMessage(userId: Int) {
         self.messages = self.messages.map {
             $0 + [.just(userId: userId, message: message)]
         }
-        self.emit(.messagesFetched)
+//        self.emit(.messagesFetched)
         
         catSeugiRepo.sendMessage(
             .init(text: message)
-        ).success { res in
+        )
+        .map(\.data)
+        .flow(\.sendMessageFlow, on: self)
+        .ignoreError()
+        .sink { message in
             self.messages = self.messages.map {
-                $0 + [.just(userId: -1, message: res.data)]
+                $0 + [.just(userId: -1, message: message)]
             }
-            self.emit(.messagesFetched)
-        }.failure { _ in
-            self.emit(.sendMessageFailure)
-        }.observe(&subscriptions)
+        }
+        .store(in: &subscriptions)
         
         self.message = ""
     }

@@ -2,13 +2,13 @@ import SwiftUI
 import Component
 import Domain
 import SwiftUIUtil
+import SwiftUtil
 
 public struct LoginEmailView: View {
-    
     @EnvironmentObject private var alertProvider: AlertProvider
     @StateObject private var viewModel = LoginEmailViewModel()
-    @Router private var router
-    @AppState private var appState
+    @EnvironmentObject private var router: RouterViewModel
+    @EnvironmentObject private var appState: AppViewModel
     @FocusState private var firstTextField: Bool
     
     public init() {}
@@ -33,7 +33,7 @@ public struct LoginEmailView: View {
                     }
                     .applyAnimation()
             }
-            SeugiButton.large("로그인", type: .primary, isLoading: viewModel.signInFlow == .fetching) {
+            SeugiButton.large("로그인", type: .primary, isLoading: viewModel.signInFlow.is(.fetching)) {
                 viewModel.signIn()
             }
             .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
@@ -41,20 +41,25 @@ public struct LoginEmailView: View {
         }
         .padding(.horizontal, 20)
         .seugiTopBar("로그인")
-        .onChange(of: viewModel.signInFlow) { token in
-            Log.info("EmailSignInView - 로그인 성공")
-            let accessToken = String(token.accessToken.split(separator: " ")[1])
-            let refreshToken = String(token.refreshToken.split(separator: " ")[1])
-            withAnimation {
-                appState.accessToken = accessToken
-                appState.refreshToken = refreshToken
-                appState.login()
-                router.navigateToRoot()
+        .onReceive(viewModel.$signInFlow) { flow in
+            switch flow {
+            case .success(let token):
+                Log.info("EmailSignInView - 로그인 성공")
+                let accessToken = String(token.accessToken.split(separator: " ")[1])
+                let refreshToken = String(token.refreshToken.split(separator: " ")[1])
+                withAnimation {
+                    appState.accessToken = accessToken
+                    appState.refreshToken = refreshToken
+                    appState.login()
+                    router.navigateToRoot()
+                }
+            case .failure:
+                alertProvider.present("로그인 실패")
+                    .message("아이디 혹은 비밀번호를 다시 확인해 주세요")
+                    .show()
+            default:
+                break
             }
-        } failure: { _ in
-            alertProvider.present("로그인 실패")
-                .message("아이디 혹은 비밀번호를 다시 확인해 주세요")
-                .show()
         }
         .onAppear {
             firstTextField = true

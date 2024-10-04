@@ -1,14 +1,7 @@
-//
-//  InvitationMemberViewModel.swift
-//  SettingWorkspaceFeature
-//
-//  Created by hhhello0507 on 7/24/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import Foundation
 import DIContainer
 import Domain
+import SwiftUtil
 
 final class InvitateMemberViewModel: BaseViewModel<InvitateMemberViewModel.Effect> {
     enum Effect {}
@@ -17,10 +10,10 @@ final class InvitateMemberViewModel: BaseViewModel<InvitateMemberViewModel.Effec
     
     // MARK: - Properties
     @Published var selection = segmentedButtonRoles[0]
-    @Published var workspaceCode: FetchFlow<String> = .fetching
-    @Published private var studentWaitMembers: FetchFlow<[RetrieveMember]> = .fetching
-    @Published private var teacherWaitMembers: FetchFlow<[RetrieveMember]> = .fetching
-    var waitMembers: FetchFlow<[RetrieveMember]> {
+    @Published var workspaceCode: Flow<String> = .fetching
+    @Published private var studentWaitMembers: Flow<[RetrieveMember]> = .fetching
+    @Published private var teacherWaitMembers: Flow<[RetrieveMember]> = .fetching
+    var waitMembers: Flow<[RetrieveMember]> {
         if selection == segmentedButtonRoles[0] {
             teacherWaitMembers
         } else {
@@ -28,38 +21,29 @@ final class InvitateMemberViewModel: BaseViewModel<InvitateMemberViewModel.Effec
         }
     }
     @Published var selectedMembers: [RetrieveMember] = []
-    @Published var addWorkspaceFlow: IdleFlow<Bool> = .idle
-    @Published var cancelWorkspaceFlow: IdleFlow<Bool> = .idle
+    @Published var addWorkspaceFlow: Flow<Bool> = .idle
+    @Published var cancelWorkspaceFlow: Flow<Bool> = .idle
     
     // MARK: - Method
     func fetchWaitMembers(workspaceId: String) {
         workspaceRepo.getWaitList(workspaceId: workspaceId, workspaceRole: .student)
-            .fetching {
-                self.studentWaitMembers = .fetching
-            }.success { response in
-                self.studentWaitMembers = .success(response.data)
-            }.failure { error in
-                self.studentWaitMembers = .failure(error)
-            }.observe(&subscriptions)
+            .map(\.data)
+            .flow(\.studentWaitMembers, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
         workspaceRepo.getWaitList(workspaceId: workspaceId, workspaceRole: .teacher)
-            .fetching {
-                self.teacherWaitMembers = .fetching
-            }.success { response in
-                self.teacherWaitMembers = .success(response.data)
-            }.failure { error in
-                self.teacherWaitMembers = .failure(error)
-            }.observe(&subscriptions)
+            .map(\.data)
+            .flow(\.teacherWaitMembers, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
     
     func fetchWorkspaceCode(workspaceId: String) {
         workspaceRepo.getWorkspaceCode(workspaceId: workspaceId)
-            .fetching {
-                self.workspaceCode = .fetching
-            }.success { response in
-                self.workspaceCode = .success(response.data)
-            }.failure { error in
-                self.workspaceCode = .failure(error)
-            }.observe(&subscriptions)
+            .map(\.data)
+            .flow(\.workspaceCode, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
     
     func selectMember(member: RetrieveMember) {
@@ -75,13 +59,11 @@ final class InvitateMemberViewModel: BaseViewModel<InvitateMemberViewModel.Effec
             workspaceId: workspaceId,
             userSet: selectedMembers.map { $0.id },
             role: selection.role
-        ).fetching {
-            self.addWorkspaceFlow = .fetching
-        }.success { _ in
-            self.addWorkspaceFlow = .success()
-        }.failure { error in
-            self.addWorkspaceFlow = .failure(error)
-        }.observe(&subscriptions)
+        )
+        .map { _ in true }
+        .flow(\.addWorkspaceFlow, on: self)
+        .silentSink()
+        .store(in: &subscriptions)
     }
     
     func cancelWorkspace(workspaceId: String) {
@@ -89,12 +71,10 @@ final class InvitateMemberViewModel: BaseViewModel<InvitateMemberViewModel.Effec
             workspaceId: workspaceId,
             userSet: selectedMembers.map { $0.id },
             role: selection.role
-        ).fetching {
-            self.cancelWorkspaceFlow = .fetching
-        }.success { _ in
-            self.cancelWorkspaceFlow = .success()
-        }.failure { error in
-            self.cancelWorkspaceFlow = .failure(error)
-        }.observe(&subscriptions)
+        )
+        .map { _ in true }
+        .flow(\.cancelWorkspaceFlow, on: self)
+        .silentSink()
+        .store(in: &subscriptions)
     }
 }

@@ -1,6 +1,7 @@
 import Foundation
 import Domain
 import DIContainer
+import SwiftUtil
 
 public final class StartViewModel: BaseViewModel<StartViewModel.Effect> {
     
@@ -12,7 +13,7 @@ public final class StartViewModel: BaseViewModel<StartViewModel.Effect> {
     @Inject private var oauthRepo: OAuthRepo
     
     // MARK: - State
-    @Published var signInFlow: IdleFlow<Token> = .idle
+    @Published var signInFlow: Flow<Token> = .idle
     
     // MARK: - Method
     func signIn(code: String, provider: OAuth2Provider) {
@@ -20,13 +21,11 @@ public final class StartViewModel: BaseViewModel<StartViewModel.Effect> {
         case .google:
             oauthRepo.authenticateGoogle(
                 .init(code: code)
-            ).fetching {
-                self.signInFlow = .fetching
-            }.success { res in
-                self.signInFlow = .success(res.data)
-            }.failure { err in
-                self.signInFlow = .failure(err)
-            }.observe(&subscriptions)
+            )
+            .map(\.data)
+            .flow(\.signInFlow, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
         case .apple:
             break
         }

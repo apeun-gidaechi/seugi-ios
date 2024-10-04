@@ -3,7 +3,7 @@ import Combine
 import Foundation
 
 extension Entity {
-    var successResult: ObservableResult<Self> {
+    var successResult: APIResult<Self> {
         Future { completion in
             completion(.success(self))
         }
@@ -13,7 +13,7 @@ extension Entity {
         .observe()
     }
     
-    var successBaseResult: ObservableResult<Base<Self>> {
+    var successBaseResult: APIResult<Base<Self>> {
         Future { completion in
             completion(.success(self.withFakeBase()))
         }

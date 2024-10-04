@@ -1,14 +1,7 @@
-//
-//  ProfileViewModel.swift
-//  ProfileFeatureInterface
-//
-//  Created by hhhello0507 on 7/23/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import Foundation
 import DIContainer
 import Domain
+import SwiftUtil
 
 final class ProfileViewModel: BaseViewModel<ProfileViewModel.Effect> {
     enum Effect {}
@@ -17,7 +10,7 @@ final class ProfileViewModel: BaseViewModel<ProfileViewModel.Effect> {
     @Inject private var profileRepo: any ProfileRepo
     
     @Published var updateProfile: RetrieveProfile?
-    @Published var updateProfileFlow: IdleFlow<Bool> = .fetching
+    @Published var updateProfileFlow: Flow<Bool> = .fetching
     @Published var selectedProfleInfo: WritableKeyPath<RetrieveProfile, String>?
     
     var selectedProfleInfolabel: String {
@@ -60,12 +53,10 @@ final class ProfileViewModel: BaseViewModel<ProfileViewModel.Effect> {
                 wire: updateProfile.wire,
                 location: updateProfile.location
             )
-        ).fetching {
-            self.updateProfileFlow = .fetching
-        }.success { _ in
-            self.updateProfileFlow = .success()
-        }.failure { error in
-            self.updateProfileFlow = .failure(error)
-        }.observe(&subscriptions)
+        )
+        .map { _ in true }
+        .flow(\.updateProfileFlow, on: self)
+        .silentSink()
+        .store(in: &subscriptions)
     }
 }

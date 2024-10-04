@@ -1,10 +1,13 @@
 import Foundation
+import Combine
+
+import DateUtil
+import Domain
+import SwiftUtil
+
+import Then
 import Moya
 import CombineMoya
-import Combine
-import Domain
-import Then
-import DateUtil
 
 class Service<Target: BaseEndpoint> {
     
@@ -58,14 +61,14 @@ class Service<Target: BaseEndpoint> {
     func performRequest<T: Entity>(
         _ target: Target.Target,
         res: T.Type
-    ) -> ObservableResult<Base<T>> {
-        return request(target, res: Base<T>.self).observe()
+    ) -> APIResult<Base<T>> {
+        return request(target, res: Base<T>.self)
     }
     
     func performRequest(
         _ target: Target.Target
-    ) -> ObservableResult<BaseVoid> {
-        return request(target, res: BaseVoid.self).observe()
+    ) -> APIResult<BaseVoid> {
+        return request(target, res: BaseVoid.self)
     }
     
     private func requestLog(target: Target.Target) {

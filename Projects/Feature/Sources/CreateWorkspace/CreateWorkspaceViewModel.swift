@@ -9,6 +9,7 @@
 import Foundation
 import Domain
 import DIContainer
+import SwiftUtil
 
 final class CreateWorkspaceViewModel: BaseViewModel<CreateWorkspaceViewModel.Effect> {
     enum Effect {}
@@ -16,17 +17,14 @@ final class CreateWorkspaceViewModel: BaseViewModel<CreateWorkspaceViewModel.Eff
     @Inject private var workspaceRepo: any WorkspaceRepo
     
     @Published var workspaceName: String = ""
-    @Published var createWorkspaceFlow: IdleFlow<Bool> = .idle
+    @Published var createWorkspaceFlow: Flow<Bool> = .idle
     
     func createWorkspace(imageUrl: String) {
         // TODO: Add workspace image url
         workspaceRepo.createWorkspace(workspaceName: workspaceName, workspaceImageUrl: imageUrl)
-            .fetching {
-                self.createWorkspaceFlow = .fetching
-            }.success { _ in
-                self.createWorkspaceFlow = .success()
-            }.failure { error in
-                self.createWorkspaceFlow = .failure(error)
-            }.observe(&subscriptions)
+            .map { _ in true }
+            .flow(\.createWorkspaceFlow, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
 }

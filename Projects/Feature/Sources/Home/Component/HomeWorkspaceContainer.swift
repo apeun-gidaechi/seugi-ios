@@ -2,7 +2,7 @@ import SwiftUI
 import Component
 
 struct HomeWorkspaceContainer: View {
-    @AppState private var appState
+    @EnvironmentObject private var appState: AppViewModel
     
     private let flow: HomeFetchFlow
     

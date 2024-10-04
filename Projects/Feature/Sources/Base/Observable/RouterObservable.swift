@@ -1,23 +1,6 @@
-//
-//  Router.swift
-//  BaseFeature
-//
-//  Created by dgsw8th71 on 4/10/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
 
-@propertyWrapper
-struct Router: DynamicProperty {
-    @EnvironmentObject private var router: RouterObservable
-    
-    var wrappedValue: RouterObservable {
-        router
-    }
-}
-
-public final class RouterObservable: ObservableObject {
+public final class RouterViewModel: ObservableObject {
     @Published public var navPath = NavigationPath()
     public init() {}
 

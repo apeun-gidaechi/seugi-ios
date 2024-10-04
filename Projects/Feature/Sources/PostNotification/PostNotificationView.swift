@@ -4,8 +4,8 @@ import Component
 public struct PostNotificationView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    @Router private var router
-    @AppState private var appState
+    @EnvironmentObject private var router: RouterViewModel
+    @EnvironmentObject private var appState: AppViewModel
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel = PostNotificationViewModel()
     
@@ -47,23 +47,28 @@ public struct PostNotificationView: View {
             }
             .disabled(viewModel.content.isEmpty || viewModel.title.isEmpty)
         }
-        .onChange(of: viewModel.fetchPostNotification) { _ in
-            alertProvider.present(type == .createNotification ? "공지 작성 성공" : "공지 수정 성공")
-                .primaryButton("닫기") {
-                    dismiss()
-//                    guard let selectedWorkspace = appState.selectedWorkspace else {
-//                        return
-//                    }
-//                    notificationViewModel.fetchNotifications(workspaceId: selectedWorkspace.workspaceId)
-                }
-                .show()
-        } failure: { _ in
-            alertProvider.present(type == .createNotification ? "공지 작성 실패" : "공지 수정 실패")
-                .message("잠시 후 다시 시도해 주세요")
-                .primaryButton("확인") {
-                    router.popToStack()
-                }
-                .show()
+        .onReceive(viewModel.$fetchPostNotification) { flow in
+            switch flow {
+            case .success:
+                alertProvider.present(type == .createNotification ? "공지 작성 성공" : "공지 수정 성공")
+                    .primaryButton("닫기") {
+                        dismiss()
+    //                    guard let selectedWorkspace = appState.selectedWorkspace else {
+    //                        return
+    //                    }
+    //                    notificationViewModel.fetchNotifications(workspaceId: selectedWorkspace.workspaceId)
+                    }
+                    .show()
+            case .failure:
+                alertProvider.present(type == .createNotification ? "공지 작성 실패" : "공지 수정 실패")
+                    .message("잠시 후 다시 시도해 주세요")
+                    .primaryButton("확인") {
+                        router.popToStack()
+                    }
+                    .show()
+            default:
+                break
+            }
         }
     }
 }

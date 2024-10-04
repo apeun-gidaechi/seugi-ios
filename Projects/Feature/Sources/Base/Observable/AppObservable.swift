@@ -1,32 +1,23 @@
 import Foundation
-import Domain
-import DIContainer
 import SwiftUI
 
-@propertyWrapper
-struct AppState: DynamicProperty {
-    @EnvironmentObject private var appState: AppObservable
-    
-    var wrappedValue: AppObservable {
-        appState
-    }
-}
+import DIContainer
+import Domain
+import SwiftUtil
 
-public final class AppObservable: BaseViewModel<AppObservable.Effect> {
+public final class AppViewModel: BaseViewModel<AppViewModel.Effect> {
     public enum Effect {
         case logout
     }
     
-    // MARK: - Repo
     @Inject private var keyValueRepo: KeyValueRepo
     @Inject private var keychainRepo: KeychainRepo
     @Inject private var workspaceRepo: WorkspaceRepo
     @Inject private var profileRepo: ProfileRepo
     @Inject private var memberRepo: MemberRepo
     
-    // MARK: - State
     // workspace
-    @Published public var workspaces: FetchFlow<[Workspace]> = .fetching
+    @Published public var workspaces: Flow<[Workspace]> = .fetching
     @Published public var selectedWorkspace: Workspace? {
         willSet {
             guard let id = newValue?.workspaceId else { return }
@@ -35,7 +26,7 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
     }
     @Published public var accessToken: String?
     @Published public var refreshToken: String?
-    @Published public var profile: FetchFlow<RetrieveProfile> = .fetching
+    @Published public var profile: Flow<RetrieveProfile> = .fetching
     public var workspaceRole: WorkspaceRole? {
         guard let selectedWorkspace,
               let member = profile.data?.member else {
@@ -44,7 +35,6 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
         return .getRole(memberId: member.id, workspace: selectedWorkspace)
     }
     
-    // MARK: - Method
     public override init() {
         super.init()
         accessToken = keyValueRepo.load(key: .accessToken)
@@ -52,7 +42,9 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
         fetchWorkspaces()
         observeState()
     }
-    
+}
+
+extension AppViewModel {
     private func observeState() {
         $accessToken.sink {
             if let token = $0 {
@@ -83,43 +75,45 @@ public final class AppObservable: BaseViewModel<AppObservable.Effect> {
         if let fcmToken = keyValueRepo.load(key: .fcmToken) as? String {
             memberRepo.logout(
                 .init(fcmToken: fcmToken)
-            ).observe(&subscriptions)
+            )
+            .silentSink()
+            .store(in: &subscriptions)
         }
         emit(.logout)
     }
     
     public func fetchWorkspaces() {
         guard accessToken != nil else { return }
-        workspaceRepo.getWorkspaces().fetching {
-            self.workspaces = .fetching
-        }.success { [self] workspaces in
-            self.workspaces = .success(workspaces.data)
-            if let id: String = keyValueRepo.load(key: .selectedWorkspaceId),
-               let selectedWorkspace = workspaces.data.first(where: { $0.workspaceId == id }) {
-                // 선택한 workspace가 있었다면
-                self.selectedWorkspace = selectedWorkspace
-            } else if let workspace = workspaces.data.first {
-                // 아니면 첫 번째 workspace
-                self.selectedWorkspace = workspace
+        workspaceRepo.getWorkspaces()
+            .map(\.data)
+            .flow(\.workspaces, on: self)
+            .sink { [self] in
+                if case .failure(let error) = $0 {
+                    Log.error("AppState.fetchWorkspaces - \(error)")
+                    if case .refreshFailure = error {
+                        logout()
+                    }
+                }
+            } receiveValue: { [self] workspaces in
+                if let id: String = keyValueRepo.load(key: .selectedWorkspaceId),
+                   let selectedWorkspace = workspaces.first(where: { $0.workspaceId == id }) {
+                    // 선택한 workspace가 있었다면
+                    self.selectedWorkspace = selectedWorkspace
+                } else if let workspace = workspaces.first {
+                    // 아니면 첫 번째 workspace
+                    self.selectedWorkspace = workspace
+                }
+                fetchMyInfo()
             }
-            fetchMyInfo()
-        }.failure { [self] error in
-            workspaces = .failure(error)
-            Log.error("AppState.fetchWorkspaces - \(error)")
-            if case .refreshFailure = error {
-                logout()
-            }
-        }.observe(&subscriptions)
+            .store(in: &subscriptions)
     }
     
     public func fetchMyInfo() {
         guard let selectedWorkspace else { return }
-        profileRepo.me(workspaceId: selectedWorkspace.workspaceId).fetching {
-            self.profile = .fetching
-        }.success { profile in
-            self.profile = .success(profile.data)
-        }.failure { error in
-            self.profile = .failure(error)
-        }.observe(&subscriptions)
+        profileRepo.me(workspaceId: selectedWorkspace.workspaceId)
+            .map(\.data)
+            .flow(\.profile, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
 }

@@ -3,6 +3,7 @@ import Domain
 import DIContainer
 import Combine
 import SwiftUI
+import SwiftUtil
 
 public final class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.Effect> {
     
@@ -15,7 +16,7 @@ public final class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.Effect
     // MARK: - State
     @Published var email: String = ""
     @Published var password: String = ""
-    @Published var signInFlow: IdleFlow<Token> = .idle
+    @Published var signInFlow: Flow<Token> = .idle
     
     public override init() {
         super.init()
@@ -34,12 +35,9 @@ public final class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.Effect
                 token: fcmToken
             )
         )
-        .fetching {
-            self.signInFlow = .fetching
-        }.success { res in
-            self.signInFlow = .success(res.data)
-        }.failure { error in
-            self.signInFlow = .failure(error)
-        }.observe(&subscriptions)
+        .map(\.data)
+        .flow(\.signInFlow, on: self)
+        .silentSink()
+        .store(in: &subscriptions)
     }
 }

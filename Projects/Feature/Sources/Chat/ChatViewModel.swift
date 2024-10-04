@@ -14,8 +14,8 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
     
     // MARK: - State
     /* personal */
-    @Published var personalRooms: FetchFlow<[Room]> = .fetching
-    @Published var groupRooms: FetchFlow<[Room]> = .fetching
+    @Published var personalRooms: Flow<[Room]> = .fetching
+    @Published var groupRooms: Flow<[Room]> = .fetching
     @Published var searchText = ""
     @Published var isSearching = false
     
@@ -25,20 +25,20 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
         self.roomType = roomType
     }
     
-    private var rooms: FetchFlow<[Room]> {
+    private var rooms: Flow<[Room]> {
         switch roomType {
         case .personal: personalRooms
         case .group: groupRooms
         }
     }
     
-    private var sortedRooms: FetchFlow<[Room]> {
+    private var sortedRooms: Flow<[Room]> {
         rooms.map {
             $0.sorted { $0.lastMessageTimestamp > $1.lastMessageTimestamp }
         }
     }
     
-    private var searchRooms: FetchFlow<[Room]> {
+    private var searchRooms: Flow<[Room]> {
         guard !searchText.isEmpty else {
             return sortedRooms
         }
@@ -50,35 +50,30 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
         return .success(rooms)
     }
     
-    var mergedRooms: FetchFlow<[Room]> {
+    var mergedRooms: Flow<[Room]> {
         isSearching ? searchRooms : sortedRooms
     }
     
-    // MARK: - Method
     func fetchChats(workspaceId: String) {
         switch roomType {
         case .personal:
-            chatRepo.searchPersonal(workspaceId: workspaceId).fetching {
-                self.personalRooms = .fetching
-            }.success { res in
-                self.personalRooms = .success(res.data)
-            }.failure { error in
-                self.personalRooms = .failure(error)
-                if case .refreshFailure = error {
-                    self.emit(.refreshFailure)
-                }
-            }.observe(&subscriptions)
+            chatRepo.searchPersonal(workspaceId: workspaceId)
+                .map(\.data)
+                .flow(\.personalRooms, on: self)
+                .silentSink()
+                .store(in: &subscriptions)
+            
+            // TODO: Handle refreshFailure
+//            
+//            if case .refreshFailure = error {
+//                self.emit(.refreshFailure)
+//            }
         case .group:
-            chatRepo.searchGroup(workspaceId: workspaceId).fetching {
-                self.groupRooms = .fetching
-            }.success { res in
-                self.groupRooms = .success(res.data)
-            }.failure { error in
-                self.groupRooms = .failure(error)
-                if case .refreshFailure = error {
-                    self.emit(.refreshFailure)
-                }
-            }.observe(&subscriptions)
+            chatRepo.searchGroup(workspaceId: workspaceId)
+                .map(\.data)
+                .flow(\.groupRooms, on: self)
+                .silentSink()
+                .store(in: &subscriptions)
         }
     }
 }

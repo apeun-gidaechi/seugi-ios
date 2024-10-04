@@ -3,6 +3,7 @@ import Domain
 import DIContainer
 import PhotosUI
 import SwiftUI
+import SwiftUtil
 
 public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect> {
     
@@ -19,14 +20,14 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect
     // MARK: - State
     @Published private var page: Int = 0
     /* message */
-    @Published var messages: FetchFlow<[Message]> = .fetching
+    @Published var messages: Flow<[Message]> = .fetching
     @Published var message: String = ""
     
     /* photo */
     @Published var photo: PhotosPickerItem?
     
     /* left room */
-    @Published var leftRoomFlow: IdleFlow<Bool> = .idle
+    @Published var leftRoomFlow: Flow<Bool> = .idle
     
     // MARK: - Parameter
     private let room: Room
@@ -57,16 +58,12 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect
     }
     
     func fetchMessages(roomId: String) {
-        messageRepo.getMessages(roomId: roomId, page: page, size: 50).fetching {
-            self.messages = .fetching
-        }.success { res in
-            let messages = res.data.messages
-                .sorted { $0.timestamp ?? .now > $1.timestamp ?? .now }
-            self.messages = .success(messages)
-            self.emit(.messagesFetched)
-        }.failure { error in
-            Log.error("❌", error)
-        }.observe(&subscriptions)
+        messageRepo.getMessages(roomId: roomId, page: page, size: 50)
+            .map(\.data.messages)
+            .map { $0.sorted { $0.timestamp ?? .now > $1.timestamp ?? .now } }
+            .flow(\.messages, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
     
     func sendMessage(room: Room) {
@@ -82,13 +79,11 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect
     }
     
     func left(roomId: String) {
-        chatRepo.leftGroup(roomId: roomId).fetching {
-            self.leftRoomFlow = .fetching
-        }.success { _ in
-            self.leftRoomFlow = .success()
-        }.failure { err in
-            self.leftRoomFlow = .failure(err)
-        }.observe(&subscriptions)
+        chatRepo.leftGroup(roomId: roomId)
+            .map { _ in true }
+            .flow(\.leftRoomFlow, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
     
     deinit {

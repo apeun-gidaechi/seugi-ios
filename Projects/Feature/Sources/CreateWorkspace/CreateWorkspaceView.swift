@@ -4,8 +4,8 @@ import PhotosUI
 
 public struct CreateWorkspaceView: View {
     
-    @AppState private var appState
-    @Router private var router
+    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var fileManager: FileManager
     @ObservedObject private var viewModel = CreateWorkspaceViewModel()
@@ -37,7 +37,7 @@ public struct CreateWorkspaceView: View {
             SeugiButton.large(
                 "계속하기",
                 type: .primary,
-                isLoading: viewModel.createWorkspaceFlow == .fetching
+                isLoading: viewModel.createWorkspaceFlow.is(.fetching)
             ) {
                 viewModel.createWorkspace(imageUrl: photoUrl ?? "")
             }
@@ -46,18 +46,23 @@ public struct CreateWorkspaceView: View {
         }
         .padding(.horizontal, 20)
         .seugiTopBar("새 학교 등록")
-        .onChange(of: viewModel.createWorkspaceFlow) { _ in
-            alertProvider.present("학교 등록 성공")
-                .primaryButton("닫기") {
-                    appState.fetchWorkspaces()
-                    router.navigateToRoot()
-                }
-                .show()
-        } failure: { _ in
-            alertProvider.present("학교 등록 실패")
-                .primaryButton("확인") {}
-                .message("잠시 후 다시 시도해 주세요")
-                .show()
+        .onReceive(viewModel.$createWorkspaceFlow) { flow in
+            switch flow {
+            case .success:
+                alertProvider.present("학교 등록 성공")
+                    .primaryButton("닫기") {
+                        appState.fetchWorkspaces()
+                        router.navigateToRoot()
+                    }
+                    .show()
+            case .failure:
+                alertProvider.present("학교 등록 실패")
+                    .primaryButton("확인") {}
+                    .message("잠시 후 다시 시도해 주세요")
+                    .show()
+            default:
+                break
+            }
         }
         .photosPicker(
             isPresented: $isPhotoPresent,

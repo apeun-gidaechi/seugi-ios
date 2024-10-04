@@ -1,15 +1,17 @@
+import Combine
+
 public protocol WorkspaceRepo {
-    func createWorkspace(workspaceName: String, workspaceImageUrl: String) -> ObservableResult<BaseVoid>
-    func getWorkspaces() -> ObservableResult<Base<[Workspace]>>
-    func getWorkspaceCode(workspaceId: String) -> ObservableResult<Base<String>>
-    func getWorkspace(code: String) -> ObservableResult<Base<WorkspaceInfo>>
-    func joinWorkspace(workspaceId: String, workspaceCode: String, role: WorkspaceRole) -> ObservableResult<BaseVoid>
-    func getMembers(workspaceId: String) -> ObservableResult<Base<[RetrieveProfile]>>
-    func getMembersChart(workspaceId: String) -> ObservableResult<Base<WorkspaceMembersChart>>
-    func removeWorkspace(workspaceId: String) -> ObservableResult<BaseVoid>
-    func addWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> ObservableResult<BaseVoid>
-    func cancelWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> ObservableResult<BaseVoid>
-    func getWaitList(workspaceId: String, workspaceRole: WorkspaceRole) -> ObservableResult<Base<[RetrieveMember]>>
-    func updateWorkspace(workspaceId: String, workspaceName: String, workspaceImageUrl: String) -> ObservableResult<BaseVoid>
-    func getMyWaitList() -> ObservableResult<Base<[WorkspaceInfo]>>
+    func createWorkspace(workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid>
+    func getWorkspaces() -> APIResult<Base<[Workspace]>>
+    func getWorkspaceCode(workspaceId: String) -> APIResult<Base<String>>
+    func getWorkspace(code: String) -> APIResult<Base<WorkspaceInfo>>
+    func joinWorkspace(workspaceId: String, workspaceCode: String, role: WorkspaceRole) -> APIResult<BaseVoid>
+    func getMembers(workspaceId: String) -> APIResult<Base<[RetrieveProfile]>>
+    func getMembersChart(workspaceId: String) -> APIResult<Base<WorkspaceMembersChart>>
+    func removeWorkspace(workspaceId: String) -> APIResult<BaseVoid>
+    func addWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> APIResult<BaseVoid>
+    func cancelWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> APIResult<BaseVoid>
+    func getWaitList(workspaceId: String, workspaceRole: WorkspaceRole) -> APIResult<Base<[RetrieveMember]>>
+    func updateWorkspace(workspaceId: String, workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid>
+    func getMyWaitList() -> APIResult<Base<[WorkspaceInfo]>>
 }

@@ -1,14 +1,7 @@
-//
-//  ManageMemberViewModel.swift
-//  SettingWorkspaceFeatureInterface
-//
-//  Created by hhhello0507 on 7/23/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import Foundation
 import Domain
 import DIContainer
+import SwiftUtil
 
 final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Effect> {
     enum Effect {}
@@ -17,12 +10,12 @@ final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Eff
     
     // MARK: - State
     @Published var selection = segmentedButtonRoles[0]
-    @Published var members: FetchFlow<WorkspaceMembersChart> = .fetching
+    @Published var members: Flow<WorkspaceMembersChart> = .fetching
     @Published var searchText: String = ""
     @Published var isSearching: Bool = false
     
     // MARK: - Getter
-    var selectedMembers: FetchFlow<[RetrieveProfile]> {
+    var selectedMembers: Flow<[RetrieveProfile]> {
         members.map {
             // 선생님을 선택했을 경우
             let selectedMembers = if selection == segmentedButtonRoles[0] {
@@ -34,7 +27,7 @@ final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Eff
         }
     }
     
-    var searchedMembers: FetchFlow<[RetrieveProfile]> {
+    var searchedMembers: Flow<[RetrieveProfile]> {
         guard !searchText.isEmpty else {
             return selectedMembers
         }
@@ -46,12 +39,9 @@ final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Eff
     // MARK: - Method
     func fetchMembers(workspaceId: String) {
         workspaceRepo.getMembersChart(workspaceId: workspaceId)
-            .fetching {
-                self.members = .fetching
-            }.success {
-                self.members = .success($0.data)
-            }.failure { error in
-                self.members = .failure(error)
-            }.observe(&subscriptions)
+            .map(\.data)
+            .flow(\.members, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
 }

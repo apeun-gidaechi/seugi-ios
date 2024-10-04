@@ -1,22 +1,15 @@
-//
-//  SettingProfileViewModel.swift
-//  SettingProfileFeature
-//
-//  Created by hhhello0507 on 7/23/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import Foundation
 import DIContainer
 import Domain
+import SwiftUtil
 
 final class SettingProfileViewModel: BaseViewModel<SettingProfileViewModel.Effect> {
     enum Effect {}
     
     @Inject private var memberRepo: any MemberRepo
     
-    @Published var editMemberFlow: IdleFlow<Bool> = .idle
-    @Published var removeMemberFlow: IdleFlow<Bool> = .idle
+    @Published var editMemberFlow: Flow<Bool> = .idle
+    @Published var removeMemberFlow: Flow<Bool> = .idle
     var member: RetrieveMember?
     
     func editMember(
@@ -27,22 +20,18 @@ final class SettingProfileViewModel: BaseViewModel<SettingProfileViewModel.Effec
             .init(
                 picture: picture, name: member.name, birth: member.birth
             )
-        ).fetching {
-            self.editMemberFlow = .fetching
-        }.success { _ in
-            self.editMemberFlow = .success()
-        }.failure { error in
-            self.editMemberFlow = .failure(error)
-        }.observe(&subscriptions)
+        )
+        .map { _ in true }
+        .flow(\.editMemberFlow, on: self)
+        .silentSink()
+        .store(in: &subscriptions)
     }
     
     func removeMember() {
-        memberRepo.remove().fetching {
-            self.removeMemberFlow = .idle
-        }.success { _ in
-            self.removeMemberFlow = .success()
-        }.failure { err in
-            self.removeMemberFlow = .failure(err)
-        }.observe(&subscriptions)
+        memberRepo.remove()
+            .map { _ in true }
+            .flow(\.removeMemberFlow, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
 }

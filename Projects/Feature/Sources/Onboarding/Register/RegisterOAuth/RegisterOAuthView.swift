@@ -4,7 +4,7 @@ import Component
 public struct RegisterOAuthView: View {
     
     @ObservedObject private var viewModel: RegisterOAuthViewModel
-    @Router private var router
+    @EnvironmentObject private var router: RouterViewModel
     @FocusState private var firstTextField: Bool
     
     public init(viewModel: RegisterOAuthViewModel) {

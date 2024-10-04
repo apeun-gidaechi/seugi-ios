@@ -4,8 +4,8 @@ import SwiftUtil
 
 public struct StartView: View {
     
-    @Router private var router
-    @AppState private var appState
+    @EnvironmentObject private var router: RouterViewModel
+    @EnvironmentObject private var appState: AppViewModel
     @EnvironmentObject private var alertProvider: AlertProvider
     
     @StateObject private var viewModel = StartViewModel()
@@ -63,25 +63,24 @@ public struct StartView: View {
                 }
             }
         }
-        .onChangeFailure(of: viewModel.signInFlow) { _ in
-            alertProvider.present("로그인 실패")
-                .message("잠시 후 다시 시도해 주세요")
-                .show()
-        }
-        .onChange(of: viewModel.signInFlow) { token in
-            Log.info("StartView - 로그인 성공")
-            let accessToken = String(token.accessToken.split(separator: " ")[1])
-            let refreshToken = String(token.refreshToken.split(separator: " ")[1])
-            withAnimation {
-                appState.accessToken = accessToken
-                appState.refreshToken = refreshToken
-                appState.login()
-                router.navigateToRoot()
+        .onReceive(viewModel.$signInFlow) { flow in
+            switch flow {
+            case .success(let token):
+                let accessToken = String(token.accessToken.split(separator: " ")[1])
+                let refreshToken = String(token.refreshToken.split(separator: " ")[1])
+                withAnimation {
+                    appState.accessToken = accessToken
+                    appState.refreshToken = refreshToken
+                    appState.login()
+                    router.navigateToRoot()
+                }
+            case .failure:
+                alertProvider.present("로그인 실패")
+                    .message("아이디 혹은 비밀번호를 다시 확인해 주세요")
+                    .show()
+            default:
+                break
             }
-        } failure: { _ in
-            alertProvider.present("로그인 실패")
-                .message("아이디 혹은 비밀번호를 다시 확인해 주세요")
-                .show()
         }
     }
     
@@ -98,7 +97,7 @@ public struct StartView: View {
                     viewModel.signIn(code: code, provider: .apple)
                 } failureCompletion: {
                     isPresented = false
-                    viewModel.signInFlow = .failure(.unknown)
+//                    viewModel.signInFlow = .failure(.unknown)
                 }
             }
             GoogleLoginButton {
@@ -110,7 +109,7 @@ public struct StartView: View {
                     viewModel.signIn(code: code, provider: .google)
                 } failureCompletion: { _ in
                     isPresented = false
-                    viewModel.signInFlow = .failure(.unknown)
+//                    viewModel.signInFlow = .failure(.unknown)
                 }
             }
             Spacer()

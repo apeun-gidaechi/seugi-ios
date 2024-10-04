@@ -5,8 +5,8 @@ import Domain
 public struct ProfileView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    @AppState private var appState
-    @Router private var router
+    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var router: RouterViewModel
     @StateObject private var viewModel = ProfileViewModel()
     @State private var isSheetPresent: Bool = false
     
@@ -61,29 +61,31 @@ public struct ProfileView: View {
         .seugiBackground(.sub(.white))
         .seugiTopBar("내 프로필")
         .hideBackButton()
-        .onChange(of: viewModel.updateProfileFlow) { _ in
-            alertProvider.present("\(viewModel.selectedProfleInfolabel) 수정 성공")
-                .show()
-        } failure: { _ in
-            alertProvider.present("\(viewModel.selectedProfleInfolabel) 수정 실패")
-                .primaryButton("확인") {}
-                .show()
+        .onReceive(viewModel.$updateProfileFlow) { flow in
+            switch flow {
+            case .success:
+                alertProvider.present("\(viewModel.selectedProfleInfolabel) 수정 성공")
+                    .show()
+                appState.fetchMyInfo()
+            case .failure:
+                alertProvider.present("\(viewModel.selectedProfleInfolabel) 수정 실패")
+                    .primaryButton("확인") {}
+                    .show()
+            default:
+                break
+            }
         }
         .onChange(of: profile, initial: true) {
             viewModel.updateProfile = $0
         }
-        .onChangeSuccess(of: viewModel.updateProfileFlow) { _ in
-            appState.fetchMyInfo()
-        }
         .onChange(of: viewModel.selectedProfleInfo) { _ in
             self.isSheetPresent = true
         }
-        .sheet(isPresented: $isSheetPresent) {
-            sheet
-        }
+        .sheet(isPresented: $isSheetPresent, content: sheetContent)
     }
     
-    var sheet: some View {
+    @ViewBuilder
+    func sheetContent() -> some View {
         VStack(spacing: 32) {
             VStack(alignment: .leading, spacing: 16) {
                 Text("\(viewModel.selectedProfleInfolabel) 수정")

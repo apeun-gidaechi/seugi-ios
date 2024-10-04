@@ -12,7 +12,7 @@ import Component
 
 struct ChatMessageCell: View {
     
-    @AppState private var appState
+    @EnvironmentObject private var appState: AppViewModel
     
     enum Action {
         case clickImage

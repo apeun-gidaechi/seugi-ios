@@ -4,8 +4,8 @@ import Domain
 
 public struct RootView: View {
     
-    @StateObject private var appState = AppObservable()
-    @StateObject private var router = RouterObservable()
+    @StateObject private var appState = AppViewModel()
+    @StateObject private var router = RouterViewModel()
     @StateObject private var stompManager = StompManager()
     @StateObject private var fileManager = FileManager()
     

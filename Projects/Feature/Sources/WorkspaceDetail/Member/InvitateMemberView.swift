@@ -12,7 +12,7 @@ import Component
 struct InvitateMemberView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    @AppState private var appState
+    @EnvironmentObject private var appState: AppViewModel
     @StateObject private var viewModel = InvitateMemberViewModel()
     
     @State private var buttonsSize: CGSize = .zero
@@ -120,35 +120,48 @@ struct InvitateMemberView: View {
         .onAppear {
             fetchAll()
         }
-        .onChangeFetchFlow(of: viewModel.waitMembers) {} failure: {
-            alertProvider.present("불러오기 실패")
-                .show()
-        }
-        .onChange(of: viewModel.addWorkspaceFlow) { _ in
-            alertProvider.present("가입 수락 성공")
-                .show()
-            guard let selectedWorkspace = appState.selectedWorkspace else {
-                return
+        // TODO: Resolve
+//        .onReceive(viewModel.$waitMembers) {
+//            if case .failure = $0 {
+//                alertProvider.present("불러오기 실패")
+//                    .show()
+//            }
+//        }
+        .onReceive(viewModel.$addWorkspaceFlow) { flow in
+            switch flow {
+            case .success:
+                alertProvider.present("가입 수락 성공")
+                    .show()
+                guard let selectedWorkspace = appState.selectedWorkspace else {
+                    return
+                }
+                viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)
+            case .failure:
+                alertProvider.present("가입 수락 실패")
+                    .primaryButton("확인") {}
+                    .message("잠시 후 다시 시도해 주세요")
+                    .show()
+            default:
+                break
             }
-            viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)
-        } failure: { _ in
-            alertProvider.present("가입 수락 실패")
-                .primaryButton("확인") {}
-                .message("잠시 후 다시 시도해 주세요")
-                .show()
         }
-        .onChange(of: viewModel.cancelWorkspaceFlow) { _ in
-            alertProvider.present("가입 거절 실패")
-                .show()
-            guard let selectedWorkspace = appState.selectedWorkspace else {
-                return
+        .onReceive(viewModel.$cancelWorkspaceFlow) { flow in
+            switch flow {
+            case .success:
+                alertProvider.present("가입 거절 성공")
+                    .show()
+                guard let selectedWorkspace = appState.selectedWorkspace else {
+                    return
+                }
+                viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)
+            case .failure:
+                alertProvider.present("가입 거절 실패")
+                    .primaryButton("확인") {}
+                    .message("잠시 후 다시 시도해 주세요")
+                    .show()
+            default:
+                break
             }
-            viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)
-        } failure: { _ in
-            alertProvider.present("가입 거절 실패")
-                .primaryButton("확인") {}
-                .message("잠시 후 다시 시도해 주세요")
-                .show()
         }
     }
 }

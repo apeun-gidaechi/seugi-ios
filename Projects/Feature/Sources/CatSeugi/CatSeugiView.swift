@@ -10,7 +10,7 @@ public struct CatSeugiView: View {
         case top
     }
     
-    @AppState private var appState
+    @EnvironmentObject private var appState: AppViewModel
     @EnvironmentObject private var alert: AlertProvider
     @StateObject private var viewModel = CatSeugiViewModel()
     
@@ -66,16 +66,16 @@ public struct CatSeugiView: View {
         .hideKeyboardWhenTap()
         .seugiTopBar("캣스기")
         .showShadow()
-        .onAppear {
-            viewModel.subscribe { effect in
-                switch effect {
-                case .messagesFetched:
-                    scrollToBottom()
-                case .sendMessageFailure:
-                    alert.present("전송 실패")
-                        .message("다시 시도해 주세요")
-                        .show()
-                }
+        .onReceive(viewModel.$sendMessageFlow) { flow in
+            switch flow {
+            case .success:
+                scrollToBottom()
+            case .failure:
+                alert.present("전송 실패")
+                    .message("다시 시도해 주세요")
+                    .show()
+            default:
+                break
             }
             focused = true
         }

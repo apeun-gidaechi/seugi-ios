@@ -37,16 +37,17 @@ public final class StompManager: BaseViewModel<StompManager.Effect> {
                     Log.error("🤩 STOMP disConnected - RefreshToken not founded")
                     return
                 }
-                memberRepo.refresh(token: refreshToken).fetching {
-                    Log.info("🤩 STOMP disConnected - try to reissue !")
-                }.success { res in
-                    let accessToken = String(res.data.split(separator: " ")[1])
-                    self.stompRepo.reissue(accessToken: accessToken)
-                    self.stompRepo.reconnect(time: 1)
-                    Log.info("🤩 STOMP disConnected - reconnecting...")
-                }.failure { _ in
-                    Log.error("🤩 STOMP disConnected - reissue failure... OTL")
-                }.observe(&subscriptions)
+                memberRepo.refresh(token: refreshToken)
+                    .print()
+                    .ignoreError()
+                    .map(\.data)
+                    .sink { token in
+                        let accessToken = String(token.split(separator: " ")[1])
+                        self.stompRepo.reissue(accessToken: accessToken)
+                        self.stompRepo.reconnect(time: 1)
+                        Log.info("🤩 STOMP disConnected - reconnecting...")
+                    }
+                    .store(in: &subscriptions)
             }
             .store(in: &subscriptions)
         stompRepo.subSendError()

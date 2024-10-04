@@ -1,23 +1,21 @@
 import Foundation
 import Domain
 import DIContainer
+import SwiftUtil
 
 public final class JoinWorkspaceViewModel: BaseViewModel<JoinWorkspaceViewModel.Effect> {
     
-    public enum Effect {
-        case fetchWorkspaceSuccess
-        case joinWorkspaceSuccess
-    }
+    public enum Effect {}
     
     // MARK: - Repo
     @Inject private var workspaceRepo: WorkspaceRepo
     
     // MARK: - State
     // workspace
-    @Published var workspace: IdleFlow<WorkspaceInfo> = .idle
+    @Published var workspace: Flow<WorkspaceInfo> = .idle
     
     // join
-    @Published public var joinFlow: IdleFlow<Bool> = .idle
+    @Published public var joinFlow: Flow<Bool> = .idle
     @Published var roleType = WorkspaceRole.student
     @Published public var code: String = ""
     public var isFetchJoinWorkspace: Bool {
@@ -29,14 +27,11 @@ public final class JoinWorkspaceViewModel: BaseViewModel<JoinWorkspaceViewModel.
     
     // MARK: - Method
     public func fetchWorkspace() {
-        workspaceRepo.getWorkspace(code: code).fetching {
-            self.workspace = .fetching
-        }.success { res in
-            self.workspace = .success(res.data)
-            self.emit(.fetchWorkspaceSuccess)
-        }.failure { error in
-            self.workspace = .failure(error)
-        }.observe(&subscriptions)
+        workspaceRepo.getWorkspace(code: code)
+            .map(\.data)
+            .flow(\.workspace, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
     
     public func joinWorkspace() {
@@ -44,13 +39,10 @@ public final class JoinWorkspaceViewModel: BaseViewModel<JoinWorkspaceViewModel.
             Log.info("💎 JoinWorkspaceViewModel.joinWorkspace - workspace not founded")
             return
         }
-        workspaceRepo.joinWorkspace(workspaceId: w.workspaceId, workspaceCode: code, role: roleType).fetching {
-            self.joinFlow = .fetching
-        }.success { _ in
-            self.joinFlow = .success()
-            self.emit(.joinWorkspaceSuccess)
-        }.failure { error in
-            self.joinFlow = .failure(error)
-        }.observe(&subscriptions)
+        workspaceRepo.joinWorkspace(workspaceId: w.workspaceId, workspaceCode: code, role: roleType)
+            .map { _ in true }
+            .flow(\.joinFlow, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
 }

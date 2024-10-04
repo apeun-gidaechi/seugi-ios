@@ -6,8 +6,8 @@ public struct HomeView: View {
     
     @StateObject private var viewModel = HomeViewModel()
     @EnvironmentObject private var alertProvider: AlertProvider
-    @AppState private var appState
-    @Router private var router
+    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var router: RouterViewModel
     
     private var isWorkspaceEmpty: Bool {
         if let workspaces = appState.workspaces.data,
@@ -19,7 +19,7 @@ public struct HomeView: View {
     }
     
     private var flow: HomeFetchFlow {
-        if appState.workspaces == .fetching {
+        if appState.workspaces.is(.fetching) {
             .fetching
         } else if isWorkspaceEmpty {
             .failure
