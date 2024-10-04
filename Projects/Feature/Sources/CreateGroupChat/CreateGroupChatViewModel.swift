@@ -2,10 +2,10 @@ import Domain
 import Foundation
 import DIContainer
 import SwiftUtil
+import Combine
 
-public final class CreateGroupChatViewModel: BaseViewModel<CreateGroupChatViewModel.Effect> {
-    
-    public enum Effect {}
+public final class CreateGroupChatViewModel: ObservableObject {
+    var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Repo
     @Inject private var workspaceRepo: WorkspaceRepo

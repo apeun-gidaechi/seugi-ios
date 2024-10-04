@@ -2,9 +2,10 @@ import Foundation
 import Domain
 import DIContainer
 import SwiftUtil
+import Combine
 
-final class WorkspaceMemberViewModel: BaseViewModel<WorkspaceMemberViewModel.Effect> {
-    enum Effect {}
+final class WorkspaceMemberViewModel: ObservableObject {
+    var subscriptions = Set<AnyCancellable>()
     
     @Inject private var workspaceRepo: any WorkspaceRepo
     

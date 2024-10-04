@@ -1,15 +1,12 @@
 import Foundation
 import SwiftUI
+import Combine
 
 import DIContainer
 import Domain
 import SwiftUtil
 
-public final class AppViewModel: BaseViewModel<AppViewModel.Effect> {
-    public enum Effect {
-        case logout
-    }
-    
+public final class AppViewModel: ObservableObject {
     @Inject private var keyValueRepo: KeyValueRepo
     @Inject private var keychainRepo: KeychainRepo
     @Inject private var workspaceRepo: WorkspaceRepo
@@ -34,9 +31,11 @@ public final class AppViewModel: BaseViewModel<AppViewModel.Effect> {
         }
         return .getRole(memberId: member.id, workspace: selectedWorkspace)
     }
+    @Published var logoutFlow = Flow<Bool>.idle
     
-    public override init() {
-        super.init()
+    var subscriptions = Set<AnyCancellable>()
+    
+    public init() {
         accessToken = keyValueRepo.load(key: .accessToken)
         refreshToken = keychainRepo.load(key: .refreshToken)
         fetchWorkspaces()
@@ -76,10 +75,11 @@ extension AppViewModel {
             memberRepo.logout(
                 .init(fcmToken: fcmToken)
             )
+            .map { _ in true }
+            .flow(\.logoutFlow, on: self)
             .silentSink()
             .store(in: &subscriptions)
         }
-        emit(.logout)
     }
     
     public func fetchWorkspaces() {

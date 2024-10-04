@@ -4,13 +4,16 @@ import DIContainer
 import PhotosUI
 import SwiftUI
 import SwiftUtil
+import Combine
 
-public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect> {
+public final class ChatDetailViewModel: ObservableObject {
     
     public enum Effect {
         case messageLoaded
         case messagesFetched
     }
+    
+    var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Repo
     @Inject private var messageRepo: MessageRepo
@@ -35,7 +38,6 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect
     // MARK: - Initializer
     init(room: Room) {
         self.room = room
-        super.init()
         self.fetchMessages(roomId: room.id)
         self.subscribe(roomId: room.id)
     }
@@ -47,7 +49,7 @@ public final class ChatDetailViewModel: BaseViewModel<ChatDetailViewModel.Effect
                 if var messages = messages.data {
                     messages.append(res)
                     self.messages = .success(messages)
-                    emit(.messageLoaded)
+//                    emit(.messageLoaded)
                 }
             }
             .store(in: &subscriptions)

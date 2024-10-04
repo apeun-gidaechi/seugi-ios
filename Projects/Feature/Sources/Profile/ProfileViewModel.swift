@@ -2,9 +2,10 @@ import Foundation
 import DIContainer
 import Domain
 import SwiftUtil
+import Combine
 
-final class ProfileViewModel: BaseViewModel<ProfileViewModel.Effect> {
-    enum Effect {}
+final class ProfileViewModel: ObservableObject {
+    var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Properties
     @Inject private var profileRepo: any ProfileRepo

@@ -82,12 +82,12 @@ public struct ChatView: View {
                 }
         }
         .onAppear {
-            viewModel.subscribe { subject in
-                switch subject {
-                case .refreshFailure:
-                    appState.logout()
-                }
-            }
+//            viewModel.subscribe { subject in
+//                switch subject {
+//                case .refreshFailure:
+//                    appState.logout()
+//                }
+//            }
         }
         .onReceive(appState.$selectedWorkspace) {
             guard let id = $0?.workspaceId else { return }

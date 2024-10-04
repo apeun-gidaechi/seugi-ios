@@ -10,9 +10,10 @@ import Foundation
 import DIContainer
 import Domain
 import SwiftUtil
+import Combine
 
-final class HomeViewModel: BaseViewModel<HomeViewModel.Effect> {
-    enum Effect {}
+final class HomeViewModel: ObservableObject {
+    var subscriptions = Set<AnyCancellable>()
     
     @Inject private var mealRepo: MealRepo
     @Inject private var timetableRepo: TimetableRepo

@@ -2,17 +2,18 @@ import Foundation
 import Domain
 import DIContainer
 import SwiftUtil
+import Combine
 
-public final class StompManager: BaseViewModel<StompManager.Effect> {
-    public enum Effect {}
+public final class StompManager: ObservableObject {
     
     // MARK: - Properties
     @Inject private var stompRepo: any StompRepo
     @Inject private var memberRepo: any MemberRepo
     @Inject private var keychainRepo: any KeychainRepo
     
-    public override init() {
-        super.init()
+    var subscriptions = Set<AnyCancellable>()
+    
+    public init() {
         openSocket()
     }
     

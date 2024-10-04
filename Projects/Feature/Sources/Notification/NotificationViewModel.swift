@@ -2,10 +2,10 @@ import DIContainer
 import Domain
 import Foundation
 import SwiftUtil
+import Combine
 
-final class NotificationViewModel: BaseViewModel<NotificationViewModel.Effect> {
-    
-    enum Effect {}
+final class NotificationViewModel: ObservableObject {
+    var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Repo
     @Inject private var notificationRepo: NotificationRepo

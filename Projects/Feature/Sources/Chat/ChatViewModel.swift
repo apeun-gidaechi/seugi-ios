@@ -2,12 +2,9 @@ import Foundation
 import Domain
 import DIContainer
 import SwiftUtil
+import Combine
 
-public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
-    
-    public enum Effect {
-        case refreshFailure
-    }
+public final class ChatViewModel: ObservableObject {
     
     // MARK: - Repo
     @Inject private var chatRepo: ChatRepo
@@ -20,6 +17,7 @@ public final class ChatViewModel: BaseViewModel<ChatViewModel.Effect> {
     @Published var isSearching = false
     
     private let roomType: RoomType
+    var subscriptions = Set<AnyCancellable>()
     
     init(roomType: RoomType) {
         self.roomType = roomType

@@ -147,17 +147,17 @@ public struct ChatDetailView: View {
             hideKeyboard()
         }
         .onAppear {
-            viewModel.subscribe { subject in
-                switch subject {
-                case .messageLoaded:
-                    Task {
-                        try? await Task.sleep(for: .seconds(0.2))
-                        scrollToBottom()
-                    }
-                case .messagesFetched:
-                    scrollToBottom()
-                }
-            }
+//            viewModel.subscribe { subject in
+//                switch subject {
+//                case .messageLoaded:
+//                    Task {
+//                        try? await Task.sleep(for: .seconds(0.2))
+//                        scrollToBottom()
+//                    }
+//                case .messagesFetched:
+//                    scrollToBottom()
+//                }
+//            }
         }
         .photosPicker(
             isPresented: $showPhotoPicker,

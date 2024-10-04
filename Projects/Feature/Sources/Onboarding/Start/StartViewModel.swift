@@ -2,12 +2,10 @@ import Foundation
 import Domain
 import DIContainer
 import SwiftUtil
+import Combine
 
-public final class StartViewModel: BaseViewModel<StartViewModel.Effect> {
-    
-    public enum Effect {
-        case signInSuccess(token: Token)
-    }
+public final class StartViewModel: ObservableObject {
+    var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Repo
     @Inject private var oauthRepo: OAuthRepo

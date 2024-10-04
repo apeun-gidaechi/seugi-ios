@@ -28,13 +28,10 @@ extension MainView: View {
                 .page(icon: .personFill)
         }
         .ignoresSafeArea(.keyboard)
-        .onAppear {
-            appState.subscribe { subject in
-                switch subject {
-                case .logout:
-                    selection = 0
-                    router.navigateToRoot()
-                }
+        .onReceive(appState.$logoutFlow) { flow in
+            if case .success = flow {
+                selection = 0
+                router.navigateToRoot()
             }
         }
         .onChange(of: appState.selectedWorkspace) { _ in

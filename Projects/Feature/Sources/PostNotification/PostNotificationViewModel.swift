@@ -2,10 +2,10 @@ import Foundation
 import Domain
 import DIContainer
 import SwiftUtil
+import Combine
 
-class PostNotificationViewModel: BaseViewModel<PostNotificationViewModel.Effect> {
-    
-    enum Effect {}
+class PostNotificationViewModel: ObservableObject {
+    var subscriptions = Set<AnyCancellable>()
     
     @Inject private var notificationRepo: any NotificationRepo
     

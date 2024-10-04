@@ -5,9 +5,8 @@ import Combine
 import SwiftUI
 import SwiftUtil
 
-public final class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.Effect> {
-    
-    public enum Effect {}
+public final class LoginEmailViewModel: ObservableObject {
+    var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Repo
     @Inject private var memberRepo: MemberRepo
@@ -17,10 +16,6 @@ public final class LoginEmailViewModel: BaseViewModel<LoginEmailViewModel.Effect
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var signInFlow: Flow<Token> = .idle
-    
-    public override init() {
-        super.init()
-    }
     
     // MARK: - Method
     func signIn() {

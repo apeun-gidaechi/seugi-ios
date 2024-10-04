@@ -51,17 +51,15 @@ public struct StartView: View {
                 .fadeInEffect(time: 0.75)
             }
         }
-        .sheet(isPresented: $isPresented) {
-            sheet
-        }
+        .sheet(isPresented: $isPresented, content: sheetContent)
         .onAppear {
-            viewModel.subscribe { subject in
-                switch subject {
-                case .signInSuccess(let token):
-                    appState.accessToken = String(token.accessToken.split(separator: " ")[1])
-                    appState.refreshToken = String(token.refreshToken.split(separator: " ")[1])
-                }
-            }
+//            viewModel.subscribe { subject in
+//                switch subject {
+//                case .signInSuccess(let token):
+//                    appState.accessToken = String(token.accessToken.split(separator: " ")[1])
+//                    appState.refreshToken = String(token.refreshToken.split(separator: " ")[1])
+//                }
+//            }
         }
         .onReceive(viewModel.$signInFlow) { flow in
             switch flow {
@@ -84,7 +82,7 @@ public struct StartView: View {
         }
     }
     
-    private var sheet: some View {
+    private func sheetContent() -> some View {
         VStack(spacing: 8) {
             SeugiButton.large("이메일로 계속하기", type: .black) {
                 isPresented = false

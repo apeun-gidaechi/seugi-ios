@@ -2,10 +2,10 @@ import Foundation
 import DIContainer
 import Domain
 import SwiftUtil
+import Combine
 
-public final class RegisterEmailViewModel: BaseViewModel<RegisterEmailViewModel.Effect> {
-    
-    public enum Effect {}
+public final class RegisterEmailViewModel: ObservableObject {
+    var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Repo
     @Inject private var emailRepo: EmailRepo

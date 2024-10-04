@@ -11,9 +11,10 @@ import SwiftUI
 import PhotosUI
 import DIContainer
 import Domain
+import Combine
 
-public final class FileManager: BaseViewModel<FileManager.Effect> {
-    public enum Effect {}
+public final class FileManager: ObservableObject {
+    var subscriptions = Set<AnyCancellable>()
     
     @Inject private var fileRepo: any FileRepo
     
