@@ -2,15 +2,16 @@ import SwiftUI
 import SwiftUIUtil
 import Domain
 
-public struct RootView: View {
-    
+public struct RootView {
     @StateObject private var appState = AppViewModel()
     @StateObject private var router = RouterViewModel()
-    @StateObject private var stompManager = StompManager()
-    @StateObject private var fileManager = FileManager()
+    @StateObject private var stompViewModel = StompViewModel()
+    @StateObject private var fileViewModel = FileViewModel()
     
     public init() {}
-    
+}
+
+extension RootView: View {
     public var body: some View {
         NavigationStack(path: $router.navPath) {
             if appState.accessToken == nil {
@@ -24,8 +25,8 @@ public struct RootView: View {
         }
         .environmentObject(router)
         .environmentObject(appState)
-        .environmentObject(stompManager)
-        .environmentObject(fileManager)
+        .environmentObject(stompViewModel)
+        .environmentObject(fileViewModel)
         // 디버그일 경우 3번 탭할 시 세션 초기화
         #if DEBUG
         .onTapGesture(count: 3) {

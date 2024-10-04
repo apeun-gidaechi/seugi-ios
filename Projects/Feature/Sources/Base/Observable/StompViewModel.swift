@@ -4,7 +4,7 @@ import DIContainer
 import SwiftUtil
 import Combine
 
-public final class StompManager: ObservableObject {
+public final class StompViewModel: ObservableObject {
     
     // MARK: - Properties
     @Inject private var stompRepo: any StompRepo
@@ -19,7 +19,7 @@ public final class StompManager: ObservableObject {
     
     // MARK: - Method
     public func openSocket() {
-        Log.info("💎 StompManager.subscribe")
+        Log.info("💎 StompViewModel.subscribe")
         stompRepo.openSocket()
         stompRepo.subConnect()
             .sink { _ in

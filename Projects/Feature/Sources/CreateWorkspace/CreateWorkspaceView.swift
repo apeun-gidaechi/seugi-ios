@@ -7,7 +7,7 @@ public struct CreateWorkspaceView: View {
     @EnvironmentObject private var appState: AppViewModel
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var alertProvider: AlertProvider
-    @EnvironmentObject private var fileManager: FileManager
+    @EnvironmentObject private var fileViewModel: FileViewModel
     @ObservedObject private var viewModel = CreateWorkspaceViewModel()
     
     @State private var photo: PhotosPickerItem?
@@ -71,7 +71,7 @@ public struct CreateWorkspaceView: View {
         )
         .onChange(of: photo) { photo in
             if let photo {
-                fileManager.uploadPhoto(photo: photo) { url in
+                fileViewModel.uploadPhoto(photo: photo) { url in
                     self.photoUrl = url
                 } failure: { _ in
                     alertProvider.present("이미지 업로드 실패")

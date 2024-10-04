@@ -7,7 +7,7 @@ public struct SettingProfileView: View {
     
     @Environment(\.openURL) private var openURL
     @EnvironmentObject private var appState: AppViewModel
-    @EnvironmentObject private var fileManager: FileManager
+    @EnvironmentObject private var fileViewModel: FileViewModel
     @EnvironmentObject private var alert: AlertProvider
     @ObservedObject private var viewModel = SettingProfileViewModel()
     
@@ -94,7 +94,7 @@ public struct SettingProfileView: View {
             guard let photo else {
                 return
             }
-            fileManager.uploadPhoto(photo: photo) { url in
+            fileViewModel.uploadPhoto(photo: photo) { url in
                 viewModel.editMember(picture: url)
             } failure: { error in
                 viewModel.editMemberFlow = .failure(error)

@@ -13,7 +13,7 @@ import DIContainer
 import Domain
 import Combine
 
-public final class FileManager: ObservableObject {
+public final class FileViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
     @Inject private var fileRepo: any FileRepo
