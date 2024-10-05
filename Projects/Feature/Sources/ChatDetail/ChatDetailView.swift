@@ -43,7 +43,10 @@ public struct ChatDetailView: View {
     
     public var body: some View {
         viewModel.messages.makeView {
-            ProgressView()
+            VStack {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
         } success: { messages in
             ScrollViewReader { scrollViewProxy in
                 ScrollView {
