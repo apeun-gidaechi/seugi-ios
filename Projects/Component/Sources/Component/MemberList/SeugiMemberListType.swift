@@ -1,4 +1,5 @@
 import SwiftUI
+
 import Domain
 
 public enum SeugiMemberListType {

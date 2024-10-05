@@ -26,7 +26,7 @@ public struct RegisterEmailView: View {
                 .button {
                     router.navigate(to: OnboardingDestination.emailSignIn)
                 }
-                .applyAnimation()
+                .scaledButtonStyle()
             SeugiButton.large("계속하기", type: .primary) {
                 router.navigate(to: OnboardingDestination.emailVerification)
             }

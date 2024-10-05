@@ -1,8 +1,8 @@
 import SwiftUI
+
 import Domain
 
 public struct SeugiChatList: View {
-    
     private let type: RoomType
     private let room: Room
     

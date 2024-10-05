@@ -1,11 +1,3 @@
-//
-//  View+page.swift
-//  Component
-//
-//  Created by hhhello0507 on 9/15/24.
-//  Copyright © 2024 apeun-gidaechi. All rights reserved.
-//
-
 import SwiftUI
 
 public extension View {

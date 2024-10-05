@@ -106,7 +106,7 @@ struct NotificationCell: View {
                     .button {
                         action(.emojiClicked(emoji.emoji))
                     }
-                    .applyAnimation()
+                    .scaledButtonStyle()
                 }
                 Spacer()
             }

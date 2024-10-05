@@ -40,7 +40,7 @@ struct ProfileCell: View {
                     .button {
                         action()
                     }
-                    .applyAnimation()
+                    .scaledButtonStyle()
             }
             .padding(.horizontal, 20)
             SeugiListItem.normal(title: value.isEmpty ? "-" : value)

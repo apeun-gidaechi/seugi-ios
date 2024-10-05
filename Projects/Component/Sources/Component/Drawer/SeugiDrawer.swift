@@ -1,14 +1,7 @@
-//
-//  SeugiDrawer.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 4/4/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
-import SwiftUIUtil
 import UIKit
+
+import SwiftUIUtil
 
 public extension View {
     func seugiDrawer<Body>(
@@ -20,7 +13,6 @@ public extension View {
 }
 
 public struct SeugiDrawerModifier<C>: ViewModifier where C: View {
-    
     @Binding private var isOpen: Bool
     @State private var translation: CGSize = .zero
     private var content: () -> C
@@ -57,20 +49,18 @@ public struct SeugiDrawerModifier<C>: ViewModifier where C: View {
                     .animation(.default, value: isOpen)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                self.translation = value.translation
+                        DragGesture().onChanged { value in
+                            self.translation = value.translation
+                        }.onEnded { value in
+                            // 절반 이상 움직였다면 drawer 닫기
+                            let translation = value.translation
+                            if translation.width >= self.translation.width / 2 {
+                                isOpen = false
                             }
-                            .onEnded { value in
-                                // 절반 이상 움직였다면 drawer 닫기
-                                let translation = value.translation
-                                if translation.width >= self.translation.width / 2 {
-                                    isOpen = false
-                                }
-                                
-                                // 초기화
-                                self.translation = .zero
-                            }
+                            
+                            // 초기화
+                            self.translation = .zero
+                        }
                     )
             }
     }

@@ -9,7 +9,6 @@ public extension SeugiShadowSystem {
 }
 
 extension SeugiShadowSystem.EvPrimary {
-    
     var color: Color {
         switch self {
         case .ev1: .seugi(.primary(.p500)).opacity(0.04)

@@ -1,21 +1,14 @@
-//
-//  AlimoButton.swift
-//  Alimo
-//
-//  Created by dgsw8th71 on 1/3/24.
-//  Copyright © 2024 tuist.io. All rights reserved.
-//
-
 import SwiftUI
 
+import SwiftUIUtil
+
 public struct SeugiButton: View {
-    
     private let text: String
     private let type: SeugiButtonType
     private let size: SeugiButtonSize
     private let isLoading: Bool
     private let expanded: Bool
-    private let callback: () -> Void
+    private let action: () -> Void
     
     private init(
         _ text: String,
@@ -23,20 +16,18 @@ public struct SeugiButton: View {
         size: SeugiButtonSize,
         isLoading: Bool = false,
         expanded: Bool = false,
-        callback: @escaping () -> Void
+        action: @escaping () -> Void
     ) {
         self.text = text
         self.type = type
         self.size = size
         self.isLoading = isLoading
         self.expanded = expanded
-        self.callback = callback
+        self.action = action
     }
     
     public var body: some View {
-        Button {
-            callback()
-        } label: {
+        Button(action: action) {
             Text(!isLoading ? text : "")
                 .overlay {
                     if isLoading {
@@ -49,23 +40,35 @@ public struct SeugiButton: View {
     }
 }
 
-// MARK: - Method
 public extension SeugiButton {
-    
     static func large(
         _ text: String,
         type: SeugiButtonType,
-        isLoading: Bool = false, callback: @escaping () -> Void
+        isLoading: Bool = false,
+        action: @escaping () -> Void
     ) -> SeugiButton {
-        .init(text, type: type, size: .large, isLoading: isLoading, callback: callback)
+        .init(
+            text,
+            type: type,
+            size: .large,
+            isLoading: isLoading,
+            action: action
+        )
     }
     
     static func small(
         _ text: String,
         type: SeugiButtonType,
-        isLoading: Bool = false, callback: @escaping () -> Void
+        isLoading: Bool = false,
+        action: @escaping () -> Void
     ) -> SeugiButton {
-        .init(text, type: type, size: .small, isLoading: isLoading, callback: callback)
+        .init(
+            text,
+            type: type,
+            size: .small,
+            isLoading: isLoading,
+            action: action
+        )
     }
     
     func expanded(_ condition: Bool = true) -> Self {
@@ -75,14 +78,12 @@ public extension SeugiButton {
             size: size,
             isLoading: isLoading,
             expanded: condition,
-            callback: callback
+            action: action
         )
     }
 }
 
-// MARK: - Style
 struct SeugiButtonStyle: ButtonStyle {
-    
     @Environment(\.isEnabled) private var isEnabled
     private let type: SeugiButtonType
     private let size: SeugiButtonSize
@@ -102,25 +103,16 @@ struct SeugiButtonStyle: ButtonStyle {
     }
     
     func makeBody(configuration: Configuration) -> some View {
-        let backgroundColor = isEnabled ? type.backgroundColor : type.disabledBackgroundColor
-        configuration.label
-        // style
+        return configuration.label
             .font(size.font)
             .frame(height: size.height)
             .if((size == .small) && !expanded) {
-                $0.padding(.horizontal, 12)
-                    .if(isLoading) {
-                        $0.padding(.horizontal, 24)
-                    }
+                $0.padding(.horizontal, 12 + (isLoading ? 24 : 0))
             }
-            .if(size == .large || expanded) {
-                $0.frame(maxWidth: .infinity)
-            }
+            .frame(maxWidth: size == .large || expanded ? .infinity : nil)
+            .shadow(type == .shadow ? .evBlack(.ev1) : nil)
             .foregroundStyle(isEnabled ? type.foregroundColor : type.disabledForegroundColor)
-            .if(type == .shadow) {
-                $0.shadow(.evBlack(.ev1))
-            }
-            .background(backgroundColor)
+            .background(isEnabled ? type.backgroundColor : type.disabledBackgroundColor)
             .cornerRadius(12, corners: .allCorners)
             .addPressAnimation(configuration.isPressed)
     }

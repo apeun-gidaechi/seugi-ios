@@ -3,7 +3,6 @@ import SwiftUIUtil
 import Domain
 
 public struct SeugiSelectingMember: View {
-    
     private let action: () -> Void
     private let member: RetrieveProfile
     

@@ -1,10 +1,10 @@
 import UIKit
 import SwiftUI
 import AuthenticationServices
+
 import SwiftUIUtil
 
 public struct GoogleLoginButton: View {
-    
     private let action: () -> Void
     
     public init(action: @escaping () -> Void) {
@@ -12,9 +12,7 @@ public struct GoogleLoginButton: View {
     }
     
     public var body: some View {
-        Button {
-            action()
-        } label: {
+        Button(action: action) {
             HStack(spacing: 8) {
                 Image(image: .google)
                     .resizable()
@@ -29,6 +27,6 @@ public struct GoogleLoginButton: View {
             .cornerRadius(8, corners: .allCorners)
             .stroke(8, content: Color(0xFFE6E6E6))
         }
-        .applyAnimation()
+        .scaledButtonStyle()
     }
 }

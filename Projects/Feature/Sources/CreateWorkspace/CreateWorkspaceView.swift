@@ -29,7 +29,7 @@ public struct CreateWorkspaceView: View {
             .button {
                 isPhotoPresent = true
             }
-            .applyAnimation()
+            .scaledButtonStyle()
             .padding(.top, 16)
             SeugiTextFieldForm("학교 이름을 입력해 주세요", text: $viewModel.workspaceName, label: "학교 이름")
 

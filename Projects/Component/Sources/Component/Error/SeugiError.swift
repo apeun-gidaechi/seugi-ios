@@ -1,15 +1,6 @@
-//
-//  SeugiError.swift
-//  Component
-//
-//  Created by hhhello0507 on 7/22/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
 
 public struct SeugiError: View {
-    
     private let title: String
     private let image: SeugiImage
     

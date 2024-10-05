@@ -31,7 +31,7 @@ public struct ProfileView: View {
                         .button {
                             router.navigate(to: MainDestination.settingProfile)
                         }
-                        .applyAnimation()
+                        .scaledButtonStyle()
                 }
                 .padding(.vertical, 8)
                 .padding(.horizontal, 16)

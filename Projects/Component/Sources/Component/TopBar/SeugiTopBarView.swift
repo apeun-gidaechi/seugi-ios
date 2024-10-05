@@ -62,7 +62,7 @@ extension SeugiTopBarView: View {
                         .foregroundStyle(colors.tintColor)
                         .frame(width: 24, height: 24)
                 }
-                .applyAnimation()
+                .scaledButtonStyle()
                 .matchedGeometryEffect(id: "backbutton", in: animation)
             }
             if let title {
@@ -160,7 +160,10 @@ public extension SeugiTopBarView {
             tintColor: .seugi(.sub(.black))
         )
         
-        public func copy(backgroundColor: Color? = nil, tintColor: Color? = nil) -> Self {
+        public func copy(
+            backgroundColor: Color? = nil,
+            tintColor: Color? = nil
+        ) -> Self {
             return Colors(
                 backgroundColor: backgroundColor ?? self.backgroundColor,
                 tintColor: tintColor ?? self.tintColor

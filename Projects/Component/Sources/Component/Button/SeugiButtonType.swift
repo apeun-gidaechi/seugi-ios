@@ -1,11 +1,3 @@
-//
-//  AlimoButtonType.swift
-//  Alimo
-//
-//  Created by dgsw8th71 on 1/3/24.
-//  Copyright © 2024 tuist.io. All rights reserved.
-//
-
 import SwiftUI
 
 public enum SeugiButtonType: CaseIterable {

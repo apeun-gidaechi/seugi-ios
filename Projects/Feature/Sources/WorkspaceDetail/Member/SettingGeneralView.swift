@@ -26,7 +26,7 @@ struct SettingGeneralView: View {
                             .secondaryButton("취소") {}
                             .show()
                     }
-                    .applyAnimation()
+                    .scaledButtonStyle()
             }
             .padding(.top, 6)
         }

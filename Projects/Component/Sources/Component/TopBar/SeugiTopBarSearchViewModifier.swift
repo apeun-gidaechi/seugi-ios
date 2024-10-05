@@ -68,7 +68,6 @@ struct SeugiTopBarSearchViewModifier: SeugiTopBarViewModifier {
     }
     
     func onTapGesture() {
-        print("TAPPPP")
         withAnimation {
             isSearching = false
             text = ""

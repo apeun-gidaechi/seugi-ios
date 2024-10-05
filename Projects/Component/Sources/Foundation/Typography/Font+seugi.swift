@@ -1,7 +1,6 @@
 import SwiftUI
 
 public extension Font {
-    
     static func pretendard(_ style: SeugiTypography) -> Font {
         custom(style.weight.rawValue, size: style.size)
     }

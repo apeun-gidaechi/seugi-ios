@@ -1,7 +1,6 @@
 import SwiftUI
 
 public extension Color {
-    
     enum SeugiColorSystem {
         case primary(Primary)
         case gray(Gray)
@@ -13,7 +12,6 @@ public extension Color {
 }
 
 public extension Color {
-    
     static func seugi(_ style: SeugiColorSystem) -> Color {
         switch style {
         case let .primary(colorable as SeugiColorable),
@@ -39,22 +37,18 @@ public extension Color {
 }
 
 public extension View {
-    
     @inlinable
     func seugiColor(_ style: Color.SeugiColorSystem) -> some View {
-        self
-            .foregroundStyle(Color.seugi(style))
+        return foregroundStyle(Color.seugi(style))
     }
     
     @inlinable
     func seugiBackground(_ style: Color.SeugiColorSystem) -> some View {
-        self
-            .background(Color.seugi(style))
+        return background(Color.seugi(style))
     }
     
     @inlinable
     func seugiBackground<T: InsettableShape>(_ style: Color.SeugiColorSystem, in: T) -> some View {
-        self
-            .background(Color.seugi(style), in: `in`)
+        return background(Color.seugi(style), in: `in`)
     }
 }

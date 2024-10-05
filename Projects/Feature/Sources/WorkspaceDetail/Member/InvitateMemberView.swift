@@ -71,7 +71,7 @@ struct InvitateMemberView: View {
                                     .button {
                                         viewModel.selectMember(member: member)
                                     }
-                                    .applyAnimation()
+                                    .scaledButtonStyle()
                                 }
                             }
                             .padding(.horizontal, 4)

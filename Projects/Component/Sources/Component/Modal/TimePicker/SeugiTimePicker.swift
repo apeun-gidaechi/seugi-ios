@@ -1,16 +1,8 @@
-//
-//  SeugiTimePicker.swift
-//  Component
-//
-//  Created by hhhello0507 on 7/25/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
+
 import SwiftUIUtil
 
 public struct SeugiTimePicker<C: View>: ModalViewProtocol {
-    
     typealias P = TimePickerProvider
     
     @StateObject private var provider: TimePickerProvider

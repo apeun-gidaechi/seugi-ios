@@ -1,8 +1,8 @@
 import SwiftUI
+
 import SwiftUIUtil
 
 public struct SeugiToolTip: View {
-    
     private let type: SeugiToolTipType
     private let size: SeugiToolTipType.Size
     private let direction: SeugiToolTipType.Direction

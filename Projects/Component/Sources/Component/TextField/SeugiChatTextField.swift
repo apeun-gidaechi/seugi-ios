@@ -3,7 +3,6 @@ import SwiftUI
 import PhotosUI
 
 public struct SeugiChatTextField: View {
-    
     public enum Action {
         case sendMessage
         case imageMenu

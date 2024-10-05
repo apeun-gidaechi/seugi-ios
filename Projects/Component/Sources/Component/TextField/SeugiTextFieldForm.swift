@@ -1,15 +1,6 @@
-//
-//  SeugiTextFieldForm.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 3/26/24.
-//  Copyright © 2024 seugi. All rights reserved.
-//
-
 import SwiftUI
 
 public struct SeugiTextFieldForm: View {
-    
     private let hint: String
     @Binding private var text: String
     private let type: SeugiTextFieldType

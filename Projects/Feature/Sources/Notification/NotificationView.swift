@@ -5,8 +5,8 @@ import Domain
 public struct NotificationView: View {
     @EnvironmentObject private var appState: AppViewModel
     @EnvironmentObject private var router: RouterViewModel
+    @EnvironmentObject private var alert: AlertProvider
     @StateObject private var viewModel = NotificationViewModel()
-    @Component.Alert private var alert
     
     @State private var addEmojiPresent: Bool = false
     
@@ -16,7 +16,6 @@ public struct NotificationView: View {
 }
 
 extension NotificationView {
-    
     public var body: some View {
         ScrollView {
             viewModel.notifications.makeView {

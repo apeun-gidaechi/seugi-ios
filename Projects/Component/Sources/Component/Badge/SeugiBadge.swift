@@ -1,19 +1,14 @@
-//
-//  AlimoBadge.swift
-//  App
-//
-//  Created by dgsw8th71 on 1/7/24.
-//  Copyright © 2024 b8nd. All rights reserved.
-//
-
 import SwiftUI
+
 import SwiftUIUtil
 
 public struct SeugiBadge: View {
     private let type: SeugiBadgeType
+    
     public init(type: SeugiBadgeType) {
         self.type = type
     }
+    
     public var body: some View {
         if case let .number(num) = type {
             let text = num >= 300 ? "300+" : String(num)

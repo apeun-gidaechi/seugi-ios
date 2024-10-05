@@ -10,7 +10,7 @@ public struct Page {
         public static func buildBlock(
             _ components: Page...
         ) -> [Page] {
-            components
+            return components
         }
     }
     

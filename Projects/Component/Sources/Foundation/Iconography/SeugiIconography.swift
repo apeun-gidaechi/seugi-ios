@@ -1,15 +1,6 @@
-//
-//  SeugiIconography.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 4/7/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
 
 public enum SeugiIconography: String {
-    
     case addEmoji = "add_emoji"
     case addFill = "add_fill"
     case addLine = "add_line"

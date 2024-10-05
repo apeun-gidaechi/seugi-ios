@@ -1,19 +1,10 @@
-//
-//  SeugiMenu.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 4/3/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
+
 import SwiftUIUtil
 
 public protocol DropdownProtocol: Hashable & CustomStringConvertible {}
 
 public struct SeugiDropdown<T: DropdownProtocol>: View {
-    
-    // MARK: - parameters
     private let hint: String
     private let pickerOptions: [T]
     @Binding private var selection: T
@@ -28,7 +19,6 @@ public struct SeugiDropdown<T: DropdownProtocol>: View {
         self._selection = selection
     }
     
-    // MARK: - View
     public var body: some View {
         Menu {
             Picker(hint, selection: $selection) {
@@ -54,7 +44,6 @@ public struct SeugiDropdown<T: DropdownProtocol>: View {
 }
 
 struct SeugiDropdownStyle: MenuStyle {
-    
     @Environment(\.isEnabled) var isEnabled
     
     func makeBody(configuration: Configuration) -> some View {

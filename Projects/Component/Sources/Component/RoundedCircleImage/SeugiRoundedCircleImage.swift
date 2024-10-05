@@ -1,16 +1,8 @@
-//
-//  SeugiRoundedCircleImage.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 3/29/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
+
 import SwiftUIUtil
 
 public struct SeugiRoundedCircleImage: View {
-    
     private let type: SeugiRoundedCircleImageType
     private let size: SeugiRoundedCircleImageType.Size
     

@@ -1,10 +1,10 @@
 import SwiftUI
+
 import Domain
 import DateUtil
 import SwiftUIUtil
 
 public struct ChatItemView: View {
-    
     private let author: RetrieveMember
     private let type: ChatItemViewCellType
     private let config: ChatItemConfig

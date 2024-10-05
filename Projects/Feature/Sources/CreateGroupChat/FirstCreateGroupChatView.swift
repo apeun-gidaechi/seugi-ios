@@ -45,7 +45,7 @@ extension FirstCreateGroupChatView: View {
                                 .button {
                                     viewModel.selectMember(member: member, selected: selected)
                                 }
-                                .applyAnimation()
+                                .scaledButtonStyle()
                             }
                         }
                         .padding(.horizontal, 4)

@@ -40,26 +40,26 @@ public struct WorkspaceDetailView: View {
                         .button {
                             router.navigate(to: MainDestination.settingGeneral)
                         }
-                        .applyAnimation()
+                        .scaledButtonStyle()
                     SeugiListItem.icon(title: "알림 설정", icon: .expandRightLine)
                         .button {
                             router.navigate(to: MainDestination.settingAlarm)
                         }
-                        .applyAnimation()
+                        .scaledButtonStyle()
                     SettingWorkspaceHeadline(icon: .personFill)
                         .padding(.top, 24)
                     SeugiListItem.icon(title: "멤버", icon: .expandRightLine)
                         .button {
                             router.navigate(to: MainDestination.manageMember)
                         }
-                        .applyAnimation()
+                        .scaledButtonStyle()
                     if let workspaceRole = appState.workspaceRole,
                        workspaceRole >= .teacher {
                         SeugiListItem.icon(title: "멤버 초대", icon: .expandRightLine)
                             .button {
                                 router.navigate(to: MainDestination.invitationMember)
                             }
-                            .applyAnimation()
+                            .scaledButtonStyle()
                     }
                 }
             }
@@ -85,7 +85,7 @@ public struct WorkspaceDetailView: View {
                             appState.selectedWorkspace = workspace
                             isSheetPresent = false
                         }
-                        .applyAnimation()
+                        .scaledButtonStyle()
                 }
             }
             HStack(spacing: 8) {

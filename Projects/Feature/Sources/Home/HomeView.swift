@@ -32,7 +32,7 @@ extension HomeView: View {
                     .button {
                         router.navigate(to: MainDestination.workspaceDetail)
                     }
-                    .applyAnimation()
+                    .scaledButtonStyle()
                 HomeTimetableContainer(for: viewModel.timetables)
                 HomeMealContainer(for: viewModel.meals)
                 HomeCatSeugiContainer(for: flow) { action in

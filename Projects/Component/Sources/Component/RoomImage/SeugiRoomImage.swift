@@ -1,10 +1,11 @@
 import SwiftUI
-import Nuke
-import NukeUI
+
 import SwiftUIUtil
 
+import Nuke
+import NukeUI
+
 public struct SeugiRoomImage: View {
-    
     private let url: String?
     private let type: SeugiRoomImageType
     private let label: String
@@ -33,13 +34,10 @@ public struct SeugiRoomImage: View {
     public var body: some View {
         if let url {
             LazyImage(url: .init(string: url)) { state in
-                /// - Success
                 if let image = state.image {
                     image
-                /// - Error
                 } else if state.error != nil {
                     unavailableView
-                /// Fetching
                 } else {
                     Circle()
                         .seugiColor(.gray(.g100))
@@ -50,7 +48,6 @@ public struct SeugiRoomImage: View {
             .processors([.resize(size: .init(width: type.size, height: type.size), unit: .pixels)])
             .clipShape(Circle())
         } else {
-            /// NotFound Url
             unavailableView
         }
     }

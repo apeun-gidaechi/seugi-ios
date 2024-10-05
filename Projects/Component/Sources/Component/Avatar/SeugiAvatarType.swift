@@ -1,4 +1,4 @@
-import SwiftUI
+import Foundation
 
 public enum SeugiAvatarType: CaseIterable {
     case extraSmall

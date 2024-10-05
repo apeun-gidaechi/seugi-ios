@@ -30,7 +30,7 @@ public struct ChatView: View {
                                 .button {
                                     router.navigate(to: MainDestination.chatDetail(room: room))
                                 }
-                                .applyAnimation()
+                                .scaledButtonStyle()
                         }
                     }
                 }

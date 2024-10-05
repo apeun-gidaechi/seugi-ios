@@ -1,12 +1,4 @@
-//
-//  AlimoBadgeType.swift
-//  App
-//
-//  Created by dgsw8th71 on 1/7/24.
-//  Copyright © 2024 b8nd. All rights reserved.
-//
-
-import SwiftUI
+import Foundation
 
 public enum SeugiBadgeType {
     case normal

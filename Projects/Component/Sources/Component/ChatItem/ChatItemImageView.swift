@@ -1,17 +1,11 @@
-//
-//  ChatItemImageView.swift
-//  Component
-//
-//  Created by hhhello0507 on 9/23/24.
-//  Copyright © 2024 apeun-gidaechi. All rights reserved.
-//
-
 import Foundation
 import SwiftUI
-import Nuke
-import NukeUI
+
 import Domain
 import SwiftUIUtil
+
+import Nuke
+import NukeUI
 
 public struct ChatItemImageView: View {
     private let author: RetrieveMember

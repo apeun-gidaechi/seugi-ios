@@ -1,21 +1,12 @@
-//
-//  SeugiDivider.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 3/23/24.
-//  Copyright © 2024 seugi. All rights reserved.
-//
-
 import SwiftUI
 
 public struct SeugiDivider: View {
-    
-    private let thickness: Thickness
-    private let direction: Self.Direction
+    private let thickness: SeugiDividerThickness
+    private let direction: SeugiDividerDirection
     
     public init(
-        thickness: Thickness = .thin,
-        direction: Self.Direction = .horizontal
+        thickness: SeugiDividerThickness = .thin,
+        direction: SeugiDividerDirection = .horizontal
     ) {
         self.thickness = thickness
         self.direction = direction

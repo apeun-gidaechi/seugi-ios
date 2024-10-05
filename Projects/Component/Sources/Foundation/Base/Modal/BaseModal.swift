@@ -1,25 +1,19 @@
-//
-//  BaseModal.swift
-//  Component
-//
-//  Created by hhhello0507 on 7/25/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import Foundation
 import SwiftUI
+
 import SwiftUIUtil
 
-struct BaseModal<MC: View, C: View>: View {
-    
+struct BaseModal<ModalContent: View, C: View>: View {
     @Namespace var animation
     @State private var scaleEffect: CGFloat = 1.2
-    @Binding var isPresent: Bool
     @State var opacity: Double = 0.0
+    
     let backgroundColor: Color.SeugiColorSystem = .sub(.white)
     let cornerRadius: CGFloat = 16
+    
+    @Binding var isPresent: Bool
     let shadow: SeugiShadowSystem = .evBlack(.ev1)
-    @ViewBuilder let modalContent: () -> MC
+    @ViewBuilder let modalContent: () -> ModalContent
     @ViewBuilder let content: () -> C
     
     var body: some View {
@@ -28,7 +22,6 @@ struct BaseModal<MC: View, C: View>: View {
             Color.black
                 .opacity(0.2 * opacity)
                 .ignoresSafeArea()
-            // MARK: - Alert
             VStack {
                 Spacer()
                 modalContent()

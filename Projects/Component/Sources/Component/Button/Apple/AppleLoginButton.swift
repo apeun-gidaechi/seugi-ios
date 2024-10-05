@@ -1,8 +1,8 @@
 import SwiftUI
+
 import SwiftUIUtil
 
 public struct AppleLoginButton: View {
-    
     private let action: () -> Void
     
     public init(action: @escaping () -> Void) {
@@ -10,9 +10,7 @@ public struct AppleLoginButton: View {
     }
     
     public var body: some View {
-        Button {
-            action()
-        } label: {
+        Button(action: action) {
             HStack(spacing: 8) {
                 Image(image: .apple)
                     .resizable()
@@ -29,6 +27,6 @@ public struct AppleLoginButton: View {
             .cornerRadius(8, corners: .allCorners)
             .stroke(8, content: Color(0xFFE6E6E6))
         }
-        .applyAnimation()
+        .scaledButtonStyle()
     }
 }

@@ -31,7 +31,7 @@ public struct LoginEmailView: View {
                     .button {
                         router.navigate(to: OnboardingDestination.emailSignUp)
                     }
-                    .applyAnimation()
+                    .scaledButtonStyle()
             }
             SeugiButton.large("로그인", type: .primary, isLoading: viewModel.signInFlow.is(.fetching)) {
                 viewModel.signIn()

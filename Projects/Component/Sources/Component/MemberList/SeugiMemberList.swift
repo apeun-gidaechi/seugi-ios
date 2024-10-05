@@ -1,4 +1,5 @@
 import SwiftUI
+
 import Domain
 
 public struct SeugiMemberList<Content>: View where Content: View {

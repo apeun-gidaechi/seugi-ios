@@ -3,7 +3,6 @@ import SwiftUIUtil
 import NukeUI
 
 public struct SeugiRoundedCircleAsyncImage: View {
-    
     private let url: String?
     private let icon: SeugiIconography
     private let size: SeugiRoundedCircleImageType.Size
@@ -36,7 +35,6 @@ public struct SeugiRoundedCircleAsyncImage: View {
 }
 
 public extension SeugiRoundedCircleAsyncImage {
-    
     static func large(url: String?) -> Self {
         .init(url: url, size: .large)
     }

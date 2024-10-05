@@ -1,6 +1,7 @@
 import SwiftUI
-import SwiftUIUtil
 import Combine
+
+import SwiftUIUtil
 
 struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
     
@@ -60,7 +61,7 @@ struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
                                         .frame(height: 36)
                                         .padding(.horizontal, 12)
                                 }
-                                .applyAnimation()
+                                .scaledButtonStyle()
                                 .toTrailing()
                             }
                         } else {
@@ -75,7 +76,7 @@ struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
                                         .frame(height: 36)
                                         .padding(.horizontal, 12)
                                 }
-                                .applyAnimation()
+                                .scaledButtonStyle()
                                 .toTrailing()
                             } else {
                                 Button {
@@ -87,7 +88,7 @@ struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
                                         .frame(height: 36)
                                         .padding(.horizontal, 12)
                                 }
-                                .applyAnimation()
+                                .scaledButtonStyle()
                                 .toTrailing()
                             }
                         }

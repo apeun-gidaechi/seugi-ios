@@ -1,20 +1,7 @@
 import Foundation
 import SwiftUI
 
-@propertyWrapper
-public struct Alert: DynamicProperty {
-    
-    @EnvironmentObject private var provider: AlertProvider
-    
-    public init() {}
-    
-    public var wrappedValue: AlertProvider {
-        provider
-    }
-}
-
 public final class AlertProvider: ObservableObject, ModalProvider {
-    
     public struct Builder {
         private let title: String
         private let message: String?
@@ -48,15 +35,33 @@ public final class AlertProvider: ObservableObject, ModalProvider {
         }
         
         public func message(_ message: String?) -> Self {
-            .init(title: title, message: message, secondaryButton: secondaryButton, primaryButton: primaryButton, provider: provider)
+            .init(
+                title: title,
+                message: message,
+                secondaryButton: secondaryButton,
+                primaryButton: primaryButton,
+                provider: provider
+            )
         }
         
         public func secondaryButton(_ title: String, action: @escaping () -> Void = {}) -> Self {
-            .init(title: self.title, message: message, secondaryButton: .init(title, action: action), primaryButton: primaryButton, provider: provider)
+            .init(
+                title: self.title,
+                message: message,
+                secondaryButton: .init(title, action: action),
+                primaryButton: primaryButton,
+                provider: provider
+            )
         }
         
         public func primaryButton(_ title: String, action: @escaping () -> Void = {}) -> Self {
-            .init(title: self.title, message: message, secondaryButton: secondaryButton, primaryButton: .init(title, action: action), provider: provider)
+            .init(
+                title: self.title,
+                message: message,
+                secondaryButton: secondaryButton,
+                primaryButton: .init(title, action: action),
+                provider: provider
+            )
         }
         
         public func show() {

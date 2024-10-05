@@ -1,21 +1,20 @@
-//
-//  ChatItemTimeLabelView.swift
-//  Component
-//
-//  Created by hhhello0507 on 9/23/24.
-//  Copyright © 2024 apeun-gidaechi. All rights reserved.
-//
-
 import SwiftUI
 
 struct ChatItemTimeLabelView: View {
-    let alignment: ChatItemHorizontalAlignment
-    let config: ChatItemConfig
+    private let alignment: ChatItemHorizontalAlignment
+    private let config: ChatItemConfig
+    
+    init(alignment: ChatItemHorizontalAlignment, config: ChatItemConfig) {
+        self.alignment = alignment
+        self.config = config
+    }
+    private var unreadUserCount: Int {
+        config.joinUserCount - config.message.read.count
+    }
     
     var body: some View {
         if config.isLast {
             VStack(alignment: alignment.rawValue, spacing: 0) {
-                let unreadUserCount = config.joinUserCount - config.message.read.count
                 if unreadUserCount > 0 {
                     Text("\(unreadUserCount)")
                         .seugiColor(.gray(.g600))

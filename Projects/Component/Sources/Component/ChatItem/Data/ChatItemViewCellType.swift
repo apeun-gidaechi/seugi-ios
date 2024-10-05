@@ -1,11 +1,3 @@
-//
-//  ChatItemViewCellType.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 3/28/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
 
 public enum ChatItemViewCellType: Equatable {
@@ -40,14 +32,6 @@ public enum ChatItemViewCellType: Equatable {
         switch self {
         case .other, .ai: .leading
         case .me: .trailing
-        }
-    }
-    
-    public var isAi: Bool {
-        if case .ai = self {
-            true
-        } else {
-            false
         }
     }
 }

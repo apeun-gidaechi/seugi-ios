@@ -1,11 +1,3 @@
-//
-//  SeugiShadowSystem+Ev.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 3/23/24.
-//  Copyright © 2024 seugi. All rights reserved.
-//
-
 import SwiftUI
 
 public extension SeugiShadowSystem {
@@ -17,7 +9,6 @@ public extension SeugiShadowSystem {
 }
 
 extension SeugiShadowSystem.EvBlack {
-    
     var color: Color {
         switch self {
         case .ev1: .init(0x000000, alpha: 0.04)

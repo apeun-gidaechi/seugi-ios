@@ -1,15 +1,6 @@
-//
-//  AlimoSwitch.swift
-//  App
-//
-//  Created by dgsw8th71 on 1/7/24.
-//  Copyright © 2024 b8nd. All rights reserved.
-//
-
 import SwiftUI
 
 public struct SeugiToggle: View {
-    
     @Binding private var isOn: Bool
     private let type: ToggleType
     
@@ -37,7 +28,6 @@ public struct SeugiToggle: View {
 }
 
 struct SeugiCheckboxStyle: ToggleStyle {
-    
     var size: ToggleSize
     
     func makeBody(configuration: Configuration) -> some View {

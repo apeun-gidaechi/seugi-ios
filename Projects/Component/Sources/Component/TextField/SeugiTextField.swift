@@ -1,22 +1,12 @@
-//
-//  AlimoTextField.swift
-//  Alimo
-//
-//  Created by dgsw8th71 on 1/4/24.
-//  Copyright © 2024 tuist.io. All rights reserved.
-//
-
 import SwiftUI
+
 import SwiftUIUtil
 
 public struct SeugiTextField: View {
-    
-    // MARK: - parameters
     private let hint: String
     @Binding var text: String
     private let type: SeugiTextFieldType
     
-    // MARK: - state
     @FocusState private var isFocused: Bool
     @State private var isHide = true
     
@@ -30,7 +20,6 @@ public struct SeugiTextField: View {
         self.type = type
     }
     
-    // MARK: - View
     public var body: some View {
         Group {
             if type == .password && isHide {
@@ -42,7 +31,12 @@ public struct SeugiTextField: View {
             }
         }
         .textFieldStyle(
-            SeugiTextFieldStyle(text: text, isFocused: isFocused, isHide: isHide, type: type) {
+            SeugiTextFieldStyle(
+                text: text,
+                isFocused: isFocused,
+                isHide: isHide,
+                type: type
+            ) {
                 text = ""
             } onClickHide: {
                 isHide.toggle()
@@ -53,7 +47,6 @@ public struct SeugiTextField: View {
 }
 
 struct SeugiTextFieldStyle: TextFieldStyle {
-    
     @Environment(\.isEnabled) var isEnabled
     var text: String
     var isFocused: Bool
@@ -63,11 +56,9 @@ struct SeugiTextFieldStyle: TextFieldStyle {
     var onClickHide: () -> Void
     
     func _body(configuration: TextField<Self._Label>) -> some View {
-        
         let lineWidth = isFocused ? 1.5 : 1
         let strokeColor: Color = isFocused ? .seugi(.primary(.p500)) : .seugi(.gray(.g300))
-        
-        configuration
+        return configuration
             .textInputAutocapitalization(.never)
             .autocorrectionDisabled()
             .textContentType(.init(rawValue: ""))
@@ -78,7 +69,7 @@ struct SeugiTextFieldStyle: TextFieldStyle {
             .font(.subtitle(.s2))
             .accentColor(.seugi(.primary(.p500)))
             .seugiColor(isEnabled ? .sub(.black) : .gray(.g400))
-            .overlay(
+            .overlay {
                 ZStack {
                     RoundedCornerShape(radius: 12)
                         .stroke(isEnabled ? strokeColor : .seugi(.gray(.g200)), lineWidth: lineWidth)
@@ -109,6 +100,6 @@ struct SeugiTextFieldStyle: TextFieldStyle {
                     }
                     .padding(.trailing, 16)
                 }
-            )
+            }
     }
 }

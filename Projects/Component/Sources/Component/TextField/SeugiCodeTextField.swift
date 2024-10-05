@@ -1,18 +1,10 @@
-//
-//  SeugiCodeTextField.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 4/3/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
+
 import SwiftUtil
 import SwiftUIUtil
 
 public struct SeugiCodeTextField: View {
-    
-    // MARK: - parameters
+    @FocusState private var isFocused: Bool
     @Binding private var text: String
     private let length: Int
     
@@ -24,10 +16,6 @@ public struct SeugiCodeTextField: View {
         self.length = length
     }
     
-    // MARK: - local state
-    @FocusState private var isFocused: Bool
-    
-    // MARK: - View
     public var body: some View {
         ZStack {
             TextField("", text: $text)
@@ -51,11 +39,9 @@ public struct SeugiCodeTextField: View {
 }
 
 struct SeugiCodeTextFieldStyle: TextFieldStyle {
-    
     @Environment(\.isEnabled) var isEnabled
     
     func _body(configuration: TextField<Self._Label>) -> some View {
-        
         configuration
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
@@ -69,7 +55,6 @@ struct SeugiCodeTextFieldStyle: TextFieldStyle {
 }
 
 struct SeugiCodeCell: View {
-    
     @Environment(\.isEnabled) var isEnabled
     var isFocused: Bool
     

@@ -36,7 +36,7 @@ public struct SettingProfileView: View {
                 .button {
                     showPhotoPicker = true
                 }
-                .applyAnimation()
+                .scaledButtonStyle()
                 HStack(spacing: 4) {
                     Text(profile.member.name)
                         .font(.subtitle(.s2))
@@ -58,7 +58,7 @@ public struct SettingProfileView: View {
                             .secondaryButton("아니요") {}
                             .show()
                     }
-                    .applyAnimation()
+                    .scaledButtonStyle()
                 SeugiListItem.icon(title: "회원 탈퇴", icon: .expandRightLine, titleColor: .red(.r500))
                     .button {
                         alert.present("정말 회원 탈퇴하시겠습니까?")
@@ -69,18 +69,18 @@ public struct SettingProfileView: View {
                             .secondaryButton("취소")
                             .show()
                     }
-                    .applyAnimation()
+                    .scaledButtonStyle()
                 SeugiDivider(thickness: .thick)
                 SeugiListItem.icon(title: "개인정보 처리 방침", icon: .expandRightLine)
                     .button {
                         openURL.callAsFunction(URL(string: "https://byungjjun.notion.site/58f95c1209fb48b4b74434701290f838?pvs=74") ?? .aboutBlank)
                     }
-                    .applyAnimation()
+                    .scaledButtonStyle()
                 SeugiListItem.icon(title: "서비스 운영 정책", icon: .expandRightLine)
                     .button {
                         openURL.callAsFunction(URL(string: "https://byungjjun.notion.site/5ba79e224f53439bbfa3607e581fe6bf?pvs=74") ?? .aboutBlank)
                     }
-                    .applyAnimation()
+                    .scaledButtonStyle()
             }
             Spacer()
         }

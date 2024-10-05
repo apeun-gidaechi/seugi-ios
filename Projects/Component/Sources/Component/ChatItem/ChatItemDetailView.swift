@@ -1,16 +1,8 @@
-//
-//  ChatItemDateView.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 3/28/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
+
 import SwiftUIUtil
 
 public struct ChatItemDetailView: View {
-    
     private let text: String
     
     public init(text: String) {

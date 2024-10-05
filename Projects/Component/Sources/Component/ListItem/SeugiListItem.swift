@@ -1,15 +1,6 @@
-//
-//  SeugiListItem.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 3/23/24.
-//  Copyright © 2024 seugi. All rights reserved.
-//
-
 import SwiftUI
 
 public struct SeugiListItem: View {
-    
     private let isOn: Binding<Bool>?
     private let title: String
     private let description: String?

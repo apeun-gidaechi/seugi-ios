@@ -67,7 +67,7 @@ struct HomeCatSeugiContainer: View {
                             .stroke(SeugiGradientSystem.primary, lineWidth: 1.5)
                     }
                 }
-                .applyAnimation()
+                .scaledButtonStyle()
                 
                 //                VStack(alignment: .leading, spacing: 4) {
                 //                    Text("지난주")

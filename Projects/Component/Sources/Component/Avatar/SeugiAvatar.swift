@@ -1,10 +1,11 @@
 import SwiftUI
-import Nuke
-import NukeUI
+
 import SwiftUIUtil
 
+import Nuke
+import NukeUI
+
 public struct SeugiAvatar: View {
-    
     private let url: String?
     private let type: SeugiAvatarType
     
@@ -19,13 +20,10 @@ public struct SeugiAvatar: View {
     public var body: some View {
         if let url {
             LazyImage(url: .init(string: url)) { state in
-                /// - Success
                 if let image = state.image {
                     image
-                /// - Error
                 } else if state.error != nil {
                     unavailableView
-                /// Fetching
                 } else {
                     Circle()
                         .seugiColor(.gray(.g100))
@@ -37,7 +35,6 @@ public struct SeugiAvatar: View {
             .frame(width: type.size, height: type.size)
             .clipShape(Circle())
         } else {
-            /// NotFound Url
             unavailableView
         }
     }
