@@ -1,5 +1,4 @@
 public protocol ChatRepo {
-    
     // MemberGroup
     func addMemberGroup(_ req: ChatMemberEventReq) -> APIResult<BaseVoid>
     func kickMemberGroup(_ req: ChatMemberEventReq) -> APIResult<BaseVoid>

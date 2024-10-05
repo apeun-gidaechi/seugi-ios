@@ -1,5 +1,3 @@
-import Foundation
-
 public protocol KeyValueRepo {
     func save(key: StorableKeys, value: Any)
     func load(key: StorableKeys) -> Any?
