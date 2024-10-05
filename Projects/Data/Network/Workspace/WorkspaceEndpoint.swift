@@ -1,5 +1,6 @@
-import Moya
 import Domain
+
+import Moya
 
 public enum WorkspaceEndpoint: SeugiEndpoint {
     case getWorkspaces
@@ -18,7 +19,6 @@ public enum WorkspaceEndpoint: SeugiEndpoint {
 }
 
 public extension WorkspaceEndpoint {
-    
     static let provider = MoyaProvider<WorkspaceEndpoint>(session: session)
     static let authProvider = MoyaProvider<WorkspaceEndpoint>(session: authSession)
     

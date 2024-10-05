@@ -1,5 +1,6 @@
-import Moya
 import Domain
+
+import Moya
 
 enum NotificationEndpoint: SeugiEndpoint {
     case getNotifications(workspaceId: String)
@@ -10,7 +11,6 @@ enum NotificationEndpoint: SeugiEndpoint {
 }
 
 extension NotificationEndpoint {
-    
     static let provider = MoyaProvider<NotificationEndpoint>(session: session)
     static let authProvider = MoyaProvider<NotificationEndpoint>(session: authSession)
     

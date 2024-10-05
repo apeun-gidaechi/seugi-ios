@@ -1,6 +1,8 @@
-import Domain
-import ApeunStompKit
 import Combine
+
+import Domain
+
+import ApeunStompKit
 
 final class MessageService: Service<MessageEndpoint> {
     private let stomp = ApeunStompService.shared.stomp

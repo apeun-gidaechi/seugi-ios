@@ -1,5 +1,6 @@
-import Swinject
 import Domain
+
+import Swinject
 
 public final class MemberAssembly: Assembly {
     public init() {}

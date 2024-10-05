@@ -1,8 +1,8 @@
-import Moya
 import Domain
 
+import Moya
+
 enum ChatEndpoint: SeugiEndpoint {
-    
     // MemberGroup
     case addMemberGroup(_ req: ChatMemberEventReq)
     case kickMemberGroup(_ req: ChatMemberEventReq)
@@ -23,7 +23,6 @@ enum ChatEndpoint: SeugiEndpoint {
 }
 
 extension ChatEndpoint {
-    
     static let provider = MoyaProvider<Self>(session: session)
     static let authProvider = MoyaProvider<Self>(session: authSession)
     

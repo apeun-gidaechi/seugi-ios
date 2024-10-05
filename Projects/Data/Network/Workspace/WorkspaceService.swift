@@ -1,7 +1,6 @@
 import Domain
 
 final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
-    
     func getWorkspaces() -> APIResult<Base<[Workspace]>> {
         performRequest(.getWorkspaces, res: [Workspace].self)
     }

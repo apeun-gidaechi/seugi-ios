@@ -1,6 +1,7 @@
-import Domain
 import Combine
 import Foundation
+
+import Domain
 
 final class MealService: Service<MealEndpoint>, MealRepo {
     func getAll(workspaceId: String) -> APIResult<Base<[Meal]>> {

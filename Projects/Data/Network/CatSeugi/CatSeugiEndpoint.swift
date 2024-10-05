@@ -1,13 +1,6 @@
-//
-//  OAuthEndpoint.swift
-//  Network
-//
-//  Created by hhhello0507 on 9/11/24.
-//  Copyright © 2024 apeun-gidaechi. All rights reserved.
-//
+import Domain
 
 import Moya
-import Domain
 
 enum CatSeugiEndpoint: AIEndpoint {
     case sendMessage(CatSeugiSendMessageReq)

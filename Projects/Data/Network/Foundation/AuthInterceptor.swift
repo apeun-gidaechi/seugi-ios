@@ -1,15 +1,16 @@
-import Alamofire
-import UIKit
 import Foundation
-import Domain
-import DIContainer
 import SwiftUI
 import Combine
-import Moya
+import UIKit
+
+import Domain
+import DIContainer
 import SwiftUtil
 
+import Moya
+import Alamofire
+
 final class AuthInterceptor: Moya.RequestInterceptor {
-    
     @Inject private var keyValueStore: KeyValueRepo
     @Inject private var keychainRepo: KeychainRepo
     @Inject private var memberRepo: MemberRepo
@@ -88,9 +89,5 @@ final class AuthInterceptor: Moya.RequestInterceptor {
     private func failureReissue() {
         keyValueStore.delete(key: .accessToken)
         keychainRepo.delete(key: .refreshToken)
-    }
-    
-    deinit {
-        subscriptions.forEach { $0.cancel() }
     }
 }

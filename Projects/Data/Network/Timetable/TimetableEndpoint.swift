@@ -1,15 +1,6 @@
-//
-//  TimetableEndpoint.swift
-//  Core
-//
-//  Created by hhhello0507 on 9/11/24.
-//  Copyright © 2024 apeun-gidaechi. All rights reserved.
-//
-
 import Moya
 
 enum TimetableEndpoint: SeugiEndpoint {
-    
     case getWeekend(workspaceId: String)
     case getDay(workspaceId: String)
     case reset(workspaceId: String)

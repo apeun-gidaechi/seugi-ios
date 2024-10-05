@@ -1,16 +1,8 @@
-//
-//  Decoder.swift
-//  Network
-//
-//  Created by hhhello0507 on 9/12/24.
-//  Copyright © 2024 apeun-gidaechi. All rights reserved.
-//
-
 import Foundation
+
 import DateUtil
 
 public let decoder = JSONDecoder().then { decoder in
-    
     let localDateTimeMSFormatter = DateFormatter("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     let localDateTimeFormatter = DateFormatter("yyyy-MM-dd'T'HH:mm:ss")
     let localDateFormatter = DateFormatter("yyyy-MM-dd")

@@ -1,5 +1,6 @@
-import Moya
 import Foundation
+
+import Moya
 
 public protocol SeugiEndpoint: BaseEndpoint {}
 

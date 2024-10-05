@@ -1,13 +1,7 @@
-//
-//  LocalRetrieveMember.swift
-//  Local
-//
-//  Created by hhhello0507 on 9/1/24.
-//  Copyright © 2024 apeun-gidaechi. All rights reserved.
-//
-
 import Foundation
+
 import RealmSwift
+
 import Domain
 
 final class RetrieveMemberEntity: Object {

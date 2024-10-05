@@ -1,5 +1,6 @@
-import Moya
 import Domain
+
+import Moya
 
 public enum ProfileEndpoint: SeugiEndpoint {
     case me(workspaceId: String)
@@ -8,7 +9,6 @@ public enum ProfileEndpoint: SeugiEndpoint {
 }
 
 public extension ProfileEndpoint {
-    
     static let provider = MoyaProvider<ProfileEndpoint>(session: session)
     static let authProvider = MoyaProvider<ProfileEndpoint>(session: authSession)
     

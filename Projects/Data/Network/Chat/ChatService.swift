@@ -1,8 +1,8 @@
-import Domain
 import Combine
 
+import Domain
+
 final class ChatService: Service<ChatEndpoint>, ChatRepo {
-    
     func addMemberGroup(_ req: ChatMemberEventReq) -> APIResult<BaseVoid> {
         performRequest(.addMemberGroup(req))
     }

@@ -1,14 +1,8 @@
-//
-//  CatSeugiAssembly.swift
-//  Network
-//
-//  Created by hhhello0507 on 9/12/24.
-//  Copyright © 2024 apeun-gidaechi. All rights reserved.
-//
-
 import Foundation
-import Swinject
+
 import Domain
+
+import Swinject
 
 public struct CatSeugiAssembly: Assembly {
     public init() {}

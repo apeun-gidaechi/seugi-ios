@@ -1,5 +1,6 @@
-import Swinject
 import Domain
+
+import Swinject
 
 public final class ProfileAssembly: Assembly {
     public init() {}

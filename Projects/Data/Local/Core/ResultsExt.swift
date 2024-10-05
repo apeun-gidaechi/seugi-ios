@@ -1,4 +1,5 @@
 import Foundation
+
 import RealmSwift
 
 extension Results {

@@ -1,4 +1,5 @@
 import Swinject
+
 import Domain
 
 public final class EmailAssembly: Assembly {

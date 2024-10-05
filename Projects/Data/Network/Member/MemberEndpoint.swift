@@ -1,5 +1,6 @@
-import Moya
 import Domain
+
+import Moya
 
 enum MemberEndpoint: SeugiEndpoint {
     case edit(_ req: EditMemberReq)
@@ -12,7 +13,6 @@ enum MemberEndpoint: SeugiEndpoint {
 }
 
 extension MemberEndpoint {
-    
     static let provider = MoyaProvider<MemberEndpoint>(session: session)
     static let authProvider = MoyaProvider<MemberEndpoint>(session: authSession)
     

@@ -1,5 +1,6 @@
-import Domain
 import Combine
+
+import Domain
 
 final class ProfileService: Service<ProfileEndpoint>, ProfileRepo {
     func me(workspaceId: String) -> APIResult<Base<RetrieveProfile>> {

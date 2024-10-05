@@ -1,5 +1,6 @@
-import Domain
 import Combine
+
+import Domain
 
 final class MemberService: Service<MemberEndpoint>, MemberRepo {
     

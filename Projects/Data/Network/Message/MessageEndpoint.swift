@@ -5,7 +5,6 @@ public enum MessageEndpoint: SeugiEndpoint {
 }
 
 public extension MessageEndpoint {
-    
     static let provider = MoyaProvider<MessageEndpoint>(session: session)
     static let authProvider = MoyaProvider<MessageEndpoint>(session: authSession)
     

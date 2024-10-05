@@ -1,5 +1,6 @@
-import Moya
 import Domain
+
+import Moya
 
 enum MealEndpoint: SeugiEndpoint {
     case getAll(workspaceId: String)
@@ -8,7 +9,6 @@ enum MealEndpoint: SeugiEndpoint {
 }
 
 extension MealEndpoint {
-    
     static let provider = MoyaProvider<Self>(session: session)
     static let authProvider = MoyaProvider<Self>(session: authSession)
     

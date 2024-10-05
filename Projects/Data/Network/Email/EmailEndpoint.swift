@@ -5,7 +5,6 @@ public enum EmailEndpoint: SeugiEndpoint {
 }
 
 public extension EmailEndpoint {
-    
     static var provider = MoyaProvider<Self>(session: session)
     static var authProvider = MoyaProvider<Self>(session: authSession)
     

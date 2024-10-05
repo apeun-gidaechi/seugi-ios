@@ -1,5 +1,6 @@
-import Domain
 import Foundation
+
+import Domain
 
 final class FileService: Service<FileEndpoint>, FileRepo {
     func upload(type: FileType, file: Data) -> APIResult<Base<String>> {
