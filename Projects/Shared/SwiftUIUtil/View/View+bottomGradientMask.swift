@@ -1,11 +1,3 @@
-//
-//  View+gradientMask.swift
-//  DateUtil
-//
-//  Created by hhhello0507 on 7/24/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
 
 public extension View {

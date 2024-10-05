@@ -20,7 +20,7 @@ struct ChatItemTimeLabelView: View {
                         .seugiColor(.gray(.g600))
                         .font(.caption(.c1))
                 }
-                Text(config.message.timestamp?.adjustedString ?? "")
+                Text(config.message.timestamp?.prettyText ?? "")
                     .seugiColor(.gray(.g600))
                     .font(.caption(.c2))
             }

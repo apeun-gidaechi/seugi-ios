@@ -11,10 +11,7 @@ let project = Project.make(
             product: .framework,
             bundleId: makeBundleId("Domain"),
             sources: ["Sources/**"],
-            dependencies: [
-                .shared(of: .DateUtil),
-                .shared(of: .SwiftUtil)
-            ]
+            dependencies: []
         ),
         .make(
             name: "DomainTesting",

@@ -38,7 +38,7 @@ public struct SeugiChatList: View {
             }
             Spacer()
             VStack(alignment: .trailing, spacing: 4) {
-                Text(room.lastMessageTimestamp.adjustedString)
+                Text(room.lastMessageTimestamp.prettyText)
                     .font(.body(.b2))
                     .seugiColor(.gray(.g500))
                 if room.notReadCnt > 0 {

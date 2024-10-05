@@ -1,7 +1,7 @@
 import Foundation
 
 public extension Date {
-    var timeAgo: String {
+    var timeAgoText: String {
         let currentDate = Date()
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: self, to: currentDate)
@@ -21,7 +21,7 @@ public extension Date {
         }
     }
     
-    var adjustedString: String {
+    var prettyText: String {
         let dateFormatter = DateFormatter()
         let calendar = Calendar.current
         let now = Date()
