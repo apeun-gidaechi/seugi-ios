@@ -34,7 +34,7 @@ public struct RegisterEmailView: View {
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
-        .seugiTopBar("회원가입")
+        .seugiTopBar(title: "회원가입")
         .hideKeyboardWhenTap()
         .onAppear {
             firstTextField = true

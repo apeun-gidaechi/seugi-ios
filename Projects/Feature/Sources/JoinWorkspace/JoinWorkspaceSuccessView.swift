@@ -32,6 +32,6 @@ public struct JoinWorkspaceSuccessView: View {
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
-        .seugiTopBar("학교 가입")
+        .seugiTopBar(title: "학교 가입")
     }
 }

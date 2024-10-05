@@ -45,7 +45,7 @@ public struct CreateWorkspaceView: View {
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
-        .seugiTopBar("새 학교 등록")
+        .seugiTopBar(title: "새 학교 등록")
         .onReceive(viewModel.$createWorkspaceFlow) { flow in
             switch flow {
             case .success:

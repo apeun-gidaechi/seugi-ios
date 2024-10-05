@@ -64,8 +64,10 @@ public struct CatSeugiView: View {
             makeBottomTextField()
         }
         .hideKeyboardWhenTap()
-        .seugiTopBar("캣스기")
-        .showShadow()
+        .seugiTopBar(
+            title: "캣스기",
+            showShadow: true
+        )
         .onReceive(viewModel.$sendMessageFlow) { flow in
             switch flow {
             case .success:

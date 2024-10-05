@@ -21,7 +21,7 @@ public struct JoinWorkspaceCodeView: View {
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
-        .seugiTopBar("학교 가입")
+        .seugiTopBar(title: "학교 가입")
         .onReceive(viewModel.$workspace) {
             switch $0 {
             case .success:

@@ -15,7 +15,6 @@ struct TopBarPreview: View {
             Text("Hello, Seugi!")
                 .font(.display(.d1))
         }
-        .seugiTopBar("로그인")
-        .showShadow()
+        .seugiTopBar(title: "로그인", showShadow: true)
     }
 }

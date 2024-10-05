@@ -14,6 +14,7 @@ public final class ChatDetailViewModel: ObservableObject {
     }
     
     var subscriptions = Set<AnyCancellable>()
+    let subject = PassthroughSubject<Effect, Never>()
     
     // MARK: - Repo
     @Inject private var messageRepo: MessageRepo

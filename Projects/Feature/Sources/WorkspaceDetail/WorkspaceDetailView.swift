@@ -66,7 +66,7 @@ public struct WorkspaceDetailView: View {
             .padding(.top, 12)
         }
         .scrollIndicators(.hidden)
-        .seugiTopBar("내 학교")
+        .seugiTopBar(title: "내 학교")
         .sheet(isPresented: $isSheetPresent) {
             sheet
         }

@@ -2,20 +2,15 @@ import SwiftUI
 import Component
 import SwiftUIUtil
 
-public struct HomeView: View {
-    
-    @StateObject private var viewModel = HomeViewModel()
+struct HomeView {
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var appState: AppViewModel
     @EnvironmentObject private var router: RouterViewModel
     
+    @StateObject private var viewModel = HomeViewModel()
+    
     private var isWorkspaceEmpty: Bool {
-        if let workspaces = appState.workspaces.data,
-           !workspaces.isEmpty {
-            false
-        } else {
-            true
-        }
+        appState.workspaces.data?.isEmpty ?? true
     }
     
     private var flow: HomeFetchFlow {
@@ -27,22 +22,10 @@ public struct HomeView: View {
             .success
         }
     }
-    
-    public init() {}
-    
-    private func showJoinWorkspaceAlert() {
-        alertProvider.present("학교 등록하기")
-            .primaryButton("기존 학교 가입") {
-                router.navigate(to: MainDestination.joinWorkspaceRole)
-            }
-            .secondaryButton("새 학교 만들기") {
-                router.navigate(to: MainDestination.createWorkspace)
-            }
-            .message("학교를 등록한 뒤 스기를 사용할 수 있어요")
-            .show()
-    }
-    
-    public var body: some View {
+}
+
+extension HomeView: View {
+    var body: some View {
         ScrollView {
             VStack(spacing: 8) {
                 HomeWorkspaceContainer(for: flow)
@@ -66,8 +49,13 @@ public struct HomeView: View {
         }
         .scrollIndicators(.hidden)
         .seugiBackground(.primary(.p050))
-        .seugiTopBar("홈", background: .seugi(.primary(.p050)))
-        .hideBackButton()
+        .seugiTopBar(
+            title: "홈",
+            colors: .default.copy(
+                backgroundColor: .seugi(.primary(.p050))
+            ),
+            showBackButton: false
+        )
         .animation(.spring(duration: 0.4), value: viewModel.meals)
         .animation(.spring(duration: 0.4), value: viewModel.timetables)
         .onChange(of: flow, initial: true) {
@@ -80,5 +68,17 @@ public struct HomeView: View {
             viewModel.fetchMeals(workspaceId: id)
             viewModel.fetchTimetable(workspaceId: id)
         }
+    }
+    
+    func showJoinWorkspaceAlert() {
+        alertProvider.present("학교 등록하기")
+            .primaryButton("기존 학교 가입") {
+                router.navigate(to: MainDestination.joinWorkspaceRole)
+            }
+            .secondaryButton("새 학교 만들기") {
+                router.navigate(to: MainDestination.createWorkspace)
+            }
+            .message("학교를 등록한 뒤 스기를 사용할 수 있어요")
+            .show()
     }
 }

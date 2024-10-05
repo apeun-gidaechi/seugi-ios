@@ -29,7 +29,7 @@ public struct RegisterEmailVerificationView: View {
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
-        .seugiTopBar("이메일 인증")
+        .seugiTopBar(title: "이메일 인증")
         .onReceive(viewModel.$signUpFlow) { flow in
             switch flow {
             case .success(let token):

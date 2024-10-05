@@ -59,8 +59,7 @@ public struct ProfileView: View {
             }
         }
         .seugiBackground(.sub(.white))
-        .seugiTopBar("내 프로필")
-        .hideBackButton()
+        .seugiTopBar(title: "내 프로필", showBackButton: false)
         .onReceive(viewModel.$updateProfileFlow) { flow in
             switch flow {
             case .success:

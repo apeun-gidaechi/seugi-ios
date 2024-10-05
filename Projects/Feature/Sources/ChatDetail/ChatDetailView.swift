@@ -102,7 +102,16 @@ public struct ChatDetailView: View {
             }
         }
         .hideKeyboardWhenTap()
-        .seugiTopBar(room.chatName) {
+        .seugiTopBar(
+            title: isSearching ? nil : room.chatName,
+            showShadow: true,
+            subView: {
+                if isSearching {
+                    TextField("메세지, 이미지, 파일 검색", text: $searchText)
+                        .focused($searchFocus)
+                }
+            }
+        ) {
             if isSearching {
                 withAnimation {
                     isSearching = false
@@ -111,23 +120,17 @@ public struct ChatDetailView: View {
                 dismiss()
             }
         }
-        .hideTitle(isSearching)
-        .subView {
-            if isSearching {
-                TextField("메세지, 이미지, 파일 검색", text: $searchText)
-                    .focused($searchFocus)
-            }
-        }
-        .showShadow()
-        .if(!isSearching) { view in
-            view.button(.searchLine) {
-                withAnimation {
-                    isSearching = true
-                    searchFocus = true
+        .buttons {
+            if !isSearching {
+                SeugiTopBarButton(icon: .searchLine) {
+                    withAnimation {
+                        isSearching = true
+                        searchFocus = true
+                    }
                 }
-            }
-            .button(.hamburgerHorizontalLine) {
-                isDrawerOpen = true
+                SeugiTopBarButton(icon: .hamburgerHorizontalLine) {
+                    isDrawerOpen = true
+                }
             }
         }
         .seugiDrawer(isOpen: $isDrawerOpen) {
@@ -146,18 +149,13 @@ public struct ChatDetailView: View {
         .onChange(of: isDrawerOpen) { _ in
             hideKeyboard()
         }
-        .onAppear {
-//            viewModel.subscribe { subject in
-//                switch subject {
-//                case .messageLoaded:
-//                    Task {
-//                        try? await Task.sleep(for: .seconds(0.2))
-//                        scrollToBottom()
-//                    }
-//                case .messagesFetched:
-//                    scrollToBottom()
-//                }
-//            }
+        .onReceive(viewModel.subject) { subject in
+            switch subject {
+            case .messageLoaded:
+                scrollToBottom(animated: true)
+            case .messagesFetched:
+                scrollToBottom()
+            }
         }
         .photosPicker(
             isPresented: $showPhotoPicker,
@@ -169,7 +167,7 @@ public struct ChatDetailView: View {
             switch flow {
             case .success:
                 router.popToStack()
-            case .failure(let error):
+            case .failure:
                 alert.present("채팅방을 나갈 수 없습니다")
                     .message("잠시 후 다시 시도해 주세요")
                     .show()
@@ -195,16 +193,20 @@ public struct ChatDetailView: View {
         .padding(.bottom, 8)
         .seugiBackground(.primary(.p050))
         .onTapGesture {
-            Task {
-                try? await Task.sleep(for: .seconds(0.1))
-                withAnimation {
-                    scrollToBottom()
-                }
-            }
+            scrollToBottom(animated: true)
         }
     }
     
-    private func scrollToBottom() {
-        scrollViewProxy?.scrollTo(Id.bottom)
+    private func scrollToBottom(animated: Bool = false) {
+        if animated {
+            Task {
+                try? await Task.sleep(for: .seconds(0.1))
+                withAnimation {
+                    scrollViewProxy?.scrollTo(Id.bottom)
+                }
+            }
+        } else {
+            scrollViewProxy?.scrollTo(Id.bottom)
+        }
     }
 }

@@ -50,11 +50,18 @@ extension NotificationView {
             viewModel.fetchNotifications(workspaceId: selectedWorkspace.workspaceId)
         }
         .seugiBackground(.primary(.p050))
-        .seugiTopBar("공지", background: .seugi(.primary(.p050)))
-        .hideBackButton()
-        .if(appState.workspaceRole != .student) {
-            $0.button(.writeLine) {
-                router.navigate(to: MainDestination.createNotification)
+        .seugiTopBar(
+            title: "공지",
+            colors: .default.copy(
+                backgroundColor: .seugi(.primary(.p050))
+            ),
+            showBackButton: false
+        )
+        .buttons {
+            if appState.workspaceRole != .student {
+                .init(icon: .writeLine) {
+                    router.navigate(to: MainDestination.createNotification)
+                }
             }
         }
         .onReceive(viewModel.$removeNotificationFlow) { flow in

@@ -7,6 +7,8 @@ import Domain
 import SwiftUtil
 
 public final class AppViewModel: ObservableObject {
+    var subscriptions = Set<AnyCancellable>()
+    
     @Inject private var keyValueRepo: KeyValueRepo
     @Inject private var keychainRepo: KeychainRepo
     @Inject private var workspaceRepo: WorkspaceRepo
@@ -32,8 +34,6 @@ public final class AppViewModel: ObservableObject {
         return .getRole(memberId: member.id, workspace: selectedWorkspace)
     }
     @Published var logoutFlow = Flow<Bool>.idle
-    
-    var subscriptions = Set<AnyCancellable>()
     
     public init() {
         accessToken = keyValueRepo.load(key: .accessToken)

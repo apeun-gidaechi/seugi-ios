@@ -23,6 +23,6 @@ struct SettingAlarmView: View {
             }
             .padding(.top, 6)
         }
-        .seugiTopBar("알림 설정")
+        .seugiTopBar(title: "알림 설정")
     }
 }

@@ -37,15 +37,17 @@ public struct SecondCreateGroupChatView: View {
             }
         }
         .padding(.horizontal, 20)
-        .seugiTopBar("")
-        .subView {
-            SeugiButton.small("완료", type: .transparent, isLoading: viewModel.createRoomFlow.is(.fetching)) {
-                if let selectedWorkspace = appState.selectedWorkspace {
-                    viewModel.createGroupChat(workspaceId: selectedWorkspace.workspaceId)
+        .seugiTopBar(
+            title: "",
+            subView: {
+                SeugiButton.small("완료", type: .transparent, isLoading: viewModel.createRoomFlow.is(.fetching)) {
+                    if let selectedWorkspace = appState.selectedWorkspace {
+                        viewModel.createGroupChat(workspaceId: selectedWorkspace.workspaceId)
+                    }
                 }
+                .disabled(viewModel.roomName.isEmpty)
             }
-            .disabled(viewModel.roomName.isEmpty)
-        }
+        )
         .onReceive(viewModel.$createRoomFlow) { flow in
             switch flow {
             case .success:

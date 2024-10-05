@@ -4,6 +4,11 @@ import SwiftUI
 import Domain
 
 public enum Flow<Data: Equatable>: Equatable {
+    case idle
+    case fetching
+    case success(Data)
+    case failure(Error)
+    
     public static func == (lhs: Flow<Data>, rhs: Flow<Data>) -> Bool {
         switch (lhs, rhs) {
         case (.idle, idle), (.fetching, .fetching), (.failure, .failure): true
@@ -11,10 +16,6 @@ public enum Flow<Data: Equatable>: Equatable {
         default: false
         }
     }
-    case idle
-    case fetching
-    case success(Data)
-    case failure(Error)
 }
 
 public extension Flow {

@@ -31,6 +31,9 @@ struct ImagePreview: View {
             }
         }
         .ignoresSafeArea()
-        .seugiTopBar("", background: .black, tintColor: .white)
+        .seugiTopBar(
+            title: "",
+            colors: SeugiTopBarView.Colors(backgroundColor: .black, tintColor: .white)
+        )
     }
 }

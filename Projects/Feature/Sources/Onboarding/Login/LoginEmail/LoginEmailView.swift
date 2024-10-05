@@ -40,7 +40,7 @@ public struct LoginEmailView: View {
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
-        .seugiTopBar("로그인")
+        .seugiTopBar(title: "로그인")
         .onReceive(viewModel.$signInFlow) { flow in
             switch flow {
             case .success(let token):

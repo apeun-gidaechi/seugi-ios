@@ -38,7 +38,7 @@ public struct JoinWorkspaceRoleView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 16)
         }
-        .seugiTopBar("학교 가입")
+        .seugiTopBar(title: "학교 가입")
         .onReceive(viewModel.$joinFlow) {
             switch $0 {
             case .success:

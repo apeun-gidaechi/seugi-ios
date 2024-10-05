@@ -4,20 +4,22 @@ import Flow
 import SwiftUIUtil
 import Domain
 
-public struct FirstCreateGroupChatView: View {
-    
-    @EnvironmentObject private var router: RouterViewModel
-    @State private var contentSize: CGSize = .zero
-    @EnvironmentObject private var viewModel: CreateGroupChatViewModel
+struct FirstCreateGroupChatView {
     @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var router: RouterViewModel
+    @EnvironmentObject private var viewModel: CreateGroupChatViewModel
+    
+    @State private var contentSize: CGSize = .zero
     
     public init() {}
     
     private var profile: RetrieveProfile? {
         appState.profile.data
     }
-    
-    public var body: some View {
+}
+
+extension FirstCreateGroupChatView: View {
+    var body: some View {
         VStack(spacing: 0) {
             viewModel.members.makeView {
                 Spacer()
@@ -70,20 +72,22 @@ public struct FirstCreateGroupChatView: View {
 //                }
 //            }
         }
-        .seugiTopBar("멤버 선택")
-        .subView {
-            SeugiButton.small("완료", type: .transparent) {
-                if viewModel.selectedMembers.count > 1 {
-                    router.navigate(to: MainDestination.secondCreateGroupChat)
-                } else {
-                    guard let selectedWorkspace = appState.selectedWorkspace else {
-                        return
+        .seugiTopBar(
+            title: "멤버 선택",
+            subView: {
+                SeugiButton.small("완료", type: .transparent) {
+                    if viewModel.selectedMembers.count > 1 {
+                        router.navigate(to: MainDestination.secondCreateGroupChat)
+                    } else {
+                        guard let selectedWorkspace = appState.selectedWorkspace else {
+                            return
+                        }
+                        viewModel.createPersonalChat(workspaceId: selectedWorkspace.workspaceId)
                     }
-                    viewModel.createPersonalChat(workspaceId: selectedWorkspace.workspaceId)
                 }
+                .disabled(viewModel.selectedMembers.isEmpty)
             }
-            .disabled(viewModel.selectedMembers.isEmpty)
-        }
+        )
     }
     
     @ViewBuilder

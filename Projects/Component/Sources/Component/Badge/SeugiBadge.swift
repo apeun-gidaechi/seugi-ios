@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftUIUtil
 
 public struct SeugiBadge: View {
     private let type: SeugiBadgeType

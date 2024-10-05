@@ -70,7 +70,14 @@ struct WorkspaceMemberView: View {
             }
             Spacer()
         }
-        .seugiTopBar("멤버") {
+        .seugiTopBar(
+            title: viewModel.isSearching ? nil : "멤버"
+        ) {
+            if viewModel.isSearching {
+                TextField("채팅방 검색", text: $viewModel.searchText)
+                    .focused($searchFocus)
+            }
+        } onBackAction: {
             withAnimation {
                 viewModel.isSearching = false
             }
@@ -78,18 +85,13 @@ struct WorkspaceMemberView: View {
                 dismiss()
             }
         }
-        .hideTitle(viewModel.isSearching)
-        .subView {
-            if viewModel.isSearching {
-                TextField("채팅방 검색", text: $viewModel.searchText)
-                    .focused($searchFocus)
-            }
-        }
-        .if(!viewModel.isSearching) { view in
-            view.button(.searchLine) {
-                withAnimation {
-                    viewModel.isSearching = true
-                    searchFocus = true
+        .buttons {
+            if !viewModel.isSearching {
+                .init(icon: .searchLine) {
+                    withAnimation {
+                        viewModel.isSearching = true
+                        searchFocus = true
+                    }
                 }
             }
         }

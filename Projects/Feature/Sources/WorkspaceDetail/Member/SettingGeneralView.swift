@@ -30,6 +30,6 @@ struct SettingGeneralView: View {
             }
             .padding(.top, 6)
         }
-        .seugiTopBar("일반")
+        .seugiTopBar(title: "일반")
     }
 }

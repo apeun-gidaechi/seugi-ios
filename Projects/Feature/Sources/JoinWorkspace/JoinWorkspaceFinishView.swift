@@ -28,6 +28,6 @@ public struct JoinWorkspaceFinishView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 16)
         }
-        .seugiTopBar("")
+        .seugiTopBar(title: "")
     }
 }

@@ -84,7 +84,7 @@ public struct SettingProfileView: View {
             }
             Spacer()
         }
-        .seugiTopBar("설정")
+        .seugiTopBar(title: "설정")
         .photosPicker(
             isPresented: $showPhotoPicker,
             selection: $profileImagePhoto,

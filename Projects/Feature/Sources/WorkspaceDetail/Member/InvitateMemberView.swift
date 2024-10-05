@@ -116,7 +116,7 @@ struct InvitateMemberView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 16)
         }
-        .seugiTopBar("멤버 초대")
+        .seugiTopBar(title: "멤버 초대")
         .onAppear {
             fetchAll()
         }

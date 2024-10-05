@@ -54,32 +54,33 @@ public struct ChatView: View {
                 }
             }
         }
-        .seugiTopBar(roomType.text) {
-            withAnimation {
-                viewModel.isSearching = false
-            }
-        }
-        .hideTitle(viewModel.isSearching)
-        .subView {
+        .seugiTopBar(
+            title: viewModel.isSearching ? nil : roomType.text,
+            showBackButton: viewModel.isSearching
+        ) {
             if viewModel.isSearching {
                 TextField("채팅방 검색", text: $viewModel.searchText)
                     .focused($searchFocus)
             }
+        } onBackAction: {
+            withAnimation {
+                viewModel.isSearching = false
+            }
         }
-        .if(!viewModel.isSearching) { view in
-            view.hideBackButton()
-                .button(.searchLine) {
+        .buttons {
+            if !viewModel.isSearching {
+                .init(icon: .searchLine) {
                     withAnimation {
                         viewModel.isSearching = true
                         searchFocus = true
                     }
                 }
-                .if(roomType != .personal) { view in
-                    view.button(.addFill) {
+                if roomType != .personal {
+                    .init(icon: .addFill) {
                         router.navigate(to: MainDestination.firstCreateGroupChat)
                     }
-                    .hideBackButton()
                 }
+            }
         }
         .onAppear {
 //            viewModel.subscribe { subject in

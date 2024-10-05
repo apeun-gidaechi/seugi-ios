@@ -31,22 +31,24 @@ public struct PostNotificationView: View {
             .padding(.top, 6)
         }
         .scrollIndicators(.hidden)
-        .seugiTopBar(type == .createNotification ? "새 공지 작성" : "공지 수정")
-        .subView {
-            SeugiButton.small("완료", type: .transparent, isLoading: viewModel.fetchPostNotification == .fetching) {
-                hideKeyboard() // UX
-                switch type {
-                case .createNotification:
-                    guard let selectedWorkspace = appState.selectedWorkspace else {
-                        return
+        .seugiTopBar(
+            title: type == .createNotification ? "새 공지 작성" : "공지 수정",
+            subView: {
+                SeugiButton.small("완료", type: .transparent, isLoading: viewModel.fetchPostNotification == .fetching) {
+                    hideKeyboard() // UX
+                    switch type {
+                    case .createNotification:
+                        guard let selectedWorkspace = appState.selectedWorkspace else {
+                            return
+                        }
+                        viewModel.createNotification(workspaceId: selectedWorkspace.workspaceId)
+                    case .updateNotification(let notification):
+                        viewModel.updateNotification(notificationId: notification.id)
                     }
-                    viewModel.createNotification(workspaceId: selectedWorkspace.workspaceId)
-                case .updateNotification(let notification):
-                    viewModel.updateNotification(notificationId: notification.id)
                 }
+                .disabled(viewModel.content.isEmpty || viewModel.title.isEmpty)
             }
-            .disabled(viewModel.content.isEmpty || viewModel.title.isEmpty)
-        }
+        )
         .onReceive(viewModel.$fetchPostNotification) { flow in
             switch flow {
             case .success:
