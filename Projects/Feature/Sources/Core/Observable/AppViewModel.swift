@@ -15,24 +15,11 @@ public final class AppViewModel: ObservableObject {
     @Inject private var profileRepo: ProfileRepo
     @Inject private var memberRepo: MemberRepo
     
-    // workspace
-    @Published public var workspaces: Flow<[Workspace]> = .fetching
-    @Published public var selectedWorkspace: Workspace? {
-        willSet {
-            guard let id = newValue?.workspaceId else { return }
-            keyValueRepo.save(key: .selectedWorkspaceId, value: id)
-        }
-    }
-    @Published public var accessToken: String?
-    @Published public var refreshToken: String?
-    @Published public var profile: Flow<RetrieveProfile> = .fetching
-    public var workspaceRole: WorkspaceRole? {
-        guard let selectedWorkspace,
-              let member = profile.data?.member else {
-            return nil
-        }
-        return .getRole(memberId: member.id, workspace: selectedWorkspace)
-    }
+    @Published var workspaces: Flow<[Workspace]> = .fetching
+    @Published var selectedWorkspace: Workspace?
+    @Published var accessToken: String?
+    @Published var refreshToken: String?
+    @Published var profile: Flow<RetrieveProfile> = .fetching
     @Published var logoutFlow = Flow<Bool>.idle
     
     public init() {
@@ -40,6 +27,16 @@ public final class AppViewModel: ObservableObject {
         refreshToken = keychainRepo.load(key: .refreshToken)
         fetchWorkspaces()
         observeState()
+    }
+}
+
+public extension AppViewModel {
+    var workspaceRole: WorkspaceRole? {
+        guard let selectedWorkspace,
+              let member = profile.data?.member else {
+            return nil
+        }
+        return .getRole(memberId: member.id, workspace: selectedWorkspace)
     }
 }
 
@@ -60,6 +57,11 @@ extension AppViewModel {
                 self.keychainRepo.delete(key: .refreshToken)
             }
         }.store(in: &subscriptions)
+        
+        $selectedWorkspace.sink {
+            guard let id = $0?.workspaceId else { return }
+            self.keyValueRepo.save(key: .selectedWorkspaceId, value: id)
+        }.store(in: &subscriptions)
     }
     
     public func login() {
@@ -70,7 +72,8 @@ extension AppViewModel {
         accessToken = nil
         refreshToken = nil
         selectedWorkspace = nil
-        profile = .fetching
+        profile = .idle
+        workspaces = .idle
         if let fcmToken = keyValueRepo.load(key: .fcmToken) as? String {
             memberRepo.logout(
                 .init(fcmToken: fcmToken)

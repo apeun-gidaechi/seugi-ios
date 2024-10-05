@@ -139,28 +139,20 @@ public extension Publisher {
         _ keyPath: ReferenceWritableKeyPath<Object, Flow<Output>>,
         on object: Object
     ) -> AnyPublisher<Output, Failure> {
-        self.receive(on: DispatchQueue.main).handleEvents(
+        self.handleEvents(
             receiveSubscription: { _ in
-                DispatchQueue.main.async {
-                    object[keyPath: keyPath] = .fetching
-                }
+                object[keyPath: keyPath] = .fetching
             },
             receiveOutput: { output in
-                DispatchQueue.main.async {
-                    object[keyPath: keyPath] = .success(output)
-                }
+                object[keyPath: keyPath] = .success(output)
             },
             receiveCompletion: { completion in
-                DispatchQueue.main.async {
-                    if case .failure(let error) = completion {
-                        object[keyPath: keyPath] = .failure(error)
-                    }
+                if case .failure(let error) = completion {
+                    object[keyPath: keyPath] = .failure(error)
                 }
             },
             receiveCancel: {
-                DispatchQueue.main.async {
-                    object[keyPath: keyPath] = .idle
-                }
+                object[keyPath: keyPath] = .idle
             }
         )
         .eraseToAnyPublisher()
