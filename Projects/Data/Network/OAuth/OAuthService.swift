@@ -1,13 +1,18 @@
 import Foundation
-
 import Domain
 
-final class OAuthService: Service<OAuthEndpoint>, OAuthRepo {
+final class OAuthService: OAuthRepo {
+    let runner: NetRunner
+    
+    init(runner: NetRunner) {
+        self.runner = runner
+    }
+    
     func authenticateGoogle(_ req: GoogleCodeReq) -> APIResult<Base<Token>> {
-        performRequest(.authenticateGoogle(req), res: Token.self)
+        runner.deepDive(OAuthEndpoint.authenticateGoogle(req), res: Base<Token>.self)
     }
     
     func connectGoogle(_ req: GoogleCodeReq) -> APIResult<BaseVoid> {
-        performRequest(.connectGoogle(req))
+        runner.deepDive(OAuthEndpoint.connectGoogle(req), res: BaseVoid.self)
     }
 }

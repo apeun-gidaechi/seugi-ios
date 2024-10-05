@@ -1,53 +1,58 @@
 import Combine
-
 import Domain
 
-final class ChatService: Service<ChatEndpoint>, ChatRepo {
+final class ChatService: ChatRepo {
+    let runner: NetRunner
+    
+    init(runner: NetRunner) {
+        self.runner = runner
+    }
+    
     func addMemberGroup(_ req: ChatMemberEventReq) -> APIResult<BaseVoid> {
-        performRequest(.addMemberGroup(req))
+        runner.deepDive(ChatEndpoint.addMemberGroup(req), res: BaseVoid.self)
     }
     
     func kickMemberGroup(_ req: ChatMemberEventReq) -> APIResult<BaseVoid> {
-        performRequest(.kickMemberGroup(req))
+        runner.deepDive(ChatEndpoint.kickMemberGroup(req), res: BaseVoid.self)
     }
     
     func tossMemberGroup(_ req: ChatMemberEventReq) -> APIResult<BaseVoid> {
-        performRequest(.tossMemberGroup(req))
+        runner.deepDive(ChatEndpoint.tossMemberGroup(req), res: BaseVoid.self)
     }
     
     func createGroup(_ req: CreateGroupChatReq) -> APIResult<Base<String>> {
-        performRequest(.createGroup(req), res: String.self)
+        runner.deepDive(ChatEndpoint.createGroup(req), res: Base<String>.self)
     }
     
     func searchGroup(workspaceId: String, word: String) -> APIResult<Base<[Room]>> {
-        performRequest(.searchGroupByWord(workspaceId: workspaceId, word: word), res: [Room].self)
+        runner.deepDive(ChatEndpoint.searchGroupByWord(workspaceId: workspaceId, word: word), res: Base<[Room]>.self)
     }
     
     func searchGroup(roomId: String) -> APIResult<Base<Room>> {
-        performRequest(.searchGroupById(roomId: roomId), res: Room.self)
+        runner.deepDive(ChatEndpoint.searchGroupById(roomId: roomId), res: Base<Room>.self)
     }
     
     func searchGroup(workspaceId: String) -> APIResult<Base<[Room]>> {
-        performRequest(.searchGroup(workspaceId: workspaceId), res: [Room].self)
+        runner.deepDive(ChatEndpoint.searchGroup(workspaceId: workspaceId), res: Base<[Room]>.self)
     }
     
     func leftGroup(roomId: String) -> APIResult<BaseVoid> {
-        performRequest(.leftGroup(roomId: roomId))
+        runner.deepDive(ChatEndpoint.leftGroup(roomId: roomId), res: BaseVoid.self)
     }
     
     func createPersonal(_ req: CreateGroupChatReq) -> APIResult<Base<String>> {
-        performRequest(.createPersonal(req), res: String.self)
+        runner.deepDive(ChatEndpoint.createPersonal(req), res: Base<String>.self)
     }
     
     func searchPersonal(workspaceId: String, word: String) -> APIResult<Base<[Room]>> {
-        performRequest(.searchPersonalByWord(workspaceId: workspaceId, word: word), res: [Room].self)
+        runner.deepDive(ChatEndpoint.searchPersonalByWord(workspaceId: workspaceId, word: word), res: Base<[Room]>.self)
     }
     
     func searchPersonal(roomId: String) -> APIResult<Base<Room>> {
-        performRequest(.searchPersonalById(roomId: roomId), res: Room.self)
+        runner.deepDive(ChatEndpoint.searchPersonalById(roomId: roomId), res: Base<Room>.self)
     }
     
     func searchPersonal(workspaceId: String) -> APIResult<Base<[Room]>> {
-        performRequest(.searchPersonal(workspaceId: workspaceId), res: [Room].self)
+        runner.deepDive(ChatEndpoint.searchPersonal(workspaceId: workspaceId), res: Base<[Room]>.self)
     }
 }

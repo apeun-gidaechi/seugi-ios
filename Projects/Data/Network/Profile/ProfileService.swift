@@ -1,17 +1,22 @@
 import Combine
-
 import Domain
 
-final class ProfileService: Service<ProfileEndpoint>, ProfileRepo {
+final class ProfileService: ProfileRepo {
+    let runner: NetRunner
+
+    init(runner: NetRunner) {
+        self.runner = runner
+    }
+    
     func me(workspaceId: String) -> APIResult<Base<RetrieveProfile>> {
-        performRequest(.me(workspaceId: workspaceId), res: RetrieveProfile.self)
+        runner.deepDive(ProfileEndpoint.me(workspaceId: workspaceId), res: Base<RetrieveProfile>.self)
     }
     
     func others(workspaceId: String, memberId: String) -> APIResult<Base<RetrieveProfile>> {
-        performRequest(.others(workspaceId: workspaceId, memberId: memberId), res: RetrieveProfile.self)
+        runner.deepDive(ProfileEndpoint.others(workspaceId: workspaceId, memberId: memberId), res: Base<RetrieveProfile>.self)
     }
     
     func patchProfile(workspaceId: String, _ req: PatchProfileReq) -> APIResult<BaseVoid> {
-        performRequest(.patch(workspaceId: workspaceId, req: req))
+        runner.deepDive(ProfileEndpoint.patch(workspaceId: workspaceId, req: req), res: BaseVoid.self)
     }
 }

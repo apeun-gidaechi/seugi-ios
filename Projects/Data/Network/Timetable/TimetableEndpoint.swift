@@ -1,27 +1,24 @@
 import Moya
 
-enum TimetableEndpoint: SeugiEndpoint {
+enum TimetableEndpoint {
     case getWeekend(workspaceId: String)
     case getDay(workspaceId: String)
     case reset(workspaceId: String)
 }
 
-extension TimetableEndpoint {
-    static let authProvider = MoyaProvider<Self>(session: authSession)
-    static let provider = MoyaProvider<Self>(session: session)
-    
-    var host: String {
-        "timetable"
-    }
-    
-    var route: (Moya.Method, String, Moya.Task) {
+extension TimetableEndpoint: SeugiEndpoint {
+    var host: String { "timetable" }
+    var route: Route {
         switch self {
         case .getWeekend(let workspaceId):
-                .get - "weekend" - ["workspaceId": workspaceId].toURLParameters()
+            return .get("weekend")
+                .task(["workspaceId": workspaceId].toURLParameters())
         case .getDay(let workspaceId):
-                .get - "day" - ["workspaceId": workspaceId].toURLParameters()
+            return .get("day")
+                .task(["workspaceId": workspaceId].toURLParameters())
         case .reset(let workspaceId):
-                .post - "reset" - ["workspaceId": workspaceId].toURLParameters()
+            return .post("reset")
+                .task(["workspaceId": workspaceId].toURLParameters())
         }
     }
 }

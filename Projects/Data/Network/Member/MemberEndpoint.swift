@@ -1,8 +1,7 @@
 import Domain
-
 import Moya
 
-enum MemberEndpoint: SeugiEndpoint {
+enum MemberEndpoint {
     case edit(_ req: EditMemberReq)
     case login(_ req: LoginMemberReq)
     case refresh(token: String)
@@ -12,42 +11,38 @@ enum MemberEndpoint: SeugiEndpoint {
     case logout(_ req: LogoutReq)
 }
 
-extension MemberEndpoint {
-    static let provider = MoyaProvider<MemberEndpoint>(session: session)
-    static let authProvider = MoyaProvider<MemberEndpoint>(session: authSession)
-    
-    var host: String {
-        "member"
-    }
-    
-    var route: (Moya.Method, String, Moya.Task) {
+extension MemberEndpoint: SeugiEndpoint {
+    var host: String { "member" }
+    var route: Route {
         switch self {
         case .edit(let req):
-                .patch - "edit" - req.toJSONParameters()
+            return .patch("edit")
+                .task(req.toJSONParameters())
         case .login(let req):
-                .post - "login" - req.toJSONParameters()
+            return .post("login")
+                .task(req.toJSONParameters())
         case .refresh(let token):
-                .get - "refresh" - ["token": "Bearer " + token].toURLParameters()
+            return .get("refresh")
+                .task(["token": "Bearer " + token].toURLParameters())
         case .register(let req):
-                .post - "register" - req.toJSONParameters()
+            return .post("register")
+                .task(req.toJSONParameters())
         case .remove:
-                .delete - "remove" - .requestPlain
+            return .delete("remove")
         case .myInfo:
-                .patch - "myInfo" - .requestPlain
+            return .patch("myInfo")
         case .logout(let req):
-                .post - "logout" - req.toJSONParameters()
+            return .post("logout")
+                .task(req.toJSONParameters())
         }
     }
     
     var authorization: Authorization {
         switch self {
-        case .edit: .authorization
-        case .login: .none
-        case .refresh: .none
-        case .register: .none
-        case .remove: .authorization
-        case .myInfo: .authorization
-        case .logout: .authorization
+        case .login, .refresh, .register:
+            return .none
+        default:
+            return .refresh
         }
     }
 }

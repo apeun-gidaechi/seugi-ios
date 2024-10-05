@@ -11,13 +11,18 @@ import Moya
 import Alamofire
 
 final class AuthInterceptor: Moya.RequestInterceptor {
-    @Inject private var keyValueStore: KeyValueRepo
-    @Inject private var keychainRepo: KeychainRepo
-    @Inject private var memberRepo: MemberRepo
-    
     private var subscriptions = Set<AnyCancellable>()
     
-    init() {}
+    private var keyValueStore: KeyValueRepo
+    private var keychainRepo: KeychainRepo
+    
+    init(
+        keyValueStore: KeyValueRepo,
+        keychainRepo: KeychainRepo
+    ) {
+        self.keyValueStore = keyValueStore
+        self.keychainRepo = keychainRepo
+    }
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Swift.Result<URLRequest, Error>) -> Void) {
         
@@ -69,8 +74,11 @@ final class AuthInterceptor: Moya.RequestInterceptor {
         
         Log.network("✅ AuthInterceptor - Try refresh with token - \(refreshToken)")
         
-        memberRepo.refresh(token: refreshToken)
-            .map(\.data)
+        DefaultNetRunner(provider: .init(), authProvider: .init(), decoder: .myDecoder)
+            .deepDive(MemberEndpoint.refresh(token: refreshToken), res: Base<Token>.self)
+            .map(\.data.accessToken)
+            .receive(on: DispatchQueue.main)
+            .subscribe(on: DispatchQueue.global(qos: .background))
             .sink {
                 if case .failure = $0 {
                     Log.network(error)

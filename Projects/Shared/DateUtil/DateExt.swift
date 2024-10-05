@@ -57,7 +57,8 @@ public extension Date {
     }
     
     func parseString(_ str: String) -> String {
-        let dateFormatter = DateFormatter(str)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = str
         let formattedDate = dateFormatter.string(from: self)
         return formattedDate
     }

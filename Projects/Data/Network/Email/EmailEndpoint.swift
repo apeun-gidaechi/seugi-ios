@@ -1,21 +1,16 @@
 import Moya
 
-public enum EmailEndpoint: SeugiEndpoint {
+enum EmailEndpoint {
     case send(email: String)
 }
 
-public extension EmailEndpoint {
-    static var provider = MoyaProvider<Self>(session: session)
-    static var authProvider = MoyaProvider<Self>(session: authSession)
-    
-    var host: String {
-        "email"
-    }
-    
-    var route: (Moya.Method, String, Moya.Task) {
+extension EmailEndpoint: SeugiEndpoint {
+    var host: String { "email" }
+    var route: Route {
         switch self {
         case .send(let email):
-                .get - "send" - ["email": email].toURLParameters()
+            .get("send")
+            .task(["email": email].toURLParameters())
         }
     }
 }

@@ -21,7 +21,7 @@ final class ApeunStompService {
             StompCommands.commandHeaderHeartBeat.rawValue: "0,10000"
         ]
     ).then {
-        $0.jsonDecoder = decoder
+        $0.jsonDecoder = .myDecoder
     }
 }
 

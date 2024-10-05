@@ -1,34 +1,38 @@
 import Combine
-
 import Domain
 
-final class MemberService: Service<MemberEndpoint>, MemberRepo {
-    
+final class MemberService: MemberRepo {
+    let runner: NetRunner
+
+    init(runner: NetRunner) {
+        self.runner = runner
+    }
+
     func edit(_ req: EditMemberReq) -> APIResult<BaseVoid> {
-        performRequest(.edit(req))
+        runner.deepDive(MemberEndpoint.edit(req), res: BaseVoid.self)
     }
     
     func login(_ req: LoginMemberReq) -> APIResult<Base<Token>> {
-        performRequest(.login(req), res: Token.self)
+        runner.deepDive(MemberEndpoint.login(req), res: Base<Token>.self)
     }
     
     func refresh(token: String) -> APIResult<Base<String>> {
-        performRequest(.refresh(token: token), res: String.self)
+        runner.deepDive(MemberEndpoint.refresh(token: token), res: Base<String>.self)
     }
     
     func register(_ req: RegisterMemberReq) -> APIResult<Base<Token>> {
-        performRequest(.register(req), res: Token.self)
+        runner.deepDive(MemberEndpoint.register(req), res: Base<Token>.self)
     }
     
     func remove() -> APIResult<BaseVoid> {
-        performRequest(.remove)
+        runner.deepDive(MemberEndpoint.remove, res: BaseVoid.self)
     }
     
     func myInfo() -> APIResult<Base<RetrieveMember>> {
-        performRequest(.myInfo, res: RetrieveMember.self)
+        runner.deepDive(MemberEndpoint.myInfo, res: Base<RetrieveMember>.self)
     }
     
     func logout(_ req: LogoutReq) -> APIResult<BaseVoid> {
-        performRequest(.logout(req))
+        runner.deepDive(MemberEndpoint.logout(req), res: BaseVoid.self)
     }
 }

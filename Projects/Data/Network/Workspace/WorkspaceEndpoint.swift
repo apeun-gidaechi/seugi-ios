@@ -1,8 +1,7 @@
 import Domain
-
 import Moya
 
-public enum WorkspaceEndpoint: SeugiEndpoint {
+enum WorkspaceEndpoint {
     case getWorkspaces
     case getWorkspaceCode(workspaceId: String)
     case getWorkspace(code: String)
@@ -18,42 +17,44 @@ public enum WorkspaceEndpoint: SeugiEndpoint {
     case getMyWaitList
 }
 
-public extension WorkspaceEndpoint {
-    static let provider = MoyaProvider<WorkspaceEndpoint>(session: session)
-    static let authProvider = MoyaProvider<WorkspaceEndpoint>(session: authSession)
-    
-    var host: String {
-        "workspace"
-    }
-    
-    var route: (Moya.Method, String, Moya.Task) {
+extension WorkspaceEndpoint: SeugiEndpoint {
+    var host: String { "workspace" }
+    var route: Route {
         switch self {
         case .getWorkspaces:
-                .get - "" - .requestPlain
+                .get()
         case .getWorkspaceCode(let workspaceId):
-                .get - "code/\(workspaceId)" - .requestPlain
+                .get("code/\(workspaceId)")
         case .getWorkspace(let code):
-                .get - "search/\(code)" - .requestPlain
+                .get("search/\(code)")
         case .joinWorkspace(let req):
-                .post - "join" - req.toJSONParameters()
+                .post("join")
+                .task(req.toJSONParameters())
         case .getMembers(let workspaceId):
-                .get - "members" - ["workspaceId": workspaceId].toURLParameters()
+                .get("members")
+                .task(["workspaceId": workspaceId].toURLParameters())
         case .getMembersChart(let workspaceId):
-                .get - "members/chart" - ["workspaceId": workspaceId].toURLParameters()
+                .get("members/chart")
+                .task(["workspaceId": workspaceId].toURLParameters())
         case .createWorkspace(let req):
-                .post - "" - req.toJSONParameters()
+                .post()
+                .task(req.toJSONParameters())
         case .removeWorkspace(let workspaceId):
-                .delete - "\(workspaceId)" - .requestPlain
+                .delete("\(workspaceId)")
         case .addWorkspace(let req):
-                .patch - "add" - req.toJSONParameters()
+                .patch("add")
+                .task(req.toJSONParameters())
         case .cancelWorkspace(let req):
-                .delete - "cancel" - req.toJSONParameters()
+                .delete("cancel")
+                .task(req.toJSONParameters())
         case .getWaitList(let workspaceId, let workspaceRole):
-                .get - "wait-list" - ["workspaceId": workspaceId, "role": workspaceRole.rawValue].toURLParameters()
+                .get("wait-list")
+                .task(["workspaceId": workspaceId, "role": workspaceRole.rawValue].toURLParameters())
         case .updateWorkspace(let req):
-                .patch - "" - req.toJSONParameters()
+                .patch()
+                .task(req.toJSONParameters())
         case .getMyWaitList:
-                .get - "my/wait-list" - .requestPlain
+                .get("my/wait-list")
         }
     }
 }

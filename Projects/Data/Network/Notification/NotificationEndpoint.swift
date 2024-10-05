@@ -1,8 +1,7 @@
 import Domain
-
 import Moya
 
-enum NotificationEndpoint: SeugiEndpoint {
+enum NotificationEndpoint {
     case getNotifications(workspaceId: String)
     case postNotification(PostNotificationReq)
     case updateNotification(UpdateNotificationReq)
@@ -10,26 +9,24 @@ enum NotificationEndpoint: SeugiEndpoint {
     case emojiNotification(NotificationEmojiReq)
 }
 
-extension NotificationEndpoint {
-    static let provider = MoyaProvider<NotificationEndpoint>(session: session)
-    static let authProvider = MoyaProvider<NotificationEndpoint>(session: authSession)
-    
-    var host: String {
-        "notification"
-    }
-    
-    var route: (Moya.Method, String, Moya.Task) {
+extension NotificationEndpoint: SeugiEndpoint {
+    var host: String { "notification" }
+    var route: Route {
         switch self {
         case .getNotifications(let workspaceId):
-                .get - "\(workspaceId)" - .requestPlain
+            return .get("\(workspaceId)")
+                .task(.requestPlain)
         case .postNotification(let req):
-                .post - "" - req.toJSONParameters()
+            return .post()
+                .task(req.toJSONParameters())
         case .updateNotification(let req):
-                .patch - "" - req.toJSONParameters()
-        case .removeNotification(workspaceId: let workspaceId, id: let id):
-                .delete - "\(workspaceId)/\(id)" - .requestPlain
+            return .patch()
+                .task(req.toJSONParameters())
+        case .removeNotification(let workspaceId, let id):
+            return .delete("\(workspaceId)/\(id)")
         case .emojiNotification(let req):
-                .patch - "emoji" - req.toJSONParameters()
+            return .patch("emoji")
+                .task(req.toJSONParameters())
         }
     }
 }

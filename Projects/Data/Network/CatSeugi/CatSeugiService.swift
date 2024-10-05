@@ -1,9 +1,14 @@
 import Foundation
-
 import Domain
 
-final class CatSeugiService: Service<CatSeugiEndpoint>, CatSeugiRepo {
+final class CatSeugiService: CatSeugiRepo {
+    let runner: NetRunner
+    
+    init(runner: NetRunner) {
+        self.runner = runner
+    }
+    
     func sendMessage(_ req: CatSeugiSendMessageReq) -> APIResult<Base<String>> {
-        performRequest(.sendMessage(req), res: String.self)
+        runner.deepDive(CatSeugiEndpoint.sendMessage(req), res: Base<String>.self)
     }
 }

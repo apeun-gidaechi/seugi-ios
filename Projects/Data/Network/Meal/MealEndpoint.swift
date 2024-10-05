@@ -1,29 +1,24 @@
 import Domain
-
 import Moya
 
-enum MealEndpoint: SeugiEndpoint {
+enum MealEndpoint {
     case getAll(workspaceId: String)
     case getByDate(workspaceId: String, date: String)
     case reset(workspaceId: String)
 }
 
-extension MealEndpoint {
-    static let provider = MoyaProvider<Self>(session: session)
-    static let authProvider = MoyaProvider<Self>(session: authSession)
-    
-    var host: String {
-        "meal"
-    }
-    
-    var route: (Moya.Method, String, Moya.Task) {
+extension MealEndpoint: SeugiEndpoint {
+    var host: String { "meal" }
+    var route: Route {
         switch self {
         case .getAll(let workspaceId):
-                .get - "all" - ["workspaceId": workspaceId].toURLParameters()
+                .get("all")
+                .task(["workspaceId": workspaceId].toURLParameters())
         case .getByDate(let workspaceId, let date):
-                .get - "" - ["workspaceId": workspaceId, "date": date].toURLParameters()
+                .get()
+                .task(["workspaceId": workspaceId, "date": date].toURLParameters())
         case .reset(let workspaceId):
-                .post - "reset/\(workspaceId)" - .requestPlain
+                .post("reset/\(workspaceId)")
         }
     }
 }

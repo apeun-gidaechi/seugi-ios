@@ -1,23 +1,29 @@
 import Domain
 
-final class NotificationService: Service<NotificationEndpoint>, NotificationRepo {
+final class NotificationService: NotificationRepo {
+    let runner: NetRunner
+
+    init(runner: NetRunner) {
+        self.runner = runner
+    }
+    
     func getNotifications(workspaceId: String) -> APIResult<Base<[Notification]>> {
-        performRequest(.getNotifications(workspaceId: workspaceId), res: [Notification].self)
+        runner.deepDive(NotificationEndpoint.getNotifications(workspaceId: workspaceId), res: Base<[Notification]>.self)
     }
     
     func postNotification(_ req: PostNotificationReq) -> APIResult<BaseVoid> {
-        performRequest(.postNotification(req))
+        runner.deepDive(NotificationEndpoint.postNotification(req), res: BaseVoid.self)
     }
     
     func updateNotification(_ req: UpdateNotificationReq) -> APIResult<BaseVoid> {
-        performRequest(.updateNotification(req))
+        runner.deepDive(NotificationEndpoint.updateNotification(req), res: BaseVoid.self)
     }
     
     func removeNotification(workspaceId: String, id: Int) -> APIResult<BaseVoid> {
-        performRequest(.removeNotification(workspaceId: workspaceId, id: id))
+        runner.deepDive(NotificationEndpoint.removeNotification(workspaceId: workspaceId, id: id), res: BaseVoid.self)
     }
     
     func emojiNotification(_ req: NotificationEmojiReq) -> APIResult<BaseVoid> {
-        performRequest(.emojiNotification(req))
+        runner.deepDive(NotificationEndpoint.emojiNotification(req), res: BaseVoid.self)
     }
 }

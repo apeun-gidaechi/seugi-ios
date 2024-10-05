@@ -1,21 +1,16 @@
 import Moya
 
-public enum MessageEndpoint: SeugiEndpoint {
+enum MessageEndpoint {
     case getMessages(roomId: String, page: Int, size: Int)
 }
 
-public extension MessageEndpoint {
-    static let provider = MoyaProvider<MessageEndpoint>(session: session)
-    static let authProvider = MoyaProvider<MessageEndpoint>(session: authSession)
-    
-    var host: String {
-        "message"
-    }
-    
-    var route: (Moya.Method, String, Moya.Task) {
+extension MessageEndpoint: SeugiEndpoint {
+    var host: String { "message" }
+    var route: Route {
         switch self {
         case .getMessages(let roomId, let page, let size):
-                .get - "search/\(roomId)" - ["page": page, "size": size].toURLParameters()
+            return .get("search/\(roomId)")
+                .task(["page": page, "size": size].toURLParameters())
         }
     }
 }

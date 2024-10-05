@@ -1,15 +1,21 @@
 import Domain
 
-final class TimetableService: Service<TimetableEndpoint>, TimetableRepo {
+final class TimetableService: TimetableRepo {
+    let runner: NetRunner
+
+    init(runner: NetRunner) {
+        self.runner = runner
+    }
+
     func getWeekend(workspaceId: String) -> APIResult<Base<[Timetable]>> {
-        performRequest(.getWeekend(workspaceId: workspaceId), res: [Timetable].self)
+        runner.deepDive(TimetableEndpoint.getWeekend(workspaceId: workspaceId), res: Base<[Timetable]>.self)
     }
-    
+
     func getDay(workspaceId: String) -> APIResult<Base<[Timetable]>> {
-        performRequest(.getDay(workspaceId: workspaceId), res: [Timetable].self)
+        runner.deepDive(TimetableEndpoint.getDay(workspaceId: workspaceId), res: Base<[Timetable]>.self)
     }
-    
+
     func reset(workspaceId: String) -> APIResult<BaseVoid> {
-        performRequest(.reset(workspaceId: workspaceId))
+        runner.deepDive(TimetableEndpoint.reset(workspaceId: workspaceId), res: BaseVoid.self)
     }
 }

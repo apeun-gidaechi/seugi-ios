@@ -1,17 +1,20 @@
 import Combine
-
 import Domain
-
 import ApeunStompKit
 
-final class MessageService: Service<MessageEndpoint> {
+final class MessageService {
     private let stomp = ApeunStompService.shared.stomp
+    let runner: NetRunner
+    
+    init(runner: NetRunner) {
+        self.runner = runner
+    }
 }
 
 // MARK: - HTTP Protocol
 extension MessageService: MessageRepo {
     public func getMessages(roomId: String, page: Int, size: Int) -> APIResult<Base<GetMessage>> {
-        performRequest(.getMessages(roomId: roomId, page: page, size: size), res: GetMessage.self)
+        runner.deepDive(MessageEndpoint.getMessages(roomId: roomId, page: page, size: size), res: Base<GetMessage>.self)
     }
 }
 

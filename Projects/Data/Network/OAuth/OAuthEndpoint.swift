@@ -1,26 +1,21 @@
 import Domain
-
 import Moya
 
-enum OAuthEndpoint: SeugiEndpoint {
+enum OAuthEndpoint {
     case authenticateGoogle(GoogleCodeReq)
     case connectGoogle(GoogleCodeReq)
 }
 
-extension OAuthEndpoint {
-    static let authProvider: MoyaProvider<Self> = .init(session: session)
-    static let provider: MoyaProvider<Self> = .init(session: authSession)
-    
-    var host: String {
-        "oauth"
-    }
-    
-    var route: (Moya.Method, String, Moya.Task) {
+extension OAuthEndpoint: SeugiEndpoint {
+    var host: String { "oauth" }
+    var route: Route {
         switch self {
         case .authenticateGoogle(let req):
-                .post - "google/authenticate" - req.toJSONParameters()
+                .post("google/authenticate")
+                .task(req.toJSONParameters())
         case .connectGoogle(let req):
-                .post - "google/connect" - req.toJSONParameters()
+                .post("google/connect")
+                .task(req.toJSONParameters())
         }
     }
 }

@@ -1,55 +1,61 @@
 import Domain
 
-final class WorkspaceService: Service<WorkspaceEndpoint>, WorkspaceRepo {
+final class WorkspaceService: WorkspaceRepo {
+    let runner: NetRunner
+    
+    init(runner: NetRunner) {
+        self.runner = runner
+    }
+    
     func getWorkspaces() -> APIResult<Base<[Workspace]>> {
-        performRequest(.getWorkspaces, res: [Workspace].self)
+        runner.deepDive(WorkspaceEndpoint.getWorkspaces, res: Base<[Workspace]>.self)
     }
     
     func getWorkspaceCode(workspaceId: String) -> APIResult<Base<String>> {
-        performRequest(.getWorkspaceCode(workspaceId: workspaceId), res: String.self)
+        runner.deepDive(WorkspaceEndpoint.getWorkspaceCode(workspaceId: workspaceId), res: Base<String>.self)
     }
     
     func getWorkspace(code: String) -> APIResult<Base<WorkspaceInfo>> {
-        performRequest(.getWorkspace(code: code), res: WorkspaceInfo.self)
+        runner.deepDive(WorkspaceEndpoint.getWorkspace(code: code), res: Base<WorkspaceInfo>.self)
     }
     
     func joinWorkspace(workspaceId: String, workspaceCode: String, role: WorkspaceRole) -> APIResult<BaseVoid> {
-        performRequest(.joinWorkspace(.init(workspaceId: workspaceId, workspaceCode: workspaceCode, role: role)))
+        runner.deepDive(WorkspaceEndpoint.joinWorkspace(.init(workspaceId: workspaceId, workspaceCode: workspaceCode, role: role)), res: BaseVoid.self)
     }
     
     func getMembers(workspaceId: String) -> APIResult<Base<[RetrieveProfile]>> {
-        performRequest(.getMembers(workspaceId: workspaceId), res: [RetrieveProfile].self)
+        runner.deepDive(WorkspaceEndpoint.getMembers(workspaceId: workspaceId), res: Base<[RetrieveProfile]>.self)
     }
     
     func getMembersChart(workspaceId: String) -> APIResult<Base<WorkspaceMembersChart>> {
-        performRequest(.getMembersChart(workspaceId: workspaceId), res: WorkspaceMembersChart.self)
+        runner.deepDive(WorkspaceEndpoint.getMembersChart(workspaceId: workspaceId), res: Base<WorkspaceMembersChart>.self)
     }
     
     func createWorkspace(workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid> {
-        performRequest(.createWorkspace(.init(workspaceName: workspaceName, workspaceImageUrl: workspaceImageUrl)))
+        runner.deepDive(WorkspaceEndpoint.createWorkspace(.init(workspaceName: workspaceName, workspaceImageUrl: workspaceImageUrl)), res: BaseVoid.self)
     }
     
     func removeWorkspace(workspaceId: String) -> APIResult<BaseVoid> {
-        performRequest(.removeWorkspace(workspaceId: workspaceId))
+        runner.deepDive(WorkspaceEndpoint.removeWorkspace(workspaceId: workspaceId), res: BaseVoid.self)
     }
     
     func addWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> APIResult<BaseVoid> {
-        performRequest(.addWorkspace(.init(workspaceId: workspaceId, userSet: userSet, role: role)))
+        runner.deepDive(WorkspaceEndpoint.addWorkspace(.init(workspaceId: workspaceId, userSet: userSet, role: role)), res: BaseVoid.self)
     }
     
     func cancelWorkspace(workspaceId: String, userSet: [Int], role: WorkspaceRole) -> APIResult<BaseVoid> {
-        performRequest(.cancelWorkspace(.init(workspaceId: workspaceId, userSet: userSet, role: role)))
+        runner.deepDive(WorkspaceEndpoint.cancelWorkspace(.init(workspaceId: workspaceId, userSet: userSet, role: role)), res: BaseVoid.self)
     }
     
     func getWaitList(workspaceId: String, workspaceRole: WorkspaceRole) -> APIResult<Base<[RetrieveMember]>> {
-        performRequest(.getWaitList(workspaceId: workspaceId, workspaceRole: workspaceRole), res: [RetrieveMember].self)
+        runner.deepDive(WorkspaceEndpoint.getWaitList(workspaceId: workspaceId, workspaceRole: workspaceRole), res: Base<[RetrieveMember]>.self)
     }
     
     func updateWorkspace(workspaceId: String, workspaceName: String, workspaceImageUrl: String) -> APIResult<BaseVoid> {
-        performRequest(.updateWorkspace(.init(workspaceId: workspaceId, workspaceName: workspaceName, workspaceImgUrl: workspaceImageUrl)))
+        runner.deepDive(WorkspaceEndpoint.updateWorkspace(.init(workspaceId: workspaceId, workspaceName: workspaceName, workspaceImgUrl: workspaceImageUrl)), res: BaseVoid.self)
     }
     
     func getMyWaitList() -> APIResult<Base<[WorkspaceInfo]>> {
-        performRequest(.getMyWaitList, res: [WorkspaceInfo].self)
+        runner.deepDive(WorkspaceEndpoint.getMyWaitList, res: Base<[WorkspaceInfo]>.self)
     }
 }

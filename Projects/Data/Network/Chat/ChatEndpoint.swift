@@ -1,8 +1,7 @@
 import Domain
-
 import Moya
 
-enum ChatEndpoint: SeugiEndpoint {
+enum ChatEndpoint {
     // MemberGroup
     case addMemberGroup(_ req: ChatMemberEventReq)
     case kickMemberGroup(_ req: ChatMemberEventReq)
@@ -22,40 +21,41 @@ enum ChatEndpoint: SeugiEndpoint {
     case searchPersonal(workspaceId: String)
 }
 
-extension ChatEndpoint {
-    static let provider = MoyaProvider<Self>(session: session)
-    static let authProvider = MoyaProvider<Self>(session: authSession)
-    
-    var host: String {
-        "chat"
-    }
-    
-    var route: (Moya.Method, String, Moya.Task) {
+extension ChatEndpoint: SeugiEndpoint {
+    var host: String { "chat" }
+    var route: Route {
         switch self {
         case .addMemberGroup(let req):
-                .post - "group/member/add" - req.toJSONParameters()
+                .post("group/member/add")
+                .task(req.toJSONParameters())
         case .kickMemberGroup(let req):
-                .patch - "group/member/kick" - req.toJSONParameters()
+                .patch("group/member/kick")
+                .task(req.toJSONParameters())
         case .tossMemberGroup(let req):
-                .patch - "group/member/toss" - req.toJSONParameters()
+                .patch("group/member/toss")
+                .task(req.toJSONParameters())
         case .createGroup(let req):
-                .post - "group/create" - req.toJSONParameters()
+                .post("group/create")
+                .task(req.toJSONParameters())
         case .searchGroupByWord(let workspaceId, let word):
-                .get - "group/search" - ["workspaceId": workspaceId, "word": word].toURLParameters()
+                .get("group/search")
+                .task(["workspaceId": workspaceId, "word": word].toURLParameters())
         case .searchGroupById(let roomId):
-                .get - "group/search/room/\(roomId)" - .requestPlain
+                .get("group/search/room/\(roomId)")
         case .searchGroup(let workspaceId):
-                .get - "group/search/\(workspaceId)" - .requestPlain
+                .get("group/search/\(workspaceId)")
         case .leftGroup(let roomId):
-                .patch - "group/left/\(roomId)" - .requestPlain
+                .patch("group/left/\(roomId)")
         case .createPersonal(let req):
-                .post - "personal/create" - req.toJSONParameters()
+                .post("personal/create")
+                .task(req.toJSONParameters())
         case .searchPersonalByWord(let workspaceId, let word):
-                .get - "personal/search" - ["workspaceId": workspaceId, "word": word].toURLParameters()
+                .get("personal/search")
+                .task(["workspaceId": workspaceId, "word": word].toURLParameters())
         case .searchPersonalById(let roomId):
-                .get - "personal/search/room/\(roomId)" - .requestPlain
+                .get("personal/search/room/\(roomId)")
         case .searchPersonal(let workspaceId):
-                .get - "personal/search/\(workspaceId)" - .requestPlain
+                .get("personal/search/\(workspaceId)")
         }
     }
 }

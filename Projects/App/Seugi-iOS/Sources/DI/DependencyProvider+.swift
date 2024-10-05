@@ -1,20 +1,20 @@
 import DIContainer
 
-// Domain
 import Domain
 
-// Data
 import Core
 import Network
 import Local
 
-// SPM
 import Swinject
 
 public extension DependencyProvider {
     func register() {
         _ = Assembler([
             // Network
+            NetRunnerAssembly(),
+            InterceptorAssembly(),
+            
             MemberAssembly(),
             ChatAssembly(),
             WorkspaceAssembly(),

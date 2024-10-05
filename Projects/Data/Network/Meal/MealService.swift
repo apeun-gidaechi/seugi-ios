@@ -1,18 +1,23 @@
 import Combine
 import Foundation
-
 import Domain
 
-final class MealService: Service<MealEndpoint>, MealRepo {
+final class MealService: MealRepo {
+    let runner: NetRunner
+
+    init(runner: NetRunner) {
+        self.runner = runner
+    }
+
     func getAll(workspaceId: String) -> APIResult<Base<[Meal]>> {
-        performRequest(.getAll(workspaceId: workspaceId), res: [Meal].self)
+        runner.deepDive(MealEndpoint.getAll(workspaceId: workspaceId), res: Base<[Meal]>.self)
     }
     
     func getByDate(workspaceId: String, date: Date) -> APIResult<Base<[Meal]>> {
-        performRequest(.getByDate(workspaceId: workspaceId, date: date.parseString("yyyyMMdd")), res: [Meal].self)
+        runner.deepDive(MealEndpoint.getByDate(workspaceId: workspaceId, date: date.parseString("yyyyMMdd")), res: Base<[Meal]>.self)
     }
     
     func reset(workspaceId: String) -> APIResult<BaseVoid> {
-        performRequest(.reset(workspaceId: workspaceId))
+        runner.deepDive(MealEndpoint.reset(workspaceId: workspaceId), res: BaseVoid.self)
     }
 }
