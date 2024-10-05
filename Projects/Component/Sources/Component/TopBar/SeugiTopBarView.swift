@@ -9,28 +9,31 @@ public struct SeugiTopBarView {
     private let colors: Colors
     private let showShadow: Bool
     private let showBackButton: Bool
-    private let buttons: [SeugiTopBarButton]
+    let buttons: [SeugiTopBarButton]
     private let subView: AnyView
     private let onBackAction: (() -> Void)?
+    private let onTapGesture: () -> Void
     private let content: AnyView
     
-    public init<SubView: View>(
+    public init(
         title: String?,
         colors: Colors,
         showShadow: Bool,
         showBackButton: Bool,
         buttons: [SeugiTopBarButton],
-        @ViewBuilder subView: @escaping () -> SubView,
+        subView: AnyView,
         onBackAction: (() -> Void)?,
+        onTapGesture: @escaping () -> Void,
         content: AnyView
     ) {
         self.title = title
         self.showShadow = showShadow
         self.showBackButton = showBackButton
         self.colors = colors
-        self.subView = AnyView(subView())
+        self.subView = subView
         self.buttons = buttons
         self.onBackAction = onBackAction
+        self.onTapGesture = onTapGesture
         self.content = content
     }
 }
@@ -45,6 +48,8 @@ extension SeugiTopBarView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             }
         }
+        .onTapGesture(perform: onTapGesture)
+        .navigationBarBackButtonHidden()
     }
     
     private var topBarContent: some View {
@@ -96,18 +101,45 @@ extension SeugiTopBarView: View {
             dismiss()
         }
     }
+}
+
+public extension SeugiTopBarView {
+    func copy(
+        title: String?? = nil,
+        colors: Colors? = nil,
+        showShadow: Bool? = nil,
+        showBackButton: Bool? = nil,
+        buttons: [SeugiTopBarButton]? = nil,
+        subView: AnyView? = nil,
+        onBackAction: (() -> Void)?? = nil,
+        onTapGesture: (() -> Void)? = nil,
+        content: AnyView? = nil
+    ) -> Self {
+        return SeugiTopBarView(
+            title: title ?? self.title,
+            colors: colors ?? self.colors,
+            showShadow: showShadow ?? self.showShadow,
+            showBackButton: showBackButton ?? self.showBackButton,
+            buttons: buttons ?? self.buttons,
+            subView: subView ?? self.subView,
+            onBackAction: onBackAction ?? self.onBackAction,
+            onTapGesture: onTapGesture ?? self.onTapGesture,
+            content: content ?? self.content
+        )
+    }
     
-    public func buttons(
+    func buttons(
         @SeugiTopBarButton.Builder buttons: () -> [SeugiTopBarButton]
     ) -> Self {
-        SeugiTopBarView(
+        return SeugiTopBarView(
             title: title,
             colors: colors,
             showShadow: showShadow,
             showBackButton: showBackButton,
             buttons: buttons(),
-            subView: { subView },
+            subView: subView,
             onBackAction: onBackAction,
+            onTapGesture: onTapGesture,
             content: content
         )
     }
@@ -152,8 +184,9 @@ public extension View {
             showShadow: showShadow,
             showBackButton: showBackButton,
             buttons: [],
-            subView: subView,
+            subView: AnyView(subView()),
             onBackAction: onBackAction,
+            onTapGesture: {},
             content: SwiftUI.AnyView(self)
         )
     }

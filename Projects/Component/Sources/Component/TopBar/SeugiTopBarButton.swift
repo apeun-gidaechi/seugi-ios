@@ -32,5 +32,9 @@ public struct SeugiTopBarButton {
         public static func buildBlock(_ components: [SeugiTopBarButton]...) -> [SeugiTopBarButton] {
             return components.flatMap(\.self)
         }
+        
+        public static func buildArray(_ components: [[SeugiTopBarButton]]) -> [SeugiTopBarButton] {
+            return components.flatMap(\.self)
+        }
     }
 }

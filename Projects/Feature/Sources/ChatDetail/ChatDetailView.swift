@@ -89,13 +89,12 @@ public struct ChatDetailView: View {
                             //                                      }
                         }
                 }
-                .rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center) //
+                .rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
                 .seugiBackground(.primary(.p050))
             }
         } failure: { _ in
             SeugiError("채팅 불러오기 실패", image: .sadButRelievedFace)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .safeAreaInset(edge: .bottom) {
             if !isSearching {
                 makeBottomTextField()
@@ -103,36 +102,15 @@ public struct ChatDetailView: View {
         }
         .hideKeyboardWhenTap()
         .seugiTopBar(
-            title: isSearching ? nil : room.chatName,
-            showShadow: true,
-            subView: {
-                if isSearching {
-                    TextField("메세지, 이미지, 파일 검색", text: $searchText)
-                        .focused($searchFocus)
-                }
-            }
-        ) {
-            if isSearching {
-                withAnimation {
-                    isSearching = false
-                }
-            } else {
-                dismiss()
-            }
-        }
+            title: room.chatName,
+            showShadow: true
+        )
         .buttons {
-            if !isSearching {
-                SeugiTopBarButton(icon: .searchLine) {
-                    withAnimation {
-                        isSearching = true
-                        searchFocus = true
-                    }
-                }
-                SeugiTopBarButton(icon: .hamburgerHorizontalLine) {
-                    isDrawerOpen = true
-                }
+            SeugiTopBarButton(icon: .hamburgerHorizontalLine) {
+                isDrawerOpen = true
             }
         }
+        .searchable("메세지, 이미지, 파일 검색", text: $searchText, isSearching: $isSearching)
         .seugiDrawer(isOpen: $isDrawerOpen) {
             ChatDetailDrawer(room: room) { action in
                 switch action {

@@ -25,6 +25,7 @@ struct SeugiApp: App {
             ) {
                 RootView()
             }
+            .navigationBarBackButtonHidden()
         }
     }
 }

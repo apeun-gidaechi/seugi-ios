@@ -70,31 +70,8 @@ struct WorkspaceMemberView: View {
             }
             Spacer()
         }
-        .seugiTopBar(
-            title: viewModel.isSearching ? nil : "멤버"
-        ) {
-            if viewModel.isSearching {
-                TextField("채팅방 검색", text: $viewModel.searchText)
-                    .focused($searchFocus)
-            }
-        } onBackAction: {
-            withAnimation {
-                viewModel.isSearching = false
-            }
-            if !viewModel.isSearching {
-                dismiss()
-            }
-        }
-        .buttons {
-            if !viewModel.isSearching {
-                .init(icon: .searchLine) {
-                    withAnimation {
-                        viewModel.isSearching = true
-                        searchFocus = true
-                    }
-                }
-            }
-        }
+        .seugiTopBar(title: "멤버")
+        .searchable("채팅방 검색", text: $viewModel.searchText, isSearching: $viewModel.isSearching)
         .sheet(isPresented: $isSheetPresent) {
             VStack(spacing: 16) {
                 Text("학생 정보 수정")
