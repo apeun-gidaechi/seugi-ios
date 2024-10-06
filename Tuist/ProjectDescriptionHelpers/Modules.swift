@@ -6,7 +6,6 @@ public enum Modules {
 }
 
 public extension Modules {
-    
     enum Data: String, CaseIterable {
         case Core
         case Network

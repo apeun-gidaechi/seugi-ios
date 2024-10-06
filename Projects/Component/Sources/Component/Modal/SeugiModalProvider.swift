@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct SeugiModalProvider<C: View>: View {
+public struct SeugiModalPresenter<C: View>: View {
     private let timePickerProvider: TimePickerProvider
     private let alertProvider: AlertProvider
     private let content: () -> C
@@ -16,7 +16,7 @@ public struct SeugiModalProvider<C: View>: View {
     }
     
     public var body: some View {
-        SeugiTimePicker(provider: timePickerProvider) {
+        SeugiTimePickerPresenter(provider: timePickerProvider) {
             SeugiAlertPresenter(provider: alertProvider) {
                 content()
                     .environmentObject(timePickerProvider)

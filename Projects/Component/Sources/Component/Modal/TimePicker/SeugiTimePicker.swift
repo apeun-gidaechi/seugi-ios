@@ -2,7 +2,7 @@ import SwiftUI
 
 import SwiftUIUtil
 
-public struct SeugiTimePicker<C: View>: ModalViewProtocol {
+public struct SeugiTimePickerPresenter<C: View>: ModalViewProtocol {
     typealias P = TimePickerProvider
     
     @StateObject private var provider: TimePickerProvider

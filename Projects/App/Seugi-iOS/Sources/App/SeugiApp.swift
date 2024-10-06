@@ -19,7 +19,7 @@ struct SeugiApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SeugiModalProvider(
+            SeugiModalPresenter(
                 alertProvider: alertProvider,
                 timePickerProvider: timePickerProvider
             ) {

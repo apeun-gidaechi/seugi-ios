@@ -22,7 +22,9 @@ let project = Project.make(
                 .SPM.Flow,
                 .SPM.MCEmojiPicker,
                 .domain,
-                .shared(of: .SwiftUIUtil)
+                .shared(of: .SwiftUIUtil),
+                .shared(of: .SwiftUtil),
+                .shared(of: .DateUtil)
             ]
         ),
         component(
