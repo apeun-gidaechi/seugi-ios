@@ -14,22 +14,32 @@ public struct RegisterEmailVerificationView: View {
     
     public var body: some View {
         VStack(spacing: 8) {
-            SeugiCodeTextFieldForm(text: $viewModel.verificationCode, label: "인증코드", length: 6)
-                .keyboardType(.numberPad)
-                .padding(.top, 16)
+            SeugiCodeTextFieldForm(
+                text: $viewModel.verificationCode,
+                label: "인증코드",
+                length: 6
+            )
+            .keyboardType(.numberPad)
+            .padding(.top, 16)
             // TODO: 함수로 분리 ?? 할 수도 있을 듯~
                 .focused($firstTextField).onAppear { firstTextField = true }
             emailSend()
                 .toTrailing()
             Spacer()
-            SeugiButton.large("계속하기", type: .primary, isLoading: viewModel.signUpFlow.is(.fetching)) {
+        }
+        .padding(.horizontal, 20)
+        .seugiTopBar(title: "이메일 인증")
+        .safeAreaInset(edge: .bottom) {
+            SeugiButton.large(
+                "계속하기",
+                type: .primary,
+                isLoading: viewModel.signUpFlow.is(.fetching)
+            ) {
                 viewModel.signUp()
             }
             .disabled(viewModel.isInValidCodeInput)
             .padding(.bottom, 16)
         }
-        .padding(.horizontal, 20)
-        .seugiTopBar(title: "이메일 인증")
         .onReceive(viewModel.$signUpFlow) { flow in
             switch flow {
             case .success(let token):
@@ -37,7 +47,6 @@ public struct RegisterEmailVerificationView: View {
                 appState.refreshToken = String(token.refreshToken.split(separator: " ")[1])
                 router.navigateToRoot()
             case .failure:
-//                let message = viewModel.signUpFlow.httpError?.message ?? "잠시 후 다시 시도해 주세요"
                 alertProvider.present("회원가입 실패")
                     .message("잠시 후 다시 시도해 주세요")
                     .show()

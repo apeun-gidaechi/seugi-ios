@@ -36,7 +36,7 @@ struct ChatMessageCell: View {
         self.currentIndex = currentIndex
         self.room = room
         self.message = messages[currentIndex]
-        self.author = room.findUserOrUnknownUser(id: message.userId)
+        self.author = room.findUserOrUnknownUser(id: message.userId).userInfo
         self.config = ChatItemConfig(
             message: message,
             isFirst: messages.isFirstMessage(at: currentIndex),

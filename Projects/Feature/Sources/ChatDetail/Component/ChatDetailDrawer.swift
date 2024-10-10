@@ -29,8 +29,13 @@ struct ChatDetailDrawer: View {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     SeugiMemberList(type: .invitation)
-                    ForEach(room.joinUserId, id: \.id) { member in
-                        SeugiMemberList(type: .normal(member: member, role: member.id == room.roomAdmin ? .admin : .student))
+                    ForEach(room.joinUserId, id: \.userInfo.id) { member in
+                        SeugiMemberList(
+                            type: .normal(
+                                member: member.userInfo,
+                                role: member.userInfo.id == room.roomAdmin ? .admin : .student
+                            )
+                        )
                     }
                 }
             }

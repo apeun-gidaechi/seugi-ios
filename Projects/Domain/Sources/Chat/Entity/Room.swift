@@ -13,12 +13,25 @@ public struct Room: Entity {
     public let chatRoomImg: String?
     public let createdAt: Date?
     public let chatStatusEnum: ChatStatusEnum
-    public let joinUserId: [RetrieveMember]
+    public let joinUserId: [UserInfo]
     public let lastMessage: String?
     public let lastMessageTimestamp: Date
     public let notReadCnt: Int
     
-    public init(id: String, workspaceId: String, type: RoomType, roomAdmin: Int, chatName: String, chatRoomImg: String?, createdAt: Date?, chatStatusEnum: ChatStatusEnum, joinUserId: [RetrieveMember], lastMessage: String?, lastMessageTimestamp: Date, notReadCnt: Int) {
+    public init(
+        id: String,
+        workspaceId: String,
+        type: RoomType,
+        roomAdmin: Int,
+        chatName: String,
+        chatRoomImg: String?,
+        createdAt: Date?,
+        chatStatusEnum: ChatStatusEnum,
+        joinUserId: [UserInfo],
+        lastMessage: String?,
+        lastMessageTimestamp: Date,
+        notReadCnt: Int
+    ) {
         self.id = id
         self.workspaceId = workspaceId
         self.type = type
@@ -35,13 +48,13 @@ public struct Room: Entity {
 }
 
 public extension Room {
-    func findUser(id: Int) -> RetrieveMember? {
+    func findUser(id: Int) -> UserInfo? {
         self.joinUserId.first {
-            $0.id == id
+            $0.userInfo.id == id
         }
     }
     
-    func findUserOrUnknownUser(id: Int) -> RetrieveMember {
-        findUser(id: id) ?? .invalidMember(id: id)
+    func findUserOrUnknownUser(id: Int) -> UserInfo {
+        findUser(id: id) ?? .init(userInfo: .invalidMember(id: id), timestamp: .now)
     }
 }

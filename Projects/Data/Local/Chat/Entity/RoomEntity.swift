@@ -13,7 +13,7 @@ class RoomEntity: Object {
     @Persisted var chatRoomImg: String?
     @Persisted var createdAt: Date?
     @Persisted var chatStatusEnum: ChatStatusEnum
-    @Persisted var joinUserId: List<RetrieveMemberEntity>
+    @Persisted var joinUserId: List<UserInfoEntity>
     @Persisted var lastMessage: String?
     @Persisted var lastMessageTimestamp: Date
     @Persisted var notReadCnt: Int
@@ -27,7 +27,7 @@ class RoomEntity: Object {
         chatRoomImg: String? = nil,
         createdAt: Date? = nil,
         chatStatusEnum: ChatStatusEnum,
-        joinUserId: [RetrieveMemberEntity],
+        joinUserId: [UserInfoEntity],
         lastMessage: String?,
         lastMessageTimestamp: Date,
         notReadCnt: Int
@@ -57,7 +57,7 @@ class RoomEntity: Object {
             chatRoomImg: room.chatRoomImg,
             createdAt: room.createdAt,
             chatStatusEnum: room.chatStatusEnum,
-            joinUserId: room.joinUserId.map { RetrieveMemberEntity.of(member: $0) },
+            joinUserId: room.joinUserId.map { UserInfoEntity.of($0) },
             lastMessage: room.lastMessage,
             lastMessageTimestamp: room.lastMessageTimestamp,
             notReadCnt: room.notReadCnt

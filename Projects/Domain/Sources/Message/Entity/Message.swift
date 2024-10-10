@@ -80,7 +80,7 @@ public extension Message {
         guard let userId = eventList?.first,
               let eventCount = self.eventList?.count,
                 eventCount > 1,
-              let firstMemberName = room.findUser(id: userId)?.name else {
+              let firstMemberName = room.findUser(id: userId)?.userInfo.name else {
             return nil
         }
         return switch type {

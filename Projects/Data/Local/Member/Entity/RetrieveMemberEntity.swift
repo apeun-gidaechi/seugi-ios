@@ -1,7 +1,5 @@
 import Foundation
-
 import RealmSwift
-
 import Domain
 
 final class RetrieveMemberEntity: Object {
@@ -20,7 +18,7 @@ final class RetrieveMemberEntity: Object {
         self.picture = picture
     }
     
-    static func of(member: RetrieveMember) -> RetrieveMemberEntity {
+    static func of(_ member: RetrieveMember) -> RetrieveMemberEntity {
         return RetrieveMemberEntity(
             id: member.id,
             email: member.email,

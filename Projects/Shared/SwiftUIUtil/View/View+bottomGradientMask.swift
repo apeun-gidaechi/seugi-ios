@@ -17,4 +17,25 @@ public extension View {
             .ignoresSafeArea()
         }
     }
+    
+    func safeAreaBottomGradientMask() -> some View {
+        self
+            .padding(.top, 16)
+            .background(
+                Color.white
+                    .mask {
+                        VStack(spacing: 0) {
+                            LinearGradient(
+                                colors: [
+                                    .clear,
+                                    .black
+                                ],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                            Color.black.frame(height: 82)
+                        }
+                    }
+        )
+    }
 }
