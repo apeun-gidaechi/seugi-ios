@@ -1,5 +1,5 @@
 public enum HomeFetchFlow {
     case fetching
-    case failure
-    case success
+    case empty
+    case finished
 }

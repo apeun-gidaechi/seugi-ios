@@ -16,10 +16,10 @@ struct HomeView {
     private var flow: HomeFetchFlow {
         if appState.workspaces.is(.fetching) {
             .fetching
-        } else if isWorkspaceEmpty {
-            .failure
+        } else if isWorkspaceEmpty && appState.workspaces.is(.success) {
+            .empty
         } else {
-            .success
+            .finished
         }
     }
 }
@@ -59,7 +59,7 @@ extension HomeView: View {
         .animation(.spring(duration: 0.4), value: viewModel.meals)
         .animation(.spring(duration: 0.4), value: viewModel.timetables)
         .onChange(of: flow, initial: true) {
-            if $0 == .failure {
+            if $0 == .empty {
                 showJoinWorkspaceAlert()
             }
         }

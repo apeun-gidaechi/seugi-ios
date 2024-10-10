@@ -24,7 +24,7 @@ public struct SeugiChatList: View {
                         .seugiColor(.sub(.black))
                         .lineLimit(1)
                     if case .group = type {
-                        Text(String(room.joinUserId.count))
+                        Text(String(room.joinUserInfo.count))
                             .font(.body(.b2))
                             .seugiColor(.gray(.g500))
                     }

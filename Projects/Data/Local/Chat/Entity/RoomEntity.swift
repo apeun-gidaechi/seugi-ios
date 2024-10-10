@@ -57,7 +57,7 @@ class RoomEntity: Object {
             chatRoomImg: room.chatRoomImg,
             createdAt: room.createdAt,
             chatStatusEnum: room.chatStatusEnum,
-            joinUserId: room.joinUserId.map { UserInfoEntity.of($0) },
+            joinUserId: room.joinUserInfo.map { UserInfoEntity.of($0) },
             lastMessage: room.lastMessage,
             lastMessageTimestamp: room.lastMessageTimestamp,
             notReadCnt: room.notReadCnt

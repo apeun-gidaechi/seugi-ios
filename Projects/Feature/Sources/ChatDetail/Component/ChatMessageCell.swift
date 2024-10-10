@@ -41,7 +41,7 @@ struct ChatMessageCell: View {
             message: message,
             isFirst: messages.isFirstMessage(at: currentIndex),
             isLast: messages.isLastMessage(at: currentIndex),
-            joinUserCount: room.joinUserId.count
+            joinUserCount: room.joinUserInfo.count
         )
         self.action = action
     }

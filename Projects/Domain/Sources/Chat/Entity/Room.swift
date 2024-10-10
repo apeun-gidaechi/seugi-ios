@@ -13,7 +13,7 @@ public struct Room: Entity {
     public let chatRoomImg: String?
     public let createdAt: Date?
     public let chatStatusEnum: ChatStatusEnum
-    public let joinUserId: [UserInfo]
+    public let joinUserInfo: [UserInfo]
     public let lastMessage: String?
     public let lastMessageTimestamp: Date
     public let notReadCnt: Int
@@ -40,7 +40,7 @@ public struct Room: Entity {
         self.chatRoomImg = chatRoomImg
         self.createdAt = createdAt
         self.chatStatusEnum = chatStatusEnum
-        self.joinUserId = joinUserId
+        self.joinUserInfo = joinUserId
         self.lastMessage = lastMessage
         self.lastMessageTimestamp = lastMessageTimestamp
         self.notReadCnt = notReadCnt
@@ -49,7 +49,7 @@ public struct Room: Entity {
 
 public extension Room {
     func findUser(id: Int) -> UserInfo? {
-        self.joinUserId.first {
+        self.joinUserInfo.first {
             $0.userInfo.id == id
         }
     }
