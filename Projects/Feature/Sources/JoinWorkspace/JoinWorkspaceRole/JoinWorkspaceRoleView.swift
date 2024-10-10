@@ -1,15 +1,15 @@
 import SwiftUI
 import Component
 
-public struct JoinWorkspaceRoleView: View {
-    
-    @EnvironmentObject private var alertProvider: AlertProvider
+public struct JoinWorkspaceRoleView {
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
     @State private var selectedTab: JobType = .student
     
     public init() {}
-    
+}
+
+extension JoinWorkspaceRoleView: View {
     public var body: some View {
         VStack(spacing: 16) {
             Spacer()
@@ -18,40 +18,29 @@ public struct JoinWorkspaceRoleView: View {
                     .font(.subtitle(.s1))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 4)
-                HStack {
+                HStack(spacing: 8) {
                     ForEach(JobType.allCases, id: \.self) { tab in
                         Button {
-                            withAnimation(.spring(duration: 0.4)) {
-                                selectedTab = tab
-                            }
+                            selectedTab = tab
                         } label: {
                             WorkspaceRoleCell(jobType: tab, isActive: tab == selectedTab)
+                                .animation(.spring(duration: 0.4), value: selectedTab)
                         }
                     }
                 }
             }
             .padding(.horizontal, 16)
             Spacer()
-            SeugiButton.large("계속하기", type: .primary, isLoading: viewModel.isFetchJoinWorkspace) {
-                viewModel.joinWorkspace()
+            SeugiButton.large(
+                "계속하기", type: .primary,
+                isLoading: viewModel.isFetchJoinWorkspace
+            ) {
+                viewModel.roleType = selectedTab.toWorkspaceRole()
+                router.navigate(to: MainDestination.joinWorkspaceCode)
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 16)
         }
         .seugiTopBar(title: "학교 가입")
-        .onReceive(viewModel.$joinFlow) {
-            switch $0 {
-            case .success:
-                router.navigate(to: MainDestination.joinWorkspaceCode)
-            case .failure:
-                alertProvider.present("가입 요청 실패")
-                    .message("잠시 후 다시 시도해 주세요")
-                    .show()
-            default:
-                break
-            }
-            if case .failure = $0 {
-            }
-        }
     }
 }

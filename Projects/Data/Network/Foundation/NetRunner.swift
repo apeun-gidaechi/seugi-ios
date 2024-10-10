@@ -1,9 +1,7 @@
 import Foundation
 import Combine
-
 import Domain
 import SwiftUtil
-
 import Moya
 import CombineMoya
 
@@ -161,7 +159,7 @@ private extension Error {
     func toAPIError(using decoder: JSONDecoder) -> APIError {
         guard let error = self as? MoyaError,
               let response = error.response else {
-            return APIError.unknown
+            return .unknown
         }
         if case .underlying(let error, _) = error,
            let error = error.asAFError,
@@ -169,9 +167,12 @@ private extension Error {
            let error = retryError as? APIError {
             return error
         }
-        guard let error = try? decoder.decode(BaseVoid.self, from: response.data) else {
-            return APIError.unknown
+        if case .objectMapping = error {
+            return .decodingError
         }
-        return APIError.http(error)
+        guard let error = try? decoder.decode(BaseVoid.self, from: response.data) else {
+            return .unknown
+        }
+        return .http(error)
     }
 }

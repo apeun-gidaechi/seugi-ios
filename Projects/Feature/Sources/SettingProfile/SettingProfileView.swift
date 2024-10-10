@@ -1,42 +1,46 @@
 import SwiftUI
+import PhotosUI
 import Component
 import Domain
-import PhotosUI
 
-public struct SettingProfileView: View {
-    
+public struct SettingProfileView {
     @Environment(\.openURL) private var openURL
-    @EnvironmentObject private var appState: AppViewModel
-    @EnvironmentObject private var fileViewModel: FileViewModel
-    @EnvironmentObject private var alert: AlertProvider
-    @ObservedObject private var viewModel = SettingProfileViewModel()
     
-    // photo
+    @EnvironmentObject private var router: RouterViewModel
+    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var alert: AlertProvider
+    
+    @StateObject private var viewModel = SettingProfileViewModel()
+    @StateObject private var fileViewModel = FileViewModel()
+    
     @State private var showPhotoPicker: Bool = false
     @State private var profileImagePhoto: PhotosPickerItem?
     
     private var profile: RetrieveProfile? {
         appState.profile.data
     }
-    
+}
+
+extension SettingProfileView: View {
     public var body: some View {
         VStack(spacing: 8) {
             if let profile {
-                ZStack(alignment: .bottomTrailing) {
-                    SeugiAvatar(profile.member.picture, type: .extraLarge)
-                    if profile.member.picture.isEmpty {
-                        Image(icon: .addFill)
-                            .resizable()
-                            .renderingMode(.template)
-                            .frame(width: 24, height: 24)
-                            .seugiColor(.gray(.g600))
+                Button {
+                    showPhotoPicker = true
+                } label: {
+                    ZStack(alignment: .bottomTrailing) {
+                        SeugiAvatar(profile.member.picture, type: .extraLarge)
+                        if profile.member.picture.isEmpty {
+                            Image(icon: .addFill)
+                                .resizable()
+                                .renderingMode(.template)
+                                .frame(width: 24, height: 24)
+                                .seugiColor(.gray(.g600))
+                        }
                     }
                 }
-                .padding(.vertical, 8)
-                .button {
-                    showPhotoPicker = true
-                }
                 .scaledButtonStyle()
+                .padding(.vertical, 8)
                 HStack(spacing: 4) {
                     Text(profile.member.name)
                         .font(.subtitle(.s2))
@@ -54,6 +58,7 @@ public struct SettingProfileView: View {
                         alert.present("로그아웃 하시겠습니까?")
                             .primaryButton("로그아웃") {
                                 appState.logout()
+                                router.navigateToRoot()
                             }
                             .secondaryButton("아니요") {}
                             .show()
@@ -94,10 +99,18 @@ public struct SettingProfileView: View {
             guard let photo else {
                 return
             }
-            fileViewModel.uploadPhoto(photo: photo) { url in
+            Task {
+                await fileViewModel.uploadPhoto(photo: photo)
+            }
+        }
+        .onReceive(fileViewModel.$fileFlow) { flow in
+            switch flow {
+            case .success(let url):
                 viewModel.editMember(picture: url)
-            } failure: { error in
+            case .failure(let error):
                 viewModel.editMemberFlow = .failure(error)
+            default:
+                break
             }
         }
         .onChange(of: appState.profile, initial: true) {

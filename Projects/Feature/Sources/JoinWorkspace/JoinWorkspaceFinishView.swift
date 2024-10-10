@@ -1,12 +1,13 @@
 import SwiftUI
 import Component
 
-public struct JoinWorkspaceFinishView: View {
-    
+public struct JoinWorkspaceFinishView {
     @EnvironmentObject private var router: RouterViewModel
     
     public init() {}
-    
+}
+
+extension JoinWorkspaceFinishView: View {
     public var body: some View {
         VStack {
             Spacer()
@@ -28,6 +29,6 @@ public struct JoinWorkspaceFinishView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 16)
         }
-        .seugiTopBar(title: "")
+        .seugiTopBar(title: "학교 가입")
     }
 }

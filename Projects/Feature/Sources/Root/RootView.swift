@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftUtil
 import SwiftUIUtil
 import Domain
 
@@ -6,7 +7,6 @@ public struct RootView {
     @StateObject private var appState = AppViewModel()
     @StateObject private var router = RouterViewModel()
     @StateObject private var stompViewModel = StompViewModel()
-    @StateObject private var fileViewModel = FileViewModel()
     
     public init() {}
 }
@@ -26,7 +26,6 @@ extension RootView: View {
         .environmentObject(router)
         .environmentObject(appState)
         .environmentObject(stompViewModel)
-        .environmentObject(fileViewModel)
         // 디버그일 경우 3번 탭할 시 세션 초기화
         #if DEBUG
         .onTapGesture(count: 3) {

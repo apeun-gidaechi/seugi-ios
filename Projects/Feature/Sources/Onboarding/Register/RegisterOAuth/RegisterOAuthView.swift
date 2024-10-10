@@ -1,16 +1,19 @@
 import SwiftUI
 import Component
 
-public struct RegisterOAuthView: View {
-    
-    @ObservedObject private var viewModel: RegisterOAuthViewModel
+public struct RegisterOAuthView {
     @EnvironmentObject private var router: RouterViewModel
+    
+    @StateObject private var viewModel: RegisterOAuthViewModel
+    
     @FocusState private var firstTextField: Bool
     
     public init(viewModel: RegisterOAuthViewModel) {
-        self.viewModel = viewModel
+        self._viewModel = .init(wrappedValue: viewModel)
     }
-    
+}
+
+extension RegisterOAuthView: View {
     public var body: some View {
         VStack(spacing: 16) {
             SeugiTextFieldForm(

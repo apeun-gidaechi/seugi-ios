@@ -1,14 +1,7 @@
-//
-//  SelectingJobType.swift
-//  Feature
-//
-//  Created by dgsw8th71 on 3/26/24.
-//  Copyright © 2024 seugi. All rights reserved.
-//
-
 import Foundation
 import SwiftUI
 import Component
+import Domain
 
 enum JobType: String, CaseIterable {
     case student = "학생"
@@ -18,6 +11,15 @@ enum JobType: String, CaseIterable {
         switch self {
         case .student: .student
         case .teacher: .teacher
+        }
+    }
+    
+    func toWorkspaceRole() -> WorkspaceRole {
+        switch self {
+        case .student:
+                .student
+        case .teacher:
+                .teacher
         }
     }
 }

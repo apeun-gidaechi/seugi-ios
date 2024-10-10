@@ -3,20 +3,24 @@
 import SwiftUI
 import Component
 
-public struct JoinWorkspaceSuccessView: View {
-    
+public struct JoinWorkspaceSuccessView {
+    @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
     
     public init() {}
-    
+}
+
+extension JoinWorkspaceSuccessView: View {
     public var body: some View {
         VStack(spacing: 16) {
             Spacer()
             VStack(spacing: 0) {
                 if case .success(let workspace) = viewModel.workspace {
-                    SeugiRoundedCircleAsyncImage.medium(url: workspace.workspaceImageUrl)
-                        .padding(.bottom, 16)
+                    SeugiRoundedCircleAsyncImage.medium(
+                        url: workspace.workspaceImageUrl
+                    )
+                    .padding(.bottom, 16)
                     Text(workspace.workspaceName)
                         .font(.subtitle(.s1))
                         .seugiColor(.sub(.black))
@@ -27,11 +31,23 @@ public struct JoinWorkspaceSuccessView: View {
             }
             Spacer()
             SeugiButton.large("계속하기", type: .primary) {
-                router.navigate(to: MainDestination.joinWorkspaceRole)
+                viewModel.joinWorkspace()
             }
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)
         .seugiTopBar(title: "학교 가입")
+        .onReceive(viewModel.$joinFlow) {
+            switch $0 {
+            case .success:
+                router.navigate(to: MainDestination.joinWorkspaceFinish)
+            case .failure:
+                alertProvider.present("가입 요청 실패")
+                    .message("잠시 후 다시 시도해 주세요")
+                    .show()
+            default:
+                break
+            }
+        }
     }
 }

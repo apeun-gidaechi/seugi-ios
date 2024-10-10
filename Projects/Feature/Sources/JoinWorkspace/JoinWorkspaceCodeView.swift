@@ -1,18 +1,27 @@
 import SwiftUI
 import Component
 
-public struct JoinWorkspaceCodeView: View {
-    
+public struct JoinWorkspaceCodeView {
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var alertProvider: AlertProvider
     
-    public init() {}
+    @FocusState private var focused
     
+    public init() {}
+}
+
+extension JoinWorkspaceCodeView: View {
     public var body: some View {
         VStack(spacing: 16) {
-            SeugiCodeTextFieldForm(text: $viewModel.code, label: "초대코드", length: 6)
-                .padding(.top, 16)
+            SeugiCodeTextFieldForm(
+                text: $viewModel.code,
+                label: "초대코드",
+                length: 6
+            )
+            .padding(.top, 16)
+            .focused($focused)
+            .onAppear { focused = true }
             Spacer()
             SeugiButton.large("계속하기", type: .primary, isLoading: viewModel.workspace.is(.fetching)) {
                 viewModel.fetchWorkspace()
@@ -33,6 +42,9 @@ public struct JoinWorkspaceCodeView: View {
             default:
                 break
             }
+        }
+        .onDisappear {
+            viewModel.code = ""
         }
     }
 }
