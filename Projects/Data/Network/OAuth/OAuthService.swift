@@ -15,4 +15,8 @@ final class OAuthService: OAuthRepo {
     func connectGoogle(_ req: GoogleCodeReq) -> APIResult<BaseVoid> {
         runner.deepDive(OAuthEndpoint.connectGoogle(req), res: BaseVoid.self)
     }
+    
+    func authenticateApple(_ req: AppleCodeReq) -> APIResult<Base<Token>> {
+        runner.deepDive(OAuthEndpoint.authenticateApple(req), res: Base<Token>.self)
+    }
 }

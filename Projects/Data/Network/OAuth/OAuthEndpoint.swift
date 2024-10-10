@@ -4,6 +4,7 @@ import Moya
 enum OAuthEndpoint {
     case authenticateGoogle(GoogleCodeReq)
     case connectGoogle(GoogleCodeReq)
+    case authenticateApple(AppleCodeReq)
 }
 
 extension OAuthEndpoint: SeugiEndpoint {
@@ -15,6 +16,9 @@ extension OAuthEndpoint: SeugiEndpoint {
                 .task(req.toJSONParameters())
         case .connectGoogle(let req):
                 .post("google/connect")
+                .task(req.toJSONParameters())
+        case .authenticateApple(let req):
+                .post("apple/authenticate")
                 .task(req.toJSONParameters())
         }
     }

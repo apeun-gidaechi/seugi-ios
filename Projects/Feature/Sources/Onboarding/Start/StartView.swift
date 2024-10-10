@@ -72,6 +72,30 @@ extension StartView: View {
                 break
             }
         }
+        .onReceive(appleLoginViewModel.$loginFlow) { flow in
+            isPresented = false
+            switch flow {
+            case .success(let result):
+                viewModel.signIn(
+                    code: result.code,
+                    provider: .apple
+                )
+            default:
+                break
+            }
+        }
+        .onReceive(googleLoginViewModel.$loginFlow) { flow in
+            switch flow {
+            case .success(let result):
+                if let code = result.serverAuthCode {
+                    viewModel.signIn(code: code, provider: .google)
+                }
+            case .failure:
+                isPresented = false
+            default:
+                break
+            }
+        }
     }
     
     private func sheetContent() -> some View {
@@ -82,25 +106,10 @@ extension StartView: View {
             }
             .padding(.top, 20)
             AppleLoginButton {
-                appleLoginViewModel.signIn { code, _ in
-                    isPresented = false
-                    viewModel.signIn(code: code, provider: .apple)
-                } failureCompletion: {
-                    isPresented = false
-//                    viewModel.signInFlow = .failure(.unknown)
-                }
+                appleLoginViewModel.signIn()
             }
             GoogleLoginButton {
-                Task {
-                    do {
-                        let result = try await googleLoginViewModel.signIn()
-                        if let code = result.serverAuthCode {
-                            viewModel.signIn(code: code, provider: .google)
-                        }
-                    } catch {
-                        isPresented = false
-                    }
-                }
+                googleLoginViewModel.signIn()
             }
             Spacer()
         }

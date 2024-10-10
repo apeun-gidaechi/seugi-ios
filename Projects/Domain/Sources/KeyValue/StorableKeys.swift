@@ -9,4 +9,7 @@ public enum StorableKeys: String {
     
     case fcmToken
     case allowAlarm
+    
+    case appleNickname = "APPLE_NICKNAME"
+    case appleEmail = "APPLE_EMAIL"
 }
