@@ -23,11 +23,11 @@ struct HomeWorkspaceContainer: View {
             switch flow {
             case .fetching:
                 ProgressView()
-            case .failure:
+            case .empty:
                 Text("내 학교를 등록해주세요")
                     .seugiColor(.gray(.g600))
                     .font(.body(.b2))
-            case .success:
+            case .finished:
                 if let workspace = appState.selectedWorkspace {
                     Text(workspace.workspaceName)
                         .font(.subtitle(.s2))

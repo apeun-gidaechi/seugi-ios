@@ -3,10 +3,14 @@ import Component
 import SwiftUIUtil
 
 public struct RegisterEmailView {
+    enum FocusedField {
+        case name, email, password, passwordCheck
+    }
+    
     @EnvironmentObject private var viewModel: RegisterEmailViewModel
     @EnvironmentObject private var router: RouterViewModel
     
-    @FocusState private var firstTextField: Bool
+    @FocusState private var focused: FocusedField?
     
     public init() {}
 }
@@ -21,25 +25,37 @@ extension RegisterEmailView: View {
                     label: "이름"
                 )
                 .padding(.top, 16)
-                .focused($firstTextField)
+                .focused($focused, equals: .name)
+                .onSubmit {
+                    focused = .email
+                }
                 SeugiTextFieldForm(
                     "이메일 입력해 주세요",
                     text: $viewModel.email,
                     label: "이메일"
                 )
                 .keyboardType(.emailAddress)
+                .focused($focused, equals: .email)
+                .onSubmit {
+                    focused = .password
+                }
                 SeugiTextFieldForm(
                     "비밀번호 입력해 주세요",
                     text: $viewModel.password,
                     type: .password,
                     label: "비밀번호"
                 )
+                .focused($focused, equals: .password)
+                .onSubmit {
+                    focused = .passwordCheck
+                }
                 SeugiTextFieldForm(
                     "비밀번호를 다시 입력해 주세요",
                     text: $viewModel.passwordCheck,
                     type: .password,
                     label: "비밀번호 확인"
                 )
+                .focused($focused, equals: .passwordCheck)
                 Spacer()
             }
             .padding(.horizontal, 20)
@@ -67,7 +83,7 @@ extension RegisterEmailView: View {
         }
         .hideKeyboardWhenTap()
         .onAppear {
-            firstTextField = true
+            focused = .name
         }
     }
 }

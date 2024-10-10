@@ -35,12 +35,12 @@ struct HomeScheduleContainer: View {
             switch schedule {
             case .fetching:
                 ProgressView()
-            case .failure:
+            case .empty:
                 Text("학교를 등록하고 일정을 확인하세요")
                     .seugiColor(.gray(.g600))
                     .font(.body(.b2))
                     .padding(.vertical, 12)
-            case .success:
+            case .finished:
                 VStack(spacing: 16) {
                     ForEach(0..<3, id: \.self) { _ in
                         HStack(spacing: 0) {

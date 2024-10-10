@@ -4,22 +4,38 @@ import Domain
 import SwiftUIUtil
 import SwiftUtil
 
-public struct LoginEmailView: View {
+public struct LoginEmailView {
+    enum FocusedField {
+        case email, password
+    }
+    
     @EnvironmentObject private var alertProvider: AlertProvider
     @StateObject private var viewModel = LoginEmailViewModel()
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var appState: AppViewModel
-    @FocusState private var firstTextField: Bool
+    @FocusState private var focused: FocusedField?
     
     public init() {}
-    
+}
+
+extension LoginEmailView: View {
     public var body: some View {
         VStack(spacing: 16) {
             SeugiTextFieldForm("이메일을 입력해주세요", text: $viewModel.email, label: "이메일", isForcedLabel: true)
                 .keyboardType(.emailAddress)
                 .padding(.top, 16)
-                .focused($firstTextField)
-            SeugiTextFieldForm("비밀번호를 입력해주세요", text: $viewModel.password, type: .password, label: "비밀번호", isForcedLabel: true)
+                .focused($focused, equals: .email)
+                .onSubmit {
+                    focused = .password
+                }
+            SeugiTextFieldForm(
+                "비밀번호를 입력해주세요",
+                text: $viewModel.password,
+                type: .password,
+                label: "비밀번호",
+                isForcedLabel: true
+            )
+            .focused($focused, equals: .password)
             Spacer()
             HStack(spacing: 4) {
                 Text("계정이 없으시다면?")
@@ -33,7 +49,11 @@ public struct LoginEmailView: View {
                     }
                     .scaledButtonStyle()
             }
-            SeugiButton.large("로그인", type: .primary, isLoading: viewModel.signInFlow.is(.fetching)) {
+            SeugiButton.large(
+                "로그인",
+                type: .primary,
+                isLoading: viewModel.signInFlow.is(.fetching)
+            ) {
                 viewModel.signIn()
             }
             .disabled(viewModel.email.isEmpty || viewModel.password.isEmpty)
@@ -41,6 +61,9 @@ public struct LoginEmailView: View {
         }
         .padding(.horizontal, 20)
         .seugiTopBar(title: "로그인")
+        .onAppear {
+            focused = .email
+        }
         .onReceive(viewModel.$signInFlow) { flow in
             switch flow {
             case .success(let token):
@@ -60,9 +83,6 @@ public struct LoginEmailView: View {
             default:
                 break
             }
-        }
-        .onAppear {
-            firstTextField = true
         }
     }
 }

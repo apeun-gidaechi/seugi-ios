@@ -40,12 +40,12 @@ struct HomeCatSeugiContainer: View {
             switch flow {
             case .fetching:
                 ProgressView()
-            case .failure:
+            case .empty:
                 Text("학교를 등록하고 캣스기와 대화해 보세요")
                     .seugiColor(.gray(.g600))
                     .font(.body(.b2))
                     .padding(.vertical, 12)
-            case .success:
+            case .finished:
                 Button {
                     action(.clicked)
                 } label: {
