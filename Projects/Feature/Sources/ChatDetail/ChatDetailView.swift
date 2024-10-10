@@ -101,11 +101,7 @@ public struct ChatDetailView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .safeAreaInset(edge: .bottom) {
-            if !isSearching {
-                makeBottomTextField()
-            }
-        }
+        .safeAreaInset(edge: .bottom, content: safeAreaContent)
         .hideKeyboardWhenTap()
         .seugiTopBar(
             title: room.chatName,
@@ -130,23 +126,20 @@ public struct ChatDetailView: View {
                 }
             }
         }
-        .onChange(of: isDrawerOpen) { _ in
-            hideKeyboard()
-        }
-        .onReceive(viewModel.subject) { subject in
-            switch subject {
-            case .messageLoaded:
-                scrollToBottom(animated: true)
-            case .messagesFetched:
-                scrollToBottom()
-            }
-        }
         .photosPicker(
             isPresented: $showPhotoPicker,
             selection: $viewModel.photo,
             matching: .any(of: [.images, .screenshots, .livePhotos])
         )
+        .onChange(of: isDrawerOpen) { _ in
+            hideKeyboard()
+        }
         .onChange(of: viewModel.photo) { _ in } // TODO: impl
+        .onReceive(viewModel.$messages) {
+            if case .success = $0 {
+                scrollToBottom(animated: true)
+            }
+        }
         .onReceive(viewModel.$leftRoomFlow) { flow in
             switch flow {
             case .success:
@@ -162,25 +155,29 @@ public struct ChatDetailView: View {
     }
     
     @ViewBuilder
-    private func makeBottomTextField() -> some View {
-        SeugiChatTextField("메세지 보내기", text: $viewModel.message) { action in
-            switch action {
-            case .sendMessage:
-                viewModel.sendMessage(room: room)
-            case .imageMenu:
-                showPhotoPicker = true
-            case .fileMenu:
-                break
+    private func safeAreaContent() -> some View {
+        if !isSearching {
+            SeugiChatTextField("메세지 보내기", text: $viewModel.message) { action in
+                switch action {
+                case .sendMessage:
+                    viewModel.sendMessage(room: room)
+                case .imageMenu:
+                    showPhotoPicker = true
+                case .fileMenu:
+                    break
+                }
+            }
+            .padding(.horizontal, 8)
+            .padding(.bottom, 8)
+            .seugiBackground(.primary(.p050))
+            .onTapGesture {
+                scrollToBottom(animated: true)
             }
         }
-        .padding(.horizontal, 8)
-        .padding(.bottom, 8)
-        .seugiBackground(.primary(.p050))
-        .onTapGesture {
-            scrollToBottom(animated: true)
-        }
     }
-    
+}
+
+extension ChatDetailView {
     private func scrollToBottom(animated: Bool = false) {
         if animated {
             Task {

@@ -1,7 +1,7 @@
 import Combine
 
 public protocol StompMessageRepo {
-    func sendMessage(roomId: String, type: MessageType, message: String, mention: [Int]?, mentionAll: Bool?, emoticon: String?)
+    func sendMessage(_ req: SendMessageReq)
     func subGetMessage(roomId: String) -> AnyPublisher<Message, Never>
     func unsubGetMessage(roomId: String)
 }

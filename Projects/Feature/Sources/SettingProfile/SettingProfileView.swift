@@ -106,15 +106,14 @@ extension SettingProfileView: View {
         .onReceive(fileViewModel.$fileFlow) { flow in
             switch flow {
             case .success(let file):
-                viewModel.editMember(picture: file.url)
+                if let profile = appState.profile.data {
+                    viewModel.editMember(picture: file.url, member: profile.member)
+                }
             case .failure(let error):
                 viewModel.editMemberFlow = .failure(error)
             default:
                 break
             }
-        }
-        .onChange(of: appState.profile, initial: true) {
-            viewModel.member = $0.data?.member
         }
         .onReceive(viewModel.$editMemberFlow) { flow in
             switch flow {

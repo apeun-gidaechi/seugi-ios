@@ -12,7 +12,7 @@ public struct Message: Entity {
     public let mention: [Int]
     public let mentionAll: Bool
     public let timestamp: Date?
-    public let uuid: String
+    public let uuid: String?
     public let messageStatus: ChatStatusEnum?
     
     public init(
@@ -27,7 +27,7 @@ public struct Message: Entity {
         mention: [Int],
         mentionAll: Bool,
         timestamp: Date?,
-        uuid: String,
+        uuid: String?,
         messageStatus: ChatStatusEnum?
     ) {
         self.id = id
@@ -121,5 +121,9 @@ public extension [Message] {
         let message = self[currentIndex]
         return currentIndex == self.count - 1 
         || self[currentIndex + 1].userId != message.userId
+    }
+    
+    func getFirstMessageTimestamp() -> Date? {
+        return self.first?.timestamp
     }
 }

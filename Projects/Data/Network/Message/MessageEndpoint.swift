@@ -1,16 +1,17 @@
+import Foundation
 import Moya
 
 enum MessageEndpoint {
-    case getMessages(roomId: String, page: Int, size: Int)
+    case getMessages(roomId: String, timestamp: Date?)
 }
 
 extension MessageEndpoint: SeugiEndpoint {
     var host: String { "message" }
     var route: Route {
         switch self {
-        case .getMessages(let roomId, let page, let size):
+        case .getMessages(let roomId, let timestamp):
             return .get("search/\(roomId)")
-                .task(["page": page, "size": size].toURLParameters())
+                .task(["size": timestamp].toURLParameters())
         }
     }
 }

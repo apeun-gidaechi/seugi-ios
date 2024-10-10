@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 import Domain
 import ApeunStompKit
 
@@ -13,8 +14,8 @@ final class MessageService {
 
 // MARK: - HTTP Protocol
 extension MessageService: MessageRepo {
-    public func getMessages(roomId: String, page: Int, size: Int) -> APIResult<Base<GetMessage>> {
-        runner.deepDive(MessageEndpoint.getMessages(roomId: roomId, page: page, size: size), res: Base<GetMessage>.self)
+    public func getMessages(roomId: String, timestamp: Date?) -> APIResult<Base<GetMessage>> {
+        runner.deepDive(MessageEndpoint.getMessages(roomId: roomId, timestamp: timestamp), res: Base<GetMessage>.self)
     }
 }
 
@@ -61,8 +62,7 @@ extension MessageService: StompRepo {
 }
 
 extension MessageService: StompMessageRepo {
-    public func sendMessage(roomId: String, type: MessageType, message: String, mention: [Int]?, mentionAll: Bool?, emoticon: String?) {
-        let req = SendMessageReq(roomId: roomId, type: type, message: message, mention: mention, mentionAll: mentionAll, emoticon: emoticon)
+    public func sendMessage(_ req: SendMessageReq) {
         stomp.sendJSONForDict(dict: req, to: "/pub/chat.message")
     }
     
