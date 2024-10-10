@@ -52,7 +52,8 @@ public struct PostNotificationView: View {
         .onReceive(viewModel.$fetchPostNotification) { flow in
             switch flow {
             case .success:
-                alertProvider.present(type == .createNotification ? "공지 작성 성공" : "공지 수정 성공")
+                alertProvider.present(
+                    .init(title: type == .createNotification ? "공지 작성 성공" : "공지 수정 성공")
                     .primaryButton("닫기") {
                         dismiss()
     //                    guard let selectedWorkspace = appState.selectedWorkspace else {
@@ -60,14 +61,15 @@ public struct PostNotificationView: View {
     //                    }
     //                    notificationViewModel.fetchNotifications(workspaceId: selectedWorkspace.workspaceId)
                     }
-                    .show()
+                )
             case .failure:
-                alertProvider.present(type == .createNotification ? "공지 작성 실패" : "공지 수정 실패")
+                alertProvider.present(
+                    .init(title: type == .createNotification ? "공지 작성 실패" : "공지 수정 실패")
                     .message("잠시 후 다시 시도해 주세요")
                     .primaryButton("확인") {
                         router.popToStack()
                     }
-                    .show()
+                )
             default:
                 break
             }

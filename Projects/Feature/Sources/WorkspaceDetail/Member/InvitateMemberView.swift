@@ -41,8 +41,9 @@ struct InvitateMemberView: View {
                         SeugiButton.small("학교코드 확인", type: .gray) {
                             if case .success = viewModel.workspaceCode {
                                 showWorkspaceCodeDialog = true
-                                alertProvider.present("초대코드는 \(viewModel.workspaceCode.data ?? "")입니다")
-                                    .show()
+                                alertProvider.present(
+                                    .init(title: "초대코드는 \(viewModel.workspaceCode.data ?? "")입니다")
+                                )
                             }
                         }
                     }
@@ -130,17 +131,19 @@ struct InvitateMemberView: View {
         .onReceive(viewModel.$addWorkspaceFlow) { flow in
             switch flow {
             case .success:
-                alertProvider.present("가입 수락 성공")
-                    .show()
+                alertProvider.present(
+                    .init(title: "가입 수락 성공")
+                )
                 guard let selectedWorkspace = appState.selectedWorkspace else {
                     return
                 }
                 viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)
             case .failure:
-                alertProvider.present("가입 수락 실패")
-                    .primaryButton("확인") {}
+                alertProvider.present(
+                    .init(title: "가입 수락 실패")
+                    .primaryButton("확인")
                     .message("잠시 후 다시 시도해 주세요")
-                    .show()
+                )
             default:
                 break
             }
@@ -148,17 +151,19 @@ struct InvitateMemberView: View {
         .onReceive(viewModel.$cancelWorkspaceFlow) { flow in
             switch flow {
             case .success:
-                alertProvider.present("가입 거절 성공")
-                    .show()
+                alertProvider.present(
+                    .init(title: "가입 거절 성공")
+                )
                 guard let selectedWorkspace = appState.selectedWorkspace else {
                     return
                 }
                 viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)
             case .failure:
-                alertProvider.present("가입 거절 실패")
-                    .primaryButton("확인") {}
+                alertProvider.present(
+                    .init(title: "가입 거절 실패")
+                    .primaryButton("확인")
                     .message("잠시 후 다시 시도해 주세요")
-                    .show()
+                )
             default:
                 break
             }

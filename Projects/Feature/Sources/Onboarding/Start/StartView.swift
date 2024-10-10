@@ -65,9 +65,10 @@ extension StartView: View {
                     router.navigateToRoot()
                 }
             case .failure:
-                alertProvider.present("로그인 실패")
+                alertProvider.present(
+                    .init(title: "로그인 실패")
                     .message("아이디 혹은 비밀번호를 다시 확인해 주세요")
-                    .show()
+                )
             default:
                 break
             }

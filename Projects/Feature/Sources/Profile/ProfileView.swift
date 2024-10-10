@@ -63,13 +63,15 @@ public struct ProfileView: View {
         .onReceive(viewModel.$updateProfileFlow) { flow in
             switch flow {
             case .success:
-                alertProvider.present("\(viewModel.selectedProfleInfolabel) 수정 성공")
-                    .show()
+                alertProvider.present(
+                    .init(title: "\(viewModel.selectedProfleInfolabel) 수정 성공")
+                )
                 appState.fetchMyInfo()
             case .failure:
-                alertProvider.present("\(viewModel.selectedProfleInfolabel) 수정 실패")
-                    .primaryButton("확인") {}
-                    .show()
+                alertProvider.present(
+                    .init(title: "\(viewModel.selectedProfleInfolabel) 수정 실패")
+                    .primaryButton("확인")
+                )
             default:
                 break
             }

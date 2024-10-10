@@ -36,9 +36,10 @@ extension JoinWorkspaceCodeView: View {
             case .success:
                 router.navigate(to: MainDestination.joinWorkspaceSuccess)
             case .failure:
-                alertProvider.present("초대코드가 올바르지 않습니다")
+                alertProvider.present(
+                    .init(title: "초대코드가 올바르지 않습니다")
                     .message("다시 입력해주세요")
-                    .show()
+                )
             default:
                 break
             }

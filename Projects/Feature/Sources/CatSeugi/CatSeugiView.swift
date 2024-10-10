@@ -73,9 +73,10 @@ public struct CatSeugiView: View {
             case .success:
                 scrollToBottom()
             case .failure:
-                alert.present("전송 실패")
+                alert.present(
+                    .init(title: "전송 실패")
                     .message("다시 시도해 주세요")
-                    .show()
+                )
             default:
                 break
             }

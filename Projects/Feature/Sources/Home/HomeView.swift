@@ -71,14 +71,15 @@ extension HomeView: View {
     }
     
     func showJoinWorkspaceAlert() {
-        alertProvider.present("학교 등록하기")
+        alertProvider.present(
+            .init(title: "학교 등록하기")
+            .message("학교를 등록한 뒤 스기를 사용할 수 있어요")
             .primaryButton("기존 학교 가입") {
                 router.navigate(to: MainDestination.joinWorkspaceRole)
             }
             .secondaryButton("새 학교 만들기") {
                 router.navigate(to: MainDestination.createWorkspace)
             }
-            .message("학교를 등록한 뒤 스기를 사용할 수 있어요")
-            .show()
+        )
     }
 }

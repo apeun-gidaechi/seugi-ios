@@ -56,17 +56,19 @@ extension RegisterEmailVerificationView: View {
                 appState.refreshToken = String(token.refreshToken.split(separator: " ")[1])
                 router.navigateToRoot()
             case .failure:
-                alertProvider.present("회원가입 실패")
+                alertProvider.present(
+                    .init(title: "회원가입 실패")
                     .message("잠시 후 다시 시도해 주세요")
-                    .show()
+                )
             default:
                 break
             }
         }
         .onReceive(viewModel.$sendEmailFlow) {
             if case .failure = $0 {
-                alertProvider.present("이메일 전송 실패")
-                    .show()
+                alertProvider.present(
+                    .init(title: "이메일 전송 실패")
+                )
             }
         }
     }

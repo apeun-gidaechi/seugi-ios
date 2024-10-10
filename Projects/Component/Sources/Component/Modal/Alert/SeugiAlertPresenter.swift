@@ -28,20 +28,22 @@ struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
             modalContent: {
                 VStack(spacing: 18) {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(provider.title)
-                            .font(.subtitle(.s1))
-                            .seugiColor(.sub(.black))
-                        if let message = provider.message {
-                            Text(message)
-                                .font(.subtitle(.s2))
+                        if let alert = provider.alert {
+                            Text(alert.title)
+                                .font(.subtitle(.s1))
                                 .seugiColor(.sub(.black))
+                            if let message = alert.message {
+                                Text(message)
+                                    .font(.subtitle(.s2))
+                                    .seugiColor(.sub(.black))
+                            }
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(4)
                     HStack(spacing: 8) {
-                        if let secondaryButton = provider.secondaryButton {
-                            if let primaryButton = provider.primaryButton {
+                        if let secondaryButton = provider.alert?.secondaryButton {
+                            if let primaryButton = provider.alert?.primaryButton {
                                 SeugiButton.large(secondaryButton.title, type: .gray) {
                                     secondaryButton.action()
                                     dismiss()
@@ -65,7 +67,7 @@ struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
                                 .toTrailing()
                             }
                         } else {
-                            if let primaryButton = provider.primaryButton {
+                            if let primaryButton = provider.alert?.primaryButton {
                                 Button {
                                     primaryButton.action()
                                     dismiss()

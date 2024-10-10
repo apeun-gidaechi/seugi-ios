@@ -66,13 +66,15 @@ extension NotificationView {
         .onReceive(viewModel.$removeNotificationFlow) { flow in
             switch flow {
             case .success:
-                alert.present("삭제 성공")
-                    .primaryButton("닫기") {}
-                    .show()
+                alert.present(
+                    .init(title: "삭제 성공")
+                    .primaryButton("닫기")
+                )
             case .failure:
-                alert.present("삭제 실패")
-                    .primaryButton("확인") {}
-                    .show()
+                alert.present(
+                    .init(title: "삭제 실패")
+                    .primaryButton("확인")
+                )
             default:
                 break
             }
@@ -99,7 +101,8 @@ extension NotificationView {
         case .updateNotification:
             router.navigate(to: MainDestination.updateNotification(notification))
         case .removeNotification:
-            alert.present("공지를 정말 삭제하시겠습니까?")
+            alert.present(
+                .init(title: "공지를 정말 삭제하시겠습니까?")
                 .primaryButton("삭제") {
                     viewModel.removeNotification(
                         workspaceId: selectedWorkspace.workspaceId,
@@ -110,7 +113,7 @@ extension NotificationView {
                     )
                 }
                 .secondaryButton("닫기") {}
-                .show()
+            )
         case .reportNotification:
             // TODO: Impl
             break

@@ -61,17 +61,19 @@ extension CreateWorkspaceView: View {
         .onReceive(viewModel.$createWorkspaceFlow) { flow in
             switch flow {
             case .success:
-                alertProvider.present("학교 등록 성공")
+                alertProvider.present(
+                    .init(title: "학교 등록 성공")
                     .primaryButton("닫기") {
                         appState.fetchWorkspaces()
                         router.navigateToRoot()
                     }
-                    .show()
+                )
             case .failure:
-                alertProvider.present("학교 등록 실패")
-                    .primaryButton("확인") {}
+                alertProvider.present(
+                    .init(title: "학교 등록 실패")
                     .message("잠시 후 다시 시도해 주세요")
-                    .show()
+                    .primaryButton("확인")
+                )
             default:
                 break
             }
@@ -89,10 +91,11 @@ extension CreateWorkspaceView: View {
                 self.uploadedFile = file
             case .failure(let error):
                 debugPrint(error)
-                alertProvider.present("이미지 업로드 실패")
-                    .primaryButton("확인") {}
+                alertProvider.present(
+                    .init(title: "이미지 업로드 실패")
                     .message("잠시 후 다시 시도해 주세요")
-                    .show()
+                    .primaryButton("확인")
+                )
             default:
                 break
             }

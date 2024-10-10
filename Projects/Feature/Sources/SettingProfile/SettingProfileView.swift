@@ -55,24 +55,26 @@ extension SettingProfileView: View {
             LazyVStack(spacing: 0) {
                 SeugiListItem.icon(title: "로그아웃", icon: .expandRightLine)
                     .button {
-                        alert.present("로그아웃 하시겠습니까?")
+                        alert.present(
+                            .init(title: "로그아웃 하시겠습니까?")
                             .primaryButton("로그아웃") {
                                 appState.logout()
                                 router.navigateToRoot()
                             }
-                            .secondaryButton("아니요") {}
-                            .show()
+                            .secondaryButton("아니요")
+                        )
                     }
                     .scaledButtonStyle()
                 SeugiListItem.icon(title: "회원 탈퇴", icon: .expandRightLine, titleColor: .red(.r500))
                     .button {
-                        alert.present("정말 회원 탈퇴하시겠습니까?")
+                        alert.present(
+                            .init(title: "정말 회원 탈퇴하시겠습니까?")
                             .message("회원 탈퇴 시 모든 정보가 삭제 됩니다")
                             .primaryButton("탈퇴") {
                                 viewModel.removeMember()
                             }
                             .secondaryButton("취소")
-                            .show()
+                        )
                     }
                     .scaledButtonStyle()
                 SeugiDivider(thickness: .thick)
@@ -119,13 +121,15 @@ extension SettingProfileView: View {
             switch flow {
             case .success:
                 appState.fetchMyInfo()
-                alert.present("정보 수정 성공")
-                    .show()
+                alert.present(
+                    .init(title: "정보 수정 성공")
+                )
             case .failure:
-                alert.present("정보 수정 실패")
+                alert.present(
+                    .init(title: "정보 수정 실패")
                     .primaryButton("확인")
                     .message("잠시 후 다시 시도해 주세요")
-                    .show()
+                )
             default:
                 break
             }
@@ -135,9 +139,10 @@ extension SettingProfileView: View {
             case .success:
                 appState.logout()
             case .failure:
-                alert.present("탈퇴 실패")
+                alert.present(
+                    .init(title: "탈퇴 실패")
                     .primaryButton("잠시 후 다시 시도해 주세요")
-                    .show()
+                )
             default:
                 break
             }

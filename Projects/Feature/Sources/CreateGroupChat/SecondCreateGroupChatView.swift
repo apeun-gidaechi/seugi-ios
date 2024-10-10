@@ -53,9 +53,10 @@ public struct SecondCreateGroupChatView: View {
             case .success:
                 router.navigateToRoot()
             case .failure:
-                alertProvider.present("채팅방 만들기 실패")
-                    .primaryButton("확인") {}
-                    .show()
+                alertProvider.present(
+                    .init(title: "채팅방 만들기 실패")
+                    .primaryButton("확인")
+                )
             default:
                 break
             }

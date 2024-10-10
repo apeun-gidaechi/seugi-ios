@@ -117,12 +117,12 @@ public struct ChatDetailView: View {
             ChatDetailDrawer(room: room) { action in
                 switch action {
                 case .leftRoom:
-                    alert.present("채팅방을 나가시겠습니까?")
+                    alert.present(
+                        .init(title: "채팅방을 나가시겠습니까?")
                         .primaryButton("나가기") {
                             viewModel.left(roomId: room.id)
-                        }
-                        .secondaryButton("닫기") {}
-                        .show()
+                        }.secondaryButton("닫기")
+                    )
                 }
             }
         }
@@ -145,9 +145,10 @@ public struct ChatDetailView: View {
             case .success:
                 router.popToStack()
             case .failure:
-                alert.present("채팅방을 나갈 수 없습니다")
+                alert.present(
+                    .init(title: "채팅방을 나갈 수 없습니다")
                     .message("잠시 후 다시 시도해 주세요")
-                    .show()
+                )
             default:
                 break
             }

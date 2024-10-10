@@ -42,9 +42,10 @@ extension JoinWorkspaceSuccessView: View {
             case .success:
                 router.navigate(to: MainDestination.joinWorkspaceFinish)
             case .failure:
-                alertProvider.present("가입 요청 실패")
+                alertProvider.present(
+                    .init(title: "가입 요청 실패")
                     .message("잠시 후 다시 시도해 주세요")
-                    .show()
+                )
             default:
                 break
             }

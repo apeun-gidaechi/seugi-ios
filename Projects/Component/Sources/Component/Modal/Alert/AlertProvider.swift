@@ -2,92 +2,63 @@ import Foundation
 import SwiftUI
 
 public final class AlertProvider: ObservableObject, ModalProvider {
-    public struct Builder {
-        private let title: String
-        private let message: String?
-        private let secondaryButton: AlertButton?
-        private let primaryButton: AlertButton?
-        private let provider: AlertProvider
+    public struct Alert {
+        let title: String
+        let message: String?
+        let secondaryButton: AlertButton?
+        let primaryButton: AlertButton?
         
         public init(
             title: String,
-            provider: AlertProvider
-        ) {
-            self.title = title
-            self.message = nil
-            self.secondaryButton = nil
-            self.primaryButton = nil
-            self.provider = provider
-        }
-        
-        private init(
-            title: String,
-            message: String?,
-            secondaryButton: AlertButton?,
-            primaryButton: AlertButton?,
-            provider: AlertProvider
+            message: String? = nil,
+            secondaryButton: AlertButton? = nil,
+            primaryButton: AlertButton? = nil
         ) {
             self.title = title
             self.message = message
             self.secondaryButton = secondaryButton
             self.primaryButton = primaryButton
-            self.provider = provider
         }
         
         public func message(_ message: String?) -> Self {
             .init(
-                title: title,
+                title: self.title,
                 message: message,
-                secondaryButton: secondaryButton,
-                primaryButton: primaryButton,
-                provider: provider
+                secondaryButton: self.secondaryButton,
+                primaryButton: self.primaryButton
             )
         }
         
-        public func secondaryButton(_ title: String, action: @escaping () -> Void = {}) -> Self {
+        public func secondaryButton(
+            _ title: String,
+            action: @escaping () -> Void = {}
+        ) -> Self {
             .init(
                 title: self.title,
-                message: message,
+                message: self.message,
                 secondaryButton: .init(title, action: action),
-                primaryButton: primaryButton,
-                provider: provider
+                primaryButton: self.primaryButton
             )
         }
         
         public func primaryButton(_ title: String, action: @escaping () -> Void = {}) -> Self {
             .init(
                 title: self.title,
-                message: message,
-                secondaryButton: secondaryButton,
-                primaryButton: .init(title, action: action),
-                provider: provider
+                message: self.message,
+                secondaryButton: self.secondaryButton,
+                primaryButton: .init(title, action: action)
             )
-        }
-        
-        public func show() {
-            provider.title = title
-            provider.message = message
-            provider.secondaryButton = secondaryButton
-            provider.primaryButton = primaryButton
-            provider.isPresent = true
         }
     }
     
     @Published public var isPresent = false
-    @Published var title: String = ""
-    @Published var message: String?
-    @Published var secondaryButton: AlertButton?
-    @Published var primaryButton: AlertButton?
+    @Published var alert: Alert?
     
     public init() {}
     
     public func present(
-        _ title: String
-    ) -> Builder {
-        .init(title: title, provider: self)
-    }
-    
-    public var description: String {
-        "title: \(title), message: \(message ?? "nil")"
+        _ alert: Alert
+    ) {
+        isPresent = true
     }
 }
