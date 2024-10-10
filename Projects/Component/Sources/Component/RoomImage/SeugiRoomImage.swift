@@ -38,11 +38,6 @@ public struct SeugiRoomImage: View {
                     image
                 } else if state.error != nil {
                     unavailableView
-                } else {
-                    Circle()
-                        .seugiColor(.gray(.g100))
-                        .frame(width: type.size, height: type.size)
-                        .shimmer()
                 }
             }
             .processors([.resize(size: .init(width: type.size, height: type.size), unit: .pixels)])

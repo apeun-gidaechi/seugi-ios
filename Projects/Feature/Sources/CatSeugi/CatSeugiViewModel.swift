@@ -10,7 +10,7 @@ final class CatSeugiViewModel: ObservableObject {
     
     @Published var messages: Flow<[Message]> = .success([])
     @Published var message: String = ""
-    @Published var sendMessageFlow = Flow<String>.idle
+    @Published var sendMessageFlow: Flow<String> = .idle
     
     var subscriptions = Set<AnyCancellable>()
     
@@ -18,7 +18,6 @@ final class CatSeugiViewModel: ObservableObject {
         self.messages = self.messages.map {
             $0 + [.just(userId: userId, message: message)]
         }
-//        self.emit(.messagesFetched)
         
         catSeugiRepo.sendMessage(
             .init(text: message)

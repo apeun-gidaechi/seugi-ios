@@ -13,45 +13,45 @@ public final class ChatDetailViewModel: ObservableObject {
     @Inject private var chatRepo: ChatRepo
     @Inject private var stompMessageRepo: StompMessageRepo
     
-    @Published private var page: Int = 0
-    /* message */
+    @Published var page: Int = 0
     @Published var messages: Flow<[Message]> = .fetching
     @Published var message: String = ""
-    
-    /* photo */
     @Published var photo: PhotosPickerItem?
-    
     @Published var leftRoomFlow: Flow<BaseVoid> = .idle
     
-    // MARK: - Parameter
     private let room: Room
     
-    // MARK: - Initializer
     init(room: Room) {
         self.room = room
-        self.fetchMessages(roomId: room.id)
-        self.subscribe(roomId: room.id)
+        self.fetchMessages()
+        self.subscribe()
     }
     
-    // MARK: - Method
-    func subscribe(roomId: String) {
-        stompMessageRepo.subGetMessage(roomId: roomId)
+    deinit {
+        self.unsubscribe()
+    }
+}
+
+extension ChatDetailViewModel {
+    func subscribe() {
+        stompMessageRepo.subGetMessage(roomId: room.id)
             .sink { [self] res in
                 if var messages = messages.data {
-                    messages.append(res)
-                    self.messages = .success(messages)
+                    self.messages = self.messages.map {
+                        $0 + [res]
+                    }
                 }
             }
             .store(in: &subscriptions)
     }
     
-    func unsubscribe(roomId: String) {
-        stompMessageRepo.unsubGetMessage(roomId: roomId)
+    func unsubscribe() {
+        stompMessageRepo.unsubGetMessage(roomId: room.id)
     }
     
-    func fetchMessages(roomId: String) {
+    func fetchMessages() {
         messageRepo.getMessages(
-            roomId: roomId,
+            roomId: room.id,
             timestamp: messages.data?.getFirstMessageTimestamp()
         )
         .map(\.data.messages)
@@ -81,9 +81,5 @@ public final class ChatDetailViewModel: ObservableObject {
             .flow(\.leftRoomFlow, on: self)
             .silentSink()
             .store(in: &subscriptions)
-    }
-    
-    deinit {
-        self.unsubscribe(roomId: room.id)
     }
 }

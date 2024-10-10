@@ -46,8 +46,8 @@ public class DefaultNetRunner: NetRunner {
     public let decoder: JSONDecoder
     
     public init(
-        provider: MoyaProvider<AnyEndpoint>,
-        authProvider: MoyaProvider<AnyEndpoint>,
+        provider: MoyaProvider<AnyEndpoint> = .init(),
+        authProvider: MoyaProvider<AnyEndpoint> = .init(),
         decoder: JSONDecoder
     ) {
         self.provider = provider

@@ -7,14 +7,14 @@ import Combine
 final class NotificationViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
-    // MARK: - Repo
     @Inject private var notificationRepo: NotificationRepo
     
-    // MARK: - State
     @Published var notifications: Flow<[Domain.Notification]> = .fetching
     @Published var removeNotificationFlow: Flow<BaseVoid> = .idle
     @Published var selectedNotificationForAddEmoji: Domain.Notification?
-    
+}
+
+extension NotificationViewModel {
     public func fetchNotifications(workspaceId: String) {
         notificationRepo.getNotifications(workspaceId: workspaceId)
             .map { $0.data.sorted { $0.creationDate ?? .now > $1.creationDate ?? .now } }

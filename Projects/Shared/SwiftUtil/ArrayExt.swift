@@ -1,14 +1,5 @@
 import Foundation
 
-public enum ArrayUtil {
-    public static func splitArray<T>(array: [T]) -> [[T]] {
-        let middleIndex = Int(ceil(Double(array.count) / 2.0))
-        let firstHalf = Array(array[0..<middleIndex])
-        let secondHalf = Array(array[middleIndex..<array.count])
-        return [firstHalf, secondHalf]
-    }
-}
-
 public extension Array {
     func getOrNil(idx: Int) -> Element? {
         let strLength = self.count

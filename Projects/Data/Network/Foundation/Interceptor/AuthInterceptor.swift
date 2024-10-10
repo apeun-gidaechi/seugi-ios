@@ -74,7 +74,14 @@ final class AuthInterceptor: Moya.RequestInterceptor {
         
         Log.network("✅ AuthInterceptor - Try refresh with token - \(refreshToken)")
         
-        DefaultNetRunner(provider: .init(), authProvider: .init(), decoder: .myDecoder)
+        DefaultNetRunner(
+            provider: .init(
+                plugins: [
+                    NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))
+                ]
+            ),
+            decoder: .myDecoder
+        )
             .deepDive(MemberEndpoint.refresh(token: refreshToken), res: Base<Token>.self)
             .map(\.data.accessToken)
             .receive(on: DispatchQueue.main)

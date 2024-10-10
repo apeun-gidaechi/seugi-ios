@@ -7,9 +7,9 @@ import Combine
 final class InvitateMemberViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
-    @Inject private var workspaceRepo: any WorkspaceRepo
+    @Inject private var workspaceRepo: WorkspaceRepo
+    @Inject private var keyValueRepo: KeyValueRepo
     
-    // MARK: - Properties
     @Published var selection = segmentedButtonRoles[0]
     @Published var workspaceCode: Flow<String> = .fetching
     @Published private var studentWaitMembers: Flow<[RetrieveMember]> = .fetching
@@ -24,8 +24,9 @@ final class InvitateMemberViewModel: ObservableObject {
     @Published var selectedMembers: [RetrieveMember] = []
     @Published var addWorkspaceFlow: Flow<BaseVoid> = .idle
     @Published var cancelWorkspaceFlow: Flow<BaseVoid> = .idle
-    
-    // MARK: - Method
+}
+
+extension InvitateMemberViewModel {
     func fetchWaitMembers(workspaceId: String) {
         workspaceRepo.getWaitList(workspaceId: workspaceId, workspaceRole: .student)
             .map(\.data)

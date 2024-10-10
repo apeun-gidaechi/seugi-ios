@@ -58,3 +58,13 @@ public extension Room {
         findUser(id: id) ?? .init(userInfo: .invalidMember(id: id), timestamp: .now)
     }
 }
+
+public extension [Room] {
+    func search(text: String) -> [Room] {
+        return if text.isEmpty {
+            self.filter { $0.chatName.contains(text) }
+        } else {
+            self
+        }
+    }
+}

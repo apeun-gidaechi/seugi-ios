@@ -7,11 +7,9 @@ import Combine
 public final class CreateGroupChatViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
-    // MARK: - Repo
     @Inject private var workspaceRepo: WorkspaceRepo
     @Inject private var chatRepo: ChatRepo
     
-    // MARK: - State
     @Published var members: Flow<[RetrieveProfile]> = .fetching
     @Published var selectedMembers: [RetrieveProfile] = []
     @Published var roomName: String = ""

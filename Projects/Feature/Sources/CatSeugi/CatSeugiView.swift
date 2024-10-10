@@ -3,8 +3,7 @@ import PhotosUI
 import Component
 import Domain
 
-public struct CatSeugiView: View {
-    
+public struct CatSeugiView {
     enum Id: Hashable {
         case bottom
         case top
@@ -12,14 +11,16 @@ public struct CatSeugiView: View {
     
     @EnvironmentObject private var appState: AppViewModel
     @EnvironmentObject private var alert: AlertProvider
+    
     @StateObject private var viewModel = CatSeugiViewModel()
     
-    // MARK: - State
     @State private var scrollViewProxy: ScrollViewProxy?
     @FocusState private var focused
     
     public init() {}
-    
+}
+
+extension CatSeugiView: View {
     public var body: some View {
         viewModel.messages.makeView {
             ProgressView()

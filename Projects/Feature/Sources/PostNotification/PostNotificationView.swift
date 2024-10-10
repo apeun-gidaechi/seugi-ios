@@ -1,26 +1,27 @@
 import SwiftUI
 import Component
 
-public struct PostNotificationView: View {
+public struct PostNotificationView {
+    @Environment(\.dismiss) private var dismiss
     
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var appState: AppViewModel
-    @Environment(\.dismiss) private var dismiss
+    
     @StateObject private var viewModel = PostNotificationViewModel()
     
     private let type: PostNotificationType
     
-    init(
-        type: PostNotificationType
-    ) {
+    init(type: PostNotificationType) {
         self.type = type
         if case .updateNotification(let notification) = type {
             viewModel.title = notification.title
             viewModel.content = notification.content
         }
     }
-    
+}
+
+extension PostNotificationView: View {
     public var body: some View {
         ScrollView {
             VStack(spacing: 8) {
@@ -35,7 +36,7 @@ public struct PostNotificationView: View {
             title: type == .createNotification ? "새 공지 작성" : "공지 수정",
             subView: {
                 SeugiButton.small("완료", type: .transparent, isLoading: viewModel.fetchPostNotification == .fetching) {
-                    hideKeyboard() // UX
+                    hideKeyboard() // for UX
                     switch type {
                     case .createNotification:
                         guard let selectedWorkspace = appState.selectedWorkspace else {
@@ -46,7 +47,7 @@ public struct PostNotificationView: View {
                         viewModel.updateNotification(notificationId: notification.id)
                     }
                 }
-                .disabled(viewModel.content.isEmpty || viewModel.title.isEmpty)
+                .disabled(!viewModel.isValidInput)
             }
         )
         .onReceive(viewModel.$fetchPostNotification) { flow in

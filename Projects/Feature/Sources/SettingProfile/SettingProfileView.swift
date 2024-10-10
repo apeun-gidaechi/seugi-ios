@@ -59,7 +59,6 @@ extension SettingProfileView: View {
                             .init(title: "로그아웃 하시겠습니까?")
                             .primaryButton("로그아웃") {
                                 appState.logout()
-                                router.navigateToRoot()
                             }
                             .secondaryButton("아니요")
                         )

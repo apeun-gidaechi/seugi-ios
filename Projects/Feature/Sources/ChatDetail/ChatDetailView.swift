@@ -7,40 +7,35 @@ import SwiftUtil
 let pagingInterval = 50
 
 public struct ChatDetailView: View {
-    
     enum Id: Hashable {
         case bottom
         case top
     }
-    
-    @EnvironmentObject private var alert: AlertProvider
-    @StateObject private var viewModel: ChatDetailViewModel
-    @EnvironmentObject private var appState: AppViewModel
-    @EnvironmentObject private var router: RouterViewModel
     @Environment(\.dismiss) private var dismiss
     
-    // MARK: - State
-    /* drawer */
+    @EnvironmentObject private var alert: AlertProvider
+    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var router: RouterViewModel
+    
+    @StateObject private var viewModel: ChatDetailViewModel
+    
     @State private var isDrawerOpen = false
-    /* scroll */
     @State private var scrollViewProxy: ScrollViewProxy?
-    /* search */
     @State private var isSearching = false
     @State private var searchText = ""
-    @FocusState private var searchFocus: Bool
-    /* photo picker */
     @State private var showPhotoPicker = false
     
-    // MARK: - Properties
+    @FocusState private var searchFocus: Bool
+    
     private let room: Room
     
-    public init(
-        room: Room
-    ) {
+    public init(room: Room) {
         self.room = room
         self._viewModel = StateObject(wrappedValue: ChatDetailViewModel(room: room))
     }
-    
+}
+
+extension ChatDetailView {
     public var body: some View {
         viewModel.messages.makeView {
             VStack {

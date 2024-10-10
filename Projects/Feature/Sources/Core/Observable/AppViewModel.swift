@@ -15,12 +15,12 @@ public final class AppViewModel: ObservableObject {
     @Inject private var profileRepo: ProfileRepo
     @Inject private var memberRepo: MemberRepo
     
-    @Published var workspaces: Flow<[Workspace]> = .fetching
-    @Published var selectedWorkspace: Workspace?
     @Published var accessToken: String?
     @Published var refreshToken: String?
+    @Published var workspaces: Flow<[Workspace]> = .fetching
+    @Published var selectedWorkspace: Workspace?
     @Published var profile: Flow<RetrieveProfile> = .fetching
-    @Published var logoutFlow = Flow<BaseVoid>.idle
+    @Published var logoutFlow: Flow<BaseVoid> = .idle
     
     public init() {
         accessToken = keyValueRepo.load(key: .accessToken)

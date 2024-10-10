@@ -12,13 +12,13 @@ extension ProfileEndpoint: SeugiEndpoint {
     var route: Route {
         switch self {
         case .me(let workspaceId):
-            return .get("me")
+                .get("me")
                 .task(["workspaceId": workspaceId].toURLParameters())
         case .others(let workspaceId, let memberId):
-            return .get("others")
+                .get("others")
                 .task(["workspaceId": workspaceId, "memberId": memberId].toURLParameters())
         case .patch(let workspaceId, let req):
-            return .patch("\(workspaceId)")
+                .patch("\(workspaceId)")
                 .task(req.toJSONParameters())
         }
     }

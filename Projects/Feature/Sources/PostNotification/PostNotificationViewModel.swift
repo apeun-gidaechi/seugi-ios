@@ -7,12 +7,15 @@ import Combine
 class PostNotificationViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
-    @Inject private var notificationRepo: any NotificationRepo
+    @Inject private var notificationRepo: NotificationRepo
     
     @Published var title: String = ""
     @Published var content: String = ""
-    
     @Published var fetchPostNotification: Flow<BaseVoid> = .idle
+    
+    var isValidInput: Bool {
+        !title.isEmpty && !content.isEmpty
+    }
     
     func createNotification(workspaceId: String) {
         notificationRepo.postNotification(

@@ -33,7 +33,7 @@ extension JoinWorkspaceRoleView: View {
             Spacer()
             SeugiButton.large(
                 "계속하기", type: .primary,
-                isLoading: viewModel.isFetchJoinWorkspace
+                isLoading: viewModel.joinFlow.is(.fetching)
             ) {
                 viewModel.roleType = selectedTab.toWorkspaceRole()
                 router.navigate(to: MainDestination.joinWorkspaceCode)

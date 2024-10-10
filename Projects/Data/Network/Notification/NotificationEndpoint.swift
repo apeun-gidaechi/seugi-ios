@@ -14,18 +14,18 @@ extension NotificationEndpoint: SeugiEndpoint {
     var route: Route {
         switch self {
         case .getNotifications(let workspaceId):
-            return .get("\(workspaceId)")
+                .get("\(workspaceId)")
                 .task(.requestPlain)
         case .postNotification(let req):
-            return .post()
+                .post()
                 .task(req.toJSONParameters())
         case .updateNotification(let req):
-            return .patch()
+                .patch()
                 .task(req.toJSONParameters())
         case .removeNotification(let workspaceId, let id):
-            return .delete("\(workspaceId)/\(id)")
+                .delete("\(workspaceId)/\(id)")
         case .emojiNotification(let req):
-            return .patch("emoji")
+                .patch("emoji")
                 .task(req.toJSONParameters())
         }
     }

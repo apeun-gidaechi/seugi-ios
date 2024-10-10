@@ -5,19 +5,18 @@ import SwiftUtil
 import Combine
 
 public final class StompViewModel: ObservableObject {
-    
-    // MARK: - Properties
-    @Inject private var stompRepo: any StompRepo
-    @Inject private var memberRepo: any MemberRepo
-    @Inject private var keychainRepo: any KeychainRepo
-    
     var subscriptions = Set<AnyCancellable>()
+    
+    @Inject private var stompRepo: StompRepo
+    @Inject private var memberRepo: MemberRepo
+    @Inject private var keychainRepo: KeychainRepo
     
     public init() {
         openSocket()
     }
-    
-    // MARK: - Method
+}
+
+extension StompViewModel {
     public func openSocket() {
         Log.info("💎 StompViewModel.subscribe")
         stompRepo.openSocket()

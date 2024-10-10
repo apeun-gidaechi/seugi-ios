@@ -11,7 +11,6 @@ import Domain
 import Component
 
 struct ChatMessageCell: View {
-    
     @EnvironmentObject private var appState: AppViewModel
     
     enum Action {

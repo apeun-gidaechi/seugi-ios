@@ -7,7 +7,7 @@ import Combine
 final class SettingProfileViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
-    @Inject private var memberRepo: any MemberRepo
+    @Inject private var memberRepo: MemberRepo
     
     @Published var editMemberFlow: Flow<BaseVoid> = .idle
     @Published var removeMemberFlow: Flow<BaseVoid> = .idle

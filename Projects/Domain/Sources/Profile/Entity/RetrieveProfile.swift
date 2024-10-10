@@ -40,3 +40,13 @@ public struct RetrieveProfile: Entity {
         self.schNumber = schNumber
     }
 }
+
+public extension [RetrieveProfile] {
+    func search(text: String) -> [RetrieveProfile] {
+        if text.isEmpty {
+            self
+        } else {
+            self.filter { $0.member.name.contains(text) }
+        }
+    }
+}

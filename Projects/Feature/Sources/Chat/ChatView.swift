@@ -2,7 +2,7 @@ import SwiftUI
 import Component
 import Domain
 
-public struct ChatView: View {
+public struct ChatView {
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var appState: AppViewModel
     @StateObject private var viewModel: ChatViewModel
@@ -15,7 +15,9 @@ public struct ChatView: View {
         self.roomType = roomType
         self._viewModel = .init(wrappedValue: .init(roomType: roomType))
     }
-    
+}
+
+extension ChatView: View {
     public var body: some View {
         viewModel.mergedRooms.makeView {
             ProgressView()
@@ -62,14 +64,6 @@ public struct ChatView: View {
             text: $viewModel.searchText,
             isSearching: $viewModel.isSearching
         )
-        .onAppear {
-//            viewModel.subscribe { subject in
-//                switch subject {
-//                case .refreshFailure:
-//                    appState.logout()
-//                }
-//            }
-        }
         .onReceive(appState.$selectedWorkspace) {
             guard let id = $0?.workspaceId else { return }
             viewModel.fetchChats(workspaceId: id)

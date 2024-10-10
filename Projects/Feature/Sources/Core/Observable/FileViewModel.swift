@@ -13,7 +13,7 @@ enum FileError: Error {
 public final class FileViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
-    @Inject private var fileRepo: any FileRepo
+    @Inject private var fileRepo: FileRepo
     
     @Published var fileFlow: Flow<File> = .idle
 }

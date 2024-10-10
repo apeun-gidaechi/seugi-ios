@@ -23,10 +23,14 @@ extension JoinWorkspaceCodeView: View {
             .focused($focused)
             .onAppear { focused = true }
             Spacer()
-            SeugiButton.large("계속하기", type: .primary, isLoading: viewModel.workspace.is(.fetching)) {
+            SeugiButton.large(
+                "계속하기",
+                type: .primary,
+                isLoading: viewModel.workspace.is(.fetching)
+            ) {
                 viewModel.fetchWorkspace()
             }
-            .disabled(viewModel.isInValidInput)
+            .disabled(!viewModel.isValidInput)
             .padding(.bottom, 16)
         }
         .padding(.horizontal, 20)

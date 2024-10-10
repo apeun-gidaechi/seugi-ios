@@ -7,8 +7,7 @@ import Combine
 final class ProfileViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
-    // MARK: - Properties
-    @Inject private var profileRepo: any ProfileRepo
+    @Inject private var profileRepo: ProfileRepo
     
     @Published var updateProfile: RetrieveProfile?
     @Published var updateProfileFlow: Flow<BaseVoid> = .fetching

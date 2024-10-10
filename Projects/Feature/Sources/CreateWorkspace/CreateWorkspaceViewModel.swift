@@ -15,7 +15,7 @@ import Combine
 final class CreateWorkspaceViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
-    @Inject private var workspaceRepo: any WorkspaceRepo
+    @Inject private var workspaceRepo: WorkspaceRepo
     
     @Published var workspaceName: String = ""
     @Published var createWorkspaceFlow: Flow<BaseVoid> = .idle

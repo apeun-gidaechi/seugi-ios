@@ -1,14 +1,6 @@
-//
-//  MainCoordinator.swift
-//  MainFeatureInterface
-//
-//  Created by hhhello0507 on 8/22/24.
-//
-
 import SwiftUI
 
 struct MainCoordinator: View {
-    
     @StateObject private var joinWorkspaceViewModel = JoinWorkspaceViewModel()
     @StateObject private var createGroupChatViewModel = CreateGroupChatViewModel()
     
@@ -25,7 +17,7 @@ struct MainCoordinator: View {
                 case .secondCreateGroupChat: SecondCreateGroupChatView().environmentObject(createGroupChatViewModel)
                     
                     // notification
-                case .createNotification: 
+                case .createNotification:
                     PostNotificationView(type: .createNotification)
                 case .updateNotification(let notification):
                     PostNotificationView(type: .updateNotification(notification))

@@ -15,4 +15,8 @@ public struct WorkspaceMembersChart: Entity {
         self.admin = admin
         self.students = students
     }
+    
+    public var allTeachers: [RetrieveProfile] {
+        return (Array(self.admin.values) + Array(self.middleAdmin.values) + Array(self.teachers.values)).flatMap(\.self)
+    }
 }

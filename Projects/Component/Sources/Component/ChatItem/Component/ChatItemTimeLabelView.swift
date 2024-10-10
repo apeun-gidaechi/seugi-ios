@@ -11,6 +11,7 @@ struct ChatItemTimeLabelView: View {
         self.alignment = alignment
         self.config = config
     }
+    
     private var unreadUserCount: Int {
 //        config.joinUserCount - config.message.read.count
         1 // TODO: FIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIX
