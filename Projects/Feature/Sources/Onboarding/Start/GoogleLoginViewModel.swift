@@ -1,31 +1,21 @@
-//
-//  GoogleSignInViewModel.swift
-//  Feature
-//
-//  Created by hhhello0507 on 9/4/24.
-//  Copyright © 2024 apeun-gidaechi. All rights reserved.
-//
-
 import Foundation
 import GoogleSignIn
 
+enum GoogleLoginError: Error {
+    case notFoundRootViewController
+}
+
 final class GoogleLoginViewModel: ObservableObject {
-    
-    func signIn(
-        successCompletion: @escaping (GIDSignInResult) -> Void,
-        failureCompletion: @escaping (Error) -> Void
-    ) {
+    @MainActor
+    func signIn() async throws -> GIDSignInResult {
         guard let rootViewController = UIApplication.shared.rootController else {
             print("GoogleLoginViewModel.signIn - rootViewController is nil")
-            return
+            throw GoogleLoginError.notFoundRootViewController
         }
-        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { result, error in
-            if let error {
-                failureCompletion(error)
-                return
-            }
-            guard let result else { return }
-            successCompletion(result)
-        }
+        return try await GIDSignIn.sharedInstance.signIn(
+            withPresenting: rootViewController,
+            hint: nil,
+            additionalScopes: []
+        )
     }
 }

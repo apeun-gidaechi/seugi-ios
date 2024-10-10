@@ -2,8 +2,7 @@ import SwiftUI
 import Component
 import SwiftUtil
 
-public struct StartView: View {
-    
+public struct StartView {
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var appState: AppViewModel
     @EnvironmentObject private var alertProvider: AlertProvider
@@ -15,7 +14,9 @@ public struct StartView: View {
     @State private var isPresented: Bool = false
     
     public init() {}
-    
+}
+
+extension StartView: View {
     public var body: some View {
         ZStack {
             SeugiGradientSystem.primary
@@ -52,15 +53,6 @@ public struct StartView: View {
             }
         }
         .sheet(isPresented: $isPresented, content: sheetContent)
-        .onAppear {
-//            viewModel.subscribe { subject in
-//                switch subject {
-//                case .signInSuccess(let token):
-//                    appState.accessToken = String(token.accessToken.split(separator: " ")[1])
-//                    appState.refreshToken = String(token.refreshToken.split(separator: " ")[1])
-//                }
-//            }
-        }
         .onReceive(viewModel.$signInFlow) { flow in
             switch flow {
             case .success(let token):
@@ -99,15 +91,15 @@ public struct StartView: View {
                 }
             }
             GoogleLoginButton {
-                googleLoginViewModel.signIn { result in
-                    isPresented = false
-                    guard let code = result.serverAuthCode else {
-                        return
+                Task {
+                    do {
+                        let result = try await googleLoginViewModel.signIn()
+                        if let code = result.serverAuthCode {
+                            viewModel.signIn(code: code, provider: .google)
+                        }
+                    } catch {
+                        isPresented = false
                     }
-                    viewModel.signIn(code: code, provider: .google)
-                } failureCompletion: { _ in
-                    isPresented = false
-//                    viewModel.signInFlow = .failure(.unknown)
                 }
             }
             Spacer()

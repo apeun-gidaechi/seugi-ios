@@ -1,24 +1,31 @@
+import Combine
 import Foundation
 import Domain
 import DIContainer
 import SwiftUtil
-import Combine
 
 public final class StartViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
-    // MARK: - Repo
     @Inject private var oauthRepo: OAuthRepo
+    @Inject private var keyValueRepo: KeyValueRepo
     
-    // MARK: - State
     @Published var signInFlow: Flow<Token> = .idle
-    
-    // MARK: - Method
+}
+
+extension StartViewModel {
     func signIn(code: String, provider: OAuth2Provider) {
+        guard let token = keyValueRepo.load(key: .fcmToken) as? String else {
+            print("StartViewModel.signIn - fcmtoken이 없어요")
+            return
+        }
         switch provider {
         case .google:
             oauthRepo.authenticateGoogle(
-                .init(code: code)
+                .init(
+                    code: code,
+                    token: token
+                )
             )
             .map(\.data)
             .flow(\.signInFlow, on: self)
