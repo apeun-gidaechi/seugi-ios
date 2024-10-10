@@ -22,8 +22,8 @@ final class InvitateMemberViewModel: ObservableObject {
         }
     }
     @Published var selectedMembers: [RetrieveMember] = []
-    @Published var addWorkspaceFlow: Flow<Bool> = .idle
-    @Published var cancelWorkspaceFlow: Flow<Bool> = .idle
+    @Published var addWorkspaceFlow: Flow<BaseVoid> = .idle
+    @Published var cancelWorkspaceFlow: Flow<BaseVoid> = .idle
     
     // MARK: - Method
     func fetchWaitMembers(workspaceId: String) {
@@ -61,7 +61,6 @@ final class InvitateMemberViewModel: ObservableObject {
             userSet: selectedMembers.map { $0.id },
             role: selection.role
         )
-        .map { _ in true }
         .flow(\.addWorkspaceFlow, on: self)
         .silentSink()
         .store(in: &subscriptions)
@@ -73,7 +72,6 @@ final class InvitateMemberViewModel: ObservableObject {
             userSet: selectedMembers.map { $0.id },
             role: selection.role
         )
-        .map { _ in true }
         .flow(\.cancelWorkspaceFlow, on: self)
         .silentSink()
         .store(in: &subscriptions)

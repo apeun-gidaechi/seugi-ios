@@ -12,13 +12,16 @@ class PostNotificationViewModel: ObservableObject {
     @Published var title: String = ""
     @Published var content: String = ""
     
-    @Published var fetchPostNotification: Flow<Bool> = .idle
+    @Published var fetchPostNotification: Flow<BaseVoid> = .idle
     
     func createNotification(workspaceId: String) {
         notificationRepo.postNotification(
-            .init(title: title, content: title, workspaceId: workspaceId)
+            .init(
+                title: title,
+                content: title,
+                workspaceId: workspaceId
+            )
         )
-        .map { _ in true }
         .flow(\.fetchPostNotification, on: self)
         .silentSink()
         .store(in: &subscriptions)
@@ -32,7 +35,6 @@ class PostNotificationViewModel: ObservableObject {
                 content: content
             )
         )
-        .map { _ in true }
         .flow(\.fetchPostNotification, on: self)
         .silentSink()
         .store(in: &subscriptions)

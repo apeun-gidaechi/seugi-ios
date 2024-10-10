@@ -9,8 +9,8 @@ final class SettingProfileViewModel: ObservableObject {
     
     @Inject private var memberRepo: any MemberRepo
     
-    @Published var editMemberFlow: Flow<Bool> = .idle
-    @Published var removeMemberFlow: Flow<Bool> = .idle
+    @Published var editMemberFlow: Flow<BaseVoid> = .idle
+    @Published var removeMemberFlow: Flow<BaseVoid> = .idle
     var member: RetrieveMember?
     
     func editMember(
@@ -22,7 +22,6 @@ final class SettingProfileViewModel: ObservableObject {
                 picture: picture, name: member.name, birth: member.birth
             )
         )
-        .map { _ in true }
         .flow(\.editMemberFlow, on: self)
         .silentSink()
         .store(in: &subscriptions)
@@ -30,7 +29,6 @@ final class SettingProfileViewModel: ObservableObject {
     
     func removeMember() {
         memberRepo.remove()
-            .map { _ in true }
             .flow(\.removeMemberFlow, on: self)
             .silentSink()
             .store(in: &subscriptions)

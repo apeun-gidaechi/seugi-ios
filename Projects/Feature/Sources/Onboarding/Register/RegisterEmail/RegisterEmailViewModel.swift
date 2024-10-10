@@ -7,11 +7,9 @@ import Combine
 public final class RegisterEmailViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
-    // MARK: - Repo
     @Inject private var emailRepo: EmailRepo
     @Inject private var memberRepo: MemberRepo
     
-    // MARK: - State
     @Published var name: String = ""
     @Published var email: String = ""
     @Published var password: String = ""
@@ -19,7 +17,7 @@ public final class RegisterEmailViewModel: ObservableObject {
     
     @Published var verificationCode: String = ""
     @Published var isWaiting: Bool = false
-    @Published var sendEmailFlow: Flow<Bool> = .idle
+    @Published var sendEmailFlow: Flow<BaseVoid> = .idle
     @Published var signUpFlow: Flow<Token> = .idle
     
     var isInValidInput: Bool {
@@ -29,11 +27,12 @@ public final class RegisterEmailViewModel: ObservableObject {
     var isInValidCodeInput: Bool {
         verificationCode.count < 6
     }
-    
+}
+
+extension RegisterEmailViewModel {
     func sendEmail() {
         isWaiting = true
         emailRepo.send(email: email)
-            .map { _ in true }
             .flow(\.sendEmailFlow, on: self)
             .silentSink()
             .store(in: &subscriptions)
@@ -42,7 +41,10 @@ public final class RegisterEmailViewModel: ObservableObject {
     func signUp() {
         memberRepo.register(
             .init(
-                name: name, email: email, password: password, code: verificationCode
+                name: name,
+                email: email,
+                password: password,
+                code: verificationCode
             )
         )
         .map(\.data)

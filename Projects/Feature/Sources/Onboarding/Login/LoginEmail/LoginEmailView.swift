@@ -41,13 +41,14 @@ extension LoginEmailView: View {
                 Text("계정이 없으시다면?")
                     .font(.body(.b1))
                     .seugiColor(.gray(.g600))
-                Text("가입하기")
-                    .font(.body(.b1))
-                    .seugiColor(.primary(.p500))
-                    .button {
-                        router.navigate(to: OnboardingDestination.emailSignUp)
-                    }
-                    .scaledButtonStyle()
+                Button {
+                    router.navigate(to: OnboardingDestination.emailSignUp)
+                } label: {
+                    Text("가입하기")
+                        .font(.body(.b1))
+                        .seugiColor(.primary(.p500))
+                }
+                .scaledButtonStyle()
             }
             SeugiButton.large(
                 "로그인",

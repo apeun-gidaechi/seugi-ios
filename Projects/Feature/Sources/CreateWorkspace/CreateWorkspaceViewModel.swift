@@ -18,12 +18,11 @@ final class CreateWorkspaceViewModel: ObservableObject {
     @Inject private var workspaceRepo: any WorkspaceRepo
     
     @Published var workspaceName: String = ""
-    @Published var createWorkspaceFlow: Flow<Bool> = .idle
+    @Published var createWorkspaceFlow: Flow<BaseVoid> = .idle
     
     func createWorkspace(imageUrl: String) {
         // TODO: Add workspace image url
         workspaceRepo.createWorkspace(workspaceName: workspaceName, workspaceImageUrl: imageUrl)
-            .map { _ in true }
             .flow(\.createWorkspaceFlow, on: self)
             .silentSink()
             .store(in: &subscriptions)

@@ -12,7 +12,7 @@ final class NotificationViewModel: ObservableObject {
     
     // MARK: - State
     @Published var notifications: Flow<[Domain.Notification]> = .fetching
-    @Published var removeNotificationFlow: Flow<Bool> = .idle
+    @Published var removeNotificationFlow: Flow<BaseVoid> = .idle
     @Published var selectedNotificationForAddEmoji: Domain.Notification?
     
     public func fetchNotifications(workspaceId: String) {
@@ -28,7 +28,6 @@ final class NotificationViewModel: ObservableObject {
             workspaceId: workspaceId,
             id: notificationId
         )
-        .map { _ in true }
         .flow(\.removeNotificationFlow, on: self)
         .silentSink()
         .store(in: &subscriptions)

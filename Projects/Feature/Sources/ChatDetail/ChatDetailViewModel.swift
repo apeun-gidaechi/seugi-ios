@@ -30,8 +30,7 @@ public final class ChatDetailViewModel: ObservableObject {
     /* photo */
     @Published var photo: PhotosPickerItem?
     
-    /* left room */
-    @Published var leftRoomFlow: Flow<Bool> = .idle
+    @Published var leftRoomFlow: Flow<BaseVoid> = .idle
     
     // MARK: - Parameter
     private let room: Room
@@ -83,7 +82,6 @@ public final class ChatDetailViewModel: ObservableObject {
     
     func left(roomId: String) {
         chatRepo.leftGroup(roomId: roomId)
-            .map { _ in true }
             .flow(\.leftRoomFlow, on: self)
             .silentSink()
             .store(in: &subscriptions)

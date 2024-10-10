@@ -20,7 +20,7 @@ public final class AppViewModel: ObservableObject {
     @Published var accessToken: String?
     @Published var refreshToken: String?
     @Published var profile: Flow<RetrieveProfile> = .fetching
-    @Published var logoutFlow = Flow<Bool>.idle
+    @Published var logoutFlow = Flow<BaseVoid>.idle
     
     public init() {
         accessToken = keyValueRepo.load(key: .accessToken)
@@ -78,7 +78,6 @@ extension AppViewModel {
             memberRepo.logout(
                 .init(fcmToken: fcmToken)
             )
-            .map { _ in true }
             .flow(\.logoutFlow, on: self)
             .silentSink()
             .store(in: &subscriptions)

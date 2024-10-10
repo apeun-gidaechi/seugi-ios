@@ -8,16 +8,15 @@ import SwiftUtil
 public final class LoginEmailViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
-    // MARK: - Repo
     @Inject private var memberRepo: MemberRepo
     @Inject private var keyValueRepo: KeyValueRepo
     
-    // MARK: - State
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var signInFlow: Flow<Token> = .idle
-    
-    // MARK: - Method
+}
+
+extension LoginEmailViewModel {
     func signIn() {
         guard let fcmToken = keyValueRepo.load(key: .fcmToken) as? String else {
             print("LoginEmailViewModel.signIn - fcmToken is nil")

@@ -4,12 +4,16 @@ struct ChatItemTimeLabelView: View {
     private let alignment: ChatItemHorizontalAlignment
     private let config: ChatItemConfig
     
-    init(alignment: ChatItemHorizontalAlignment, config: ChatItemConfig) {
+    init(
+        alignment: ChatItemHorizontalAlignment,
+        config: ChatItemConfig
+    ) {
         self.alignment = alignment
         self.config = config
     }
     private var unreadUserCount: Int {
-        config.joinUserCount - config.message.read.count
+//        config.joinUserCount - config.message.read.count
+        1 // TODO: FIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIX
     }
     
     var body: some View {

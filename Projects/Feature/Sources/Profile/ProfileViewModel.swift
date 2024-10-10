@@ -11,7 +11,7 @@ final class ProfileViewModel: ObservableObject {
     @Inject private var profileRepo: any ProfileRepo
     
     @Published var updateProfile: RetrieveProfile?
-    @Published var updateProfileFlow: Flow<Bool> = .fetching
+    @Published var updateProfileFlow: Flow<BaseVoid> = .fetching
     @Published var selectedProfleInfo: WritableKeyPath<RetrieveProfile, String>?
     
     var selectedProfleInfolabel: String {
@@ -55,7 +55,6 @@ final class ProfileViewModel: ObservableObject {
                 location: updateProfile.location
             )
         )
-        .map { _ in true }
         .flow(\.updateProfileFlow, on: self)
         .silentSink()
         .store(in: &subscriptions)

@@ -12,10 +12,24 @@ public struct Message: Entity {
     public let mention: [Int]
     public let mentionAll: Bool
     public let timestamp: Date?
-    public let read: [Int]
+    public let uuid: String
     public let messageStatus: ChatStatusEnum?
     
-    public init(id: String?, chatRoomId: String, type: Type?, userId: Int, message: String, eventList: [Int]?, emoticon: String?, emojiList: [Emoji], mention: [Int], mentionAll: Bool, timestamp: Date?, read: [Int], messageStatus: ChatStatusEnum?) {
+    public init(
+        id: String?,
+        chatRoomId: String,
+        type: Type?,
+        userId: Int,
+        message: String,
+        eventList: [Int]?,
+        emoticon: String?,
+        emojiList: [Emoji],
+        mention: [Int],
+        mentionAll: Bool,
+        timestamp: Date?,
+        uuid: String,
+        messageStatus: ChatStatusEnum?
+    ) {
         self.id = id
         self.chatRoomId = chatRoomId
         self.type = type
@@ -27,7 +41,7 @@ public struct Message: Entity {
         self.mention = mention
         self.mentionAll = mentionAll
         self.timestamp = timestamp
-        self.read = read
+        self.uuid = uuid
         self.messageStatus = messageStatus
     }
 }
@@ -46,7 +60,7 @@ public extension Message {
             mention: [],
             mentionAll: false,
             timestamp: .now,
-            read: [],
+            uuid: UUID().uuidString,
             messageStatus: .alive
         )
     }

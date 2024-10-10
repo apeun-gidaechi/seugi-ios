@@ -1,17 +1,24 @@
 import SwiftUI
 import Component
 
-public struct RegisterEmailVerificationView: View {
+public struct RegisterEmailVerificationView {
+    enum FocusedField {
+        case verificationCode
+    }
     
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var router: RouterViewModel
-    @StateObject private var timerManager = TimerManager()
     @EnvironmentObject private var appState: AppViewModel
     @EnvironmentObject private var viewModel: RegisterEmailViewModel
-    @FocusState private var firstTextField: Bool
+    
+    @StateObject private var timerManager = TimerManager()
+    
+    @FocusState private var focused: FocusedField?
     
     public init() {}
-    
+}
+
+extension RegisterEmailVerificationView: View {
     public var body: some View {
         VStack(spacing: 8) {
             SeugiCodeTextFieldForm(
@@ -20,9 +27,8 @@ public struct RegisterEmailVerificationView: View {
                 length: 6
             )
             .keyboardType(.numberPad)
+            .focused($focused, equals: .verificationCode)
             .padding(.top, 16)
-            // TODO: 함수로 분리 ?? 할 수도 있을 듯~
-                .focused($firstTextField).onAppear { firstTextField = true }
             emailSend()
                 .toTrailing()
             Spacer()
@@ -39,6 +45,9 @@ public struct RegisterEmailVerificationView: View {
             }
             .disabled(viewModel.isInValidCodeInput)
             .padding(.bottom, 16)
+        }
+        .onAppear {
+            focused = .verificationCode
         }
         .onReceive(viewModel.$signUpFlow) { flow in
             switch flow {

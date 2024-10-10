@@ -96,7 +96,10 @@ public struct ChatDetailView: View {
                 .seugiBackground(.primary(.p050))
             }
         } failure: { _ in
-            SeugiError("채팅 불러오기 실패", image: .sadButRelievedFace)
+            VStack {
+                SeugiError("채팅 불러오기 실패", image: .sadButRelievedFace)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
         }
         .safeAreaInset(edge: .bottom) {
             if !isSearching {
