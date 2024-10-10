@@ -1,5 +1,4 @@
 import SwiftUI
-
 import SwiftUIUtil
 import SwiftUtil
 import Domain
@@ -25,14 +24,6 @@ public struct ChatItemFileView: View {
             .map(String.init) ?? "(제목 없음)"
     }
     
-    private var fileEntity: FileEntity? {
-        message.split(separator: MessageConstant.fileSeparator)
-            .getOrNil(idx: 2)
-            .map(String.init)
-            .flatMap(Double.init)
-            .flatMap { FileEntity.from(byte: $0) }
-    }
-    
     public var body: some View {
         ChatItemContainer(
             author: author,
@@ -53,8 +44,10 @@ public struct ChatItemFileView: View {
                         Text(title)
                             .font(.body(.b1))
                             .seugiColor(.sub(.black))
-                        if let fileEntity {
-                            Text(String(format: "%0.2f", fileEntity.size) + " \(fileEntity.volume.text)")
+                        let file = File(message: message)
+                        if let volume = file.volume,
+                           let size = file.size {
+                            Text(String(format: "%0.2f", size) + " \(volume.text)")
                                 .font(.caption(.c2))
                                 .seugiColor(.gray(.g500))
                         }

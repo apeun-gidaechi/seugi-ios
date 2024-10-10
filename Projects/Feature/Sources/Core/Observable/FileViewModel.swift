@@ -15,7 +15,7 @@ public final class FileViewModel: ObservableObject {
     
     @Inject private var fileRepo: any FileRepo
     
-    @Published var fileFlow: Flow<String> = .idle
+    @Published var fileFlow: Flow<File> = .idle
 }
 
 extension FileViewModel {

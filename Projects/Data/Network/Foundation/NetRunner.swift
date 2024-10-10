@@ -167,7 +167,8 @@ private extension Error {
            let error = retryError as? APIError {
             return error
         }
-        if case .objectMapping = error {
+        if case .objectMapping(let error, _) = error {
+            debugPrint(error)
             return .decodingError
         }
         guard let error = try? decoder.decode(BaseVoid.self, from: response.data) else {

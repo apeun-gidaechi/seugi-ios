@@ -8,7 +8,7 @@ final class FileService: FileRepo {
         self.runner = runner
     }
 
-    func upload(type: FileType, file: Data) -> APIResult<Base<String>> {
-        runner.deepDive(FileEndpoint.upload(type: type, file: file), res: Base<String>.self)
+    func upload(type: FileType, file: Data) -> APIResult<Base<File>> {
+        runner.deepDive(FileEndpoint.upload(type: type, file: file), res: Base<File>.self)
     }
 }

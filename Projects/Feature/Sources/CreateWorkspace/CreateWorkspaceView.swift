@@ -1,6 +1,7 @@
 import SwiftUI
-import Component
 import PhotosUI
+import Component
+import Domain
 
 public struct CreateWorkspaceView {
     @EnvironmentObject private var appState: AppViewModel
@@ -12,7 +13,7 @@ public struct CreateWorkspaceView {
     
     @State private var photo: PhotosPickerItem?
     @State private var isPhotoPresent: Bool = false
-    @State private var photoUrl: String?
+    @State private var uploadedFile: File?
 }
 
 extension CreateWorkspaceView: View {
@@ -22,8 +23,8 @@ extension CreateWorkspaceView: View {
                 isPhotoPresent = true
             } label: {
                 ZStack(alignment: .bottomTrailing) {
-                    SeugiRoundedCircleAsyncImage.small(url: photoUrl)
-                    if photoUrl == nil {
+                    SeugiRoundedCircleAsyncImage.small(url: uploadedFile?.url)
+                    if uploadedFile == nil {
                         Image(icon: .addFill)
                             .resizable()
                             .renderingMode(.template)
@@ -45,7 +46,7 @@ extension CreateWorkspaceView: View {
                 type: .primary,
                 isLoading: viewModel.createWorkspaceFlow.is(.fetching)
             ) {
-                viewModel.createWorkspace(imageUrl: photoUrl ?? "")
+                viewModel.createWorkspace(imageUrl: uploadedFile?.url ?? "")
             }
             .disabled(viewModel.workspaceName.isEmpty)
             .padding(.bottom, 16)
@@ -84,8 +85,8 @@ extension CreateWorkspaceView: View {
         }
         .onReceive(fileViewModel.$fileFlow) { flow in
             switch flow {
-            case .success(let url):
-                self.photoUrl = url
+            case .success(let file):
+                self.uploadedFile = file
             case .failure(let error):
                 debugPrint(error)
                 alertProvider.present("이미지 업로드 실패")
