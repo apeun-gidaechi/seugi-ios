@@ -14,7 +14,7 @@ let project = Project.make(
         data(target: .Local, dependencies: [
             .SPM.RealmSwift,
             .SPM.Realm,
-            .SPM.Then,
+            .SPM.ScopeKit,
             .shared(of: .SwiftUIUtil),
             .shared(of: .SwiftUtil),
             .shared(of: .DateUtil)
@@ -23,7 +23,7 @@ let project = Project.make(
             .SPM.Moya,
             .SPM.CombineMoya,
             .SPM.ApeunStompKit,
-            .SPM.Then,
+            .SPM.ScopeKit,
             .shared(of: .SwiftUIUtil),
             .shared(of: .SwiftUtil),
             .shared(of: .DateUtil)

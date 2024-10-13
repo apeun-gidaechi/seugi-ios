@@ -89,7 +89,10 @@ extension StartView: View {
             switch flow {
             case .success(let result):
                 if let code = result.serverAuthCode {
-                    viewModel.signIn(code: code, provider: .google)
+                    viewModel.signIn(
+                        code: code,
+                        provider: .google
+                    )
                 }
             case .failure:
                 isPresented = false

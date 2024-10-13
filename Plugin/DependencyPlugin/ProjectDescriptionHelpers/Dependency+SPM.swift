@@ -13,7 +13,7 @@ public extension TargetDependency.SPM {
     static let Moya = TargetDependency.external(name: "Moya")
     static let CombineMoya = TargetDependency.external(name: "CombineMoya")
     static let ApeunStompKit = TargetDependency.external(name: "ApeunStompKit")
-    static let Then = TargetDependency.external(name: "Then")
+    static let ScopeKit = TargetDependency.external(name: "ScopeKit")
     static let RealmSwift = TargetDependency.external(name: "RealmSwift")
     static let Realm = TargetDependency.external(name: "Realm")
     static let MCEmojiPicker = TargetDependency.external(name: "MCEmojiPicker")

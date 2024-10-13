@@ -14,7 +14,7 @@ struct ChatItemTimeLabelView: View {
     
     private var unreadUserCount: Int {
 //        config.joinUserCount - config.message.read.count
-        1 // TODO: FIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIX
+        0 // TODO: FIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIX
     }
     
     var body: some View {

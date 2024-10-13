@@ -10,7 +10,6 @@ import SwiftUI
 import Component
 
 struct SettingGeneralView: View {
-    
     @EnvironmentObject private var alert: AlertProvider
     
     var body: some View {

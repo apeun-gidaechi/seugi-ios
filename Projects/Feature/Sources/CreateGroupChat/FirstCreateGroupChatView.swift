@@ -58,36 +58,45 @@ extension FirstCreateGroupChatView: View {
                     .toVertical()
             }
         }
-        .onAppear {
-            guard let selectedWorkspace = appState.selectedWorkspace,
-                  let member = appState.profile.data?.member else {
-                return
-            }
-            viewModel.fetchWorkspaceMembers(workspaceId: selectedWorkspace.workspaceId, memberId: member.id)
-//            viewModel.subscribe { subject in
-//                switch subject {
-//                case .createdPersonalChat(let room):
-//                    router.navigateToRoot()
-//                    router.navigate(to: MainDestination.chatDetail(room: room))
-//                }
-//            }
-        }
         .seugiTopBar(
             title: "멤버 선택",
             subView: {
-                SeugiButton.small("완료", type: .transparent) {
+                SeugiButton.small(
+                    "완료",
+                    type: .transparent,
+                    isLoading: viewModel.createRoomFlow.is(.fetching)
+                ) {
+                    guard let selectedWorkspace = appState.selectedWorkspace,
+                          let member = appState.profile.data?.member else {
+                        return
+                    }
                     if viewModel.selectedMembers.count > 1 {
                         router.navigate(to: MainDestination.secondCreateGroupChat)
                     } else {
-                        guard let selectedWorkspace = appState.selectedWorkspace else {
-                            return
-                        }
-                        viewModel.createPersonalChat(workspaceId: selectedWorkspace.workspaceId)
+                        viewModel.createPersonalChat(
+                            workspaceId: selectedWorkspace.workspaceId,
+                            memberId: member.id
+                        )
                     }
                 }
                 .disabled(viewModel.selectedMembers.isEmpty)
             }
         )
+        .onAppear {
+            guard let selectedWorkspace = appState.selectedWorkspace,
+                  let member = appState.profile.data?.member else {
+                return
+            }
+            viewModel.fetchWorkspaceMembers(
+                workspaceId: selectedWorkspace.workspaceId,
+                memberId: member.id
+            )
+        }
+        .onReceive(viewModel.$createdRoom) {
+            if case .success(let room) = $0 {
+                router.navigate(to: MainDestination.chatDetail(room: room))
+            }
+        }
     }
     
     @ViewBuilder

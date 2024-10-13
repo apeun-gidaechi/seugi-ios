@@ -1,10 +1,8 @@
 import Foundation
-
 import Domain
 import DIContainer
-
-import Then
 import ApeunStompKit
+import ScopeKit
 
 private let wssBaseUrl = Bundle.main.object(forInfoDictionaryKey: "WssBaseUrl") as? String ?? ""
 private let url = URL(string: "\(wssBaseUrl)/stomp/chat")!
@@ -20,7 +18,7 @@ final class ApeunStompService {
             "Authorization": "Bearer \(keyValueRepo.load(key: .accessToken) ?? "")",
             StompCommands.commandHeaderHeartBeat.rawValue: "0,10000"
         ]
-    ).then {
+    ).apply {
         $0.jsonDecoder = .myDecoder
     }
 }

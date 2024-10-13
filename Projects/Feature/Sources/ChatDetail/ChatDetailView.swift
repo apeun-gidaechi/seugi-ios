@@ -65,6 +65,9 @@ extension ChatDetailView {
                                             .map(String.init) {
                                             router.navigate(to: MainDestination.imagePreview(URL(string: url) ?? .aboutBlank))
                                         }
+                                    case .downloadFile:
+                                        // TODO: Handle
+                                        break
                                     }
                                 }
                             }

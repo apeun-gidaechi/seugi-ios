@@ -18,10 +18,14 @@ public struct ProfileView: View {
         ScrollView {
             VStack(spacing: 8) {
                 HStack(spacing: 10) {
-                    SeugiAvatar(profile?.member.picture, type: .medium)
-                    Text(profile?.member.name ?? "")
-                        .font(.subtitle(.s2))
-                        .seugiColor(.sub(.black))
+                    appState.profile.makeView {
+                        ProgressView()
+                    } success: { profile in
+                        SeugiAvatar(profile.member.picture, type: .medium)
+                        Text(profile.member.name)
+                            .font(.subtitle(.s2))
+                            .seugiColor(.sub(.black))
+                    } failure: { _ in }
                     Spacer()
                     Image(icon: .settingFill)
                         .resizable()
@@ -36,7 +40,9 @@ public struct ProfileView: View {
                 .padding(.vertical, 8)
                 .padding(.horizontal, 16)
                 SeugiDivider(thickness: .thick)
-                if let profile {
+                appState.profile.makeView {
+                    ProgressView()
+                } success: { profile in
                     ProfileCell("상태메세지", value: profile.status) {
                         viewModel.selectedProfleInfo = \.status
                     }
@@ -55,7 +61,7 @@ public struct ProfileView: View {
                     ProfileCell("근무위치", value: profile.location) {
                         viewModel.selectedProfleInfo = \.location
                     }
-                }
+                } failure: { _ in }
             }
         }
         .seugiBackground(.sub(.white))

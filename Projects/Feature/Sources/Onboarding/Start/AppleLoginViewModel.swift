@@ -1,6 +1,8 @@
 import Foundation
 import AuthenticationServices
-import Then
+import DIContainer
+import Domain
+import ScopeKit
 
 enum AppleLoginError: Error {
     case notFoundCredential
@@ -10,21 +12,22 @@ enum AppleLoginError: Error {
 
 struct AppleLoginResult: Equatable {
     let code: String
-    let nickname: String
 }
 
 final class AppleLoginViewModel: NSObject, ObservableObject {
+    @Inject private var keyValueRepo: KeyValueRepo
+    
     @Published var loginFlow: Flow<AppleLoginResult> = .idle
 }
 
 extension AppleLoginViewModel {
     func signIn() {
-        let request = ASAuthorizationAppleIDProvider().createRequest().then {
+        let request = ASAuthorizationAppleIDProvider().createRequest().apply {
             $0.requestedScopes = [.fullName, .email]
         }
 //        request.nonce = encodeNonce
         
-        ASAuthorizationController(authorizationRequests: [request]).do {
+        ASAuthorizationController(authorizationRequests: [request]).let {
             $0.delegate = self
             $0.presentationContextProvider = self
             $0.performRequests()
@@ -47,12 +50,23 @@ extension AppleLoginViewModel: ASAuthorizationControllerDelegate {
         }
         
         let fullName = credential.fullName
-        let nickname = (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
+        let nickname: String? = fullName?.let {
+            if $0.familyName == nil && $0.givenName == nil {
+                nil
+            } else {
+                ($0.familyName ?? "") + ($0.givenName ?? "")
+            }
+        }
         
+        if let email = credential.email {
+            self.keyValueRepo.save(key: .appleEmail, value: email)
+        }
+        if let nickname {
+            self.keyValueRepo.save(key: .appleNickname, value: nickname)
+        }
         self.loginFlow = .success(
             .init(
-                code: authorizationCodeString,
-                nickname: nickname
+                code: authorizationCodeString
             )
         )
     }
@@ -71,3 +85,4 @@ extension AppleLoginViewModel: ASAuthorizationControllerPresentationContextProvi
         return window
     }
 }
+extension PersonNameComponents: Scope {}

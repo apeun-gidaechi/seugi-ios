@@ -14,7 +14,10 @@ public final class CreateGroupChatViewModel: ObservableObject {
     @Published var selectedMembers: [RetrieveProfile] = []
     @Published var roomName: String = ""
     @Published var createRoomFlow: Flow<String> = .idle
-    
+    @Published var createdRoom: Flow<Room> = .idle
+}
+
+extension CreateGroupChatViewModel {
     func fetchWorkspaceMembers(
         workspaceId: String,
         memberId: Int
@@ -40,31 +43,52 @@ public final class CreateGroupChatViewModel: ObservableObject {
         }
     }
     
-    func createGroupChat(workspaceId: String) {
-        if selectedMembers.count == 1 {
-            // TODO: create Personal Chat
-            return
-        }
-        
-        let joinUsers = selectedMembers.map { $0.member.id }
+    func createGroupChat(
+        workspaceId: String,
+        memberId: Int
+    ) {
+        let joinUsers = selectedMembers.map { $0.member.id } + [memberId]
         chatRepo.createGroup(
-            .init(roomName: roomName, workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: "")
+            .init(
+                roomName: roomName,
+                workspaceId: workspaceId,
+                joinUsers: joinUsers,
+                chatRoomImg: ""
+            )
         )
         .map(\.data)
         .flow(\.createRoomFlow, on: self)
-        .silentSink()
+        .ignoreError()
+        .sink(receiveValue: self.fetchCreatedRoom)
         .store(in: &subscriptions)
     }
     
-    func createPersonalChat(workspaceId: String) {
-        let joinUsers = selectedMembers.map { $0.member.id }
+    func createPersonalChat(
+        workspaceId: String,
+        memberId: Int
+    ) {
+        let joinUsers = selectedMembers.map { $0.member.id } + [memberId]
         self.createRoomFlow = .fetching
         chatRepo.createPersonal(
-            .init(roomName: "", workspaceId: workspaceId, joinUsers: joinUsers, chatRoomImg: "")
+            .init(
+                roomName: "",
+                workspaceId: workspaceId,
+                joinUsers: joinUsers,
+                chatRoomImg: ""
+            )
         )
         .map(\.data)
         .flow(\.createRoomFlow, on: self)
-        .silentSink()
+        .ignoreError()
+        .sink(receiveValue: self.fetchCreatedRoom)
         .store(in: &subscriptions)
+    }
+    
+    func fetchCreatedRoom(roomId: String) {
+        chatRepo.searchGroup(roomId: roomId)
+            .map(\.data)
+            .flow(\.createdRoom, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
 }

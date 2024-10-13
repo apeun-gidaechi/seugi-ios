@@ -41,8 +41,12 @@ public struct SecondCreateGroupChatView: View {
             title: "",
             subView: {
                 SeugiButton.small("완료", type: .transparent, isLoading: viewModel.createRoomFlow.is(.fetching)) {
-                    if let selectedWorkspace = appState.selectedWorkspace {
-                        viewModel.createGroupChat(workspaceId: selectedWorkspace.workspaceId)
+                    if let selectedWorkspace = appState.selectedWorkspace,
+                       let member = appState.profile.data?.member {
+                        viewModel.createGroupChat(
+                            workspaceId: selectedWorkspace.workspaceId,
+                            memberId: member.id
+                        )
                     }
                 }
                 .disabled(viewModel.roomName.isEmpty)

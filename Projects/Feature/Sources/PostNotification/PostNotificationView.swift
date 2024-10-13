@@ -50,11 +50,8 @@ extension PostNotificationView: View {
         .seugiTopBar(
             title: type == .createNotification ? "새 공지 작성" : "공지 수정",
             subView: {
-                SeugiButton.small("완료", type: .transparent, isLoading: viewModel.fetchPostNotification == .fetching) {
+                SeugiButton.small("완료", type: .transparent, isLoading: viewModel.postNotificationFlow == .fetching) {
                     hideKeyboard() // for UX
-                    if let workspaceId = appState.selectedWorkspace?.workspaceId {
-                        notificationViewModel.fetchNotifications(workspaceId: workspaceId)
-                    }
                     switch type {
                     case .createNotification:
                         guard let selectedWorkspace = appState.selectedWorkspace else {
@@ -64,7 +61,6 @@ extension PostNotificationView: View {
                     case .updateNotification(let notification):
                         viewModel.updateNotification(notificationId: notification.id)
                     }
-                    
                 }
                 .disabled(!viewModel.isValidInput)
             }
@@ -72,7 +68,7 @@ extension PostNotificationView: View {
         .onAppear {
             self.focused = .title
         }
-        .onReceive(viewModel.$fetchPostNotification) { flow in
+        .onReceive(viewModel.$postNotificationFlow) { flow in
             switch flow {
             case .success:
                 alertProvider.present(
@@ -81,6 +77,9 @@ extension PostNotificationView: View {
                         dismiss()
                     }
                 )
+                if let workspaceId = appState.selectedWorkspace?.workspaceId {
+                    notificationViewModel.fetchNotifications(workspaceId: workspaceId)
+                }
             case .failure:
                 alertProvider.present(
                     .init(title: type == .createNotification ? "공지 작성 실패" : "공지 수정 실패")

@@ -40,12 +40,12 @@ struct ChatDetailDrawer: View {
                     }
                 }
                 Spacer()
-                makeImageButton(.notificationFill) {
-                    // TODO: handle
-                }
-                makeImageButton(.settingFill) {
-                    // TODO: handle
-                }
+//                makeImageButton(.notificationFill) {
+//                    // TODO: handle
+//                }
+//                makeImageButton(.settingFill) {
+//                    // TODO: handle
+//                }
             }
             .padding(.horizontal, 16)
             .frame(height: 40)

@@ -11,7 +11,8 @@ class PostNotificationViewModel: ObservableObject {
     
     @Published var title: String = ""
     @Published var content: String = ""
-    @Published var fetchPostNotification: Flow<BaseVoid> = .idle
+    @Published var postNotificationFlow: Flow<BaseVoid> = .idle
+    @Published var removeNotificationFlow: Flow<BaseVoid> = .idle
     
     var isValidInput: Bool {
         !title.isEmpty && !content.isEmpty
@@ -21,11 +22,11 @@ class PostNotificationViewModel: ObservableObject {
         notificationRepo.postNotification(
             .init(
                 title: title,
-                content: title,
+                content: content,
                 workspaceId: workspaceId
             )
         )
-        .flow(\.fetchPostNotification, on: self)
+        .flow(\.postNotificationFlow, on: self)
         .silentSink()
         .store(in: &subscriptions)
     }
@@ -38,18 +39,18 @@ class PostNotificationViewModel: ObservableObject {
                 content: content
             )
         )
-        .flow(\.fetchPostNotification, on: self)
+        .flow(\.postNotificationFlow, on: self)
         .silentSink()
         .store(in: &subscriptions)
     }
     
-//    func removeNotification(notificationId: Int) {
-//        sub(notificationRepo.removeNotification(workspaceId: <#T##String#>, id: <#T##Int#>)) {
-//            <#code#>
-//        } success: { <#T#> in
-//            <#code#>
-//        } failure: { <#APIError#> in
-//            <#code#>
-//        }
-//    }
+    func removeNotification(workspaceId: String, notificationId: Int) {
+        notificationRepo.removeNotification(
+            workspaceId: workspaceId,
+            id: notificationId
+        )
+        .flow(\.removeNotificationFlow, on: self)
+        .silentSink()
+        .store(in: &subscriptions)
+    }
 }

@@ -15,6 +15,7 @@ struct ChatMessageCell: View {
     
     enum Action {
         case clickImage
+        case downloadFile
     }
     
     private let messages: [Message]
@@ -75,7 +76,7 @@ struct ChatMessageCell: View {
                 type: type,
                 config: config
             ) {
-                // TODO: Download this
+                action(.downloadFile)
             }
         case .detail:
             if let text = message.getDetailText(room: room) {

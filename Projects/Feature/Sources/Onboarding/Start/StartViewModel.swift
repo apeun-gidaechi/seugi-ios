@@ -3,6 +3,7 @@ import Foundation
 import Domain
 import DIContainer
 import SwiftUtil
+import ScopeKit
 
 public final class StartViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
@@ -14,7 +15,10 @@ public final class StartViewModel: ObservableObject {
 }
 
 extension StartViewModel {
-    func signIn(code: String, provider: OAuth2Provider) {
+    func signIn(
+        code: String,
+        provider: OAuth2Provider
+    ) {
         guard let token = keyValueRepo.load(key: .fcmToken) as? String else {
             print("StartViewModel.signIn - fcmtoken이 없어요")
             return
@@ -32,7 +36,20 @@ extension StartViewModel {
             .silentSink()
             .store(in: &subscriptions)
         case .apple:
-            break
+            let email = keyValueRepo.load(key: .appleEmail) as? String
+            let name = keyValueRepo.load(key: .appleNickname) as? String
+            oauthRepo.authenticateApple(
+                .init(
+                    code: code,
+                    token: token,
+                    name: name,
+                    email: email
+                )
+            )
+            .map(\.data)
+            .flow(\.signInFlow, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
         }
     }
 }
