@@ -1,19 +1,12 @@
-//
-//  HomeScheduleView.swift
-//  Feature
-//
-//  Created by hhhello0507 on 9/15/24.
-//  Copyright © 2024 apeun-gidaechi. All rights reserved.
-//
-
-import Component
 import SwiftUI
+import Component
+import Domain
 
 struct HomeScheduleContainer: View {
     
-    private let schedule: HomeFetchFlow // TODO: dummy
+    private let schedule: Flow<[Schedule]>
     
-    init(for schedule: HomeFetchFlow) {
+    init(for schedule: Flow<[Schedule]>) {
         self.schedule = schedule
     }
     
@@ -32,22 +25,16 @@ struct HomeScheduleContainer: View {
                     .frame(width: 24, height: 24)
             }
             .padding(4)
-            switch schedule {
-            case .fetching:
+            schedule.makeView {
                 ProgressView()
-            case .empty:
-                Text("학교를 등록하고 일정을 확인하세요")
-                    .seugiColor(.gray(.g600))
-                    .font(.body(.b2))
-                    .padding(.vertical, 12)
-            case .finished:
+            } success: { schedules in
                 VStack(spacing: 16) {
-                    ForEach(0..<3, id: \.self) { _ in
+                    ForEach(schedules, id: \.id) { schedule in
                         HStack(spacing: 0) {
-                            Text("7/21")
+                            Text(schedule.date.parseString("MM/dd"))
                                 .font(.body(.b1))
                                 .seugiColor(.primary(.p500))
-                            Text("체육대회")
+                            Text(schedule.eventName)
                                 .font(.body(.b2))
                                 .seugiColor(.sub(.black))
                                 .padding(.leading, 10)
@@ -58,6 +45,11 @@ struct HomeScheduleContainer: View {
                         }
                     }
                 }
+            } failure: { _ in
+                Text("학교를 등록하고 일정을 확인하세요")
+                    .seugiColor(.gray(.g600))
+                    .font(.body(.b2))
+                    .padding(.vertical, 12)
             }
         }
         .applyCardEffect()

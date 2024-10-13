@@ -3,9 +3,11 @@ import SwiftUI
 struct MainCoordinator: View {
     @StateObject private var joinWorkspaceViewModel = JoinWorkspaceViewModel()
     @StateObject private var createGroupChatViewModel = CreateGroupChatViewModel()
+    @StateObject private var notificationViewModel = NotificationViewModel()
     
     var body: some View {
         MainView()
+            .environmentObject(notificationViewModel)
             .navigationDestination(for: MainDestination.self) { destination in
                 switch destination {
                     // catSeugi
@@ -18,9 +20,9 @@ struct MainCoordinator: View {
                     
                     // notification
                 case .createNotification:
-                    PostNotificationView(type: .createNotification)
+                    PostNotificationView(type: .createNotification).environmentObject(notificationViewModel)
                 case .updateNotification(let notification):
-                    PostNotificationView(type: .updateNotification(notification))
+                    PostNotificationView(type: .updateNotification(notification)).environmentObject(notificationViewModel)
                     
                     // profile
                 case .settingProfile: SettingProfileView()

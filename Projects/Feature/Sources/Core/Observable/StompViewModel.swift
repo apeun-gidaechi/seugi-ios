@@ -19,9 +19,9 @@ public final class StompViewModel: ObservableObject {
 
 extension StompViewModel {
     public func openSocket() {
-        guard keyValueRepo.load(key: .accessToken) != nil else { return }
+        guard let accessToken = keyValueRepo.load(key: .accessToken) as? String else { return }
         Log.info("💎 StompViewModel.subscribe")
-        
+        stompRepo.reissue(accessToken: accessToken)
         stompRepo.openSocket()
         stompRepo.subConnect()
             .sink { _ in

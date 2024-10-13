@@ -67,14 +67,6 @@ extension AppDelegate: MessagingDelegate {
         let dataDict: [String: String] = ["token": fcmToken]
         print("✅ AppDelegate.messaging - token \(fcmToken)")
         keyValueRepo.save(key: .fcmToken, value: fcmToken)
-        Task {
-            do {
-//                _ = try await NotificationApi.shared.postFcmToken(req: .init(fcmToken: fcmToken ?? ""))
-            } catch {
-                print("❌ AppDelegate.messaging - post fcm token failure")
-                print(error)
-            }
-        }
         NotificationCenter.default.post(
           name: Notification.Name("FCMToken"),
           object: nil,
@@ -84,7 +76,6 @@ extension AppDelegate: MessagingDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    
     public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         let userInfo = notification.request.content.userInfo
         if let messageID = userInfo[gcmMessageIDKey] {
