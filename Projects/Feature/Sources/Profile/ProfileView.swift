@@ -103,7 +103,8 @@ public struct ProfileView: View {
                 guard let selectedWorkspace = appState.selectedWorkspace else {
                     return
                 }
-                viewModel.updateProfile(workspaceId: selectedWorkspace.workspaceId)
+                self.viewModel.updateProfile(workspaceId: selectedWorkspace.workspaceId)
+                self.isSheetPresent = false
             }
         }
         .padding(20)
