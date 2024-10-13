@@ -6,7 +6,6 @@
 //
 
 import ProjectDescription
-import ProjectDescriptionHelpers
 import EnvironmentPlugin
 
 public extension Target {
@@ -23,7 +22,7 @@ public extension Target {
         copyFiles: [CopyFilesAction]? = nil,
         headers: Headers? = nil,
         entitlements: Entitlements? = nil,
-        scripts: [TargetScript] = [.swiftLint],
+        scripts: [TargetScript] = [],
         dependencies: [TargetDependency] = [],
         settings: Settings? = makeSettings(),
         coreDataModels: [CoreDataModel] = [],

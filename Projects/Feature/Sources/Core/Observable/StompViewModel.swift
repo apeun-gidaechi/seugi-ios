@@ -10,6 +10,7 @@ public final class StompViewModel: ObservableObject {
     @Inject private var stompRepo: StompRepo
     @Inject private var memberRepo: MemberRepo
     @Inject private var keychainRepo: KeychainRepo
+    @Inject private var keyValueRepo: KeyValueRepo
     
     public init() {
         openSocket()
@@ -18,7 +19,9 @@ public final class StompViewModel: ObservableObject {
 
 extension StompViewModel {
     public func openSocket() {
+        guard keyValueRepo.load(key: .accessToken) != nil else { return }
         Log.info("💎 StompViewModel.subscribe")
+        
         stompRepo.openSocket()
         stompRepo.subConnect()
             .sink { _ in
@@ -38,7 +41,6 @@ extension StompViewModel {
                     return
                 }
                 memberRepo.refresh(token: refreshToken)
-                    .print()
                     .ignoreError()
                     .map(\.data)
                     .sink { token in

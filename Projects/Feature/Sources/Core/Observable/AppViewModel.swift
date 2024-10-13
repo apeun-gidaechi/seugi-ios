@@ -69,11 +69,6 @@ extension AppViewModel {
     }
     
     public func logout() {
-        accessToken = nil
-        refreshToken = nil
-        selectedWorkspace = nil
-        profile = .idle
-        workspaces = .idle
         if let fcmToken = keyValueRepo.load(key: .fcmToken) as? String {
             memberRepo.logout(
                 .init(fcmToken: fcmToken)
@@ -82,6 +77,11 @@ extension AppViewModel {
             .silentSink()
             .store(in: &subscriptions)
         }
+        accessToken = nil
+        refreshToken = nil
+        selectedWorkspace = nil
+        profile = .idle
+        workspaces = .idle
     }
     
     public func fetchWorkspaces() {

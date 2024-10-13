@@ -82,8 +82,8 @@ final class AuthInterceptor: Moya.RequestInterceptor {
             ),
             decoder: .myDecoder
         )
-            .deepDive(MemberEndpoint.refresh(token: refreshToken), res: Base<Token>.self)
-            .map(\.data.accessToken)
+            .deepDive(MemberEndpoint.refresh(token: refreshToken), res: Base<String>.self)
+            .map(\.data)
             .receive(on: DispatchQueue.main)
             .subscribe(on: DispatchQueue.global(qos: .background))
             .sink {

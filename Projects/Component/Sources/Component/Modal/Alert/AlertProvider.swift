@@ -59,6 +59,7 @@ public final class AlertProvider: ObservableObject, ModalProvider {
     public func present(
         _ alert: Alert
     ) {
+        self.alert = alert
         isPresent = true
     }
 }

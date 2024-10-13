@@ -13,27 +13,22 @@ import DependencyPlugin
 let project = Project.make(
     name: "Seugi",
     targets: [
-        Target.target(
+        Target.make(
             name: "Seugi-iOS",
-            destinations: env.destinations,
             product: .app,
             bundleId: baseBundleId,
-            deploymentTargets: env.deploymentTargets,
             infoPlist: .file(path: "Seugi-iOS/Support/Info.plist"),
             sources: ["Seugi-iOS/Sources/**"],
             resources: ["Seugi-iOS/Resources/**"],
             entitlements: .file(path: "Seugi-iOS/Support/App.entitlements"),
-            scripts: [.swiftLint],
             dependencies: Modules.Data.allCases.map { TargetDependency.data(of: $0) }
-            + [.diContainer, .feature],
-            settings: makeSettings()
+            + [.diContainer, .feature]
         ),
-        Target.target(
+        Target.make(
             name: "Aggregate",
-            destinations: [.iPhone],
             product: .bundle,
             bundleId: "\(baseBundleId).aggregate",
-            scripts: [.periphery]
+            scripts: [.periphery, .swiftLint]
         )
     ]
 )

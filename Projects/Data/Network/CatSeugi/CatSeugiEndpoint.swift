@@ -1,5 +1,4 @@
 import Domain
-import Moya
 
 enum CatSeugiEndpoint {
     case sendMessage(CatSeugiSendMessageReq)

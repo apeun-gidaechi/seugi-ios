@@ -59,6 +59,7 @@ extension SettingProfileView: View {
                             .init(title: "로그아웃 하시겠습니까?")
                             .primaryButton("로그아웃") {
                                 appState.logout()
+                                router.navigateToRoot()
                             }
                             .secondaryButton("아니요")
                         )
@@ -137,6 +138,7 @@ extension SettingProfileView: View {
             switch flow {
             case .success:
                 appState.logout()
+                router.navigateToRoot()
             case .failure:
                 alert.present(
                     .init(title: "탈퇴 실패")

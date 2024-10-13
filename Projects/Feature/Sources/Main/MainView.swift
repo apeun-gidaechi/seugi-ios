@@ -6,6 +6,7 @@ import Domain
 
 public struct MainView {
     @EnvironmentObject private var router: RouterViewModel
+    @EnvironmentObject private var stompViewModel: StompViewModel
     @EnvironmentObject private var appState: AppViewModel
     
     @State private var selection: Int = 0
@@ -32,6 +33,11 @@ extension MainView: View {
             if case .success = flow {
                 selection = 0
                 router.navigateToRoot()
+            }
+        }
+        .onReceive(appState.$accessToken) {
+            if $0 != nil {
+                stompViewModel.openSocket()
             }
         }
         .onChange(of: appState.selectedWorkspace) { _ in
