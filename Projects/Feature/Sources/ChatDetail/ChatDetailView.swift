@@ -19,11 +19,9 @@ public struct ChatDetailView: View {
     
     @StateObject private var viewModel: ChatDetailViewModel
     
-    @State private var isDrawerOpen = false
+    @State private var isDrawerOpen: Bool = false
     @State private var scrollViewProxy: ScrollViewProxy?
-    @State private var isSearching = false
-    @State private var searchText = ""
-    @State private var showPhotoPicker = false
+    @State private var showPhotoPicker: Bool = false
     
     @FocusState private var searchFocus: Bool
     
@@ -37,7 +35,7 @@ public struct ChatDetailView: View {
 
 extension ChatDetailView {
     public var body: some View {
-        viewModel.messages.makeView {
+        viewModel.mergedMessages.makeView {
             VStack {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -47,11 +45,11 @@ extension ChatDetailView {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         Color.clear
-                            .id(Id.bottom)
+                            .frame(height: 0.001)
+                            .id(Id.top)
                             .onAppear {
-                                // 시작시 아래로 스크롤
-                                self.scrollViewProxy = scrollViewProxy
-                                scrollToBottom()
+                                print("ChatDetailView.body - touched top")
+                                // TODO: FETCH NEW DATA
                             }
                         Group {
                             ForEach(messages.indices, id: \.self) { index in
@@ -71,23 +69,15 @@ extension ChatDetailView {
                                 }
                             }
                         }
-                        .rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
+                        Color.clear
+                            .frame(height: 0.001)
+                            .id(Id.bottom)
                     }
                     .padding(.horizontal, 8)
-                    Color.clear
-                        .id(Id.top)
-                        .onAppear {
-                            // TODO: Handle paging
-                            //                                    let messages = viewModel.messages.data ?? []
-                            //                                    messages.count - 1 / pagingInterval
-                            //                                    guard let index = data.firstIndex(where: { $0.community.communityId == community.community.communityId }) else { return }
-                            //
-                            //                                      if index % pagingInterval == (pagingInterval - 1) && index / pagingInterval == (data.count - 1) / pagingInterval {
-                            //                                          await viewModel.fetchNextCommunities()
-                            //                                      }
-                        }
+                    .onAppear {
+                        self.scrollViewProxy = scrollViewProxy
+                    }
                 }
-                .rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
                 .seugiBackground(.primary(.p050))
             }
         } failure: { _ in
@@ -107,7 +97,7 @@ extension ChatDetailView {
                 isDrawerOpen = true
             }
         }
-        .searchable("메세지, 이미지, 파일 검색", text: $searchText, isSearching: $isSearching)
+        .searchable("메세지, 이미지, 파일 검색", text: $viewModel.searchText, isSearching: $viewModel.isSearching)
         .seugiDrawer(isOpen: $isDrawerOpen) {
             ChatDetailDrawer(room: room) { action in
                 switch action {
@@ -120,6 +110,9 @@ extension ChatDetailView {
                     )
                 }
             }
+        }
+        .onReceive($scrollViewProxy.wrappedValue.publisher) { _ in
+            scrollToBottom()
         }
         .photosPicker(
             isPresented: $showPhotoPicker,
@@ -152,7 +145,7 @@ extension ChatDetailView {
     
     @ViewBuilder
     private func safeAreaContent() -> some View {
-        if !isSearching {
+        if !viewModel.isSearching {
             SeugiChatTextField("메세지 보내기", text: $viewModel.message) { action in
                 switch action {
                 case .sendMessage:

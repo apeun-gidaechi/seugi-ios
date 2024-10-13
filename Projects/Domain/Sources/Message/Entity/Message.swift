@@ -67,7 +67,6 @@ public extension Message {
 }
 
 public extension Message {
-    
     enum ViewType: Entity {
         case text
         case image
@@ -125,5 +124,9 @@ public extension [Message] {
     
     func getFirstMessageTimestamp() -> Date? {
         return self.first?.timestamp
+    }
+    
+    func search(text: String) -> [Message] {
+        self.filter { $0.message.contains(text) }
     }
 }

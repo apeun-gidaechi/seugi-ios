@@ -16,6 +16,8 @@ public final class ChatDetailViewModel: ObservableObject {
     @Published var page: Int = 0
     @Published var messages: Flow<[Message]> = .fetching
     @Published var message: String = ""
+    @Published var searchText = ""
+    @Published var isSearching: Bool = false
     @Published var photo: PhotosPickerItem?
     @Published var leftRoomFlow: Flow<BaseVoid> = .idle
     
@@ -33,13 +35,25 @@ public final class ChatDetailViewModel: ObservableObject {
 }
 
 extension ChatDetailViewModel {
+    var searchMessages: Flow<[Message]> {
+        self.messages.map { $0.search(text: searchText) }
+    }
+    
+    var mergedMessages: Flow<[Message]> {
+        if self.isSearching {
+            searchMessages
+        } else {
+            messages
+        }
+    }
+}
+
+extension ChatDetailViewModel {
     func subscribe() {
         stompMessageRepo.subGetMessage(roomId: room.id)
             .sink { [self] res in
-                if var messages = messages.data {
-                    self.messages = self.messages.map {
-                        $0 + [res]
-                    }
+                self.messages = self.messages.map {
+                    $0 + [res]
                 }
             }
             .store(in: &subscriptions)
@@ -55,7 +69,7 @@ extension ChatDetailViewModel {
             timestamp: messages.data?.getFirstMessageTimestamp()
         )
         .map(\.data.messages)
-        .map { $0.sorted { $0.timestamp ?? .now > $1.timestamp ?? .now } }
+        .map { $0.sorted { $0.timestamp ?? .now < $1.timestamp ?? .now } }
         .flow(\.messages, on: self)
         .silentSink()
         .store(in: &subscriptions)
