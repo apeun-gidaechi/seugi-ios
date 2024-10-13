@@ -28,11 +28,9 @@ extension HomeView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 8) {
-                HomeWorkspaceContainer(for: flow)
-                    .button {
-                        router.navigate(to: MainDestination.workspaceDetail)
-                    }
-                    .scaledButtonStyle()
+                HomeWorkspaceContainer(for: flow) {
+                    router.navigate(to: MainDestination.workspaceDetail)
+                }
                 HomeTimetableContainer(for: viewModel.timetables)
                 HomeMealContainer(for: viewModel.meals)
                 HomeCatSeugiContainer(for: flow) { action in
@@ -41,7 +39,7 @@ extension HomeView: View {
                         router.navigate(to: MainDestination.catSeugi)
                     }
                 }
-                HomeScheduleContainer(for: flow)
+                HomeScheduleContainer(for: viewModel.schedules)
             }
             .padding(.top, 8)
             .padding(.bottom, 80)
@@ -67,6 +65,7 @@ extension HomeView: View {
             guard let id = $0?.workspaceId else { return }
             viewModel.fetchMeals(workspaceId: id)
             viewModel.fetchTimetable(workspaceId: id)
+            viewModel.fetchSchedules(workspaceId: id)
         }
     }
     

@@ -1,25 +1,20 @@
-//
-//  HomeViewModel.swift
-//  HomeFeature
-//
-//  Created by hhhello0507 on 7/23/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
+import Combine
 import Foundation
 import DIContainer
 import Domain
 import SwiftUtil
-import Combine
+import DateUtil
 
 final class HomeViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
     @Inject private var mealRepo: MealRepo
     @Inject private var timetableRepo: TimetableRepo
+    @Inject private var scheduleRepo: ScheduleRepo
     
     @Published var meals: Flow<[Meal]> = .fetching
     @Published var timetables: Flow<[Timetable]> = .fetching
+    @Published var schedules: Flow<[Schedule]> = .fetching
     
     func fetchMeals(workspaceId: String) {
         mealRepo.getByDate(workspaceId: workspaceId, date: .now)
@@ -35,5 +30,18 @@ final class HomeViewModel: ObservableObject {
             .flow(\.timetables, on: self)
             .silentSink()
             .store(in: &subscriptions)
+    }
+    
+    func fetchSchedules(workspaceId: String) {
+        scheduleRepo.fetchSshedulesForMonth(
+            .init(
+                workspaceId: workspaceId,
+                month: Date.now[.day]
+            )
+        )
+        .map(\.data)
+        .flow(\.schedules, on: self)
+        .silentSink()
+        .store(in: &subscriptions)
     }
 }

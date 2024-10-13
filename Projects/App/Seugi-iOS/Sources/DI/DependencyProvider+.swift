@@ -27,6 +27,7 @@ public extension DependencyProvider {
             TimetableAssembly(),
             OAuthAssembly(),
             CatSeugiAssembly(),
+            ScheduleAssembly(),
             // Local
             LocalChatAssembly(),
             // Core
