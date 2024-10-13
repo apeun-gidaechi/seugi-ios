@@ -62,4 +62,8 @@ public extension Date {
         let formattedDate = dateFormatter.string(from: self)
         return formattedDate
     }
+    
+    subscript(components: Calendar.Component) -> Int {
+        Calendar.current.dateComponents([components], from: self).value(for: components)!
+    }
 }

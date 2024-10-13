@@ -6,7 +6,7 @@ public struct NotificationView: View {
     @EnvironmentObject private var appState: AppViewModel
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var alert: AlertProvider
-    @StateObject private var viewModel = NotificationViewModel()
+    @EnvironmentObject private var viewModel: NotificationViewModel
     
     @State private var addEmojiPresent: Bool = false
     

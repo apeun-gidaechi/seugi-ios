@@ -29,7 +29,7 @@ let package = Package(
         .package(url: "https://github.com/google/GoogleSignIn-iOS.git", branch: "main"),
         .package(url: "https://github.com/moya/Moya.git", exact: "15.0.3"),
         .package(url: "https://github.com/apeun-gidaechi/apeun-stomp-kit", exact: "1.3.0"),
-        .package(url: "https://github.com/devxoul/Then", exact: "3.0.0"),
+        .package(url: "https://github.com/hhhello0507/ScopeKit", branch: "main"),
         .package(url: "https://github.com/realm/realm-swift", exact: "10.53.0"),
         .package(url: "https://github.com/izyumkin/MCEmojiPicker", exact: "1.2.3"),
         .package(url: "https://github.com/firebase/firebase-ios-sdk", branch: "main")
