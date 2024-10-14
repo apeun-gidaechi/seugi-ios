@@ -2,23 +2,20 @@ import SwiftUI
 import Component
 import Domain
 
-public struct SecondCreateGroupChatView: View {
-    
+public struct SecondCreateGroupChatView {
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var viewModel: CreateGroupChatViewModel
     @EnvironmentObject private var appState: AppViewModel
     
     public init() {}
+}
     
-    private var firstMember: RetrieveProfile {
-        viewModel.selectedMembers.first!
-    }
-    
+extension SecondCreateGroupChatView: View {
     public var body: some View {
         VStack(spacing: 16) {
             ZStack(alignment: .bottomTrailing) {
-                SeugiRoomImage(nil, type: .extraLarge, label: firstMember.member.name.getOrNil(idx: 0) ?? "-")
+                SeugiRoomImage(nil, type: .extraLarge, label: viewModel.firstMember.member.name.getOrNil(idx: 0) ?? "-")
                 Image(icon: .addFill)
                     .resizable()
                     .renderingMode(.template)
@@ -32,7 +29,7 @@ public struct SecondCreateGroupChatView: View {
                     .seugiColor(.sub(.black))
                     .padding(.top, 6)
                     .padding(.leading, 4)
-                SeugiTextField("\(firstMember.member.name) 외 \(viewModel.selectedMembers.count - 1)명", text: $viewModel.roomName)
+                SeugiTextField(viewModel.emptyRoomName, text: $viewModel.roomName)
                 Spacer()
             }
         }
@@ -49,7 +46,6 @@ public struct SecondCreateGroupChatView: View {
                         )
                     }
                 }
-                .disabled(viewModel.roomName.isEmpty)
             }
         )
         .onReceive(viewModel.$createRoomFlow) { flow in

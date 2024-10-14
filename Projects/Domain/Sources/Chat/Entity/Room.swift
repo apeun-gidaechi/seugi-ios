@@ -27,7 +27,7 @@ public struct Room: Entity {
         chatRoomImg: String?,
         createdAt: Date?,
         chatStatusEnum: ChatStatusEnum,
-        joinUserId: [UserInfo],
+        joinUserInfo: [UserInfo],
         lastMessage: String?,
         lastMessageTimestamp: Date,
         notReadCnt: Int
@@ -40,7 +40,7 @@ public struct Room: Entity {
         self.chatRoomImg = chatRoomImg
         self.createdAt = createdAt
         self.chatStatusEnum = chatStatusEnum
-        self.joinUserInfo = joinUserId
+        self.joinUserInfo = joinUserInfo
         self.lastMessage = lastMessage
         self.lastMessageTimestamp = lastMessageTimestamp
         self.notReadCnt = notReadCnt

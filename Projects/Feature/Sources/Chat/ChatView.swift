@@ -29,11 +29,12 @@ extension ChatView: View {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         ForEach(rooms, id: \.id) { room in
-                            SeugiChatList(type: roomType, room: room)
-                                .button {
-                                    router.navigate(to: MainDestination.chatDetail(room: room))
-                                }
-                                .scaledButtonStyle()
+                            Button {
+                                router.navigate(to: MainDestination.chatDetail(room: room))
+                            } label: {
+                                SeugiChatList(type: roomType, room: room)
+                            }
+                            .scaledButtonStyle()
                         }
                     }
                 }
@@ -56,7 +57,7 @@ extension ChatView: View {
         .buttons {
             if roomType != .personal {
                 .init(icon: .addFill) {
-                    router.navigate(to: MainDestination.firstCreateGroupChat)
+                    router.navigate(to: MainDestination.createGroupChatCoordinator)
                 }
             }
         }

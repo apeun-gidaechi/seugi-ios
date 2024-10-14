@@ -141,23 +141,23 @@ public extension Publisher {
         receiveOutput: ((Self.Output) -> Void)? = nil
     ) -> AnyPublisher<Output, Failure> {
         self.handleEvents(
-            receiveSubscription: { _ in
-                object[keyPath: keyPath] = .fetching
+            receiveSubscription: { [weak object] _ in
+                object?[keyPath: keyPath] = .fetching
             },
-            receiveOutput: { output in
+            receiveOutput: { [weak object] output in
                 if let receiveOutput {
                     receiveOutput(output)
                 } else {
-                    object[keyPath: keyPath] = .success(output)
+                    object?[keyPath: keyPath] = .success(output)
                 }
             },
-            receiveCompletion: { completion in
+            receiveCompletion: { [weak object] completion in
                 if case .failure(let error) = completion {
-                    object[keyPath: keyPath] = .failure(error)
+                    object?[keyPath: keyPath] = .failure(error)
                 }
             },
-            receiveCancel: {
-                object[keyPath: keyPath] = .idle
+            receiveCancel: { [weak object] in
+                object?[keyPath: keyPath] = .idle
             }
         )
         .eraseToAnyPublisher()

@@ -2,7 +2,6 @@ import SwiftUI
 
 struct MainCoordinator: View {
     @StateObject private var joinWorkspaceViewModel = JoinWorkspaceViewModel()
-    @StateObject private var createGroupChatViewModel = CreateGroupChatViewModel()
     @StateObject private var notificationViewModel = NotificationViewModel()
     
     var body: some View {
@@ -15,8 +14,7 @@ struct MainCoordinator: View {
                     
                     // chat
                 case .chatDetail(let room): ChatDetailView(room: room)
-                case .firstCreateGroupChat: FirstCreateGroupChatView().environmentObject(createGroupChatViewModel)
-                case .secondCreateGroupChat: SecondCreateGroupChatView().environmentObject(createGroupChatViewModel)
+                case .createGroupChatCoordinator: CreateGroupChatCoordinator()
                     
                     // notification
                 case .createNotification:

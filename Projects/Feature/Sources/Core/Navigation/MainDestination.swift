@@ -15,8 +15,7 @@ public enum MainDestination: Hashable {
     
     // chat
     case chatDetail(room: Room)
-    case firstCreateGroupChat
-    case secondCreateGroupChat
+    case createGroupChatCoordinator
     
     // notification
     case createNotification

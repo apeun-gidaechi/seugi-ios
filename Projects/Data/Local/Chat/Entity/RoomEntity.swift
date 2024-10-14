@@ -13,7 +13,7 @@ class RoomEntity: Object {
     @Persisted var chatRoomImg: String?
     @Persisted var createdAt: Date?
     @Persisted var chatStatusEnum: ChatStatusEnum
-    @Persisted var joinUserId: List<UserInfoEntity>
+    @Persisted var joinUserInfo: List<UserInfoEntity>
     @Persisted var lastMessage: String?
     @Persisted var lastMessageTimestamp: Date
     @Persisted var notReadCnt: Int
@@ -27,7 +27,7 @@ class RoomEntity: Object {
         chatRoomImg: String? = nil,
         createdAt: Date? = nil,
         chatStatusEnum: ChatStatusEnum,
-        joinUserId: [UserInfoEntity],
+        joinUserInfo: [UserInfoEntity],
         lastMessage: String?,
         lastMessageTimestamp: Date,
         notReadCnt: Int
@@ -41,7 +41,7 @@ class RoomEntity: Object {
         self.chatRoomImg = chatRoomImg
         self.createdAt = createdAt
         self.chatStatusEnum = chatStatusEnum
-        self.joinUserId.append(objectsIn: joinUserId)
+        self.joinUserInfo.append(objectsIn: joinUserInfo)
         self.lastMessage = lastMessage
         self.lastMessageTimestamp = lastMessageTimestamp
         self.notReadCnt = notReadCnt
@@ -57,7 +57,7 @@ class RoomEntity: Object {
             chatRoomImg: room.chatRoomImg,
             createdAt: room.createdAt,
             chatStatusEnum: room.chatStatusEnum,
-            joinUserId: room.joinUserInfo.map { UserInfoEntity.of($0) },
+            joinUserInfo: room.joinUserInfo.map { UserInfoEntity.of($0) },
             lastMessage: room.lastMessage,
             lastMessageTimestamp: room.lastMessageTimestamp,
             notReadCnt: room.notReadCnt
@@ -74,7 +74,7 @@ class RoomEntity: Object {
             chatRoomImg: self.chatRoomImg,
             createdAt: self.createdAt,
             chatStatusEnum: self.chatStatusEnum,
-            joinUserId: self.joinUserId.map { $0.toDomain() },
+            joinUserInfo: self.joinUserInfo.map { $0.toDomain() },
             lastMessage: self.lastMessage,
             lastMessageTimestamp: self.lastMessageTimestamp,
             notReadCnt: self.notReadCnt

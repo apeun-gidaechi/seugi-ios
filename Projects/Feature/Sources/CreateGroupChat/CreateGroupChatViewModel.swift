@@ -18,17 +18,16 @@ public final class CreateGroupChatViewModel: ObservableObject {
 }
 
 extension CreateGroupChatViewModel {
-    func fetchWorkspaceMembers(
-        workspaceId: String,
-        memberId: Int
-    ) {
-        workspaceRepo.getMembers(workspaceId: workspaceId)
-            .map { $0.data.filter { $0.member.id != memberId } }
-            .flow(\.members, on: self)
-            .silentSink()
-            .store(in: &subscriptions)
+    var firstMember: RetrieveProfile {
+        selectedMembers.first!
     }
     
+    var emptyRoomName: String {
+        "\(firstMember.member.name) 외 \(selectedMembers.count - 1)명"
+    }
+}
+
+extension CreateGroupChatViewModel {
     func selectMember(member: RetrieveProfile, selected: Bool) {
         if !selected {
             selectedMembers.append(member)
@@ -42,6 +41,19 @@ extension CreateGroupChatViewModel {
             $0.member.id != member.member.id
         }
     }
+}
+
+extension CreateGroupChatViewModel {
+    func fetchWorkspaceMembers(
+        workspaceId: String,
+        memberId: Int
+    ) {
+        workspaceRepo.getMembers(workspaceId: workspaceId)
+            .map { $0.data.filter { $0.member.id != memberId } }
+            .flow(\.members, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
+    }
     
     func createGroupChat(
         workspaceId: String,
@@ -50,7 +62,7 @@ extension CreateGroupChatViewModel {
         let joinUsers = selectedMembers.map { $0.member.id } + [memberId]
         chatRepo.createGroup(
             .init(
-                roomName: roomName,
+                roomName: roomName.isEmpty ? emptyRoomName : roomName,
                 workspaceId: workspaceId,
                 joinUsers: joinUsers,
                 chatRoomImg: ""

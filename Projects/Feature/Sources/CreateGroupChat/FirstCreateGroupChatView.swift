@@ -72,7 +72,7 @@ extension FirstCreateGroupChatView: View {
                         return
                     }
                     if viewModel.selectedMembers.count > 1 {
-                        router.navigate(to: MainDestination.secondCreateGroupChat)
+                        router.navigate(to: CreateGroupChatPath.secondCreateGroupChat)
                     } else {
                         viewModel.createPersonalChat(
                             workspaceId: selectedWorkspace.workspaceId,
