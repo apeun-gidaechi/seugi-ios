@@ -38,12 +38,13 @@ extension FirstCreateGroupChatView: View {
                                 let selected = viewModel.selectedMembers.contains {
                                     $0.member.id == member.member.id
                                 }
-                                SeugiMemberList(type: .normal(member: member.member)) {
-                                    SeugiToggle(isOn: .constant(selected), type: .checkbox(size: .large))
-                                        .disabled(true)
-                                }
-                                .button {
+                                Button {
                                     viewModel.selectMember(member: member, selected: selected)
+                                } label: {
+                                    SeugiMemberList(type: .normal(member: member.member)) {
+                                        SeugiToggle(isOn: .constant(selected), type: .checkbox(size: .large))
+                                            .disabled(true)
+                                    }
                                 }
                                 .scaledButtonStyle()
                             }

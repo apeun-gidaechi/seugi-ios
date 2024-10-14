@@ -59,7 +59,7 @@ extension CreateGroupChatViewModel {
         .map(\.data)
         .flow(\.createRoomFlow, on: self)
         .ignoreError()
-        .sink(receiveValue: self.fetchCreatedRoom)
+        .sink(receiveValue: self.fetchCreatedGruopRoom)
         .store(in: &subscriptions)
     }
     
@@ -80,11 +80,19 @@ extension CreateGroupChatViewModel {
         .map(\.data)
         .flow(\.createRoomFlow, on: self)
         .ignoreError()
-        .sink(receiveValue: self.fetchCreatedRoom)
+        .sink(receiveValue: self.fetchCreatedPersonalRoom)
         .store(in: &subscriptions)
     }
     
-    func fetchCreatedRoom(roomId: String) {
+    func fetchCreatedPersonalRoom(roomId: String) {
+        chatRepo.searchPersonal(roomId: roomId)
+            .map(\.data)
+            .flow(\.createdRoom, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
+    }
+    
+    func fetchCreatedGruopRoom(roomId: String) {
         chatRepo.searchGroup(roomId: roomId)
             .map(\.data)
             .flow(\.createdRoom, on: self)

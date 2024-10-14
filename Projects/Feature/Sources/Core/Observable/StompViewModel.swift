@@ -46,7 +46,8 @@ extension StompViewModel {
                     .sink { token in
                         let accessToken = String(token.split(separator: " ")[1])
                         self.stompRepo.reissue(accessToken: accessToken)
-                        self.stompRepo.reconnect(time: 1)
+//                        self.stompRepo.reconnect(time: 1)
+                        self.stompRepo.openSocket()
                         Log.info("🤩 STOMP disConnected - reconnecting...")
                     }
                     .store(in: &subscriptions)

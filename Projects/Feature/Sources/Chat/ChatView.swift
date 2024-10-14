@@ -5,6 +5,7 @@ import Domain
 public struct ChatView {
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var appState: AppViewModel
+    
     @StateObject private var viewModel: ChatViewModel
     
     @FocusState private var searchFocus: Bool

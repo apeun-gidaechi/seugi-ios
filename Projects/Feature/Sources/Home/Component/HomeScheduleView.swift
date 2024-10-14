@@ -28,20 +28,24 @@ struct HomeScheduleContainer: View {
             schedule.makeView {
                 ProgressView()
             } success: { schedules in
-                VStack(spacing: 16) {
-                    ForEach(schedules, id: \.id) { schedule in
-                        HStack(spacing: 0) {
-                            Text(schedule.date.parseString("MM/dd"))
-                                .font(.body(.b1))
-                                .seugiColor(.primary(.p500))
-                            Text(schedule.eventName)
-                                .font(.body(.b2))
-                                .seugiColor(.sub(.black))
-                                .padding(.leading, 10)
-                            Spacer()
-                            Text("D-3")
-                                .font(.caption(.c1))
-                                .seugiColor(.gray(.g600))
+                if schedules.isEmpty {
+                    SeugiError("일정이 없어요", image: .sadButRelievedFace)
+                } else {
+                    VStack(spacing: 16) {
+                        ForEach(schedules, id: \.id) { schedule in
+                            HStack(spacing: 0) {
+                                Text(schedule.date.parseString("MM/dd"))
+                                    .font(.body(.b1))
+                                    .seugiColor(.primary(.p500))
+                                Text(schedule.eventName)
+                                    .font(.body(.b2))
+                                    .seugiColor(.sub(.black))
+                                    .padding(.leading, 10)
+                                Spacer()
+                                Text("D-3")
+                                    .font(.caption(.c1))
+                                    .seugiColor(.gray(.g600))
+                            }
                         }
                     }
                 }
