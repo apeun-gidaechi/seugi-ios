@@ -3,6 +3,7 @@ import PhotosUI
 import Component
 import Domain
 import SwiftUtil
+import ScopeKit
 
 let pagingInterval = 50
 
@@ -43,14 +44,14 @@ extension ChatDetailView {
         } success: { messages in
             ScrollViewReader { scrollViewProxy in
                 ScrollView {
+                    Color.clear
+                        .frame(height: 0.001)
+                        .id(Id.top)
+                        .onAppear {
+                            print("ChatDetailView.body - touched top")
+                            // TODO: FETCH NEW DATA
+                        }
                     LazyVStack(spacing: 0) {
-                        Color.clear
-                            .frame(height: 0.001)
-                            .id(Id.top)
-                            .onAppear {
-                                print("ChatDetailView.body - touched top")
-                                // TODO: FETCH NEW DATA
-                            }
                         Group {
                             ForEach(messages.indices, id: \.self) { index in
                                 ChatMessageCell(
@@ -72,14 +73,15 @@ extension ChatDetailView {
                                 }
                             }
                         }
-                        Color.clear
-                            .frame(height: 0.001)
-                            .id(Id.bottom)
                     }
                     .padding(.horizontal, 8)
                     .onAppear {
                         self.scrollViewProxy = scrollViewProxy
+                        self.scrollToBottom()
                     }
+                    Color.clear
+                        .frame(height: 0.001)
+                        .id(Id.bottom)
                 }
                 .seugiBackground(.primary(.p050))
             }
@@ -114,9 +116,6 @@ extension ChatDetailView {
                 }
             }
         }
-        .onReceive($scrollViewProxy.wrappedValue.publisher) { _ in
-            scrollToBottom()
-        }
         .photosPicker(
             isPresented: $showPhotoPicker,
             selection: $viewModel.photo,
@@ -135,10 +134,18 @@ extension ChatDetailView {
             switch flow {
             case .success:
                 router.popToStack()
-            case .failure:
+            case .failure(let error):
+                let message = run {
+                    if let error = error as? APIError,
+                       case .http(let res) = error {
+                        res.message
+                    } else {
+                        "잠시 후 다시 시도해 주세요"
+                    }
+                }
                 alert.present(
                     .init(title: "채팅방을 나갈 수 없습니다")
-                    .message("잠시 후 다시 시도해 주세요")
+                    .message(message)
                 )
             default:
                 break

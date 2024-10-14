@@ -15,6 +15,7 @@ struct HomeMealContainer: View {
     private let meals: Flow<[Meal]>
     @State private var maxHeight: CGFloat?
     @State private var selection: Int = 0
+    @Namespace private var animation
     
     init(for meals: Flow<[Meal]>) {
         self.meals = meals
@@ -69,6 +70,22 @@ struct HomeMealContainer: View {
                     .animation(.spring(duration: 0.4), value: selection)
                     .frame(height: maxHeight ?? 300)
                     .tabViewStyle(.page(indexDisplayMode: .never))
+                    Rectangle()
+                        .frame(width: 36, height: 6)
+                        .seugiColor(.gray(.g300))
+                        .cornerRadius(3, corners: .allCorners)
+                        .overlay {
+                            let width = 36.0 / CGFloat(meals.count)
+                            Rectangle()
+                                .seugiColor(.primary(.p500))
+                                .frame(width: width)
+                                .frame(maxHeight: .infinity)
+                                .cornerRadius(3, corners: .allCorners)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .offset(x: width * CGFloat(selection))
+                                .animation(.spring(duration: 0.4), value: selection)
+                                .matchedGeometryEffect(id: "indicator", in: animation)
+                        }
                 }
             } failure: { _ in
                 Text("학교를 등록하고 급식을 확인하세요")

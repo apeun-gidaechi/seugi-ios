@@ -20,7 +20,7 @@ struct ChatDetailDrawer: View {
             SeugiDivider(thickness: .thin)
             ScrollView {
                 LazyVStack(spacing: 0) {
-                    SeugiMemberList(type: .invitation)
+//                    SeugiMemberList(type: .invitation) // TODO: Impl
                     ForEach(room.joinUserInfo, id: \.userInfo.id) { member in
                         SeugiMemberList(
                             type: .normal(
