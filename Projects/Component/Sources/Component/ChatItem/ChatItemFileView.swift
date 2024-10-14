@@ -4,31 +4,30 @@ import SwiftUtil
 import Domain
 
 public struct ChatItemFileView: View {
-    private let author: RetrieveMember
     private let type: ChatItemViewCellType
-    private let config: ChatItemConfig
+    private let message: Message
     private let action: () -> Void
-    private let message: String
     
-    public init(author: RetrieveMember, type: ChatItemViewCellType, config: ChatItemConfig, action: @escaping () -> Void) {
-        self.author = author
+    public init(
+        type: ChatItemViewCellType,
+        message: Message,
+        action: @escaping () -> Void
+    ) {
         self.type = type
-        self.config = config
+        self.message = message
         self.action = action
-        self.message = config.message.message
     }
     
     private var title: String {
-        message.split(separator: MessageConstant.fileSeparator)
+        message.message.split(separator: MessageConstant.fileSeparator)
             .getOrNil(idx: 1)
             .map(String.init) ?? "(제목 없음)"
     }
     
     public var body: some View {
         ChatItemContainer(
-            author: author,
             type: type,
-            config: config
+            message: message
         ) {
             Button(action: action) {
                 HStack(spacing: 8) {
@@ -44,7 +43,7 @@ public struct ChatItemFileView: View {
                         Text(title)
                             .font(.body(.b1))
                             .seugiColor(.sub(.black))
-                        let file = File(message: message)
+                        let file = File(message: message.message)
                         if let volume = file.volume,
                            let size = file.size {
                             Text(String(format: "%0.2f", size) + " \(volume.text)")

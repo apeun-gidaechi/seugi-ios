@@ -1,12 +1,13 @@
 import SwiftUI
+import Domain
 
 extension View {
-    func addTimeLabel(alignment: ChatItemHorizontalAlignment, config: ChatItemConfig) -> some View {
+    func addTimeLabel(alignment: ChatItemHorizontalAlignment, message: Message) -> some View {
         HStack(alignment: .bottom) {
             if alignment == .leading {
                 self
             }
-            ChatItemTimeLabelView(alignment: alignment, config: config)
+            ChatItemTimeLabelView(alignment: alignment, message: message)
             if alignment == .trailing {
                 self
             }

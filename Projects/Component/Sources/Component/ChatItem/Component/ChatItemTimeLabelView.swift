@@ -1,15 +1,16 @@
 import SwiftUI
+import Domain
 
 struct ChatItemTimeLabelView: View {
     private let alignment: ChatItemHorizontalAlignment
-    private let config: ChatItemConfig
+    private let message: Message
     
     init(
         alignment: ChatItemHorizontalAlignment,
-        config: ChatItemConfig
+        message: Message
     ) {
         self.alignment = alignment
-        self.config = config
+        self.message = message
     }
     
     private var unreadUserCount: Int {
@@ -18,14 +19,14 @@ struct ChatItemTimeLabelView: View {
     }
     
     var body: some View {
-        if config.isLast {
+        if message.isLast {
             VStack(alignment: alignment.rawValue, spacing: 0) {
                 if unreadUserCount > 0 {
                     Text("\(unreadUserCount)")
                         .seugiColor(.gray(.g600))
                         .font(.caption(.c1))
                 }
-                Text(config.message.timestamp?.prettyText ?? "")
+                Text(message.timestamp?.prettyText ?? "")
                     .seugiColor(.gray(.g600))
                     .font(.caption(.c2))
             }

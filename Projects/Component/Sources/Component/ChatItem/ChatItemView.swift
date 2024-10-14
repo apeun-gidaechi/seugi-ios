@@ -5,31 +5,27 @@ import DateUtil
 import SwiftUIUtil
 
 public struct ChatItemView: View {
-    private let author: RetrieveMember
     private let type: ChatItemViewCellType
-    private let config: ChatItemConfig
+    private let message: Message
     
     public init(
-        author: RetrieveMember,
         type: ChatItemViewCellType,
-        config: ChatItemConfig
+        message: Message
     ) {
-        self.author = author
         self.type = type
-        self.config = config
+        self.message = message
     }
     
     public var body: some View {
         ChatItemContainer(
-            author: author,
             type: type,
-            config: config
+            message: message
         ) {
             ChatItemViewCell(
-                text: config.message.message,
+                text: message.message,
                 type: type
             )
-            .addTimeLabel(alignment: type.alignent, config: config)
+            .addTimeLabel(alignment: type.alignent, message: message)
         }
     }
 }

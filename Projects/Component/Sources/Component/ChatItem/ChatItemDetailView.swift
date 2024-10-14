@@ -1,22 +1,24 @@
 import SwiftUI
-
 import SwiftUIUtil
+import Domain
 
 public struct ChatItemDetailView: View {
-    private let text: String
+    private let message: Message
     
-    public init(text: String) {
-        self.text = text
+    public init(message: Message) {
+        self.message = message
     }
     
     public var body: some View {
-        Text(text)
-            .font(.caption(.c2))
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
-            .background(Color.seugi(.gray(.g100)))
-            .cornerRadius(24, corners: .allCorners)
-            .padding(.vertical, 12)
-            .toHorizontal()
+        if let detailText = message.detailText {
+            Text(detailText)
+                .font(.caption(.c2))
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+                .background(Color.seugi(.gray(.g100)))
+                .cornerRadius(24, corners: .allCorners)
+                .padding(.vertical, 12)
+                .toHorizontal()
+        }
     }
 }

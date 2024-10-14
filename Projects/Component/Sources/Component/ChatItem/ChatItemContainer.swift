@@ -6,26 +6,27 @@ import Domain
 // - Has Avatar
 // - Horizontal align
 struct ChatItemContainer<C: View>: View {
-    let author: RetrieveMember
     let type: ChatItemViewCellType
-    let config: ChatItemConfig
+    let message: Message
     @ViewBuilder let content: () -> C
     
     var body: some View {
         HStack(alignment: .top) {
-            if case .other = type, config.isFirst {
-                SeugiAvatar(author.picture, type: .medium)
-            } else if case .ai = type, config.isFirst {
+            if case .other = type, message.isFirst {
+                SeugiAvatar(message.author?.picture, type: .medium)
+            } else if case .ai = type, message.isFirst {
                 SeugiAppIcon(type: .medium)
             }
             VStack(alignment: type.alignent.rawValue, spacing: 4) {
-                if type.alignent == .leading && config.isFirst {
-                    Text(author.name)
-                        .font(.body(.b1))
-                        .seugiColor(.gray(.g600))
+                if type.alignent == .leading && message.isFirst {
+                    if let author = message.author {
+                        Text(author.name)
+                            .font(.body(.b1))
+                            .seugiColor(.gray(.g600))
+                    }
                 }
                 content()
-                    .padding(.leading, !config.isFirst && type.alignent == .leading ? 40 : 0)
+                    .padding(.leading, !message.isFirst && type.alignent == .leading ? 40 : 0)
             }
         }
         .padding(.top, 8)
