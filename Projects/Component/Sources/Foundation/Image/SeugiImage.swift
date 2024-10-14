@@ -1,8 +1,6 @@
 public enum SeugiImage: String {
     case appIcon = "AppIcon"
     case apple = "Apple"
-    case apple1 = "Apple1"
-    case chicken = "Chicken"
     case cloud1 = "Cloud1"
     case cloud2 = "Cloud2"
     case faceWithDiagonalMouth = "FaceWithDiagonalMouth"
@@ -12,6 +10,5 @@ public enum SeugiImage: String {
     case school = "School"
     case smilingFace = "SmilingFace"
     case student = "Student"
-    case taco = "Taco"
     case teacher = "Teacher"
 }
