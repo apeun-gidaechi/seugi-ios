@@ -1,11 +1,4 @@
-//
-//  SettingAlarmViewModel.swift
-//  Feature
-//
-//  Created by hhhello0507 on 9/11/24.
-//  Copyright © 2024 apeun-gidaechi. All rights reserved.
-//
-
+import UIKit
 import Foundation
 import DIContainer
 import Domain
@@ -22,8 +15,14 @@ final class SettingAlarmViewModel: ObservableObject {
         if let allowAlarm = keyValueRepo.load(key: .allowAlarm) as? Bool {
             self.allowAlarm = allowAlarm
         }
-        $allowAlarm.sink { _ in
-            self.fetchAllowAlarm()
+        $allowAlarm.sink { allowAlarm in
+            self.keyValueRepo.save(key: .allowAlarm, value: allowAlarm)
+            if allowAlarm {
+                UIApplication.shared.registerForRemoteNotifications()
+            } else {
+                UIApplication.shared.unregisterForRemoteNotifications()
+            }
+//            self.fetchAllowAlarm()
         }.store(in: &subscriptions)
     }
     

@@ -33,9 +33,16 @@ public final class AppDelegate: NSObject, UIApplicationDelegate {
         
         UNUserNotificationCenter.current().delegate = self
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in }
-        application.registerForRemoteNotifications()
         
-        UIApplication.shared.registerForRemoteNotifications()
+        if let allowAlarm = keyValueRepo.load(key: .allowAlarm) as? Bool {
+            if allowAlarm {
+                UIApplication.shared.registerForRemoteNotifications()
+            } else {
+                UIApplication.shared.unregisterForRemoteNotifications()
+            }
+        } else {
+            UIApplication.shared.registerForRemoteNotifications()
+        }
         
         return true
     }
