@@ -109,15 +109,10 @@ extension StartView: View {
                 router.navigate(to: OnboardingDestination.emailSignIn)
             }
             .padding(.top, 20)
-            AppleLoginButton {
-                appleLoginViewModel.signIn()
-            }
-            GoogleLoginButton {
-                googleLoginViewModel.signIn()
-            }
-            Spacer()
+            AppleLoginButton(action: appleLoginViewModel.signIn)
+            GoogleLoginButton(action: googleLoginViewModel.signIn)
         }
         .padding(.horizontal, 20)
-        .adjustedHeightSheet()
+        .adjustedHeightSheet(maxHeight: 220)
     }
 }
