@@ -35,14 +35,8 @@ extension CatSeugiView: View {
                             if let member = appState.profile.data?.member {
                                 let isMe = message.userId == member.id
                                 ChatItemView(
-                                    author: isMe ? member : .just(name: "캣스기"),
                                     type: isMe ? .me : .ai,
-                                    config: ChatItemConfig(
-                                        message: message,
-                                        isFirst: messages.isFirstMessage(at: index),
-                                        isLast: messages.isLastMessage(at: index),
-                                        joinUserCount: 2
-                                    )
+                                    message: message
                                 )
                             }
                         }

@@ -12,6 +12,10 @@ public extension Publisher {
     func silentSink() -> AnyCancellable {
         return self.sink { _ in } receiveValue: { _ in }
     }
+    
+    func silentSink(in set: inout Set<AnyCancellable>) {
+        self.silentSink().store(in: &set)
+    }
 }
 
 // Allow to assign Optional value

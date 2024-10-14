@@ -1,12 +1,15 @@
 import Domain
 import Combine
+import SwiftUtil
 
 public final class FakeStompMessageRepo: StompMessageRepo {
-    public func sendMessage(roomId: String, type: Domain.MessageType, message: String, mention: [Int]?, mentionAll: Bool?, emoticon: String?) {
+    public func sendMessage(
+        _ req: SendMessageReq
+    ) {
         Log.info("💎 FakeStompMessageRepo.sendMessage")
     }
     
-    public func subGetMessage(roomId: String) -> AnyPublisher<Message, Never> {
+    public func subGetMessage(roomId: String) -> AnyPublisher<MessageRes, Never> {
         [].publisher.eraseToAnyPublisher()
     }
     

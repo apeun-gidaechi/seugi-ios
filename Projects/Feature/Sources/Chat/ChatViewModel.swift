@@ -47,7 +47,10 @@ extension ChatViewModel {
 }
 
 extension ChatViewModel {
-    func fetchChats(workspaceId: String) {
+    func fetchChats(
+        workspaceId: String,
+        roomType: RoomType
+    ) {
         switch roomType {
         case .personal:
             chatRepo.searchPersonal(workspaceId: workspaceId)

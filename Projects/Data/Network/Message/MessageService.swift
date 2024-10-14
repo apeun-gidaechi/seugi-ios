@@ -14,8 +14,8 @@ final class MessageService {
 
 // MARK: - HTTP Protocol
 extension MessageService: MessageRepo {
-    public func getMessages(roomId: String, timestamp: Date?) -> APIResult<Base<GetMessage>> {
-        runner.deepDive(MessageEndpoint.getMessages(roomId: roomId, timestamp: timestamp), res: Base<GetMessage>.self)
+    public func getMessages(roomId: String, timestamp: Date?) -> APIResult<Base<GetMessageRes>> {
+        runner.deepDive(MessageEndpoint.getMessages(roomId: roomId, timestamp: timestamp), res: Base<GetMessageRes>.self)
     }
 }
 
@@ -66,8 +66,8 @@ extension MessageService: StompMessageRepo {
         stomp.sendJSONForDict(dict: req, to: "/pub/chat.message")
     }
     
-    public func subGetMessage(roomId: String) -> AnyPublisher<Message, Never> {
-        stomp.subBody(destination: "/exchange/chat.exchange/room.\(roomId)", res: Message.self)
+    public func subGetMessage(roomId: String) -> AnyPublisher<MessageRes, Never> {
+        stomp.subBody(destination: "/exchange/chat.exchange/room.\(roomId)", res: MessageRes.self)
             .eraseToAnyPublisher()
     }
     

@@ -25,6 +25,7 @@ public final class ChatDetailViewModel: ObservableObject {
     
     init(room: Room) {
         self.room = room
+        
         self.fetchMessages()
         self.subscribe()
     }
@@ -51,9 +52,16 @@ extension ChatDetailViewModel {
 extension ChatDetailViewModel {
     func subscribe() {
         stompMessageRepo.subGetMessage(roomId: room.id)
-            .sink { [self] res in
+            .map { $0.toDomain() }
+            .sink { message in
                 self.messages = self.messages.map {
-                    $0 + [res]
+                    let messages = $0 + [
+                        message
+                            .setupAuthor(room: self.room)
+                            .setupDetailText(room: self.room)
+                    ]
+                    return messages
+                        .setupIsFirstAndIsLast()
                 }
             }
             .store(in: &subscriptions)
@@ -69,10 +77,17 @@ extension ChatDetailViewModel {
             timestamp: messages.data?.getFirstMessageTimestamp()
         )
         .map(\.data.messages)
-        .map { $0.sorted { $0.timestamp ?? .now < $1.timestamp ?? .now } }
+        .map { messages in
+            messages
+                .map { $0.toDomain() }
+                .sortedByTimestamp()
+                .setupIsFirstAndIsLast()
+                .setupAuthor(room: self.room)
+                .setupDetailText(room: self.room)
+        }
+        .ignoreError()
         .flow(\.messages, on: self)
-        .silentSink()
-        .store(in: &subscriptions)
+        .silentSink(in: &subscriptions)
     }
     
     func sendMessage(room: Room) {
@@ -93,7 +108,15 @@ extension ChatDetailViewModel {
     func left(roomId: String) {
         chatRepo.leftGroup(roomId: roomId)
             .flow(\.leftRoomFlow, on: self)
-            .silentSink()
-            .store(in: &subscriptions)
+            .silentSink(in: &subscriptions)
     }
 }
+
+/**
+ self.config = ChatItemConfig(
+     message: message,
+     isFirst: messages.isFirstMessage(at: currentIndex),
+     isLast: messages.isLastMessage(at: currentIndex),
+     joinUserCount: room.joinUserInfo.count
+ )
+ */

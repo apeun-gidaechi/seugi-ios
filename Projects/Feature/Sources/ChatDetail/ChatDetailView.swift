@@ -52,24 +52,20 @@ extension ChatDetailView {
                             // TODO: FETCH NEW DATA
                         }
                     LazyVStack(spacing: 0) {
-                        Group {
-                            ForEach(messages.indices, id: \.self) { index in
-                                ChatMessageCell(
-                                    messages: messages,
-                                    currentIndex: index,
-                                    room: room
-                                ) {
-                                    switch $0 {
-                                    case .clickImage:
-                                        if let url = messages[index].message.split(separator: MessageConstant.fileSeparator) // TODO: refactor
-                                            .first
-                                            .map(String.init) {
-                                            router.navigate(to: MainDestination.imagePreview(URL(string: url) ?? .aboutBlank))
-                                        }
-                                    case .downloadFile:
-                                        // TODO: Handle
-                                        break
+                        ForEach(messages, id: \.id) { message in
+                            ChatMessageCell(
+                                message: message
+                            ) {
+                                switch $0 {
+                                case .clickImage:
+                                    if let url = message.message.split(separator: MessageConstant.fileSeparator) // TODO: refactor
+                                        .first
+                                        .map(String.init) {
+                                        router.navigate(to: MainDestination.imagePreview(URL(string: url) ?? .aboutBlank))
                                     }
+                                case .downloadFile:
+                                    // TODO: Handle
+                                    break
                                 }
                             }
                         }
@@ -127,7 +123,7 @@ extension ChatDetailView {
         .onChange(of: viewModel.photo) { _ in } // TODO: impl
         .onReceive(viewModel.$messages) {
             if case .success = $0 {
-                scrollToBottom(animated: true)
+                scrollToBottom()
             }
         }
         .onReceive(viewModel.$leftRoomFlow) { flow in

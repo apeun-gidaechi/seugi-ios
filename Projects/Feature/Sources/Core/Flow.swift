@@ -137,14 +137,19 @@ public extension Publisher {
     @inlinable
     func flow<Object: AnyObject>(
         _ keyPath: ReferenceWritableKeyPath<Object, Flow<Output>>,
-        on object: Object
+        on object: Object,
+        receiveOutput: ((Self.Output) -> Void)? = nil
     ) -> AnyPublisher<Output, Failure> {
         self.handleEvents(
             receiveSubscription: { _ in
                 object[keyPath: keyPath] = .fetching
             },
             receiveOutput: { output in
-                object[keyPath: keyPath] = .success(output)
+                if let receiveOutput {
+                    receiveOutput(output)
+                } else {
+                    object[keyPath: keyPath] = .success(output)
+                }
             },
             receiveCompletion: { completion in
                 if case .failure(let error) = completion {

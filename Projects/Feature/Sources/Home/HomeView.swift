@@ -61,7 +61,7 @@ extension HomeView: View {
                 showJoinWorkspaceAlert()
             }
         }
-        .onReceive(appState.$selectedWorkspace) {
+        .onChange(of: appState.selectedWorkspace) {
             guard let id = $0?.workspaceId else { return }
             viewModel.fetchMeals(workspaceId: id)
             viewModel.fetchTimetable(workspaceId: id)
