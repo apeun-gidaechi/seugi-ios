@@ -2,7 +2,7 @@ import Foundation
 
 public struct Message: Entity {
     public let id: String?
-    public let chatRoomId: String
+    public let chatRoomId: String?
     public let type: `Type`?
     public let userId: Int
     public let message: String
@@ -17,7 +17,7 @@ public struct Message: Entity {
     
     public init(
         id: String?,
-        chatRoomId: String,
+        chatRoomId: String?,
         type: Type?,
         userId: Int,
         message: String,
