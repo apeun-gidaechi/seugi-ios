@@ -12,6 +12,14 @@ final class NotificationViewModel: ObservableObject {
     @Published var notifications: Flow<[Domain.Notification]> = .fetching
     @Published var removeNotificationFlow: Flow<BaseVoid> = .idle
     @Published var selectedNotificationForAddEmoji: Domain.Notification?
+    
+    var isFirstOnAppear: Bool = true
+}
+
+extension NotificationViewModel: OnAppearProtocol {
+    func fetchAllData(workspaceId: String) {
+        self.fetchNotifications(workspaceId: workspaceId)
+    }
 }
 
 extension NotificationViewModel {

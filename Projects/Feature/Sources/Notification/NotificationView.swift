@@ -82,9 +82,9 @@ extension NotificationView {
         .emojiPicker($addEmojiPresent) { emoji in
             viewModel.patchEmoji(emoji: emoji, profileId: profile?.member.id ?? 0)
         }
-        .onChange(of: appState.selectedWorkspace) {
+        .onChange(of: appState.selectedWorkspace, initial: true) {
             guard let id = $0?.workspaceId else { return }
-            viewModel.fetchNotifications(workspaceId: id)
+            viewModel.onAppear(workspaceId: id)
         }
     }
 }

@@ -47,7 +47,7 @@ extension ChatView: View {
         .hideKeyboardWhenTap()
         .refreshable {
             if let selectedWorkspace = appState.selectedWorkspace {
-                viewModel.fetchChats(workspaceId: selectedWorkspace.workspaceId, roomType: roomType)
+                viewModel.refresh(workspaceId: selectedWorkspace.workspaceId)
             }
         }
         .seugiTopBar(
@@ -66,9 +66,9 @@ extension ChatView: View {
             text: $viewModel.searchText,
             isSearching: $viewModel.isSearching
         )
-        .onChange(of: appState.selectedWorkspace) {
+        .onChange(of: appState.selectedWorkspace, initial: true) {
             guard let id = $0?.workspaceId else { return }
-            viewModel.fetchChats(workspaceId: id, roomType: roomType)
+            viewModel.onAppear(workspaceId: id)
         }
     }
 }

@@ -1,7 +1,6 @@
 import Foundation
-
 import Domain
-
+import SwiftUtil
 import Swinject
 
 public final class KeyValueAssembly: Assembly {

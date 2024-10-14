@@ -35,8 +35,8 @@ extension MainView: View {
                 router.navigateToRoot()
             }
         }
-        .onReceive(appState.$accessToken) {
-            if $0 != nil {
+        .onChange(of: appState.accessToken) { accessToken in
+            if accessToken != nil {
                 stompViewModel.openSocket()
             }
         }

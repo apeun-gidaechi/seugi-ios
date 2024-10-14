@@ -13,11 +13,21 @@ public final class ChatViewModel: ObservableObject {
     @Published var groupRooms: Flow<[Room]> = .fetching
     @Published var searchText = ""
     @Published var isSearching = false
+    var isFirstOnAppear: Bool = true
     
     private let roomType: RoomType
     
     init(roomType: RoomType) {
         self.roomType = roomType
+    }
+}
+
+extension ChatViewModel: OnAppearProtocol {
+    func fetchAllData(workspaceId: String) {
+        switch roomType {
+        case .personal: fetchPersonalChats(workspaceId: workspaceId)
+        case .group: fetchGroupChats(workspaceId: workspaceId)
+        }
     }
 }
 
@@ -47,23 +57,23 @@ extension ChatViewModel {
 }
 
 extension ChatViewModel {
-    func fetchChats(
-        workspaceId: String,
-        roomType: RoomType
+    func fetchPersonalChats(
+        workspaceId: String
     ) {
-        switch roomType {
-        case .personal:
-            chatRepo.searchPersonal(workspaceId: workspaceId)
-                .map(\.data)
-                .flow(\.personalRooms, on: self)
-                .silentSink()
-                .store(in: &subscriptions)
-        case .group:
-            chatRepo.searchGroup(workspaceId: workspaceId)
-                .map(\.data)
-                .flow(\.groupRooms, on: self)
-                .silentSink()
-                .store(in: &subscriptions)
-        }
+        chatRepo.searchPersonal(workspaceId: workspaceId)
+            .map(\.data)
+            .flow(\.personalRooms, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
+    }
+    
+    func fetchGroupChats(
+        workspaceId: String
+    ) {
+        chatRepo.searchGroup(workspaceId: workspaceId)
+            .map(\.data)
+            .flow(\.groupRooms, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
 }

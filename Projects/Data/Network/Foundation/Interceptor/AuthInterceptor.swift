@@ -11,7 +11,14 @@ import Moya
 import Alamofire
 
 final class AuthInterceptor: Moya.RequestInterceptor {
+    enum RefreshResult {
+        case success, failure
+    }
+    
     private var subscriptions = Set<AnyCancellable>()
+    
+    private var actions: [(RefreshResult) -> Void] = []
+    private var isRefreshing: Bool = false
     
     private var keyValueStore: KeyValueRepo
     private var keychainRepo: KeychainRepo
@@ -74,6 +81,19 @@ final class AuthInterceptor: Moya.RequestInterceptor {
         
         Log.network("✅ AuthInterceptor - Try refresh with token - \(refreshToken)")
         
+        if isRefreshing {
+            self.actions.append { result in
+                switch result {
+                case .success:
+                    completion(.retry)
+                case .failure:
+                    completion(.doNotRetryWithError(APIError.refreshFailure))
+                }
+            }
+            return
+        }
+        
+        self.isRefreshing = true
         DefaultNetRunner(
             provider: .init(
                 plugins: [
@@ -86,17 +106,29 @@ final class AuthInterceptor: Moya.RequestInterceptor {
             .map(\.data)
             .receive(on: DispatchQueue.main)
             .subscribe(on: DispatchQueue.global(qos: .background))
-            .sink {
-                if case .failure = $0 {
+            .sink { result in
+                switch result {
+                case .failure:
+                    self.actions.forEach { action in
+                        action(.failure)
+                    }
+                    
                     Log.network(error)
                     self.failureReissue()
                     Log.network("❌ AuthInterceptor - Refresh Failure")
                     completion(.doNotRetryWithError(APIError.refreshFailure))
+                case .finished:
+                    self.actions = []
+                    self.isRefreshing = false
                 }
             } receiveValue: {
                 Log.network("✅ AuthInterceptor - Refresh Success")
                 let accessToken = String($0.split(separator: " ")[1])
                 self.keyValueStore.save(key: .accessToken, value: accessToken)
+                
+                self.actions.forEach { action in
+                    action(.success)
+                }
                 completion(.retry)
             }.store(in: &subscriptions)
     }

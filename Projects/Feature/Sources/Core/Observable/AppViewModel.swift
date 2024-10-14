@@ -15,16 +15,14 @@ public final class AppViewModel: ObservableObject {
     @Inject private var profileRepo: ProfileRepo
     @Inject private var memberRepo: MemberRepo
     
-    @Published var accessToken: String?
-    @Published var refreshToken: String?
+    @AppStorage("accessToken", store: .seugi) var accessToken: String?
+    @AppStorage("refreshToken", store: .seugi) var refreshToken: String?
     @Published var workspaces: Flow<[Workspace]> = .fetching
     @Published var selectedWorkspace: Workspace?
     @Published var profile: Flow<RetrieveProfile> = .fetching
     @Published var logoutFlow: Flow<BaseVoid> = .idle
     
     public init() {
-        accessToken = keyValueRepo.load(key: .accessToken)
-        refreshToken = keychainRepo.load(key: .refreshToken)
         fetchWorkspaces()
         observeState()
     }
@@ -42,22 +40,6 @@ public extension AppViewModel {
 
 extension AppViewModel {
     private func observeState() {
-        $accessToken.sink {
-            if let token = $0 {
-                self.keyValueRepo.save(key: .accessToken, value: token)
-            } else {
-                self.keyValueRepo.delete(key: .accessToken)
-            }
-        }.store(in: &subscriptions)
-        
-        $refreshToken.sink {
-            if let token = $0 {
-                self.keychainRepo.save(key: .refreshToken, value: token)
-            } else {
-                self.keychainRepo.delete(key: .refreshToken)
-            }
-        }.store(in: &subscriptions)
-        
         $selectedWorkspace.sink {
             guard let id = $0?.workspaceId else { return }
             self.keyValueRepo.save(key: .selectedWorkspaceId, value: id)
@@ -85,7 +67,6 @@ extension AppViewModel {
     }
     
     public func fetchWorkspaces() {
-        guard accessToken != nil else { return }
         workspaceRepo.getWorkspaces()
             .map(\.data)
             .flow(\.workspaces, on: self)

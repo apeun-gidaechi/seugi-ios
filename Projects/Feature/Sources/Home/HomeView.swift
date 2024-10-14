@@ -61,11 +61,9 @@ extension HomeView: View {
                 showJoinWorkspaceAlert()
             }
         }
-        .onChange(of: appState.selectedWorkspace) {
+        .onChange(of: appState.selectedWorkspace, initial: true) {
             guard let id = $0?.workspaceId else { return }
-            viewModel.fetchMeals(workspaceId: id)
-            viewModel.fetchTimetable(workspaceId: id)
-            viewModel.fetchSchedules(workspaceId: id)
+            viewModel.onAppear(workspaceId: id)
         }
     }
     

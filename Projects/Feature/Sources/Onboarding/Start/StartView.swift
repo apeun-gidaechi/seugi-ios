@@ -113,6 +113,6 @@ extension StartView: View {
             GoogleLoginButton(action: googleLoginViewModel.signIn)
         }
         .padding(.horizontal, 20)
-        .adjustedHeightSheet(maxHeight: 220)
+        .adjustedHeightSheet(maxHeight: 230)
     }
 }

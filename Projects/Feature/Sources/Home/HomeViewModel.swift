@@ -16,6 +16,18 @@ final class HomeViewModel: ObservableObject {
     @Published var timetables: Flow<[Timetable]> = .fetching
     @Published var schedules: Flow<[Schedule]> = .fetching
     
+    var isFirstOnAppear: Bool = true
+}
+
+extension HomeViewModel: OnAppearProtocol {
+    func fetchAllData(workspaceId: String) {
+        self.fetchMeals(workspaceId: workspaceId)
+        self.fetchTimetable(workspaceId: workspaceId)
+        self.fetchSchedules(workspaceId: workspaceId)
+    }
+}
+
+extension HomeViewModel {
     func fetchMeals(workspaceId: String) {
         mealRepo.getByDate(workspaceId: workspaceId, date: .now)
             .map(\.data)
