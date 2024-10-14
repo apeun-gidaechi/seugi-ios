@@ -13,16 +13,14 @@ struct ChatItemTimeLabelView: View {
         self.message = message
     }
     
-    private var unreadUserCount: Int {
-//        config.joinUserCount - config.message.read.count
-        0 // TODO: FIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIXFIX
-    }
-    
     var body: some View {
         if message.isLast {
-            VStack(alignment: alignment.rawValue, spacing: 0) {
-                if unreadUserCount > 0 {
-                    Text("\(unreadUserCount)")
+            VStack(
+                alignment: alignment.rawValue,
+                spacing: 0
+            ) {
+                if message.unread > 0 {
+                    Text("\(message.unread)")
                         .seugiColor(.gray(.g600))
                         .font(.caption(.c1))
                 }

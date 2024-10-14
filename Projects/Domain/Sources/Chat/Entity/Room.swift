@@ -7,16 +7,16 @@ public struct Room: Entity {
     
     public let id: String
     public let workspaceId: String
-    public let type: RoomType
-    public let roomAdmin: Int
-    public let chatName: String
-    public let chatRoomImg: String?
-    public let createdAt: Date?
-    public let chatStatusEnum: ChatStatusEnum
-    public let joinUserInfo: [UserInfo]
-    public let lastMessage: String?
-    public let lastMessageTimestamp: Date
-    public let notReadCnt: Int
+    public var type: RoomType
+    public var roomAdmin: Int
+    public var chatName: String
+    public var chatRoomImg: String?
+    public var createdAt: Date?
+    public var chatStatusEnum: ChatStatusEnum
+    public var joinUserInfo: [UserInfo]
+    public var lastMessage: String?
+    public var lastMessageTimestamp: Date
+    public var notReadCnt: Int
     
     public init(
         id: String,

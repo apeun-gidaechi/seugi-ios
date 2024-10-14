@@ -24,6 +24,8 @@ public final class ChatDetailViewModel: ObservableObject {
     private let room: Room
     
     init(room: Room) {
+        var room = room
+        room.joinUserInfo.sort { $0.timestamp < $1.timestamp }
         self.room = room
         
         self.fetchMessages()
@@ -62,6 +64,7 @@ extension ChatDetailViewModel {
                     ]
                     return messages
                         .setupIsFirstAndIsLast()
+                        .setupRead(joinUserInfo: self.room.joinUserInfo)
                 }
                 self.objectWillChange.send() // 왜 인지 모르겠는데 뷰 업데이트가 안됨. 그래서 강제로 변경사항을 알림
             }
@@ -85,6 +88,7 @@ extension ChatDetailViewModel {
                 .setupIsFirstAndIsLast()
                 .setupAuthor(room: self.room)
                 .setupDetailText(room: self.room)
+                .setupRead(joinUserInfo: self.room.joinUserInfo)
         }
         .ignoreError()
         .flow(\.messages, on: self)

@@ -99,6 +99,7 @@ public struct Message: Entity, MessageProtocol {
     public var joinUserCount: Int
     public var author: RetrieveMember?
     public var detailText: String?
+    public var unread: Int
     
     public init(
         id: String?,
@@ -116,7 +117,8 @@ public struct Message: Entity, MessageProtocol {
         messageStatus: ChatStatusEnum?,
         isFirst: Bool = false,
         isLast: Bool = false,
-        joinUserCount: Int = 0
+        joinUserCount: Int = 0,
+        unread: Int = 0
     ) {
         self.id = id
         self.chatRoomId = chatRoomId
@@ -134,6 +136,7 @@ public struct Message: Entity, MessageProtocol {
         self.isFirst = isFirst
         self.isLast = isLast
         self.joinUserCount = joinUserCount
+        self.unread = unread
     }
 }
 
@@ -264,5 +267,19 @@ public extension [Message] {
     
     func setupDetailText(room: Room) -> Self {
         return self.map { $0.setupDetailText(room: room) }
+    }
+    
+    func setupRead(joinUserInfo: [UserInfo]) -> Self {
+        var messages = self
+        var userIndex = 0
+
+        for i in 0..<messages.count {
+            while userIndex < joinUserInfo.count && (messages[i].timestamp ?? .now) >= joinUserInfo[userIndex].timestamp {
+                userIndex += 1
+            }
+            
+            messages[i].unread = userIndex
+        }
+        return messages
     }
 }
