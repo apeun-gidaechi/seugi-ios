@@ -57,10 +57,6 @@ extension AppleLoginViewModel: ASAuthorizationControllerDelegate {
                 ($0.familyName ?? "") + ($0.givenName ?? "")
             }
         }
-        
-        if let email = credential.email {
-            self.keyValueRepo.save(key: .appleEmail, value: email)
-        }
         if let nickname {
             self.keyValueRepo.save(key: .appleNickname, value: nickname)
         }

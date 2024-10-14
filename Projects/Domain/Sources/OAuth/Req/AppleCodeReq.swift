@@ -3,17 +3,14 @@ public struct AppleCodeReq: Encodable {
     public let token: String
     public let platform: String = "IOS"
     public let name: String?
-    public let email: String?
     
     public init(
         code: String,
         token: String,
-        name: String?,
-        email: String?
+        name: String?
     ) {
         self.code = code
         self.token = token
         self.name = name
-        self.email = email
     }
 }

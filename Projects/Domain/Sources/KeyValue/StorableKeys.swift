@@ -11,5 +11,4 @@ public enum StorableKeys: String {
     case allowAlarm
     
     case appleNickname = "APPLE_NICKNAME"
-    case appleEmail = "APPLE_EMAIL"
 }

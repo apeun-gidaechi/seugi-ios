@@ -36,14 +36,12 @@ extension StartViewModel {
             .silentSink()
             .store(in: &subscriptions)
         case .apple:
-            let email = keyValueRepo.load(key: .appleEmail) as? String
             let name = keyValueRepo.load(key: .appleNickname) as? String
             oauthRepo.authenticateApple(
                 .init(
                     code: code,
                     token: token,
-                    name: name,
-                    email: email
+                    name: name
                 )
             )
             .map(\.data)
