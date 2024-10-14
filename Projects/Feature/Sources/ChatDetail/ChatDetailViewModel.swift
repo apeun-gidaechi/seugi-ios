@@ -63,6 +63,7 @@ extension ChatDetailViewModel {
                     return messages
                         .setupIsFirstAndIsLast()
                 }
+                self.objectWillChange.send() // 왜 인지 모르겠는데 뷰 업데이트가 안됨. 그래서 강제로 변경사항을 알림
             }
             .store(in: &subscriptions)
     }
@@ -111,12 +112,3 @@ extension ChatDetailViewModel {
             .silentSink(in: &subscriptions)
     }
 }
-
-/**
- self.config = ChatItemConfig(
-     message: message,
-     isFirst: messages.isFirstMessage(at: currentIndex),
-     isLast: messages.isLastMessage(at: currentIndex),
-     joinUserCount: room.joinUserInfo.count
- )
- */

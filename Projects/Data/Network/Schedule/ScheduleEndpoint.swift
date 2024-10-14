@@ -13,7 +13,7 @@ extension ScheduleEndpoint: SeugiEndpoint {
                 .get()
                 .task(req.toURLParameters())
         case .fetchSchedulesForMonth(let req):
-                .get()
+                .get("month")
                 .task(req.toURLParameters())
         }
     }

@@ -40,8 +40,9 @@ extension MainView: View {
                 stompViewModel.openSocket()
             }
         }
-        .onChange(of: appState.selectedWorkspace) { _ in
-            appState.fetchWorkspaces()
-        }
+//        .onChange(of: appState.selectedWorkspace) { _ in
+//            appState.fetchWorkspaces()
+//        }
+        // TODO: ?. 위 코드의 의도를 파악해낼 것
     }
 }
