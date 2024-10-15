@@ -36,7 +36,7 @@ struct MainCoordinator: View {
                     
                     // join workspace
                 case .joinWorkspaceCode: JoinWorkspaceCodeView().environmentObject(joinWorkspaceViewModel)
-                case .joinWorkspaceFinish: JoinWorkspaceRoleView().environmentObject(joinWorkspaceViewModel)
+                case .joinWorkspaceFinish: JoinWorkspaceFinishView().environmentObject(joinWorkspaceViewModel)
                 case .joinWorkspaceSuccess: JoinWorkspaceSuccessView().environmentObject(joinWorkspaceViewModel)
                 case .joinWorkspaceRole: JoinWorkspaceRoleView().environmentObject(joinWorkspaceViewModel)
                     
