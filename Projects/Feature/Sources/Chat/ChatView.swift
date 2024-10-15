@@ -23,10 +23,10 @@ extension ChatView: View {
         viewModel.mergedRooms.makeView {
             ProgressView()
         } success: { rooms in
-            if rooms.isEmpty {
-                SeugiError("채팅방이 없어요", image: .kissingFaceWithClosedEyes)
-            } else {
-                ScrollView {
+            ScrollView {
+                if rooms.isEmpty {
+                    SeugiError("채팅방이 없어요", image: .kissingFaceWithClosedEyes)
+                } else {
                     LazyVStack(spacing: 0) {
                         ForEach(rooms, id: \.id) { room in
                             Button {
@@ -38,18 +38,18 @@ extension ChatView: View {
                         }
                     }
                 }
-                .scrollIndicators(.hidden)
+            }
+            .scrollIndicators(.hidden)
+            .refreshable {
+                if let selectedWorkspace = appState.selectedWorkspace {
+                    viewModel.refresh(workspaceId: selectedWorkspace.workspaceId)
+                }
             }
         } failure: { _ in
             SeugiError("불러오기 실패", image: .faceWithDiagonalMouth)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .hideKeyboardWhenTap()
-        .refreshable {
-            if let selectedWorkspace = appState.selectedWorkspace {
-                viewModel.refresh(workspaceId: selectedWorkspace.workspaceId)
-            }
-        }
         .seugiTopBar(
             title: roomType.text,
             showBackButton: false
