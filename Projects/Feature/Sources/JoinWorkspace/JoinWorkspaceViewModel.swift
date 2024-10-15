@@ -15,7 +15,7 @@ public final class JoinWorkspaceViewModel: ObservableObject {
     @Published public var code: String = ""
     
     public var isValidInput: Bool {
-        code.count < 6
+        code.count == 6
     }
 }
 

@@ -48,8 +48,5 @@ extension JoinWorkspaceCodeView: View {
                 break
             }
         }
-        .onDisappear {
-            viewModel.code = ""
-        }
     }
 }
