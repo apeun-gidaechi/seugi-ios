@@ -23,6 +23,34 @@ extension StompViewModel {
         Log.info("💎 StompViewModel.subscribe")
         stompRepo.closeSocket()
         stompRepo.openSocket()
+        self.subscribe()
+    }
+    
+    public func reconnect() {
+        Log.info("💎 StompViewModel.reconnect")
+        stompRepo.closeSocket()
+        
+        guard let refreshToken = keychainRepo.load(key: .refreshToken) else {
+            Log.error("🤩 STOMP disConnected - RefreshToken not founded")
+            return
+        }
+        memberRepo.refresh(token: refreshToken)
+            .ignoreError()
+            .map(\.data)
+            .sink { token in
+                self.keyValueRepo.save(
+                    key: .accessToken,
+                    value: String(token.split(separator: " ")[1])
+                )
+                Log.info("🤩 STOMP disConnected - reconnecting...")
+                
+                self.stompRepo.reconnect(time: 10)
+                self.subscribe()
+            }
+            .store(in: &subscriptions)
+    }
+    
+    public func subscribe() {
         stompRepo.subConnect()
             .sink { _ in
                 Log.info("🤩 STOMP connected")
@@ -34,23 +62,8 @@ extension StompViewModel {
             }
             .store(in: &subscriptions)
         stompRepo.subDisconnect()
-            .sink { [self] _ in
+            .sink { _ in
                 Log.info("🤩 STOMP disConnected")
-                guard let refreshToken = keychainRepo.load(key: .refreshToken) else {
-                    Log.error("🤩 STOMP disConnected - RefreshToken not founded")
-                    return
-                }
-                memberRepo.refresh(token: refreshToken)
-                    .ignoreError()
-                    .map(\.data)
-                    .sink { token in
-                        self.keyValueRepo.save(
-                            key: .accessToken,
-                            value: String(token.split(separator: " ")[1])
-                        )
-                        Log.info("🤩 STOMP disConnected - reconnecting...")
-                    }
-                    .store(in: &subscriptions)
             }
             .store(in: &subscriptions)
         stompRepo.subSendError()

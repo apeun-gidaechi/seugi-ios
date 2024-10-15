@@ -18,7 +18,9 @@ final class SettingProfileViewModel: ObservableObject {
     ) {
         memberRepo.edit(
             .init(
-                picture: picture, name: member.name, birth: member.birth
+                picture: picture,
+                name: member.name,
+                birth: member.birth
             )
         )
         .flow(\.editMemberFlow, on: self)

@@ -49,16 +49,16 @@ extension SecondCreateGroupChatView: View {
             }
         )
         .onReceive(viewModel.$createRoomFlow) { flow in
-            switch flow {
-            case .success:
-                router.navigateToRoot()
-            case .failure:
+            if case .failure = flow {
                 alertProvider.present(
                     .init(title: "채팅방 만들기 실패")
                     .primaryButton("확인")
                 )
-            default:
-                break
+            }
+        }
+        .onReceive(viewModel.$createdRoom) { flow in
+            if case .success(let room) = flow {
+                router.replace([MainDestination.chatDetail(room: room)])
             }
         }
     }

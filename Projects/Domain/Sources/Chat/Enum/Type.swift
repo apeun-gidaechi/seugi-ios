@@ -6,6 +6,7 @@ public enum `Type`: String, Entity {
     case left = "LEFT"
     case transferAdmin = "TRANSFER_ADMIN"
     case sub = "SUB"
+    case unsub = "UNSUB"
     case deleteMessage = "DELETE_MESSAGE"
     case addEmoji = "ADD_EMOJI"
     case removeEmoji = "REMOVE_EMOJI"
