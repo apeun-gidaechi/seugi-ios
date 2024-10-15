@@ -12,7 +12,7 @@ import Component
 struct InvitateMemberView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @StateObject private var viewModel = InvitateMemberViewModel()
     
     @State private var buttonsSize: CGSize = .zero
@@ -21,7 +21,7 @@ struct InvitateMemberView: View {
     init() {}
     
     private func fetchAll() {
-        guard let selectedWorkspace = appState.selectedWorkspace else {
+        guard let selectedWorkspace = mainViewModel.selectedWorkspace else {
             return
         }
         viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)
@@ -49,7 +49,7 @@ struct InvitateMemberView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 6)
-                    if let workspaceRole = appState.workspaceRole,
+                    if let workspaceRole = mainViewModel.workspaceRole,
                        workspaceRole >= .middleAdmin {
                         viewModel.waitMembers.makeView {
                             ProgressView()
@@ -92,14 +92,14 @@ struct InvitateMemberView: View {
                 HStack(spacing: 8) {
                     Group {
                         SeugiButton.large("거절", type: .red) {
-                            guard let selectedWorkspace = appState.selectedWorkspace else {
+                            guard let selectedWorkspace = mainViewModel.selectedWorkspace else {
                                 return
                             }
                             viewModel.addWorkspace(workspaceId: selectedWorkspace.workspaceId)
                         }
                         .frame(width: proxy.size.width * 0.33)
                         SeugiButton.large("수락", type: .primary, isLoading: viewModel.addWorkspaceFlow == .fetching) {
-                            guard let selectedWorkspace = appState.selectedWorkspace else {
+                            guard let selectedWorkspace = mainViewModel.selectedWorkspace else {
                                 return
                             }
                             viewModel.addWorkspace(workspaceId: selectedWorkspace.workspaceId)
@@ -134,7 +134,7 @@ struct InvitateMemberView: View {
                 alertProvider.present(
                     .init(title: "가입 수락 성공")
                 )
-                guard let selectedWorkspace = appState.selectedWorkspace else {
+                guard let selectedWorkspace = mainViewModel.selectedWorkspace else {
                     return
                 }
                 viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)
@@ -154,7 +154,7 @@ struct InvitateMemberView: View {
                 alertProvider.present(
                     .init(title: "가입 거절 성공")
                 )
-                guard let selectedWorkspace = appState.selectedWorkspace else {
+                guard let selectedWorkspace = mainViewModel.selectedWorkspace else {
                     return
                 }
                 viewModel.fetchWaitMembers(workspaceId: selectedWorkspace.workspaceId)

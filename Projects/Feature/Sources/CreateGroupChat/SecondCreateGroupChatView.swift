@@ -6,7 +6,7 @@ public struct SecondCreateGroupChatView {
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var viewModel: CreateGroupChatViewModel
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     
     public init() {}
 }
@@ -38,8 +38,8 @@ extension SecondCreateGroupChatView: View {
             title: "",
             subView: {
                 SeugiButton.small("완료", type: .transparent, isLoading: viewModel.createRoomFlow.is(.fetching)) {
-                    if let selectedWorkspace = appState.selectedWorkspace,
-                       let member = appState.profile.data?.member {
+                    if let selectedWorkspace = mainViewModel.selectedWorkspace,
+                       let member = mainViewModel.profile.data?.member {
                         viewModel.createGroupChat(
                             workspaceId: selectedWorkspace.workspaceId,
                             memberId: member.id

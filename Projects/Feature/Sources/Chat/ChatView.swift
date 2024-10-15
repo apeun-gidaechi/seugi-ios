@@ -4,7 +4,7 @@ import Domain
 
 public struct ChatView {
     @EnvironmentObject private var router: RouterViewModel
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     
     @StateObject private var viewModel: ChatViewModel
     
@@ -45,9 +45,9 @@ extension ChatView: View {
         }
         .scrollIndicators(.hidden)
         .refreshable {
-            if let selectedWorkspace = appState.selectedWorkspace,
-               let userId = appState.profile.data?.member.id {
-                viewModel.refresh(workspaceId: selectedWorkspace.workspaceId, userId: userId)
+            if let selectedWorkspace = mainViewModel.selectedWorkspace,
+               let userId = mainViewModel.profile.data?.member.id {
+                viewModel.onAppear(workspaceId: selectedWorkspace.workspaceId, userId: userId)
             }
         }
         .hideKeyboardWhenTap()
@@ -68,14 +68,12 @@ extension ChatView: View {
             isSearching: $viewModel.isSearching
         )
         .onAppear {
-            guard let id = appState.selectedWorkspace?.workspaceId,
-                  let userId = appState.profile.data?.member.id else { return }
-            viewModel.refresh(workspaceId: id, userId: userId)
+            guard let id = mainViewModel.selectedWorkspace?.workspaceId else { return }
+            viewModel.onAppear(workspaceId: id)
         }
-        .onChange(of: appState.selectedWorkspace) {
-            guard let id = $0?.workspaceId,
-                  let userId = appState.profile.data?.member.id else { return }
-            viewModel.onAppear(workspaceId: id, userId: userId)
+        .onChange(of: mainViewModel.selectedWorkspace) {
+            guard let id = $0?.workspaceId else { return }
+            viewModel.onCreate(workspaceId: id)
         }
     }
 }

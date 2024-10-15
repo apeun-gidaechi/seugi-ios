@@ -13,7 +13,7 @@ import Domain
 struct WorkspaceMemberView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @StateObject private var viewModel = WorkspaceMemberViewModel()
     
     @State private var isSheetPresent: Bool = false
@@ -34,7 +34,7 @@ struct WorkspaceMemberView: View {
             members.makeView {
                 ProgressView()
             } success: { members in
-                if let selectedWorkspace = appState.selectedWorkspace {
+                if let selectedWorkspace = mainViewModel.selectedWorkspace {
                     if members.isEmpty {
                         SeugiError("멤버가 없어요", image: .faceWithDiagonalMouth)
                     } else {
@@ -97,7 +97,7 @@ struct WorkspaceMemberView: View {
             .presentationDetents([.height(sheetSize.height)])
         }
         .onAppear {
-            guard let selectedWorkspace = appState.selectedWorkspace else {
+            guard let selectedWorkspace = mainViewModel.selectedWorkspace else {
                 return
             }
             viewModel.fetchMembers(workspaceId: selectedWorkspace.workspaceId)

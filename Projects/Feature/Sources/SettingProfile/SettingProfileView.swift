@@ -6,8 +6,9 @@ import Domain
 public struct SettingProfileView {
     @Environment(\.openURL) private var openURL
     
-    @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var router: RouterViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var alert: AlertProvider
     
     @StateObject private var viewModel = SettingProfileViewModel()
@@ -18,7 +19,7 @@ public struct SettingProfileView {
     @State private var isSheetPresent: Bool = false
     
     private var profile: RetrieveProfile? {
-        appState.profile.data
+        mainViewModel.profile.data
     }
 }
 
@@ -114,7 +115,7 @@ extension SettingProfileView: View {
         .onReceive(fileViewModel.$fileFlow) { flow in
             switch flow {
             case .success(let file):
-                if let profile = appState.profile.data {
+                if let profile = mainViewModel.profile.data {
                     viewModel.editMember(picture: file.url, member: profile.member)
                 }
             case .failure(let error):
@@ -126,7 +127,7 @@ extension SettingProfileView: View {
         .onReceive(viewModel.$editMemberFlow) { flow in
             switch flow {
             case .success:
-                appState.fetchMyInfo()
+                mainViewModel.fetchMyInfo()
                 alert.present(
                     .init(title: "정보 수정 성공")
                 )

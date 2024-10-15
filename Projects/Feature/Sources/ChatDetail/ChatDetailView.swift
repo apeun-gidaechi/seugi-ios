@@ -15,7 +15,6 @@ public struct ChatDetailView: View {
     @Environment(\.dismiss) private var dismiss
     
     @EnvironmentObject private var alert: AlertProvider
-    @EnvironmentObject private var appState: AppViewModel
     @EnvironmentObject private var router: RouterViewModel
     
     @StateObject private var viewModel: ChatDetailViewModel

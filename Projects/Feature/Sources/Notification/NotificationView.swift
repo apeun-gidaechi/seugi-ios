@@ -3,7 +3,7 @@ import Component
 import Domain
 
 public struct NotificationView: View {
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var alert: AlertProvider
     @EnvironmentObject private var viewModel: NotificationViewModel
@@ -11,7 +11,7 @@ public struct NotificationView: View {
     @State private var addEmojiPresent: Bool = false
     
     private var profile: RetrieveProfile? {
-        appState.profile.data
+        mainViewModel.profile.data
     }
 }
 
@@ -43,7 +43,7 @@ extension NotificationView {
             .padding(.horizontal, 20)
         }
         .refreshable {
-            guard let selectedWorkspace = appState.selectedWorkspace else {
+            guard let selectedWorkspace = mainViewModel.selectedWorkspace else {
                 return
             }
             viewModel.fetchNotifications(workspaceId: selectedWorkspace.workspaceId)
@@ -57,7 +57,7 @@ extension NotificationView {
             showBackButton: false
         )
         .buttons {
-            if appState.workspaceRole != .student {
+            if mainViewModel.workspaceRole != .student {
                 .init(icon: .writeLine) {
                     router.navigate(to: MainDestination.createNotification)
                 }
@@ -82,9 +82,9 @@ extension NotificationView {
         .emojiPicker($addEmojiPresent) { emoji in
             viewModel.patchEmoji(emoji: emoji, profileId: profile?.member.id ?? 0)
         }
-        .onChange(of: appState.selectedWorkspace, initial: true) {
+        .onChange(of: mainViewModel.selectedWorkspace, initial: true) {
             guard let id = $0?.workspaceId else { return }
-            viewModel.onAppear(workspaceId: id)
+            viewModel.onCreate(workspaceId: id)
         }
     }
 }
@@ -94,7 +94,7 @@ extension NotificationView {
         for notification: Domain.Notification,
         action: NotificationCell.Action
     ) {
-        guard let selectedWorkspace = appState.selectedWorkspace else {
+        guard let selectedWorkspace = mainViewModel.selectedWorkspace else {
             return
         }
         switch action {

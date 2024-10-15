@@ -10,7 +10,7 @@ public struct PostNotificationView {
     
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var router: RouterViewModel
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var notificationViewModel: NotificationViewModel
     
     @StateObject private var viewModel = PostNotificationViewModel()
@@ -54,7 +54,7 @@ extension PostNotificationView: View {
                     hideKeyboard() // for UX
                     switch type {
                     case .createNotification:
-                        guard let selectedWorkspace = appState.selectedWorkspace else {
+                        guard let selectedWorkspace = mainViewModel.selectedWorkspace else {
                             return
                         }
                         viewModel.createNotification(workspaceId: selectedWorkspace.workspaceId)
@@ -77,7 +77,7 @@ extension PostNotificationView: View {
                         dismiss()
                     }
                 )
-                if let workspaceId = appState.selectedWorkspace?.workspaceId {
+                if let workspaceId = mainViewModel.selectedWorkspace?.workspaceId {
                     notificationViewModel.fetchNotifications(workspaceId: workspaceId)
                 }
             case .failure:

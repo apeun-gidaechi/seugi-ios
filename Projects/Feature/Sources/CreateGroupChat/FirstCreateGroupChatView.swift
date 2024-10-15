@@ -5,7 +5,7 @@ import SwiftUIUtil
 import Domain
 
 struct FirstCreateGroupChatView {
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var viewModel: CreateGroupChatViewModel
     
@@ -14,7 +14,7 @@ struct FirstCreateGroupChatView {
     public init() {}
     
     private var profile: RetrieveProfile? {
-        appState.profile.data
+        mainViewModel.profile.data
     }
 }
 
@@ -67,8 +67,8 @@ extension FirstCreateGroupChatView: View {
                     type: .transparent,
                     isLoading: viewModel.createRoomFlow.is(.fetching)
                 ) {
-                    guard let selectedWorkspace = appState.selectedWorkspace,
-                          let member = appState.profile.data?.member else {
+                    guard let selectedWorkspace = mainViewModel.selectedWorkspace,
+                          let member = mainViewModel.profile.data?.member else {
                         return
                     }
                     if viewModel.selectedMembers.count > 1 {
@@ -84,8 +84,8 @@ extension FirstCreateGroupChatView: View {
             }
         )
         .onAppear {
-            guard let selectedWorkspace = appState.selectedWorkspace,
-                  let member = appState.profile.data?.member else {
+            guard let selectedWorkspace = mainViewModel.selectedWorkspace,
+                  let member = mainViewModel.profile.data?.member else {
                 return
             }
             viewModel.fetchWorkspaceMembers(

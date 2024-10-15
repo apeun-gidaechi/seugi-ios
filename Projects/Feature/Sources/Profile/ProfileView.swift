@@ -5,20 +5,20 @@ import Domain
 public struct ProfileView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var router: RouterViewModel
     @StateObject private var viewModel = ProfileViewModel()
     @State private var isSheetPresent: Bool = false
     
     private var profile: RetrieveProfile? {
-        appState.profile.data
+        mainViewModel.profile.data
     }
     
     public var body: some View {
         ScrollView {
             VStack(spacing: 8) {
                 HStack(spacing: 10) {
-                    appState.profile.makeView {
+                    mainViewModel.profile.makeView {
                         ProgressView()
                     } success: { profile in
                         SeugiAvatar(profile.member.picture, type: .medium)
@@ -40,7 +40,7 @@ public struct ProfileView: View {
                 .padding(.vertical, 8)
                 .padding(.horizontal, 16)
                 SeugiDivider(thickness: .thick)
-                appState.profile.makeView {
+                mainViewModel.profile.makeView {
                     ProgressView()
                 } success: { profile in
                     ProfileCell("상태메세지", value: profile.status) {
@@ -78,7 +78,7 @@ public struct ProfileView: View {
                 alertProvider.present(
                     .init(title: "\(viewModel.selectedProfleInfolabel) 수정 성공")
                 )
-                appState.fetchMyInfo()
+                mainViewModel.fetchMyInfo()
             case .failure:
                 alertProvider.present(
                     .init(title: "\(viewModel.selectedProfleInfolabel) 수정 실패")
@@ -104,7 +104,7 @@ public struct ProfileView: View {
                 viewModel.updateProfileContent = $0
             }
         ) {
-            guard let selectedWorkspace = appState.selectedWorkspace else {
+            guard let selectedWorkspace = mainViewModel.selectedWorkspace else {
                 return
             }
             self.viewModel.updateProfile(workspaceId: selectedWorkspace.workspaceId)

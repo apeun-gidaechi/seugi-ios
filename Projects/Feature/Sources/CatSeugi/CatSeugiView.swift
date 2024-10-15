@@ -9,7 +9,7 @@ public struct CatSeugiView {
         case top
     }
     
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var alert: AlertProvider
     
     @StateObject private var viewModel = CatSeugiViewModel()
@@ -32,7 +32,7 @@ extension CatSeugiView: View {
                             .id(Id.top)
                         ForEach(messages.indices, id: \.self) { index in
                             let message = messages[index]
-                            if let member = appState.profile.data?.member {
+                            if let member = mainViewModel.profile.data?.member {
                                 let isMe = message.userId == member.id
                                 ChatItemView(
                                     type: isMe ? .me : .ai,
@@ -84,7 +84,7 @@ extension CatSeugiView: View {
         SeugiChatTextField("메세지 보내기", text: $viewModel.message, hasMenu: false) { action in
             switch action {
             case .sendMessage:
-                guard let member = appState.profile.data?.member else {
+                guard let member = mainViewModel.profile.data?.member else {
                     return
                 }
                 viewModel.sendMessage(userId: member.id)

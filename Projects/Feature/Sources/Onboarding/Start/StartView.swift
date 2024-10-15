@@ -61,7 +61,6 @@ extension StartView: View {
                         accessToken: String(token.accessToken.split(separator: " ")[1]),
                         refreshToken: String(token.refreshToken.split(separator: " ")[1])
                     )
-                    appState.login()
                     router.navigateToRoot()
                 }
             case .failure:

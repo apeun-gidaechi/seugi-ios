@@ -4,19 +4,19 @@ import SwiftUIUtil
 
 struct HomeView {
     @EnvironmentObject private var alertProvider: AlertProvider
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var router: RouterViewModel
     
     @StateObject private var viewModel = HomeViewModel()
     
     private var isWorkspaceEmpty: Bool {
-        appState.workspaces.data?.isEmpty ?? true
+        mainViewModel.workspaces.data?.isEmpty ?? true
     }
     
     private var flow: HomeFetchFlow {
-        if appState.workspaces.is(.fetching) {
+        if mainViewModel.workspaces.is(.fetching) {
             .fetching
-        } else if isWorkspaceEmpty && appState.workspaces.is(.success) {
+        } else if isWorkspaceEmpty && mainViewModel.workspaces.is(.success) {
             .empty
         } else {
             .finished
@@ -46,8 +46,8 @@ extension HomeView: View {
             .padding(.horizontal, 20)
         }
         .refreshable {
-            guard let id = appState.selectedWorkspace?.workspaceId else { return }
-            self.viewModel.refresh(workspaceId: id)
+            guard let id = mainViewModel.selectedWorkspace?.workspaceId else { return }
+            self.viewModel.onAppear(workspaceId: id)
         }
         .scrollIndicators(.hidden)
         .seugiBackground(.primary(.p050))
@@ -65,9 +65,9 @@ extension HomeView: View {
                 showJoinWorkspaceAlert()
             }
         }
-        .onChange(of: appState.selectedWorkspace, initial: true) {
+        .onChange(of: mainViewModel.selectedWorkspace, initial: true) {
             guard let id = $0?.workspaceId else { return }
-            viewModel.onAppear(workspaceId: id)
+            viewModel.onCreate(workspaceId: id)
         }
     }
     

@@ -11,39 +11,12 @@ public final class AppViewModel: ObservableObject {
     
     @Inject private var keyValueRepo: KeyValueRepo
     @Inject private var keychainRepo: KeychainRepo
-    @Inject private var workspaceRepo: WorkspaceRepo
-    @Inject private var profileRepo: ProfileRepo
     @Inject private var memberRepo: MemberRepo
     
-    @Published var workspaces: Flow<[Workspace]> = .fetching
-    @Published var selectedWorkspace: Workspace?
-    @Published var profile: Flow<RetrieveProfile> = .fetching
     @Published var logoutFlow: Flow<BaseVoid> = .idle
-    
-    public init() {
-        fetchWorkspaces()
-        observeState()
-    }
-}
-
-public extension AppViewModel {
-    var workspaceRole: WorkspaceRole? {
-        guard let selectedWorkspace,
-              let member = profile.data?.member else {
-            return nil
-        }
-        return .getRole(memberId: member.id, workspace: selectedWorkspace)
-    }
 }
 
 extension AppViewModel {
-    private func observeState() {
-        $selectedWorkspace.sink {
-            guard let id = $0?.workspaceId else { return }
-            self.keyValueRepo.save(key: .selectedWorkspaceId, value: id)
-        }.store(in: &subscriptions)
-    }
-    
     func setToken(
         accessToken: String? = nil,
         refreshToken: String? = nil
@@ -60,10 +33,6 @@ extension AppViewModel {
         }
     }
     
-    public func login() {
-        fetchWorkspaces()
-    }
-    
     public func logout() {
         if let fcmToken = keyValueRepo.load(key: .fcmToken) as? String {
             memberRepo.logout(
@@ -75,9 +44,39 @@ extension AppViewModel {
         }
         keyValueRepo.delete(key: .accessToken)
         keychainRepo.delete(key: .refreshToken)
-        selectedWorkspace = nil
-        profile = .idle
-        workspaces = .idle
+        keyValueRepo.delete(key: .selectedWorkspaceId)
+    }
+}
+
+final class MainViewModel: ObservableObject {
+    var subscriptions = Set<AnyCancellable>()
+    
+    @Inject private var workspaceRepo: WorkspaceRepo
+    @Inject private var profileRepo: ProfileRepo
+    @Inject private var keyValueRepo: KeyValueRepo
+    
+    @Published var workspaces: Flow<[Workspace]> = .fetching
+    @Published var selectedWorkspace: Workspace?
+    @Published var profile: Flow<RetrieveProfile> = .fetching
+    
+    var workspaceRole: WorkspaceRole? {
+        guard let selectedWorkspace,
+              let member = profile.data?.member else {
+            return nil
+        }
+        return .getRole(memberId: member.id, workspace: selectedWorkspace)
+    }
+    
+    init() {
+        self.fetchWorkspaces()
+        self.observeState()
+    }
+    
+    private func observeState() {
+        $selectedWorkspace.sink {
+            guard let id = $0?.workspaceId else { return }
+            self.keyValueRepo.save(key: .selectedWorkspaceId, value: id)
+        }.store(in: &subscriptions)
     }
     
     public func fetchWorkspaces() {
@@ -87,9 +86,9 @@ extension AppViewModel {
             .sink { [self] in
                 if case .failure(let error) = $0 {
                     Log.error("AppState.fetchWorkspaces - \(error)")
-                    if case .refreshFailure = error {
-                        logout()
-                    }
+//                    if case .refreshFailure = error {
+//                        logout()
+//                    }
                 }
             } receiveValue: { [self] workspaces in
                 if let id: String = keyValueRepo.load(key: .selectedWorkspaceId),

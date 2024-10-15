@@ -17,25 +17,25 @@ protocol OnAppearProtocol: AnyObject {
 
 // Only view can be used.
 extension OnAppearProtocol {
-    func onAppear(workspaceId: String) {
+    func onCreate(workspaceId: String) {
         if isFirstOnAppear {
             fetchAllData(workspaceId: workspaceId)
             self.isFirstOnAppear = false
         }
     }
     
-    func onAppear(workspaceId: String, userId: Int) {
+    func onCreate(workspaceId: String, userId: Int) {
         if isFirstOnAppear {
             fetchAllData(workspaceId: workspaceId, userId: userId)
             self.isFirstOnAppear = false
         }
     }
     
-    func refresh(workspaceId: String) {
+    func onAppear(workspaceId: String) {
         fetchAllData(workspaceId: workspaceId)
     }
     
-    func refresh(workspaceId: String, userId: Int) {
+    func onAppear(workspaceId: String, userId: Int) {
         fetchAllData(workspaceId: workspaceId, userId: userId)
     }
     

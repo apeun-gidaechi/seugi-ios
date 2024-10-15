@@ -2,7 +2,7 @@ import SwiftUI
 import Component
 
 struct HomeWorkspaceContainer: View {
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     
     private let flow: HomeFetchFlow
     private let action: () -> Void
@@ -34,7 +34,7 @@ struct HomeWorkspaceContainer: View {
                         .seugiColor(.gray(.g600))
                         .font(.body(.b2))
                 case .finished:
-                    if let workspace = appState.selectedWorkspace {
+                    if let workspace = mainViewModel.selectedWorkspace {
                         Text(workspace.workspaceName)
                             .font(.subtitle(.s2))
                             .seugiColor(.gray(.g600))

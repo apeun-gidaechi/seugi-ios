@@ -4,13 +4,13 @@ import Domain
 
 public struct WorkspaceDetailView: View {
     
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var router: RouterViewModel
     
     @State private var isSheetPresent: Bool = false
     
     private var workspace: Workspace? {
-        appState.selectedWorkspace
+        mainViewModel.selectedWorkspace
     }
     
     public var body: some View {
@@ -53,7 +53,7 @@ public struct WorkspaceDetailView: View {
                             router.navigate(to: MainDestination.manageMember)
                         }
                         .scaledButtonStyle()
-                    if let workspaceRole = appState.workspaceRole,
+                    if let workspaceRole = mainViewModel.workspaceRole,
                        workspaceRole >= .teacher {
                         SeugiListItem.icon(title: "멤버 초대", icon: .expandRightLine)
                             .button {
@@ -70,7 +70,7 @@ public struct WorkspaceDetailView: View {
         .sheet(isPresented: $isSheetPresent) {
             sheet
         }
-        .onChange(of: appState.selectedWorkspace) { _ in // UX - 학교 선택하면 메인 화면으로 이동
+        .onChange(of: mainViewModel.selectedWorkspace) { _ in // UX - 학교 선택하면 메인 화면으로 이동
             router.navigateToRoot()
         }
     }
@@ -79,13 +79,14 @@ public struct WorkspaceDetailView: View {
     private var sheet: some View {
         VStack(spacing: 16) {
             VStack(spacing: 4) {
-                ForEach(appState.workspaces.data ?? [], id: \.workspaceId) { workspace in
-                    HomeWorkspaceCell(workspace: workspace, workspaceRole: appState.workspaceRole ?? .student)
-                        .button {
-                            appState.selectedWorkspace = workspace
-                            isSheetPresent = false
-                        }
-                        .scaledButtonStyle()
+                ForEach(mainViewModel.workspaces.data ?? [], id: \.workspaceId) { workspace in
+                    Button {
+                        mainViewModel.selectedWorkspace = workspace
+                        isSheetPresent = false
+                    } label: {
+                        HomeWorkspaceCell(workspace: workspace, workspaceRole: mainViewModel.workspaceRole ?? .student)
+                    }
+                    .scaledButtonStyle()
                 }
             }
             HStack(spacing: 8) {

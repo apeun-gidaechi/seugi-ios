@@ -8,7 +8,7 @@ struct ChatMessageCell: View {
         case downloadFile
     }
     
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     
     private let message: Message
     private let action: (Action) -> Void
@@ -22,7 +22,7 @@ struct ChatMessageCell: View {
     }
     
     private var me: RetrieveMember? {
-        appState.profile.data?.member
+        mainViewModel.profile.data?.member
     }
     
     private var type: ChatItemViewCellType {

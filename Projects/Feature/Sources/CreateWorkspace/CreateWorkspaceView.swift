@@ -4,7 +4,7 @@ import Component
 import Domain
 
 public struct CreateWorkspaceView {
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var alertProvider: AlertProvider
     
@@ -64,7 +64,7 @@ extension CreateWorkspaceView: View {
                 alertProvider.present(
                     .init(title: "학교 등록 성공")
                     .primaryButton("닫기") {
-                        appState.fetchWorkspaces()
+                        mainViewModel.fetchWorkspaces()
                         router.navigateToRoot()
                     }
                 )

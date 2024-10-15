@@ -7,7 +7,7 @@ import Domain
 public struct MainView {
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var stompViewModel: StompViewModel
-    @EnvironmentObject private var appState: AppViewModel
+    @EnvironmentObject private var mainViewModel: MainViewModel
     
     @AppStorage("ACCESS_TOKEN", store: .seugi) private var accessToken: String?
     
@@ -31,15 +31,13 @@ extension MainView: View {
                 .page(icon: .personFill)
         }
         .ignoresSafeArea(.keyboard)
-        .onReceive(appState.$logoutFlow) { flow in
-            if case .success = flow {
-                selection = 0
-                router.navigateToRoot()
-            }
-        }
-        .onAppear {
-            appState.fetchWorkspaces()
-        }
+        // ㅅㅂ
+//        .onReceive(appState.$logoutFlow) { flow in
+//            if case .success = flow {
+//                selection = 0
+//                router.navigateToRoot()
+//            }
+//        }
         .onChange(of: accessToken) { accessToken in
             if let accessToken {
                 stompViewModel.reissue(accessToken: accessToken)
