@@ -29,11 +29,6 @@ public final class ChatDetailViewModel: ObservableObject {
         self.room = room
         
         self.fetchMessages()
-        self.subscribe()
-    }
-    
-    deinit {
-        self.unsubscribe()
     }
 }
 

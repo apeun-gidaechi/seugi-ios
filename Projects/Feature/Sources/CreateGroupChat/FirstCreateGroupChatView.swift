@@ -95,7 +95,7 @@ extension FirstCreateGroupChatView: View {
         }
         .onReceive(viewModel.$createdRoom) {
             if case .success(let room) = $0 {
-                router.navigate(to: MainDestination.chatDetail(room: room))
+                router.replace([MainDestination.chatDetail(room: room)])
             }
         }
     }

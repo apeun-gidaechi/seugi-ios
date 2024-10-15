@@ -117,6 +117,12 @@ extension ChatDetailView {
             selection: $viewModel.photo,
             matching: .any(of: [.images, .screenshots, .livePhotos])
         )
+        .onAppear {
+            self.viewModel.subscribe()
+        }
+        .onDisappear {
+            self.viewModel.unsubscribe()
+        }
         .onChange(of: isDrawerOpen) { _ in
             hideKeyboard()
         }

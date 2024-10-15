@@ -15,4 +15,11 @@ public final class RouterViewModel: ObservableObject {
     public func navigateToRoot() {
         navPath.removeLast(navPath.count)
     }
+    
+    public func replace(_ path: [any Hashable]) {
+        navPath.removeLast(navPath.count)
+        path.forEach {
+            navPath.append($0)
+        }
+    }
 }
