@@ -1,9 +1,9 @@
 import Foundation
 
 public extension DateFormatter {
-    convenience init(type: DateFormatterType, locale: Locale = Locale(identifier: "ko_KR")) {
+    convenience init(type: DateFormatterType) {
         self.init()
         self.dateFormat = type.rawValue
-        self.locale = locale
+        self.timeZone = .init(abbreviation: "UTC")
     }
 }
