@@ -6,6 +6,11 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let packageSettings = PackageSettings(
+    productTypes: [
+        "Flow": .framework,
+        "Nuke": .framework,
+        "NukeUI": .framework
+    ],
     baseSettings: .settings(
         base: .init(),
         configurations: [

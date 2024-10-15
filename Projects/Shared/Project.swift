@@ -25,7 +25,7 @@ func shared(
 ) -> Target {
     .make(
         name: target.rawValue,
-        product: .staticFramework,
+        product: .framework,
         bundleId: makeBundleId(target.rawValue),
         sources: ["\(target.rawValue)/**"],
         dependencies: dependencies
