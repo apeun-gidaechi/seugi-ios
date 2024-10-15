@@ -30,26 +30,25 @@ extension MessageService: StompRepo {
         stomp.disconnect()
     }
     
-    public func subDisconnect() -> AnyPublisher<Void, Never> {
-        stomp.subDisconnect()
-    }
-    
-    public func subConnect() -> AnyPublisher<Void, Never> {
-        stomp.subConnect()
-    }
-    
-    public func subSendReciept() -> AnyPublisher<String, Never> {
-        stomp.subSendReceipt()
-    }
-    
-    public func subSendError() -> AnyPublisher<SendStompErrorEntity, Never> {
-        stomp.subSendError()
-            .map { $0.toDomain() }
+    public func subStompEvet() -> AnyPublisher<StompEventEntity, Never> {
+        stomp.subject.eraseToAnyPublisher()
+            .map { event in
+                switch event {
+                case .stompClient(let body, let header, let destination):
+                        .stompClient(body: body, header: header, destination: destination)
+                case .stompClientDidDisconnect:
+                        .stompClientDidDisconnect
+                case .stompClientDidConnect:
+                        .stompClientDidConnect
+                case .serverDidSendReceipt(let receiptId):
+                        .serverDidSendReceipt(receiptId: receiptId)
+                case .serverDidSendError(let description, let message):
+                        .serverDidSendError(.init(description: description, message: message))
+                case .serverDidSendPing:
+                        .serverDidSendPing
+                }
+            }
             .eraseToAnyPublisher()
-    }
-    
-    public func subPing() -> AnyPublisher<Void, Never> {
-        stomp.subPing()
     }
     
     public func reissue(accessToken: String) {

@@ -20,39 +20,27 @@ public final class StompViewModel: ObservableObject {
 
 extension StompViewModel {
     public func openSocket() {
-        Log.info("💎 StompViewModel.subscribe")
+        Log.info("💎 StompViewModel.openSocket")
         stompRepo.closeSocket()
         stompRepo.openSocket()
         stompRepo.reconnect(time: 10)
-        self.subscribe()
-    }
-    
-    public func subscribe() {
-        stompRepo.subConnect()
-            .sink { _ in
-                Log.info("🤩 STOMP connected")
-            }
-            .store(in: &self.subscriptions)
-        stompRepo.subPing()
-            .sink { _ in
-                Log.info("🤩 STOMP ping")
-            }
-            .store(in: &self.subscriptions)
-        stompRepo.subDisconnect()
-            .sink { _ in
-                Log.info("🤩 STOMP disConnected")
-                self.stompRepo.closeSocket()
-            }
-            .store(in: &self.subscriptions)
-        stompRepo.subSendError()
-            .sink { error in
-                Log.error("🤩 STOMP error")
-                dump(error)
-            }
-            .store(in: &subscriptions)
-        stompRepo.subSendReciept()
-            .sink { recieptId in
-                Log.info("🤩 STOMP recieptId \(recieptId)")
+        stompRepo.subStompEvet()
+            .sink { event in
+                switch event {
+                case .stompClientDidDisconnect:
+                    Log.info("🤩 STOMP disConnected")
+                case .stompClientDidConnect:
+                    Log.info("🤩 STOMP connected")
+                case .serverDidSendReceipt(let receiptId):
+                    Log.info("🤩 STOMP recieptId \(receiptId)")
+                case .serverDidSendError(let error):
+                    Log.error("🤩 STOMP error")
+                    dump(error)
+                case .serverDidSendPing:
+                    Log.info("🤩 STOMP ping")
+                default:
+                    break
+                }
             }
             .store(in: &subscriptions)
     }

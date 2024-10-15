@@ -1,4 +1,4 @@
-public struct SendStompErrorEntity: Entity {
+public struct StompSendErrorEntity: Entity {
     public let description: String
     public let message: String?
     

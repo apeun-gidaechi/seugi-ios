@@ -20,10 +20,10 @@ public struct ChatView {
 
 extension ChatView: View {
     public var body: some View {
-        viewModel.mergedRooms.makeView {
-            ProgressView()
-        } success: { rooms in
-            ScrollView {
+        ScrollView {
+            viewModel.mergedRooms.makeView {
+                ProgressView()
+            } success: { rooms in
                 if rooms.isEmpty {
                     SeugiError("채팅방이 없어요", image: .kissingFaceWithClosedEyes)
                 } else {
@@ -38,18 +38,18 @@ extension ChatView: View {
                         }
                     }
                 }
+            } failure: { _ in
+                SeugiError("불러오기 실패", image: .faceWithDiagonalMouth)
             }
-            .scrollIndicators(.hidden)
-            .refreshable {
-                if let selectedWorkspace = appState.selectedWorkspace,
-                   let userId = appState.profile.data?.member.id {
-                    viewModel.refresh(workspaceId: selectedWorkspace.workspaceId, userId: userId)
-                }
-            }
-        } failure: { _ in
-            SeugiError("불러오기 실패", image: .faceWithDiagonalMouth)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .scrollIndicators(.hidden)
+        .refreshable {
+            if let selectedWorkspace = appState.selectedWorkspace,
+               let userId = appState.profile.data?.member.id {
+                viewModel.refresh(workspaceId: selectedWorkspace.workspaceId, userId: userId)
+            }
+        }
         .hideKeyboardWhenTap()
         .seugiTopBar(
             title: roomType.text,

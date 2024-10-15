@@ -18,7 +18,7 @@ public final class FakeStompRepo: StompRepo {
         [].publisher.eraseToAnyPublisher()
     }
     
-    public func subSendError() -> AnyPublisher<SendStompErrorEntity, Never> {
+    public func subSendError() -> AnyPublisher<StompSendErrorEntity, Never> {
         Log.info("🤩 FakeStompRepo.subSendError")
         return [].publisher.eraseToAnyPublisher()
     }
