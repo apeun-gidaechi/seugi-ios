@@ -46,18 +46,21 @@ extension RegisterEmailVerificationView: View {
             }
             .disabled(viewModel.isInValidCodeInput)
             .padding(.bottom, 16)
+            .padding(.horizontal, 20)
         }
         .onAppear {
             focused = .verificationCode
         }
+        .onDisappear {
+            viewModel.verificationCode = ""
+            viewModel.signUpFlow = .idle
+            viewModel.sendEmailFlow = .idle
+        }
         .onReceive(viewModel.$signUpFlow) { flow in
             switch flow {
             case .success(let token):
-                UserDefaults.seugi.set(
-                    String(token.accessToken.split(separator: " ")[1]),
-                    forKey: StorableKeys.accessToken.rawValue
-                )
                 appState.setToken(
+                    accessToken: String(token.accessToken.split(separator: " ")[1]),
                     refreshToken: String(token.refreshToken.split(separator: " ")[1])
                 )
                 router.navigateToRoot()
@@ -93,6 +96,8 @@ extension RegisterEmailVerificationView: View {
                 .seugiColor(.gray(.g600))
         } else {
             SeugiButton.small("인증 코드 전송", type: .primary) {
+                let generator = UIImpactFeedbackGenerator(style: .heavy)
+                generator.impactOccurred()
                 timerManager.startTimer {
                     viewModel.isWaiting = false
                 }

@@ -37,6 +37,9 @@ extension MainView: View {
                 router.navigateToRoot()
             }
         }
+        .onAppear {
+            appState.fetchWorkspaces()
+        }
         .onChange(of: accessToken) { accessToken in
             if let accessToken {
                 print("ACCESS_TOKEN IS CHANGED")
