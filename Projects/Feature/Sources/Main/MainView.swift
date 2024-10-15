@@ -9,6 +9,8 @@ public struct MainView {
     @EnvironmentObject private var stompViewModel: StompViewModel
     @EnvironmentObject private var appState: AppViewModel
     
+    @AppStorage("ACCESS_TOKEN", store: .seugi) private var accessToken: String?
+    
     @State private var selection: Int = 0
     
     public init() {}
@@ -35,9 +37,11 @@ extension MainView: View {
                 router.navigateToRoot()
             }
         }
-        .onChange(of: appState.accessToken) { accessToken in
-            if accessToken != nil {
+        .onChange(of: accessToken) { accessToken in
+            if let accessToken {
+                print("ACCESS_TOKEN IS CHANGED")
                 stompViewModel.openSocket()
+                stompViewModel.reissue(accessToken: accessToken)
             }
         }
 //        .onChange(of: appState.selectedWorkspace) { _ in

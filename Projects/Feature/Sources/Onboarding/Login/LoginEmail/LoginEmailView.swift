@@ -69,11 +69,11 @@ extension LoginEmailView: View {
             switch flow {
             case .success(let token):
                 Log.info("EmailSignInView - 로그인 성공")
-                let accessToken = String(token.accessToken.split(separator: " ")[1])
-                let refreshToken = String(token.refreshToken.split(separator: " ")[1])
                 withAnimation {
-                    appState.accessToken = accessToken
-                    appState.refreshToken = refreshToken
+                    appState.setToken(
+                        accessToken: String(token.accessToken.split(separator: " ")[1]),
+                        refreshToken: String(token.refreshToken.split(separator: " ")[1])
+                    )
                     appState.login()
                     router.navigateToRoot()
                 }

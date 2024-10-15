@@ -1,5 +1,6 @@
 import SwiftUI
 import Component
+import Domain
 
 public struct RegisterEmailVerificationView {
     enum FocusedField {
@@ -52,8 +53,13 @@ extension RegisterEmailVerificationView: View {
         .onReceive(viewModel.$signUpFlow) { flow in
             switch flow {
             case .success(let token):
-                appState.accessToken = String(token.accessToken.split(separator: " ")[1])
-                appState.refreshToken = String(token.refreshToken.split(separator: " ")[1])
+                UserDefaults.seugi.set(
+                    String(token.accessToken.split(separator: " ")[1]),
+                    forKey: StorableKeys.accessToken.rawValue
+                )
+                appState.setToken(
+                    refreshToken: String(token.refreshToken.split(separator: " ")[1])
+                )
                 router.navigateToRoot()
             case .failure:
                 alertProvider.present(

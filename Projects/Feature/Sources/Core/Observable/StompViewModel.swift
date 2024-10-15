@@ -1,3 +1,4 @@
+import SwiftUI
 import Foundation
 import Domain
 import DIContainer
@@ -19,9 +20,8 @@ public final class StompViewModel: ObservableObject {
 
 extension StompViewModel {
     public func openSocket() {
-        guard let accessToken = keyValueRepo.load(key: .accessToken) as? String else { return }
         Log.info("💎 StompViewModel.subscribe")
-        stompRepo.reissue(accessToken: accessToken)
+        stompRepo.closeSocket()
         stompRepo.openSocket()
         stompRepo.subConnect()
             .sink { _ in
@@ -44,10 +44,10 @@ extension StompViewModel {
                     .ignoreError()
                     .map(\.data)
                     .sink { token in
-                        let accessToken = String(token.split(separator: " ")[1])
-                        self.stompRepo.reissue(accessToken: accessToken)
-//                        self.stompRepo.reconnect(time: 1)
-                        self.stompRepo.openSocket()
+                        self.keyValueRepo.save(
+                            key: .accessToken,
+                            value: String(token.split(separator: " ")[1])
+                        )
                         Log.info("🤩 STOMP disConnected - reconnecting...")
                     }
                     .store(in: &subscriptions)
@@ -64,5 +64,9 @@ extension StompViewModel {
                 Log.info("🤩 STOMP recieptId \(recieptId)")
             }
             .store(in: &subscriptions)
+    }
+    
+    public func reissue(accessToken: String) {
+        stompRepo.reissue(accessToken: accessToken)
     }
 }

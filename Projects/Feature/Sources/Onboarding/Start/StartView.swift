@@ -56,11 +56,11 @@ extension StartView: View {
         .onReceive(viewModel.$signInFlow) { flow in
             switch flow {
             case .success(let token):
-                let accessToken = String(token.accessToken.split(separator: " ")[1])
-                let refreshToken = String(token.refreshToken.split(separator: " ")[1])
                 withAnimation {
-                    appState.accessToken = accessToken
-                    appState.refreshToken = refreshToken
+                    appState.setToken(
+                        accessToken: String(token.accessToken.split(separator: " ")[1]),
+                        refreshToken: String(token.refreshToken.split(separator: " ")[1])
+                    )
                     appState.login()
                     router.navigateToRoot()
                 }

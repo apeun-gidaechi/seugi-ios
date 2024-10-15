@@ -8,7 +8,6 @@ private let wssBaseUrl = Bundle.main.object(forInfoDictionaryKey: "WssBaseUrl") 
 private let url = URL(string: "\(wssBaseUrl)/stomp/chat")!
 
 final class ApeunStompService {
-    
     @Inject private var keyValueRepo: KeyValueRepo
     
     private init() {}

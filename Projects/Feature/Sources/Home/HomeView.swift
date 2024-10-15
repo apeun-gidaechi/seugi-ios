@@ -45,6 +45,10 @@ extension HomeView: View {
             .padding(.bottom, 80)
             .padding(.horizontal, 20)
         }
+        .refreshable {
+            guard let id = appState.selectedWorkspace?.workspaceId else { return }
+            self.viewModel.refresh(workspaceId: id)
+        }
         .scrollIndicators(.hidden)
         .seugiBackground(.primary(.p050))
         .seugiTopBar(

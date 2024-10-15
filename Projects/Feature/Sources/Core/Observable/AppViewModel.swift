@@ -15,8 +15,6 @@ public final class AppViewModel: ObservableObject {
     @Inject private var profileRepo: ProfileRepo
     @Inject private var memberRepo: MemberRepo
     
-    @AppStorage("accessToken", store: .seugi) var accessToken: String?
-    @AppStorage("refreshToken", store: .seugi) var refreshToken: String?
     @Published var workspaces: Flow<[Workspace]> = .fetching
     @Published var selectedWorkspace: Workspace?
     @Published var profile: Flow<RetrieveProfile> = .fetching
@@ -46,6 +44,22 @@ extension AppViewModel {
         }.store(in: &subscriptions)
     }
     
+    func setToken(
+        accessToken: String? = nil,
+        refreshToken: String? = nil
+    ) {
+        if let accessToken {
+            keyValueRepo.save(key: .accessToken, value: accessToken)
+        } else {
+            keyValueRepo.delete(key: .accessToken)
+        }
+        if let refreshToken {
+            keychainRepo.save(key: .refreshToken, value: refreshToken)
+        } else {
+            keychainRepo.delete(key: .refreshToken)
+        }
+    }
+    
     public func login() {
         fetchWorkspaces()
     }
@@ -59,8 +73,8 @@ extension AppViewModel {
             .silentSink()
             .store(in: &subscriptions)
         }
-        accessToken = nil
-        refreshToken = nil
+        keyValueRepo.delete(key: .accessToken)
+        keychainRepo.delete(key: .refreshToken)
         selectedWorkspace = nil
         profile = .idle
         workspaces = .idle
