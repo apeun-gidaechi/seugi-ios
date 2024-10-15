@@ -45,21 +45,27 @@ public struct ProfileView: View {
                 } success: { profile in
                     ProfileCell("상태메세지", value: profile.status) {
                         viewModel.selectedProfleInfo = \.status
+                        isSheetPresent = true
                     }
                     ProfileCell("직위", value: profile.spot) {
                         viewModel.selectedProfleInfo = \.spot
+                        isSheetPresent = true
                     }
                     ProfileCell("소속", value: profile.belong) {
                         viewModel.selectedProfleInfo = \.belong
+                        isSheetPresent = true
                     }
                     ProfileCell("휴대전화번호", value: profile.phone) {
                         viewModel.selectedProfleInfo = \.phone
+                        isSheetPresent = true
                     }
                     ProfileCell("유선전화번호", value: profile.wire) {
                         viewModel.selectedProfleInfo = \.wire
+                        isSheetPresent = true
                     }
                     ProfileCell("근무위치", value: profile.location) {
                         viewModel.selectedProfleInfo = \.location
+                        isSheetPresent = true
                     }
                 } failure: { _ in }
             }
@@ -85,36 +91,26 @@ public struct ProfileView: View {
         .onChange(of: profile, initial: true) {
             viewModel.updateProfile = $0
         }
-        .onChange(of: viewModel.selectedProfleInfo) { _ in
-            self.isSheetPresent = true
-        }
         .sheet(isPresented: $isSheetPresent, content: sheetContent)
     }
     
     @ViewBuilder
     func sheetContent() -> some View {
-        VStack(spacing: 32) {
-            VStack(alignment: .leading, spacing: 16) {
-                Text("\(viewModel.selectedProfleInfolabel) 수정")
-                    .padding(.leading, 4)
-                    .font(.subtitle(.s2))
-                    .seugiColor(.sub(.black))
-                SeugiTextField(text: .init {
-                    viewModel.updateProfileContent ?? ""
-                } set: {
-                    viewModel.updateProfileContent = $0
-                })
+        ProfileEditSheetView(
+            title: "\(viewModel.selectedProfleInfolabel) 수정",
+            text: .init {
+                viewModel.updateProfileContent ?? ""
+            } set: {
+                viewModel.updateProfileContent = $0
             }
-            SeugiButton.large("저장", type: .primary) {
-                guard let selectedWorkspace = appState.selectedWorkspace else {
-                    return
-                }
-                self.viewModel.updateProfile(workspaceId: selectedWorkspace.workspaceId)
-                self.isSheetPresent = false
+        ) {
+            guard let selectedWorkspace = appState.selectedWorkspace else {
+                return
             }
+            self.viewModel.updateProfile(workspaceId: selectedWorkspace.workspaceId)
+            self.isSheetPresent = false
+            self.viewModel.selectedProfleInfo = nil
         }
-        .padding(20)
-        .presentationDetents([.height(220)])
     }
 }
 
