@@ -41,8 +41,9 @@ extension ChatView: View {
             }
             .scrollIndicators(.hidden)
             .refreshable {
-                if let selectedWorkspace = appState.selectedWorkspace {
-                    viewModel.refresh(workspaceId: selectedWorkspace.workspaceId)
+                if let selectedWorkspace = appState.selectedWorkspace,
+                   let userId = appState.profile.data?.member.id {
+                    viewModel.refresh(workspaceId: selectedWorkspace.workspaceId, userId: userId)
                 }
             }
         } failure: { _ in
@@ -66,9 +67,15 @@ extension ChatView: View {
             text: $viewModel.searchText,
             isSearching: $viewModel.isSearching
         )
-        .onChange(of: appState.selectedWorkspace, initial: true) {
-            guard let id = $0?.workspaceId else { return }
-            viewModel.onAppear(workspaceId: id)
+        .onAppear {
+            guard let id = appState.selectedWorkspace?.workspaceId,
+                  let userId = appState.profile.data?.member.id else { return }
+            viewModel.refresh(workspaceId: id, userId: userId)
+        }
+        .onChange(of: appState.selectedWorkspace) {
+            guard let id = $0?.workspaceId,
+                  let userId = appState.profile.data?.member.id else { return }
+            viewModel.onAppear(workspaceId: id, userId: userId)
         }
     }
 }

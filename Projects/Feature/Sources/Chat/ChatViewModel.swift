@@ -23,10 +23,10 @@ public final class ChatViewModel: ObservableObject {
 }
 
 extension ChatViewModel: OnAppearProtocol {
-    func fetchAllData(workspaceId: String) {
+    func fetchAllData(workspaceId: String, userId: Int) {
         switch roomType {
-        case .personal: fetchPersonalChats(workspaceId: workspaceId)
-        case .group: fetchGroupChats(workspaceId: workspaceId)
+        case .personal: fetchPersonalChats(workspaceId: workspaceId, userId: userId)
+        case .group: fetchGroupChats(workspaceId: workspaceId, userId: userId)
         }
     }
 }
@@ -58,20 +58,28 @@ extension ChatViewModel {
 
 extension ChatViewModel {
     func fetchPersonalChats(
-        workspaceId: String
+        workspaceId: String,
+        userId: Int
     ) {
         chatRepo.searchPersonal(workspaceId: workspaceId)
             .map(\.data)
+            .map {
+                $0.setupOnline(userId: userId)
+            }
             .flow(\.personalRooms, on: self)
             .silentSink()
             .store(in: &subscriptions)
     }
     
     func fetchGroupChats(
-        workspaceId: String
+        workspaceId: String,
+        userId: Int
     ) {
         chatRepo.searchGroup(workspaceId: workspaceId)
             .map(\.data)
+            .map {
+                $0.setupOnline(userId: userId)
+            }
             .flow(\.groupRooms, on: self)
             .silentSink()
             .store(in: &subscriptions)

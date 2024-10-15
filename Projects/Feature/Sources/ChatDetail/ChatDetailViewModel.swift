@@ -48,9 +48,11 @@ extension ChatDetailViewModel {
 
 extension ChatDetailViewModel {
     func subscribe() {
+        print("ChatDetailViewModel.subscribe")
         stompMessageRepo.subGetMessage(roomId: room.id)
             .map { $0.toDomain() }
             .sink { message in
+                print("ChatDetailViewModel.subscribe - subGetMessage() message received")
                 self.messages = self.messages.map {
                     let messages = $0 + [
                         message

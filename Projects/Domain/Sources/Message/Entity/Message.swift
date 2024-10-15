@@ -272,13 +272,16 @@ public extension [Message] {
     func setupRead(joinUserInfo: [UserInfo]) -> Self {
         var messages = self
         var userIndex = 0
-
+        
+        let onlineMemberCount = joinUserInfo.filter { $0.timestamp == .distantPast }.count
+        let joinUserInfo = joinUserInfo.filter { $0.timestamp != .distantPast } // 온라인이 아닌 유저만 카운트
+        
         for i in 0..<messages.count {
             while userIndex < joinUserInfo.count && (messages[i].timestamp ?? .now) >= joinUserInfo[userIndex].timestamp {
                 userIndex += 1
             }
             
-            messages[i].unread = userIndex
+            messages[i].unread = userIndex - onlineMemberCount
         }
         return messages
     }

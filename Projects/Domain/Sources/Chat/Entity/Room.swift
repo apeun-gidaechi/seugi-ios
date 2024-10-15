@@ -67,4 +67,16 @@ public extension [Room] {
             self
         }
     }
+    
+    func setupOnline(userId: Int) -> [Room] {
+        var rooms = self
+        for (i, room) in rooms.enumerated() {
+            for (j, userInfo) in room.joinUserInfo.enumerated() {
+                if userInfo.userInfo.id == userId {
+                    rooms[i].joinUserInfo[j].timestamp = .distantPast
+                }
+            }
+        }
+        return self
+    }
 }

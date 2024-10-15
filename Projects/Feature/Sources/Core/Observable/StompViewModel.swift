@@ -23,49 +23,27 @@ extension StompViewModel {
         Log.info("💎 StompViewModel.subscribe")
         stompRepo.closeSocket()
         stompRepo.openSocket()
+        stompRepo.reconnect(time: 10)
         self.subscribe()
-    }
-    
-    public func reconnect() {
-        Log.info("💎 StompViewModel.reconnect")
-        stompRepo.closeSocket()
-        
-        guard let refreshToken = keychainRepo.load(key: .refreshToken) else {
-            Log.error("🤩 STOMP disConnected - RefreshToken not founded")
-            return
-        }
-        memberRepo.refresh(token: refreshToken)
-            .ignoreError()
-            .map(\.data)
-            .sink { token in
-                self.keyValueRepo.save(
-                    key: .accessToken,
-                    value: String(token.split(separator: " ")[1])
-                )
-                Log.info("🤩 STOMP disConnected - reconnecting...")
-                
-                self.stompRepo.reconnect(time: 10)
-                self.subscribe()
-            }
-            .store(in: &subscriptions)
     }
     
     public func subscribe() {
         stompRepo.subConnect()
             .sink { _ in
                 Log.info("🤩 STOMP connected")
-                self.stompRepo.subPing()
-                    .sink { _ in
-                        Log.info("🤩 STOMP ping")
-                    }
-                    .store(in: &self.subscriptions)
             }
-            .store(in: &subscriptions)
+            .store(in: &self.subscriptions)
+        stompRepo.subPing()
+            .sink { _ in
+                Log.info("🤩 STOMP ping")
+            }
+            .store(in: &self.subscriptions)
         stompRepo.subDisconnect()
             .sink { _ in
                 Log.info("🤩 STOMP disConnected")
+                self.stompRepo.closeSocket()
             }
-            .store(in: &subscriptions)
+            .store(in: &self.subscriptions)
         stompRepo.subSendError()
             .sink { error in
                 Log.error("🤩 STOMP error")
