@@ -15,6 +15,7 @@ struct HomeTimetableContainer: View {
         case current
     }
     
+    // TODO: Fix Dummy
     @State private var current = 3
     
     private let timetable: Flow<[Timetable]>

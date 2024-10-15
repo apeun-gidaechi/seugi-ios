@@ -16,7 +16,7 @@ public struct SeugiChatList: View {
     
     public var body: some View {
         HStack(spacing: 16) {
-            SeugiAvatar(type: .large)
+            SeugiAvatar(room.chatRoomImg, type: .large)
             VStack(alignment: .leading, spacing: 2) {
                 HStack(alignment: .bottom, spacing: 4) {
                     Text(room.chatName)

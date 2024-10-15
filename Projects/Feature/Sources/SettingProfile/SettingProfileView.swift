@@ -15,6 +15,7 @@ public struct SettingProfileView {
     
     @State private var showPhotoPicker: Bool = false
     @State private var profileImagePhoto: PhotosPickerItem?
+    @State private var isSheetPresent: Bool = false
     
     private var profile: RetrieveProfile? {
         appState.profile.data
@@ -23,7 +24,7 @@ public struct SettingProfileView {
 
 extension SettingProfileView: View {
     public var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 12) {
             if let profile {
                 Button {
                     showPhotoPicker = true
@@ -45,11 +46,15 @@ extension SettingProfileView: View {
                     Text(profile.nameAndNick)
                         .font(.subtitle(.s2))
                         .seugiColor(.sub(.black))
-                    Image(icon: .writeLine)
-                        .resizable()
-                        .renderingMode(.template)
-                        .frame(width: 20, height: 20)
-                        .seugiColor(.gray(.g500))
+                    Button {
+                        self.isSheetPresent = true
+                    } label: {
+                        Image(icon: .writeLine)
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 20, height: 20)
+                            .seugiColor(.gray(.g500))
+                    }
                 }
             }
             LazyVStack(spacing: 0) {
@@ -97,6 +102,7 @@ extension SettingProfileView: View {
             selection: $profileImagePhoto,
             matching: .any(of: [.images, .screenshots])
         )
+        .sheet(isPresented: $isSheetPresent, content: sheetContent)
         .onChange(of: profileImagePhoto) { photo in
             guard let photo else {
                 return
@@ -148,5 +154,15 @@ extension SettingProfileView: View {
                 break
             }
         }
+    }
+    
+    @ViewBuilder
+    func sheetContent() -> some View {
+//        ProfileEditSheetView(
+//            title: "이름 수정",
+//            text: <#T##Binding<String>#>
+//        ) {
+//            self.isSheetPresent = false
+//        }
     }
 }

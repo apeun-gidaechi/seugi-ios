@@ -42,13 +42,8 @@ extension MainView: View {
         }
         .onChange(of: accessToken) { accessToken in
             if let accessToken {
-                print("ACCESS_TOKEN IS CHANGED")
                 stompViewModel.reissue(accessToken: accessToken)
             }
         }
-//        .onChange(of: appState.selectedWorkspace) { _ in
-//            appState.fetchWorkspaces()
-//        }
-        // TODO: ?. 위 코드의 의도를 파악해낼 것
     }
 }
