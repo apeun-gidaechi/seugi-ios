@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apeun-gidaechi/apeun-stomp-kit",
       "state" : {
-        "revision" : "56e117b09e1deec80aa6915b87812bd6485688c5",
-        "version" : "1.3.3"
+        "revision" : "81fd8fcdcb074075b77ffd5551747333dcbab6b0",
+        "version" : "1.3.4"
       }
     },
     {
