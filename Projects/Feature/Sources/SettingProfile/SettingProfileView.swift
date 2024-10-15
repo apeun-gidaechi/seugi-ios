@@ -42,7 +42,7 @@ extension SettingProfileView: View {
                 .scaledButtonStyle()
                 .padding(.vertical, 8)
                 HStack(spacing: 4) {
-                    Text(profile.member.name)
+                    Text(profile.nameAndNick)
                         .font(.subtitle(.s2))
                         .seugiColor(.sub(.black))
                     Image(icon: .writeLine)

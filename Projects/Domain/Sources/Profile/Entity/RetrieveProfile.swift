@@ -41,6 +41,16 @@ public struct RetrieveProfile: Entity {
     }
 }
 
+public extension RetrieveProfile {
+    var nameAndNick: String {
+        if self.nick.isEmpty {
+            self.member.name
+        } else {
+            self.member.name + " (" + self.nick + ")"
+        }
+    }
+}
+
 public extension [RetrieveProfile] {
     func search(text: String) -> [RetrieveProfile] {
         if text.isEmpty {

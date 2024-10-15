@@ -4,19 +4,19 @@ import Domain
 
 public struct SeugiSelectingMember: View {
     private let action: () -> Void
-    private let member: RetrieveProfile
+    private let profile: RetrieveProfile
     
     public init(
-        member: RetrieveProfile,
+        profile: RetrieveProfile,
         action: @escaping () -> Void
     ) {
         self.action = action
-        self.member = member
+        self.profile = profile
     }
     
     public var body: some View {
         HStack(spacing: 4) {
-            Text(member.member.name)
+            Text(profile.nameAndNick)
                 .font(.body(.b2))
                 .seugiColor(.gray(.g600))
             Button {

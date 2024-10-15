@@ -23,7 +23,7 @@ extension CreateGroupChatViewModel {
     }
     
     var emptyRoomName: String {
-        "\(firstMember.member.name) 외 \(selectedMembers.count - 1)명"
+        "\(firstMember.nameAndNick) 외 \(selectedMembers.count - 1)명"
     }
 }
 

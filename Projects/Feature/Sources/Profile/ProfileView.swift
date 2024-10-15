@@ -22,7 +22,7 @@ public struct ProfileView: View {
                         ProgressView()
                     } success: { profile in
                         SeugiAvatar(profile.member.picture, type: .medium)
-                        Text(profile.member.name)
+                        Text(profile.nameAndNick)
                             .font(.subtitle(.s2))
                             .seugiColor(.sub(.black))
                     } failure: { _ in }

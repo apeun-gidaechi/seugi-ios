@@ -110,9 +110,9 @@ extension FirstCreateGroupChatView: View {
                     .padding(.leading, 8)
             } else {
                 HFlow(itemSpacing: 4, rowSpacing: 4) {
-                    ForEach(viewModel.selectedMembers, id: \.member.id) { member in
-                        SeugiSelectingMember(member: member) {
-                            viewModel.removeMember(member: member)
+                    ForEach(viewModel.selectedMembers, id: \.member.id) { profile in
+                        SeugiSelectingMember(profile: profile) {
+                            viewModel.removeMember(member: profile)
                         }
                     }
                 }
