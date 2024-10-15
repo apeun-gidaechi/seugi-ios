@@ -24,7 +24,7 @@ extension StompViewModel {
         stompRepo.closeSocket()
         stompRepo.openSocket()
         stompRepo.reconnect(time: 10)
-        stompRepo.subStompEvet()
+        stompRepo.subStompEvent()
             .sink { event in
                 switch event {
                 case .stompClientDidDisconnect:

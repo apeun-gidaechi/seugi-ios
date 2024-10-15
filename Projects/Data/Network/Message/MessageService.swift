@@ -30,7 +30,7 @@ extension MessageService: StompRepo {
         stomp.disconnect()
     }
     
-    public func subStompEvet() -> AnyPublisher<StompEventEntity, Never> {
+    public func subStompEvent() -> AnyPublisher<StompEventEntity, Never> {
         stomp.subject.eraseToAnyPublisher()
             .map { event in
                 switch event {

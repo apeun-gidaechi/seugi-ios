@@ -4,9 +4,11 @@ struct MainCoordinator: View {
     @StateObject private var mainViewModel = MainViewModel()
     @StateObject private var joinWorkspaceViewModel = JoinWorkspaceViewModel()
     @StateObject private var notificationViewModel = NotificationViewModel()
+    @StateObject private var stompViewModel = StompViewModel()
     
     var body: some View {
         MainView()
+            .environmentObject(stompViewModel)
             .environmentObject(notificationViewModel)
             .environmentObject(mainViewModel)
             .navigationDestination(for: MainDestination.self) { destination in
@@ -47,6 +49,7 @@ struct MainCoordinator: View {
                     case .imagePreview(let url): ImagePreview(url: url)
                     }
                 }
+                .environmentObject(self.stompViewModel)
                 .environmentObject(self.mainViewModel)
             }
     }

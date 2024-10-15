@@ -4,7 +4,6 @@ import Domain
 public struct RootView: View {
     @StateObject private var appState = AppViewModel()
     @StateObject private var router = RouterViewModel()
-    @StateObject private var stompViewModel = StompViewModel()
     @AppStorage("ACCESS_TOKEN", store: .seugi) var accessToken: String?
     
     public init() {}
@@ -22,6 +21,5 @@ public struct RootView: View {
         }
         .environmentObject(router)
         .environmentObject(appState)
-        .environmentObject(stompViewModel)
     }
 }

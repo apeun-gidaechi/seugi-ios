@@ -67,10 +67,6 @@ extension ChatView: View {
             text: $viewModel.searchText,
             isSearching: $viewModel.isSearching
         )
-        .onAppear {
-            guard let id = mainViewModel.selectedWorkspace?.workspaceId else { return }
-            viewModel.onAppear(workspaceId: id)
-        }
         .onChange(of: mainViewModel.selectedWorkspace) {
             guard let id = $0?.workspaceId else { return }
             viewModel.onCreate(workspaceId: id)
