@@ -3,7 +3,7 @@ import UIKit
 
 public extension View {
     func hideKeyboardWhenTap() -> some View {
-        onAppear(perform: UIApplication.shared.hideKeyboard)
+        self.onTapGesture(perform: hideKeyboard)
     }
     
     func hideKeyboard() {
