@@ -102,7 +102,9 @@ public struct ProfileView: View {
                 viewModel.updateProfileContent ?? ""
             } set: {
                 viewModel.updateProfileContent = $0
-            }
+            },
+            keyboardType: viewModel.selectedProfleInfo?.keyboardType ?? .default,
+            limit: viewModel.selectedProfleInfo?.limit ?? nil
         ) {
             guard let selectedWorkspace = mainViewModel.selectedWorkspace else {
                 return
@@ -125,6 +127,20 @@ extension KeyPath<RetrieveProfile, String> {
         case \.wire: "유선전화번호"
         case \.location: "근무위치"
         default: ""
+        }
+    }
+    
+    var keyboardType: UIKeyboardType {
+        switch self {
+        case \.phone, \.wire: .numberPad
+        default: .default
+        }
+    }
+    
+    var limit: Int? {
+        switch self {
+        case \.phone, \.wire: 11
+        default: nil
         }
     }
 }
