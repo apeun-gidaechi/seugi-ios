@@ -35,7 +35,6 @@ final class ProfileViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Method
     func updateProfile(
         workspaceId: String
     ) {

@@ -20,7 +20,7 @@ final class ChatDetailViewModel: ObservableObject {
     @Published var photo: PhotosPickerItem?
     @Published var leftRoomFlow: Flow<BaseVoid> = .idle
     
-    private let room: Room
+    @Published var room: Room
     
     init(room: Room) {
         var room = room
@@ -91,7 +91,7 @@ extension ChatDetailViewModel {
         .silentSink(in: &subscriptions)
     }
     
-    func sendMessage(room: Room) {
+    func sendMessage() {
         stompMessageRepo.sendMessage(
             .init(
                 roomId: room.id,

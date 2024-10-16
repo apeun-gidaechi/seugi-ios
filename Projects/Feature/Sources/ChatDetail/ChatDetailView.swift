@@ -163,7 +163,7 @@ extension ChatDetailView {
             SeugiChatTextField("메세지 보내기", text: $viewModel.message) { action in
                 switch action {
                 case .sendMessage:
-                    viewModel.sendMessage(room: room)
+                    viewModel.sendMessage()
                 case .imageMenu:
                     showPhotoPicker = true
                 case .fileMenu:
