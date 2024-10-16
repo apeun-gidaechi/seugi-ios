@@ -9,8 +9,7 @@ let pagingInterval = 50
 
 struct ChatDetailView: View {
     enum Id: Hashable {
-        case bottom
-        case top
+        case bottom, top
     }
     
     @EnvironmentObject private var alert: AlertProvider
@@ -66,9 +65,9 @@ extension ChatDetailView {
                         }
                     }
                 }
+                .padding(.horizontal, 8)
                 EmptyView().id(Id.bottom)
             }
-            .padding(.horizontal, 8)
             .seugiBackground(.primary(.p050))
         } failure: { _ in
             VStack {

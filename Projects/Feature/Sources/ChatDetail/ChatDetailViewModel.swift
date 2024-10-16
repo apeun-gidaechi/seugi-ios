@@ -61,6 +61,7 @@ extension ChatDetailViewModel {
                     ]
                     return messages
                         .setupIsFirstAndIsLast()
+                        .setupHasTimelabel()
                         .setupRead(joinUserInfo: self.room.joinUserInfo)
                 }
                 self.objectWillChange.send() // 왜 인지 모르겠는데 뷰 업데이트가 안됨. 그래서 강제로 변경사항을 알림
@@ -83,6 +84,7 @@ extension ChatDetailViewModel {
                 .map { $0.toDomain() }
                 .sortedByTimestamp()
                 .setupIsFirstAndIsLast()
+                .setupHasTimelabel()
                 .setupAuthor(room: self.room)
                 .setupDetailText(room: self.room)
                 .setupRead(joinUserInfo: self.room.joinUserInfo)

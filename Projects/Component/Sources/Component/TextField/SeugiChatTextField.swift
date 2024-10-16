@@ -53,14 +53,13 @@ public struct SeugiChatTextField: View {
                 .frame(height: 32)
                 .seugiColor(.sub(.black))
                 .tint(.seugi(.primary(.p500)))
-            let sendButtonColor: Color.SeugiColorSystem = text.isEmpty ? .gray(.g400) : .primary(.p500)
             Button {
                 action(.sendMessage)
             } label: {
                 Image(icon: .sendFill)
                     .resizable()
                     .renderingMode(.template)
-                    .seugiColor(sendButtonColor)
+                    .seugiColor(text.isEmpty ? .gray(.g400) : .primary(.p500))
                     .frame(width: 32, height: 32)
             }
             .disabled(text.isEmpty)

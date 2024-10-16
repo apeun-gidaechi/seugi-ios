@@ -96,6 +96,7 @@ public struct Message: Entity, MessageProtocol {
     public var messageStatus: ChatStatusEnum?
     public var isFirst: Bool
     public var isLast: Bool
+    public var hasTimeLabel: Bool
     public var joinUserCount: Int
     public var author: RetrieveMember?
     public var detailText: String?
@@ -117,6 +118,7 @@ public struct Message: Entity, MessageProtocol {
         messageStatus: ChatStatusEnum?,
         isFirst: Bool = false,
         isLast: Bool = false,
+        hasTimeLabel: Bool = false,
         joinUserCount: Int = 0,
         unread: Int = 0
     ) {
@@ -135,6 +137,7 @@ public struct Message: Entity, MessageProtocol {
         self.messageStatus = messageStatus
         self.isFirst = isFirst
         self.isLast = isLast
+        self.hasTimeLabel = hasTimeLabel
         self.joinUserCount = joinUserCount
         self.unread = unread
     }
@@ -243,6 +246,20 @@ public extension Array where Element: MessageProtocol {
         || self[currentIndex + 1].userId != message.userId
     }
     
+    func hasTimeLabel(at currentIndex: Int) -> Bool {
+        let message = self[currentIndex]
+        guard let messageTimestamp = message.timestamp else { return false }
+        
+        if currentIndex == self.count - 1 {
+            return true
+        }
+        
+        let nextMessage = self[currentIndex + 1]
+        guard let nextMessageTimestamp = nextMessage.timestamp else { return false }
+        
+        return nextMessage.userId != message.userId || messageTimestamp.diff(to: nextMessageTimestamp, in: .minute) >= 1
+    }
+    
     func getFirstMessageTimestamp() -> Date? {
         return self.first?.timestamp
     }
@@ -259,6 +276,14 @@ public extension [Message] {
         for index in messages.indices {
             messages[index].isFirst = self.isFirstMessage(at: index)
             messages[index].isLast = self.isLastMessage(at: index)
+        }
+        return messages
+    }
+    
+    func setupHasTimelabel() -> Self {
+        var messages = self
+        for index in messages.indices {
+            messages[index].hasTimeLabel = self.hasTimeLabel(at: index)
         }
         return messages
     }
@@ -285,5 +310,19 @@ public extension [Message] {
             messages[i].unread = userIndex
         }
         return messages
+    }
+}
+
+private extension Date {
+    func diff(to date: Date, in component: Calendar.Component) -> Int {
+        let calendar = Calendar.current
+        let start = calendar.date(bySetting: .second, value: 0, of: self)!
+        let end = calendar.date(bySetting: .second, value: 0, of: date)!
+        
+        guard let difference = calendar.dateComponents([component], from: start, to: end).value(for: component) else {
+            return 0
+        }
+        
+        return difference
     }
 }

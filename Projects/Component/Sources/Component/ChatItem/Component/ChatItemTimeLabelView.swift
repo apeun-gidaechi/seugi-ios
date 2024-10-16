@@ -14,19 +14,21 @@ struct ChatItemTimeLabelView: View {
     }
     
     var body: some View {
-        VStack(
-            alignment: alignment.rawValue,
-            spacing: 0
-        ) {
-            if message.unread > 0 {
-                Text("\(message.unread)")
-                    .seugiColor(.gray(.g600))
-                    .font(.caption(.c1))
-            }
-            if let text = message.timestamp?.prettyText {
-                Text(text)
-                    .seugiColor(.gray(.g600))
-                    .font(.caption(.c2))
+        if message.hasTimeLabel {
+            VStack(
+                alignment: alignment.rawValue,
+                spacing: 0
+            ) {
+                if message.unread > 0 {
+                    Text("\(message.unread)")
+                        .seugiColor(.gray(.g600))
+                        .font(.caption(.c1))
+                }
+                if let text = message.timestamp?.prettyText {
+                    Text(text)
+                        .seugiColor(.gray(.g600))
+                        .font(.caption(.c2))
+                }
             }
         }
     }
