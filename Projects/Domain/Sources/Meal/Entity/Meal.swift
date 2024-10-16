@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Meal: Entity {
     public let id: Int
     public let workspaceId: String
@@ -5,9 +7,17 @@ public struct Meal: Entity {
     public let menu: [String]
     public let calorie: String
     public let mealInfo: [String]
-    public let mealDate: String
+    public let mealDate: Date
     
-    public init(id: Int, workspaceId: String, mealType: MealType, menu: [String], calorie: String, mealInfo: [String], mealDate: String) {
+    public init(
+        id: Int,
+        workspaceId: String,
+        mealType: MealType,
+        menu: [String],
+        calorie: String,
+        mealInfo: [String],
+        mealDate: Date
+    ) {
         self.id = id
         self.workspaceId = workspaceId
         self.mealType = mealType

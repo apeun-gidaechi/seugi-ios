@@ -22,7 +22,22 @@ let project = Project.make(
             resources: ["Seugi-iOS/Resources/**"],
             entitlements: .file(path: "Seugi-iOS/Support/App.entitlements"),
             dependencies: Modules.Data.allCases.map { TargetDependency.data(of: $0) }
-            + [.diContainer, .feature]
+            + [.diContainer, .feature, .target(name: "Seugi-iOS-Widget")]
+        ),
+        Target.make(
+            name: "Seugi-iOS-Widget",
+            product: .appExtension,
+            bundleId: makeBundleId("widget"),
+            infoPlist: .extendingDefault(with: [
+                "CFBundleDisplayName": "$(PRODUCT_NAME)",
+                "NSExtension": [
+                    "NSExtensionPointIdentifier": "com.apple.widgetkit-extension"
+                ]
+            ]),
+            sources: ["Seugi-iOS-Widget/Sources/**"],
+            resources: ["Seugi-iOS-Widget/Resources/**"],
+            dependencies: Modules.Data.allCases.map { TargetDependency.data(of: $0) }
+            + [.diContainer, .component]
         ),
         Target.make(
             name: "Aggregate",
