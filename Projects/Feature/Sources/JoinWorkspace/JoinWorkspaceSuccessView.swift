@@ -3,12 +3,10 @@
 import SwiftUI
 import Component
 
-public struct JoinWorkspaceSuccessView {
+struct JoinWorkspaceSuccessView {
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
-    
-    public init() {}
 }
 
 extension JoinWorkspaceSuccessView: View {

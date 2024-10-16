@@ -2,7 +2,7 @@ import SwiftUI
 import Component
 import Domain
 
-public struct ProfileView: View {
+struct ProfileView: View {
     
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var mainViewModel: MainViewModel
@@ -14,7 +14,7 @@ public struct ProfileView: View {
         mainViewModel.profile.data
     }
     
-    public var body: some View {
+    var body: some View {
         ScrollView {
             VStack(spacing: 8) {
                 HStack(spacing: 10) {

@@ -1,6 +1,6 @@
 import Foundation
 
-public final class TimePickerProvider: ModalProvider {
+public final class TimePickerProvider: ObservableObject {
     @Published var isPresent = false
     @Published var title: String?
     @Published var action: (() -> Void)?

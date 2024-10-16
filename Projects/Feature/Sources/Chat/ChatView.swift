@@ -2,7 +2,7 @@ import SwiftUI
 import Component
 import Domain
 
-public struct ChatView {
+struct ChatView {
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var mainViewModel: MainViewModel
     
@@ -12,14 +12,14 @@ public struct ChatView {
     
     private let roomType: RoomType
     
-    public init(roomType: RoomType) {
+    init(roomType: RoomType) {
         self.roomType = roomType
         self._viewModel = .init(wrappedValue: .init(roomType: roomType))
     }
 }
 
 extension ChatView: View {
-    public var body: some View {
+    var body: some View {
         ScrollView {
             viewModel.mergedRooms.makeView {
                 ProgressView()

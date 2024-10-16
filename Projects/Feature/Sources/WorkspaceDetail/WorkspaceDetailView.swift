@@ -2,7 +2,7 @@ import SwiftUI
 import Component
 import Domain
 
-public struct WorkspaceDetailView: View {
+struct WorkspaceDetailView: View {
     
     @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var router: RouterViewModel
@@ -13,7 +13,7 @@ public struct WorkspaceDetailView: View {
         mainViewModel.selectedWorkspace
     }
     
-    public var body: some View {
+    var body: some View {
         ScrollView {
             VStack(spacing: 24) {
                 if let workspace {

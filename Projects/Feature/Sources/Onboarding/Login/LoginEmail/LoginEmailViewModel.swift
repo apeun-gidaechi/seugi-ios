@@ -5,7 +5,7 @@ import Combine
 import SwiftUI
 import SwiftUtil
 
-public final class LoginEmailViewModel: ObservableObject {
+final class LoginEmailViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
     @Inject private var memberRepo: MemberRepo

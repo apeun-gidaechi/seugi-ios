@@ -3,9 +3,7 @@ import Combine
 
 import SwiftUIUtil
 
-struct SeugiAlertPresenter<C: View>: ModalViewProtocol {
-    
-    public typealias P = AlertProvider
+struct SeugiAlertPresenter<C: View>: View {
     @StateObject private var provider: AlertProvider
     
     let content: () -> C

@@ -1,6 +1,6 @@
 import SwiftUI
 
-public enum SeugiButtonSize {
+enum SeugiButtonSize {
     case large
     case small
     

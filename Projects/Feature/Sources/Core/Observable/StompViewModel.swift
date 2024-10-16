@@ -5,15 +5,12 @@ import DIContainer
 import SwiftUtil
 import Combine
 
-public final class StompViewModel: ObservableObject {
+final class StompViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
     @Inject private var stompRepo: StompRepo
-    @Inject private var memberRepo: MemberRepo
-    @Inject private var keychainRepo: KeychainRepo
-    @Inject private var keyValueRepo: KeyValueRepo
     
-    public init() {
+    init() {
         openSocket()
     }
 }

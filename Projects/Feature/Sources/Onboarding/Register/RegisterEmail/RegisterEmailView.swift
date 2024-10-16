@@ -2,7 +2,7 @@ import SwiftUI
 import Component
 import SwiftUIUtil
 
-public struct RegisterEmailView {
+struct RegisterEmailView {
     enum FocusedField {
         case name, email, password, passwordCheck
     }
@@ -11,12 +11,10 @@ public struct RegisterEmailView {
     @EnvironmentObject private var router: RouterViewModel
     
     @FocusState private var focused: FocusedField?
-    
-    public init() {}
 }
 
 extension RegisterEmailView: View {
-    public var body: some View {
+    var body: some View {
         ScrollView {
             VStack(spacing: 16) {
                 SeugiTextFieldForm(

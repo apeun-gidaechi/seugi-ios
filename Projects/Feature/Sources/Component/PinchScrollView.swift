@@ -23,11 +23,6 @@ struct PinchScrollView<Content: View>: UIViewControllerRepresentable {
         
         private var hostedView: UIView { coordinator.hostingController.view! }
         
-        private var contentSizeConstraints: [NSLayoutConstraint] = [] {
-            willSet { NSLayoutConstraint.deactivate(contentSizeConstraints) }
-            didSet { NSLayoutConstraint.activate(contentSizeConstraints) }
-        }
-        
         init(coordinator: Coordinator) {
             self.coordinator = coordinator
             super.init(nibName: nil, bundle: nil)

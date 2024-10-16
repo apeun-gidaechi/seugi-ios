@@ -3,7 +3,7 @@ import PhotosUI
 import Component
 import Domain
 
-public struct CreateWorkspaceView {
+struct CreateWorkspaceView {
     @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var alertProvider: AlertProvider
@@ -17,7 +17,7 @@ public struct CreateWorkspaceView {
 }
 
 extension CreateWorkspaceView: View {
-    public var body: some View {
+    var body: some View {
         VStack(spacing: 16) {
             Button {
                 isPhotoPresent = true

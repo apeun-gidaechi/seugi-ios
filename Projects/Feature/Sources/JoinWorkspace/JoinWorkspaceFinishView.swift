@@ -1,14 +1,12 @@
 import SwiftUI
 import Component
 
-public struct JoinWorkspaceFinishView {
+struct JoinWorkspaceFinishView {
     @EnvironmentObject private var router: RouterViewModel
-    
-    public init() {}
 }
 
 extension JoinWorkspaceFinishView: View {
-    public var body: some View {
+    var body: some View {
         VStack {
             Spacer()
             VStack(alignment: .trailing, spacing: 16) {

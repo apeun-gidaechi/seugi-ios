@@ -3,7 +3,7 @@ import PhotosUI
 import Component
 import Domain
 
-public struct CatSeugiView {
+struct CatSeugiView {
     enum Id: Hashable {
         case bottom
         case top
@@ -17,7 +17,7 @@ public struct CatSeugiView {
     @State private var scrollViewProxy: ScrollViewProxy?
     @FocusState private var focused
     
-    public init() {}
+    init() {}
 }
 
 extension CatSeugiView: View {

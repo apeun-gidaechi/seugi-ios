@@ -8,8 +8,6 @@ import Moya
 /// Route.get("hello")
 /// Route.get("hello").task(.requestJSONEncodable(...))
 public struct Route {
-    struct VoidRes: Decodable {}
-    
     let method: Moya.Method
     let path: String
     let task: Moya.Task

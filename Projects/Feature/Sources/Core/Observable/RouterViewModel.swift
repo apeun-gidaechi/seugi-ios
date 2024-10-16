@@ -1,22 +1,22 @@
 import SwiftUI
 
-public final class RouterViewModel: ObservableObject {
-    @Published public var navPath = NavigationPath()
-    public init() {}
+final class RouterViewModel: ObservableObject {
+    @Published var navPath = NavigationPath()
+    init() {}
 
-    public func navigate(to destination: any Hashable) {
+    func navigate(to destination: any Hashable) {
         navPath.append(destination)
     }
 
-    public func popToStack() {
+    func popToStack() {
         navPath.removeLast()
     }
 
-    public func navigateToRoot() {
+    func navigateToRoot() {
         navPath.removeLast(navPath.count)
     }
     
-    public func replace(_ path: [any Hashable]) {
+    func replace(_ path: [any Hashable]) {
         navPath.removeLast(navPath.count)
         path.forEach {
             navPath.append($0)

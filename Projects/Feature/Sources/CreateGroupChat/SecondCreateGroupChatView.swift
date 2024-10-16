@@ -2,17 +2,15 @@ import SwiftUI
 import Component
 import Domain
 
-public struct SecondCreateGroupChatView {
+struct SecondCreateGroupChatView {
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var alertProvider: AlertProvider
     @EnvironmentObject private var viewModel: CreateGroupChatViewModel
     @EnvironmentObject private var mainViewModel: MainViewModel
-    
-    public init() {}
 }
     
 extension SecondCreateGroupChatView: View {
-    public var body: some View {
+    var body: some View {
         VStack(spacing: 16) {
             ZStack(alignment: .bottomTrailing) {
                 SeugiRoomImage(nil, type: .extraLarge, label: viewModel.firstMember.member.name.getOrNil(idx: 0) ?? "-")

@@ -4,17 +4,17 @@ import DIContainer
 import SwiftUtil
 import Combine
 
-public final class JoinWorkspaceViewModel: ObservableObject {
+final class JoinWorkspaceViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
     @Inject private var workspaceRepo: WorkspaceRepo
     
     @Published var workspace: Flow<WorkspaceInfo> = .idle
-    @Published public var joinFlow: Flow<BaseVoid> = .idle
+    @Published var joinFlow: Flow<BaseVoid> = .idle
     @Published var roleType = WorkspaceRole.student
-    @Published public var code: String = ""
+    @Published var code: String = ""
     
-    public var isValidInput: Bool {
+    var isValidInput: Bool {
         code.count == 6
     }
 }

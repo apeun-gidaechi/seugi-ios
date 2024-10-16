@@ -1,14 +1,12 @@
 import SwiftUI
 import Component
 
-public struct JoinWorkspaceCodeView {
+struct JoinWorkspaceCodeView {
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var alertProvider: AlertProvider
     
     @FocusState private var focused
-    
-    public init() {}
 }
 
 extension JoinWorkspaceCodeView: View {

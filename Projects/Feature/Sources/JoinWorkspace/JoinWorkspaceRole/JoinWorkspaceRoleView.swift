@@ -1,16 +1,14 @@
 import SwiftUI
 import Component
 
-public struct JoinWorkspaceRoleView {
+struct JoinWorkspaceRoleView {
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var viewModel: JoinWorkspaceViewModel
     @State private var selectedTab: JobType = .student
-    
-    public init() {}
 }
 
 extension JoinWorkspaceRoleView: View {
-    public var body: some View {
+    var body: some View {
         VStack(spacing: 16) {
             Spacer()
             VStack {

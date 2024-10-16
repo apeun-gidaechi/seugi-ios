@@ -3,7 +3,7 @@ import PhotosUI
 import Component
 import Domain
 
-public struct SettingProfileView {
+struct SettingProfileView {
     @Environment(\.openURL) private var openURL
     
     @EnvironmentObject private var appState: AppViewModel
@@ -24,7 +24,7 @@ public struct SettingProfileView {
 }
 
 extension SettingProfileView: View {
-    public var body: some View {
+    var body: some View {
         VStack(spacing: 12) {
             if let profile {
                 Button {

@@ -12,14 +12,14 @@ public extension View {
     }
 }
 
-public struct SeugiDrawerModifier<C>: ViewModifier where C: View {
+struct SeugiDrawerModifier<C>: ViewModifier where C: View {
     @Binding private var isOpen: Bool
     @State private var translation: CGSize = .zero
     private var content: () -> C
     
     private let width: CGFloat = min(320, (UIApplication.shared.screen?.bounds.width ?? .infinity) - 80)
     
-    public init(
+    init(
         isOpen: Binding<Bool>,
         @ViewBuilder content: @escaping () -> C
     ) {

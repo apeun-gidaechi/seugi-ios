@@ -2,12 +2,12 @@ import SwiftUI
 
 import SwiftUIUtil
 
-public struct ChatItemViewCell: View {
+struct ChatItemViewCell: View {
     
     private let text: String
     private let type: ChatItemViewCellType
     
-    public init(
+    init(
         text: String,
         type: ChatItemViewCellType
     ) {

@@ -1,4 +1,4 @@
-public enum HomeFetchFlow {
+enum HomeFetchFlow {
     case fetching
     case empty
     case finished

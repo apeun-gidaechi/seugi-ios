@@ -11,8 +11,6 @@ struct FirstCreateGroupChatView {
     
     @State private var contentSize: CGSize = .zero
     
-    public init() {}
-    
     private var profile: RetrieveProfile? {
         mainViewModel.profile.data
     }

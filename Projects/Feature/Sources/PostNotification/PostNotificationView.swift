@@ -1,7 +1,7 @@
 import SwiftUI
 import Component
 
-public struct PostNotificationView {
+struct PostNotificationView {
     enum FocusedField {
         case title, content
     }

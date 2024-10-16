@@ -7,12 +7,11 @@ import ScopeKit
 
 let pagingInterval = 50
 
-public struct ChatDetailView: View {
+struct ChatDetailView: View {
     enum Id: Hashable {
         case bottom
         case top
     }
-    @Environment(\.dismiss) private var dismiss
     
     @EnvironmentObject private var alert: AlertProvider
     @EnvironmentObject private var router: RouterViewModel
@@ -23,11 +22,9 @@ public struct ChatDetailView: View {
     @State private var scrollViewProxy: ScrollViewProxy?
     @State private var showPhotoPicker: Bool = false
     
-    @FocusState private var searchFocus: Bool
-    
     private let room: Room
     
-    public init(room: Room) {
+    init(room: Room) {
         self.room = room
         self._viewModel = StateObject(wrappedValue: ChatDetailViewModel(room: room))
     }

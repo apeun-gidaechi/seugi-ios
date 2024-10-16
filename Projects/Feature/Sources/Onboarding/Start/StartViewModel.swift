@@ -5,7 +5,7 @@ import DIContainer
 import SwiftUtil
 import ScopeKit
 
-public final class StartViewModel: ObservableObject {
+final class StartViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
     @Inject private var oauthRepo: OAuthRepo

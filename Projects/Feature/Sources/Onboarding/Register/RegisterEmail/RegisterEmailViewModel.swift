@@ -4,7 +4,7 @@ import Domain
 import SwiftUtil
 import Combine
 
-public final class RegisterEmailViewModel: ObservableObject {
+final class RegisterEmailViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
     @Inject private var emailRepo: EmailRepo

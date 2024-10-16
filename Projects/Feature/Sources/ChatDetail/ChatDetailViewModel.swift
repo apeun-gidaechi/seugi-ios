@@ -6,14 +6,13 @@ import SwiftUI
 import SwiftUtil
 import Combine
 
-public final class ChatDetailViewModel: ObservableObject {
+final class ChatDetailViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
     @Inject private var messageRepo: MessageRepo
     @Inject private var chatRepo: ChatRepo
     @Inject private var stompMessageRepo: StompMessageRepo
     
-    @Published var page: Int = 0
     @Published var messages: Flow<[Message]> = .fetching
     @Published var message: String = ""
     @Published var searchText = ""

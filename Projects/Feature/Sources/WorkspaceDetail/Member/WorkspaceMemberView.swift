@@ -12,13 +12,11 @@ import Domain
 
 struct WorkspaceMemberView: View {
     
-    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var mainViewModel: MainViewModel
     @StateObject private var viewModel = WorkspaceMemberViewModel()
     
     @State private var isSheetPresent: Bool = false
     @State private var sheetSize: CGSize = .zero
-    @FocusState private var searchFocus: Bool
     
     private var members: Flow<[RetrieveProfile]> {
         viewModel.isSearching ? viewModel.searchedMembers : viewModel.selectedMembers

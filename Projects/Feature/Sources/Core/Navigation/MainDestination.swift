@@ -8,7 +8,7 @@
 import Foundation
 import Domain
 
-public enum MainDestination: Hashable {
+enum MainDestination: Hashable {
     
     // catseugi
     case catSeugi

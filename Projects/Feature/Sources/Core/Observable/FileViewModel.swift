@@ -10,7 +10,7 @@ enum FileError: Error {
     case photoLoadTransferable
 }
 
-public final class FileViewModel: ObservableObject {
+final class FileViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
     @Inject private var fileRepo: FileRepo

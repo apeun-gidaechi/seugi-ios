@@ -2,7 +2,7 @@ import SwiftUI
 import Component
 import Domain
 
-public struct RegisterEmailVerificationView {
+struct RegisterEmailVerificationView {
     enum FocusedField {
         case verificationCode
     }
@@ -15,12 +15,10 @@ public struct RegisterEmailVerificationView {
     @StateObject private var timerManager = TimerManager()
     
     @FocusState private var focused: FocusedField?
-    
-    public init() {}
 }
 
 extension RegisterEmailVerificationView: View {
-    public var body: some View {
+    var body: some View {
         VStack(spacing: 8) {
             SeugiCodeTextFieldForm(
                 text: $viewModel.verificationCode,

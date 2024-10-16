@@ -6,7 +6,7 @@ import DIContainer
 import Domain
 import SwiftUtil
 
-public final class AppViewModel: ObservableObject {
+final class AppViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
     @Inject private var keyValueRepo: KeyValueRepo

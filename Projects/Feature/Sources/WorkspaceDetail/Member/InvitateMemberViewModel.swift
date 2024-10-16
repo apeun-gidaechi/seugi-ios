@@ -8,7 +8,6 @@ final class InvitateMemberViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
     @Inject private var workspaceRepo: WorkspaceRepo
-    @Inject private var keyValueRepo: KeyValueRepo
     
     @Published var selection = segmentedButtonRoles[0]
     @Published var workspaceCode: Flow<String> = .fetching

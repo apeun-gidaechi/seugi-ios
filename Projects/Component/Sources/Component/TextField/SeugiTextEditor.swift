@@ -5,7 +5,6 @@ public struct SeugiTextEditor {
     @Environment(\.isEnabled) var isEnabled
     
     @FocusState private var isFocused: Bool
-    @State private var isHide = true
     @Binding var text: String
     
     private let height: CGFloat

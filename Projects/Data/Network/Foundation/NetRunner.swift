@@ -8,7 +8,7 @@ import CombineMoya
 /// NetRunner
 /// NetRunner가 deinit 되면 provider도 deinit됨.
 /// provider가 deinit되면 request가 cancel됨.
-public protocol NetRunner {
+protocol NetRunner {
     var provider: MoyaProvider<AnyEndpoint> { get }
     var authProvider: MoyaProvider<AnyEndpoint> { get }
     var decoder: JSONDecoder { get }
@@ -40,12 +40,12 @@ public protocol NetRunner {
     ) async throws -> DTO
 }
 
-public class DefaultNetRunner: NetRunner {
-    public let provider: MoyaProvider<AnyEndpoint>
-    public let authProvider: MoyaProvider<AnyEndpoint>
-    public let decoder: JSONDecoder
+class DefaultNetRunner: NetRunner {
+    let provider: MoyaProvider<AnyEndpoint>
+    let authProvider: MoyaProvider<AnyEndpoint>
+    let decoder: JSONDecoder
     
-    public init(
+    init(
         provider: MoyaProvider<AnyEndpoint> = .init(),
         authProvider: MoyaProvider<AnyEndpoint> = .init(),
         decoder: JSONDecoder
@@ -64,7 +64,7 @@ public class DefaultNetRunner: NetRunner {
         }
     }
     
-    public func deepDive<DTO: Decodable>(
+    func deepDive<DTO: Decodable>(
         _ target: BaseEndpoint,
         res: DTO.Type,
         completion: @escaping (Result<DTO, APIError>) -> Void
@@ -83,7 +83,7 @@ public class DefaultNetRunner: NetRunner {
         }
     }
     
-    public func deepDive<DTO: Decodable>(
+    func deepDive<DTO: Decodable>(
         _ target: BaseEndpoint,
         res: DTO.Type
     ) -> AnyPublisher<DTO, APIError> {
@@ -96,7 +96,7 @@ public class DefaultNetRunner: NetRunner {
             .eraseToAnyPublisher()
     }
     
-    public func deepDive<DTO: Decodable>(
+    func deepDive<DTO: Decodable>(
         _ target: BaseEndpoint,
         res: DTO.Type
     ) -> AnyPublisher<Result<DTO, APIError>, Never> {
@@ -110,7 +110,7 @@ public class DefaultNetRunner: NetRunner {
             .eraseToAnyPublisher()
     }
     
-    public func deepDive<DTO: Decodable>(
+    func deepDive<DTO: Decodable>(
         _ target: BaseEndpoint,
         res: DTO.Type
     ) async -> Result<DTO, APIError> {
@@ -126,7 +126,7 @@ public class DefaultNetRunner: NetRunner {
             .mapError { $0.toAPIError(using: decoder) }
     }
     
-    public func deepDive<DTO: Decodable>(
+    func deepDive<DTO: Decodable>(
         _ target: BaseEndpoint,
         res: DTO.Type
     ) async throws -> DTO {

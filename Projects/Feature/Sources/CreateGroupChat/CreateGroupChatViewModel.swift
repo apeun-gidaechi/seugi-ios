@@ -4,7 +4,7 @@ import DIContainer
 import SwiftUtil
 import Combine
 
-public final class CreateGroupChatViewModel: ObservableObject {
+final class CreateGroupChatViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
     @Inject private var workspaceRepo: WorkspaceRepo

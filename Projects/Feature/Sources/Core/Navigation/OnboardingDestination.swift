@@ -1,6 +1,6 @@
 import Domain
 
-public enum OnboardingDestination: Hashable {
+enum OnboardingDestination: Hashable {
     
     // onboarding
     case emailSignUp

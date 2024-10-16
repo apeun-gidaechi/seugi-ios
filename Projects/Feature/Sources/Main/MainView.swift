@@ -4,7 +4,7 @@ import SwiftUI
 import Component
 import Domain
 
-public struct MainView {
+struct MainView {
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var stompViewModel: StompViewModel
     @EnvironmentObject private var mainViewModel: MainViewModel
@@ -12,12 +12,10 @@ public struct MainView {
     @AppStorage("ACCESS_TOKEN", store: .seugi) private var accessToken: String?
     
     @State private var selection: Int = 0
-    
-    public init() {}
 }
 
 extension MainView: View {
-    public var body: some View {
+    var body: some View {
         SeugiBottomNavigation(selection: $selection) {
             HomeView()
                 .page(icon: .homeFill)

@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-public final class AlertProvider: ObservableObject, ModalProvider {
+public final class AlertProvider: ObservableObject {
     public struct Alert {
         let title: String
         let message: String?

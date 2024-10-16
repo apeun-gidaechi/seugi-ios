@@ -4,7 +4,7 @@ import Domain
 import DIContainer
 import SwiftUtil
 
-public final class ChatViewModel: ObservableObject {
+final class ChatViewModel: ObservableObject {
     var subscriptions = Set<AnyCancellable>()
     
     @Inject private var chatRepo: ChatRepo

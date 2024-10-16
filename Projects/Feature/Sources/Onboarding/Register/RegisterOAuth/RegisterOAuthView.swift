@@ -1,7 +1,7 @@
 import SwiftUI
 import Component
 
-public struct RegisterOAuthView {
+struct RegisterOAuthView {
     @EnvironmentObject private var router: RouterViewModel
     
     @StateObject private var viewModel: RegisterOAuthViewModel
@@ -14,7 +14,7 @@ public struct RegisterOAuthView {
 }
 
 extension RegisterOAuthView: View {
-    public var body: some View {
+    var body: some View {
         VStack(spacing: 16) {
             SeugiTextFieldForm(
                 "이름을 입력해 주세요",

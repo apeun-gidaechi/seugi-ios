@@ -2,7 +2,7 @@ import SwiftUI
 import Component
 import SwiftUtil
 
-public struct StartView {
+struct StartView {
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var appState: AppViewModel
     @EnvironmentObject private var alertProvider: AlertProvider
@@ -12,12 +12,10 @@ public struct StartView {
     @StateObject private var googleLoginViewModel = GoogleLoginViewModel()
     
     @State private var isPresented: Bool = false
-    
-    public init() {}
 }
 
 extension StartView: View {
-    public var body: some View {
+    var body: some View {
         ZStack {
             SeugiGradientSystem.primary
                 .ignoresSafeArea()

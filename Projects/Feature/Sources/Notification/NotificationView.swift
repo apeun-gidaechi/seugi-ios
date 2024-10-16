@@ -2,7 +2,7 @@ import SwiftUI
 import Component
 import Domain
 
-public struct NotificationView: View {
+struct NotificationView: View {
     @EnvironmentObject private var mainViewModel: MainViewModel
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var alert: AlertProvider
@@ -16,7 +16,7 @@ public struct NotificationView: View {
 }
 
 extension NotificationView {
-    public var body: some View {
+    var body: some View {
         ScrollView {
             viewModel.notifications.makeView {
                 ProgressView()

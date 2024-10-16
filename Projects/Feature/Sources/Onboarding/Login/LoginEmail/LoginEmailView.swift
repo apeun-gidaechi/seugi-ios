@@ -4,7 +4,7 @@ import Domain
 import SwiftUIUtil
 import SwiftUtil
 
-public struct LoginEmailView {
+struct LoginEmailView {
     enum FocusedField {
         case email, password
     }
@@ -14,8 +14,6 @@ public struct LoginEmailView {
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var appState: AppViewModel
     @FocusState private var focused: FocusedField?
-    
-    public init() {}
 }
 
 extension LoginEmailView: View {

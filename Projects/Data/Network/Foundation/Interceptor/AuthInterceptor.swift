@@ -4,7 +4,6 @@ import Combine
 import UIKit
 
 import Domain
-import DIContainer
 import SwiftUtil
 
 import Moya

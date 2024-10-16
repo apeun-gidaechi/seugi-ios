@@ -9,3 +9,11 @@ public struct UserInfo: Entity {
         self.timestamp = timestamp
     }
 }
+
+public extension [UserInfo] {
+    var onlineMemberCount: Int {
+        return self.filter {
+            $0.timestamp == .distantPast
+        }.count
+    }
+}

@@ -1,5 +1,4 @@
 import SwiftUI
-
 import SwiftUIUtil
 
 public struct SeugiBadge: View {

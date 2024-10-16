@@ -2,7 +2,7 @@ import Foundation
 import Domain
 import RealmSwift
 
-public class UserInfoEntity: Object {
+class UserInfoEntity: Object {
     @Persisted var userInfo: RetrieveMemberEntity
     @Persisted var timestamp: Date
     
