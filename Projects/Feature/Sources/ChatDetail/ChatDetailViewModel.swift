@@ -19,6 +19,7 @@ final class ChatDetailViewModel: ObservableObject {
     @Published var isSearching: Bool = false
     @Published var photo: PhotosPickerItem?
     @Published var leftRoomFlow: Flow<BaseVoid> = .idle
+    @Published var firstMessageTimestamp: Date?
     
     @Published var room: Room
     

@@ -40,7 +40,11 @@ extension ChatDetailView {
             }
         } success: { messages in
             ScrollViewReader { scrollViewProxy in
-                ScrollView {
+                CustomScrollView(
+                    spacing: 0,
+                    reversed: true
+                ) {
+                    // TODO: refactor `Id` enumration
                     Color.clear
                         .frame(height: 0.001)
                         .id(Id.top)
@@ -48,34 +52,32 @@ extension ChatDetailView {
                             print("ChatDetailView.body - touched top")
                             // TODO: FETCH NEW DATA
                         }
-                    LazyVStack(spacing: 0) {
-                        ForEach(messages, id: \.id) { message in
-                            ChatMessageCell(
-                                message: message
-                            ) {
-                                switch $0 {
-                                case .clickImage:
-                                    if let url = message.message.split(separator: MessageConstant.fileSeparator) // TODO: refactor
-                                        .first
-                                        .map(String.init) {
-                                        router.navigate(to: MainDestination.imagePreview(URL(string: url) ?? .aboutBlank))
-                                    }
-                                case .downloadFile:
-                                    // TODO: Handle
-                                    break
+                    ForEach(messages, id: \.id) { message in
+                        ChatMessageCell(
+                            message: message
+                        ) {
+                            switch $0 {
+                            case .clickImage:
+                                if let url = message.message.split(separator: MessageConstant.fileSeparator) // TODO: refactor
+                                    .first
+                                    .map(String.init) {
+                                    router.navigate(to: MainDestination.imagePreview(URL(string: url) ?? .aboutBlank))
                                 }
+                            case .downloadFile:
+                                // TODO: Handle
+                                break
                             }
                         }
-                    }
-                    .padding(.horizontal, 8)
-                    .onAppear {
-                        self.scrollViewProxy = scrollViewProxy
-                        self.scrollToBottom()
                     }
                     Color.clear
                         .frame(height: 0.001)
                         .id(Id.bottom)
                 }
+                .padding(.horizontal, 8)
+                .onAppear {
+                    self.scrollViewProxy = scrollViewProxy
+                }
+                
                 .seugiBackground(.primary(.p050))
             }
         } failure: { _ in
@@ -124,11 +126,6 @@ extension ChatDetailView {
             hideKeyboard()
         }
         .onChange(of: viewModel.photo) { _ in } // TODO: impl
-        .onReceive(viewModel.$messages) {
-            if case .success = $0 {
-                scrollToBottom()
-            }
-        }
         .onReceive(viewModel.$leftRoomFlow) { flow in
             switch flow {
             case .success:
@@ -148,11 +145,6 @@ extension ChatDetailView {
                 )
             default:
                 break
-            }
-        }
-        .onReceive(keyboardMonitor.updatedKeyboardStatusAction) {
-            if case .show = $0 {
-                scrollToBottom(animated: true)
             }
         }
     }
