@@ -15,6 +15,7 @@ struct ChatDetailView: View {
     
     @EnvironmentObject private var alert: AlertProvider
     @EnvironmentObject private var router: RouterViewModel
+    @EnvironmentObject private var keyboardMonitor: KeyboardMonitor
     
     @StateObject private var viewModel: ChatDetailViewModel
     
@@ -83,7 +84,6 @@ extension ChatDetailView {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-        .safeAreaInset(edge: .bottom, content: safeAreaContent)
         .hideKeyboardWhenTap()
         .seugiTopBar(
             title: room.chatName,
@@ -95,6 +95,7 @@ extension ChatDetailView {
             }
         }
         .searchable("메세지, 이미지, 파일 검색", text: $viewModel.searchText, isSearching: $viewModel.isSearching)
+        .safeAreaInset(edge: .bottom, content: safeAreaContent)
         .seugiDrawer(isOpen: $isDrawerOpen) {
             ChatDetailDrawer(room: room) { action in
                 switch action {
@@ -149,6 +150,11 @@ extension ChatDetailView {
                 break
             }
         }
+        .onReceive(keyboardMonitor.updatedKeyboardStatusAction) {
+            if case .show = $0 {
+                scrollToBottom(animated: true)
+            }
+        }
     }
     
     @ViewBuilder
@@ -167,9 +173,6 @@ extension ChatDetailView {
             .padding(.horizontal, 8)
             .padding(.bottom, 8)
             .seugiBackground(.primary(.p050))
-            .onTapGesture {
-                scrollToBottom(animated: true)
-            }
         }
     }
 }
@@ -178,8 +181,8 @@ extension ChatDetailView {
     private func scrollToBottom(animated: Bool = false) {
         if animated {
             Task {
-                try? await Task.sleep(for: .seconds(0.1))
-                withAnimation {
+                try? await Task.sleep(for: .seconds(0.22))
+                withAnimation(.spring(duration: 0.2)) {
                     scrollViewProxy?.scrollTo(Id.bottom)
                 }
             }
