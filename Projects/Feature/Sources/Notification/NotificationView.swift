@@ -84,7 +84,7 @@ extension NotificationView {
         }
         .onChange(of: mainViewModel.selectedWorkspace, initial: true) {
             guard let id = $0?.workspaceId else { return }
-            viewModel.onCreate(workspaceId: id)
+            viewModel.onAppear(workspaceId: id)
         }
     }
 }

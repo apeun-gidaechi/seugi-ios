@@ -12,7 +12,6 @@ protocol OnAppearProtocol: AnyObject {
     
     // Only viewmodel can be used.
     func fetchAllData(workspaceId: String)
-    func fetchAllData(workspaceId: String, userId: Int)
 }
 
 // Only view can be used.
@@ -24,22 +23,7 @@ extension OnAppearProtocol {
         }
     }
     
-    func onCreate(workspaceId: String, userId: Int) {
-        if isFirstOnAppear {
-            fetchAllData(workspaceId: workspaceId, userId: userId)
-            self.isFirstOnAppear = false
-        }
-    }
-    
     func onAppear(workspaceId: String) {
         fetchAllData(workspaceId: workspaceId)
     }
-    
-    func onAppear(workspaceId: String, userId: Int) {
-        fetchAllData(workspaceId: workspaceId, userId: userId)
-    }
-    
-    // Optional override method
-    func fetchAllData(workspaceId: String) {}
-    func fetchAllData(workspaceId: String, userId: Int) {}
 }

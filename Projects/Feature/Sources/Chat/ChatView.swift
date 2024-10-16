@@ -45,9 +45,8 @@ extension ChatView: View {
         }
         .scrollIndicators(.hidden)
         .refreshable {
-            if let selectedWorkspace = mainViewModel.selectedWorkspace,
-               let userId = mainViewModel.profile.data?.member.id {
-                viewModel.onAppear(workspaceId: selectedWorkspace.workspaceId, userId: userId)
+            if let selectedWorkspace = mainViewModel.selectedWorkspace {
+                viewModel.onAppear(workspaceId: selectedWorkspace.workspaceId)
             }
         }
         .hideKeyboardWhenTap()
@@ -67,9 +66,9 @@ extension ChatView: View {
             text: $viewModel.searchText,
             isSearching: $viewModel.isSearching
         )
-        .onChange(of: mainViewModel.selectedWorkspace) {
+        .onChange(of: mainViewModel.selectedWorkspace, initial: true) {
             guard let id = $0?.workspaceId else { return }
-            viewModel.onCreate(workspaceId: id)
+            viewModel.onAppear(workspaceId: id)
         }
     }
 }
