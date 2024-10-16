@@ -7,9 +7,15 @@ final class RetrieveMemberEntity: Object {
     @Persisted var email: String
     @Persisted var birth: String
     @Persisted var name: String
-    @Persisted var picture: String
+    @Persisted var picture: String?
     
-    convenience init(id: Int, email: String, birth: String, name: String, picture: String) {
+    convenience init(
+        id: Int,
+        email: String,
+        birth: String,
+        name: String,
+        picture: String?
+    ) {
         self.init()
         self.id = id
         self.email = email

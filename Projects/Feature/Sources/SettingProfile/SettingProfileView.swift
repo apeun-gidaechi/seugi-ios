@@ -32,7 +32,7 @@ extension SettingProfileView: View {
                 } label: {
                     ZStack(alignment: .bottomTrailing) {
                         SeugiAvatar(profile.member.picture, type: .extraLarge)
-                        if profile.member.picture.isEmpty {
+                        if profile.member.picture == nil {
                             Image(icon: .addFill)
                                 .resizable()
                                 .renderingMode(.template)
@@ -48,7 +48,7 @@ extension SettingProfileView: View {
                         .font(.subtitle(.s2))
                         .seugiColor(.sub(.black))
                     Button {
-//                        self.isSheetPresent = true
+                        self.isSheetPresent = true
                     } label: {
                         Image(icon: .writeLine)
                             .resizable()
@@ -112,12 +112,16 @@ extension SettingProfileView: View {
                 await fileViewModel.uploadPhoto(photo: photo)
             }
         }
+        .onReceive(mainViewModel.$profile) { flow in
+            if case .success(let profile) = flow {
+                viewModel.updateMember = profile.member
+            }
+        }
         .onReceive(fileViewModel.$fileFlow) { flow in
             switch flow {
             case .success(let file):
-                if let profile = mainViewModel.profile.data {
-                    viewModel.editMember(picture: file.url, member: profile.member)
-                }
+                viewModel.updateMember?.picture = file.url
+                viewModel.editMember()
             case .failure(let error):
                 viewModel.editMemberFlow = .failure(error)
             default:
@@ -159,11 +163,16 @@ extension SettingProfileView: View {
     
     @ViewBuilder
     func sheetContent() -> some View {
-//        ProfileEditSheetView(
-//            title: "이름 수정",
-//            text: <#T##Binding<String>#>
-//        ) {
-//            self.isSheetPresent = false
-//        }
+        ProfileEditSheetView(
+            title: "이름 수정",
+            text: .init {
+                viewModel.updateMember?.name ?? ""
+            } set: {
+                viewModel.updateMember?.name = $0
+            }
+        ) {
+            self.isSheetPresent = false
+            self.viewModel.editMember()
+        }
     }
 }

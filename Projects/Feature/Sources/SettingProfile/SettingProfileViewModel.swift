@@ -11,16 +11,15 @@ final class SettingProfileViewModel: ObservableObject {
     
     @Published var editMemberFlow: Flow<BaseVoid> = .idle
     @Published var removeMemberFlow: Flow<BaseVoid> = .idle
+    @Published var updateMember: RetrieveMember?
     
-    func editMember(
-        picture: String,
-        member: RetrieveMember
-    ) {
+    func editMember() {
+        guard let updateMember else { return }
         memberRepo.edit(
             .init(
-                picture: picture,
-                name: member.name,
-                birth: member.birth
+                picture: updateMember.picture,
+                name: updateMember.name,
+                birth: updateMember.birth
             )
         )
         .flow(\.editMemberFlow, on: self)
