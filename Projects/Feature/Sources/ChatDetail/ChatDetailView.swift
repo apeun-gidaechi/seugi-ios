@@ -39,47 +39,37 @@ extension ChatDetailView {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         } success: { messages in
-            ScrollViewReader { scrollViewProxy in
-                CustomScrollView(
-                    spacing: 0,
-                    reversed: true
-                ) {
-                    // TODO: refactor `Id` enumration
-                    Color.clear
-                        .frame(height: 0.001)
-                        .id(Id.top)
-                        .onAppear {
-                            print("ChatDetailView.body - touched top")
-                            // TODO: FETCH NEW DATA
-                        }
-                    ForEach(messages, id: \.id) { message in
-                        ChatMessageCell(
-                            message: message
-                        ) {
-                            switch $0 {
-                            case .clickImage:
-                                if let url = message.message.split(separator: MessageConstant.fileSeparator) // TODO: refactor
-                                    .first
-                                    .map(String.init) {
-                                    router.navigate(to: MainDestination.imagePreview(URL(string: url) ?? .aboutBlank))
-                                }
-                            case .downloadFile:
-                                // TODO: Handle
-                                break
+            CustomScrollView(
+                scrollViewProxy: $scrollViewProxy,
+                spacing: 0,
+                reversed: true
+            ) {
+                EmptyView().id(Id.top)
+                    .onAppear {
+                        print("ChatDetailView.body - touched top")
+                        // TODO: FETCH NEW DATA
+                    }
+                ForEach(messages, id: \.id) { message in
+                    ChatMessageCell(
+                        message: message
+                    ) {
+                        switch $0 {
+                        case .clickImage:
+                            if let url = message.message.split(separator: MessageConstant.fileSeparator) // TODO: refactor
+                                .first
+                                .map(String.init) {
+                                router.navigate(to: MainDestination.imagePreview(URL(string: url) ?? .aboutBlank))
                             }
+                        case .downloadFile:
+                            // TODO: Handle
+                            break
                         }
                     }
-                    Color.clear
-                        .frame(height: 0.001)
-                        .id(Id.bottom)
                 }
-                .padding(.horizontal, 8)
-                .onAppear {
-                    self.scrollViewProxy = scrollViewProxy
-                }
-                
-                .seugiBackground(.primary(.p050))
+                EmptyView().id(Id.bottom)
             }
+            .padding(.horizontal, 8)
+            .seugiBackground(.primary(.p050))
         } failure: { _ in
             VStack {
                 SeugiError("채팅 불러오기 실패", image: .sadButRelievedFace)
