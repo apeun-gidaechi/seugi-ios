@@ -81,4 +81,5 @@ extension AppleLoginViewModel: ASAuthorizationControllerPresentationContextProvi
         return window
     }
 }
+
 extension PersonNameComponents: Scope {}

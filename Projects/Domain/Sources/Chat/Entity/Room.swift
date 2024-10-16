@@ -59,15 +59,13 @@ public extension Room {
     }
 }
 
-public extension [Room] {
-    func search(text: String) -> [Room] {
-        return if text.isEmpty {
-            self.filter { $0.chatName.contains(text) }
-        } else {
-            self
-        }
+extension Room: Searchable {
+    public var searchString: String {
+        self.chatName
     }
-    
+}
+
+public extension [Room] {
     func setupOnline(userId: Int) -> [Room] {
         var rooms = self
         for (i, room) in rooms.enumerated() {

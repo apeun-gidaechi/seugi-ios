@@ -51,12 +51,8 @@ public extension RetrieveProfile {
     }
 }
 
-public extension [RetrieveProfile] {
-    func search(text: String) -> [RetrieveProfile] {
-        if text.isEmpty {
-            self
-        } else {
-            self.filter { $0.member.name.contains(text) }
-        }
+extension RetrieveProfile: Searchable {
+    public var searchString: String {
+        self.nameAndNick
     }
 }

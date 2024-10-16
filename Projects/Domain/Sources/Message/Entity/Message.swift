@@ -224,6 +224,12 @@ public extension Message {
     }
 }
 
+extension Message: Searchable {
+    public var searchString: String {
+        self.message
+    }
+}
+
 public extension Array where Element: MessageProtocol {
     func isFirstMessage(at currentIndex: Int) -> Bool {
         let message = self[currentIndex]
@@ -247,10 +253,6 @@ public extension Array where Element: MessageProtocol {
 }
 
 public extension [Message] {
-    func search(text: String) -> [Message] {
-        self.filter { $0.message.contains(text) }
-    }
-    
     /// isFirst, isLast값 대입
     func setupIsFirstAndIsLast() -> Self {
         var messages = self
