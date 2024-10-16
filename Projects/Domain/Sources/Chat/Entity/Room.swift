@@ -57,24 +57,20 @@ public extension Room {
     func findUserOrUnknownUser(id: Int) -> UserInfo {
         findUser(id: id) ?? .init(userInfo: .invalidMember(id: id), timestamp: .now)
     }
+    
+    func setupOnline(userId: Int) -> Room {
+        var room = self
+        for (j, userInfo) in room.joinUserInfo.enumerated() {
+            if userInfo.userInfo.id == userId {
+                room.joinUserInfo[j].timestamp = .distantPast
+            }
+        }
+        return room
+    }
 }
 
 extension Room: Searchable {
     public var searchString: String {
         self.chatName
-    }
-}
-
-public extension [Room] {
-    func setupOnline(userId: Int) -> [Room] {
-        var rooms = self
-        for (i, room) in rooms.enumerated() {
-            for (j, userInfo) in room.joinUserInfo.enumerated() {
-                if userInfo.userInfo.id == userId {
-                    rooms[i].joinUserInfo[j].timestamp = .distantPast
-                }
-            }
-        }
-        return self
     }
 }

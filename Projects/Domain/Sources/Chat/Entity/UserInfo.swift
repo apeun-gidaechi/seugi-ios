@@ -8,12 +8,16 @@ public struct UserInfo: Entity {
         self.userInfo = userInfo
         self.timestamp = timestamp
     }
+    
+    public var isOnline: Bool {
+        return self.timestamp == .distantPast
+    }
 }
 
 public extension [UserInfo] {
     var onlineMemberCount: Int {
         return self.filter {
-            $0.timestamp == .distantPast
+            $0.isOnline
         }.count
     }
 }

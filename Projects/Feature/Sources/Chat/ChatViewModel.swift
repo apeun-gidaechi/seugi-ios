@@ -62,9 +62,6 @@ extension ChatViewModel {
     ) {
         chatRepo.searchPersonal(workspaceId: workspaceId)
             .map(\.data)
-//            .map {
-//                $0.setupOnline(userId: userId)
-//            }
             .flow(\.personalRooms, on: self)
             .silentSink()
             .store(in: &subscriptions)
@@ -72,13 +69,9 @@ extension ChatViewModel {
     
     func fetchGroupChats(
         workspaceId: String
-//        userId: Int
     ) {
         chatRepo.searchGroup(workspaceId: workspaceId)
             .map(\.data)
-//            .map {
-//                $0.setupOnline(userId: userId)
-//            }
             .flow(\.groupRooms, on: self)
             .silentSink()
             .store(in: &subscriptions)

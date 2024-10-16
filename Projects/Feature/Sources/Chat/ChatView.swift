@@ -1,6 +1,7 @@
 import SwiftUI
 import Component
 import Domain
+import ScopeKit
 
 struct ChatView {
     @EnvironmentObject private var router: RouterViewModel
@@ -30,7 +31,10 @@ extension ChatView: View {
                     LazyVStack(spacing: 0) {
                         ForEach(rooms, id: \.id) { room in
                             Button {
-                                router.navigate(to: MainDestination.chatDetail(room: room))
+                                let configuredRoom = mainViewModel.profile.data?.member.id
+                                    .let { userId in room.setupOnline(userId: userId) } ?? room
+
+                                router.navigate(to: MainDestination.chatDetail(room: configuredRoom))
                             } label: {
                                 SeugiChatList(type: roomType, room: room)
                             }
