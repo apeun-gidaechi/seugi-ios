@@ -25,7 +25,7 @@ struct ChatMessageCell: View {
         mainViewModel.profile.data?.member
     }
     
-    private var type: ChatItemViewCellType {
+    private var type: ChatItemAuthorType {
         message.author?.id == me?.id ? .me : .other
     }
     

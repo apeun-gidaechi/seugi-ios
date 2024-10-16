@@ -24,7 +24,7 @@ struct ChatItemTimeLabelView: View {
                         .seugiColor(.gray(.g600))
                         .font(.caption(.c1))
                 }
-                if let text = message.timestamp?.prettyText {
+                if let text = message.timestamp?.parseString("a hh:mm") {
                     Text(text)
                         .seugiColor(.gray(.g600))
                         .font(.caption(.c2))

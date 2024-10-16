@@ -6,7 +6,7 @@ import Domain
 // - Has Avatar
 // - Horizontal align
 struct ChatItemContainer<C: View>: View {
-    let type: ChatItemViewCellType
+    let type: ChatItemAuthorType
     let message: Message
     @ViewBuilder let content: () -> C
     

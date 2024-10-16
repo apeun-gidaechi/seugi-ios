@@ -1,6 +1,6 @@
 import SwiftUI
 
-public enum ChatItemViewCellType: Equatable {
+public enum ChatItemAuthorType: Equatable {
     case other
     case ai
     case me

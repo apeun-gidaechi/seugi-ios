@@ -4,12 +4,12 @@ import SwiftUtil
 import Domain
 
 public struct ChatItemFileView: View {
-    private let type: ChatItemViewCellType
+    private let type: ChatItemAuthorType
     private let message: Message
     private let action: () -> Void
     
     public init(
-        type: ChatItemViewCellType,
+        type: ChatItemAuthorType,
         message: Message,
         action: @escaping () -> Void
     ) {

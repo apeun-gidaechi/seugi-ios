@@ -5,11 +5,11 @@ import SwiftUIUtil
 struct ChatItemViewCell: View {
     
     private let text: String
-    private let type: ChatItemViewCellType
+    private let type: ChatItemAuthorType
     
     init(
         text: String,
-        type: ChatItemViewCellType
+        type: ChatItemAuthorType
     ) {
         self.text = text
         self.type = type

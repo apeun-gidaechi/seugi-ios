@@ -5,11 +5,11 @@ import DateUtil
 import SwiftUIUtil
 
 public struct ChatItemView: View {
-    private let type: ChatItemViewCellType
+    private let type: ChatItemAuthorType
     private let message: Message
     
     public init(
-        type: ChatItemViewCellType,
+        type: ChatItemAuthorType,
         message: Message
     ) {
         self.type = type
