@@ -5,7 +5,7 @@ import Network
 import Local
 import Swinject
 
-public extension DependencyProvider {
+extension DependencyProvider {
     func register() {
         _ = Assembler([
             // Network

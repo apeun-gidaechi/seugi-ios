@@ -1,4 +1,5 @@
 import Combine
+import WidgetKit
 import SwiftUI
 
 import Component
@@ -29,13 +30,9 @@ extension MainView: View {
                 .page(icon: .personFill)
         }
         .ignoresSafeArea(.keyboard)
-        // ㅅㅂ
-//        .onReceive(appState.$logoutFlow) { flow in
-//            if case .success = flow {
-//                selection = 0
-//                router.navigateToRoot()
-//            }
-//        }
+        .onChange(of: mainViewModel.selectedWorkspace) { _ in
+            WidgetCenter.shared.reloadAllTimelines()
+        }
         .onChange(of: accessToken) { accessToken in
             if let accessToken {
                 stompViewModel.reissue(accessToken: accessToken)
