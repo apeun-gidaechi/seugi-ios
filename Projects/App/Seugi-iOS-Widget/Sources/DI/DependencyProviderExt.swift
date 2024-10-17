@@ -1,7 +1,7 @@
 import DIContainer
+import Remote
 import Domain
 import Core
-import Network
 import Local
 import Swinject
 

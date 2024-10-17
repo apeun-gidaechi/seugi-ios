@@ -1,6 +1,6 @@
 import Combine
 import WidgetKit
-import Network
+import Remote
 import Domain
 import DIContainer
 import SwiftUtil

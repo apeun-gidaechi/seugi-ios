@@ -19,7 +19,7 @@ let project = Project.make(
             .shared(of: .SwiftUtil),
             .shared(of: .DateUtil)
         ]),
-        data(target: .Network, dependencies: [
+        data(target: .Remote, dependencies: [
             .SPM.Moya,
             .SPM.CombineMoya,
             .SPM.ApeunStompKit,
