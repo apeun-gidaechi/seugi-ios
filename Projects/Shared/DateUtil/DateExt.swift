@@ -63,6 +63,11 @@ public extension Date {
         return formattedDate
     }
     
+    func parseString(type: DateFormatterType) -> String {
+        let dateFormatter = DateFormatter(type: type)
+        return dateFormatter.string(from: self)
+    }
+    
     subscript(components: Calendar.Component) -> Int {
         Calendar.current.dateComponents([components], from: self).value(for: components)!
     }

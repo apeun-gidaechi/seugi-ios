@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import Domain
+import DateUtil
 
 final class MealService: MealRepo {
     let runner: NetRunner
@@ -14,7 +15,7 @@ final class MealService: MealRepo {
     }
     
     func getByDate(workspaceId: String, date: Date) -> APIResult<Base<[Meal]>> {
-        runner.deepDive(MealEndpoint.getByDate(workspaceId: workspaceId, date: date.parseString("yyyyMMdd")), res: Base<[Meal]>.self)
+        runner.deepDive(MealEndpoint.getByDate(workspaceId: workspaceId, date: date.parseString(type: .isoDate)), res: Base<[Meal]>.self)
     }
     
     func reset(workspaceId: String) -> APIResult<BaseVoid> {
