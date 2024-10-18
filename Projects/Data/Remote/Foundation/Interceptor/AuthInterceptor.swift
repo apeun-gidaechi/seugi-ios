@@ -35,9 +35,10 @@ final class AuthInterceptor: Moya.RequestInterceptor {
         var modifiedRequest = urlRequest
         guard let accessToken: String = keyValueStore.load(key: .accessToken) else {
             completion(.success(urlRequest))
+            Log.network("AuthInterceptor.adapt - accessToken is nil")
             return
         }
-        Log.network("AuthInterceptor - Set token: \(accessToken)")
+        Log.network("AuthInterceptor.adapt - Set token: \(accessToken)")
         modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         completion(.success(modifiedRequest))
     }
@@ -70,8 +71,7 @@ final class AuthInterceptor: Moya.RequestInterceptor {
             return
         }
         
-        let refreshToken = keychainRepo.load(key: .refreshToken) ?? ""
-        guard !refreshToken.isEmpty else {
+        guard let refreshToken = keychainRepo.load(key: .refreshToken) else {
             Log.network("❌ AuthInterceptor - Refresh Token is Empty")
             failureReissue()
             completion(.doNotRetryWithError(APIError.refreshFailure))
