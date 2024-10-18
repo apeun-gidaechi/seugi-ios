@@ -28,6 +28,7 @@ class MealProvider: TimelineProvider {
         
         guard let selectedWorkspace = keyValueRepo.load(key: .selectedWorkspaceId) as? String else {
             Log.error("MealProvider - selectedWorkspaceId is nil")
+            completion(Timeline(entries: [MealEntry.of(currentDate)], policy: .after(nextUpdate)))
             return
         }
         

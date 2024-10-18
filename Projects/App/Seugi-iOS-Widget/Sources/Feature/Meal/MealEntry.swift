@@ -9,7 +9,7 @@ public struct MealEntry: TimelineEntry {
 extension MealEntry {
     static let empty = MealEntry(
         date: .now,
-        meal: .empty
+        meal: .dummy
     )
     
     static func of(_ date: Date) -> MealEntry {
@@ -21,7 +21,7 @@ extension MealEntry {
 }
 
 extension Meal {
-    static let empty = Meal(
+    static let dummy = Meal(
         id: 1,
         workspaceId: "",
         mealType: .breakfast,

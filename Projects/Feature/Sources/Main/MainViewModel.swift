@@ -34,6 +34,7 @@ extension MainViewModel {
         $selectedWorkspace.sink {
             guard let id = $0?.workspaceId else { return }
             self.keyValueRepo.save(key: .selectedWorkspaceId, value: id)
+            Log.info("MainViewModel.observeState - user selected workspace")
         }
         .store(in: &subscriptions)
     }

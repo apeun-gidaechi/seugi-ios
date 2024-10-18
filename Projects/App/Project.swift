@@ -10,22 +10,25 @@ import ProjectDescriptionHelpers
 import EnvironmentPlugin
 import DependencyPlugin
 
+let iosName = "Seugi-iOS"
+let iosWidgetName = "\(iosName)-Widget"
+
 let project = Project.make(
     name: "Seugi",
     targets: [
         Target.make(
-            name: "Seugi-iOS",
+            name: iosName,
             product: .app,
             bundleId: baseBundleId,
-            infoPlist: .file(path: "Seugi-iOS/Support/Info.plist"),
-            sources: ["Seugi-iOS/Sources/**"],
-            resources: ["Seugi-iOS/Resources/**"],
-            entitlements: .file(path: "Seugi-iOS/Support/App.entitlements"),
+            infoPlist: .file(path: "\(iosName)/Support/Info.plist"),
+            sources: ["\(iosName)/Sources/**"],
+            resources: ["\(iosName)/Resources/**"],
+            entitlements: .file(path: "\(iosName)/Support/\(iosName).entitlements"),
             dependencies: Modules.Data.allCases.map { TargetDependency.data(of: $0) }
-            + [.diContainer, .feature, .target(name: "Seugi-iOS-Widget")]
+            + [.diContainer, .feature, .target(name: iosWidgetName)]
         ),
         Target.make(
-            name: "Seugi-iOS-Widget",
+            name: iosWidgetName,
             product: .appExtension,
             bundleId: makeBundleId("widget"),
             infoPlist: .extendingDefault(with: [
@@ -34,8 +37,9 @@ let project = Project.make(
                     "NSExtensionPointIdentifier": "com.apple.widgetkit-extension"
                 ]
             ]),
-            sources: ["Seugi-iOS-Widget/Sources/**"],
-            resources: ["Seugi-iOS-Widget/Resources/**"],
+            sources: ["\(iosWidgetName)/Sources/**"],
+            resources: ["\(iosWidgetName)/Resources/**"],
+            entitlements: .file(path: "\(iosWidgetName)/Support/\(iosWidgetName).entitlements"),
             dependencies: Modules.Data.allCases.map { TargetDependency.data(of: $0) }
             + [.diContainer, .component]
         ),
