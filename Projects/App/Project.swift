@@ -31,12 +31,7 @@ let project = Project.make(
             name: iosWidgetName,
             product: .appExtension,
             bundleId: makeBundleId("widget"),
-            infoPlist: .extendingDefault(with: [
-                "CFBundleDisplayName": "$(PRODUCT_NAME)",
-                "NSExtension": [
-                    "NSExtensionPointIdentifier": "com.apple.widgetkit-extension"
-                ]
-            ]),
+            infoPlist: .file(path: "\(iosWidgetName)/Support/Info.plist"),
             sources: ["\(iosWidgetName)/Sources/**"],
             resources: ["\(iosWidgetName)/Resources/**"],
             entitlements: .file(path: "\(iosWidgetName)/Support/\(iosWidgetName).entitlements"),

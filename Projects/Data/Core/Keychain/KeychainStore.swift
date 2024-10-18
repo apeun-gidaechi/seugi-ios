@@ -8,7 +8,8 @@ struct KeychainStore: KeychainRepo {
         let query: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrAccount: key.rawValue,
-            kSecValueData: encodedData
+            kSecValueData: encodedData,
+            kSecAttrAccessGroup: "com.seugi.keychain"
         ]
         let status = SecItemAdd(query as CFDictionary, nil)
         if status == errSecDuplicateItem {
@@ -20,10 +21,12 @@ struct KeychainStore: KeychainRepo {
         let encodedData = value.data(using: String.Encoding.utf8)!
         let previousQuery: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,
-            kSecAttrAccount: key.rawValue
+            kSecAttrAccount: key.rawValue,
+            kSecAttrAccessGroup: "com.seugi.keychain"
         ]
         let updateQuery: [CFString: Any] = [
-            kSecValueData: encodedData
+            kSecValueData: encodedData,
+            kSecAttrAccessGroup: "com.seugi.keychain"
         ]
         _ = SecItemUpdate(
             previousQuery as CFDictionary,
@@ -44,7 +47,8 @@ struct KeychainStore: KeychainRepo {
             kSecClass: kSecClassGenericPassword,
             kSecAttrAccount: key.rawValue,
             kSecReturnAttributes: true,
-            kSecReturnData: true
+            kSecReturnData: true,
+            kSecAttrAccessGroup: "com.seugi.keychain"
         ]
         var item: CFTypeRef?
         guard SecItemCopyMatching(query as CFDictionary, &item) == errSecSuccess,
@@ -59,7 +63,8 @@ struct KeychainStore: KeychainRepo {
     func delete(key: KeychainKeys) {
         let deleteQuery: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,
-            kSecAttrAccount: key.rawValue
+            kSecAttrAccount: key.rawValue,
+            kSecAttrAccessGroup: "com.seugi.keychain"
         ]
         _ = SecItemDelete(deleteQuery as CFDictionary)
     }

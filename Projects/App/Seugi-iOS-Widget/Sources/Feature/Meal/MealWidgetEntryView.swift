@@ -33,7 +33,7 @@ public struct MealWidgetEntryView: View {
                 if let meal {
                     Text(meal.calorie)
                         .font(.caption)
-                        .seugiColor(.gray(.g400))
+                        .seugiColor(.gray(.g600))
                 }
             }
             VStack(alignment: .leading, spacing: 0) {
