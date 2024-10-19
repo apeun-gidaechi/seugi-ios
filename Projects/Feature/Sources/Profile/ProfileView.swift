@@ -27,15 +27,16 @@ struct ProfileView: View {
                             .seugiColor(.sub(.black))
                     } failure: { _ in }
                     Spacer()
-                    Image(icon: .settingFill)
-                        .resizable()
-                        .renderingMode(.template)
-                        .seugiColor(.gray(.g500))
-                        .frame(width: 32, height: 32)
-                        .button {
-                            router.navigate(to: MainDestination.settingProfile)
-                        }
-                        .scaledButtonStyle()
+                    Button {
+                        router.navigate(to: MainDestination.settingProfile)
+                    } label: {
+                        Image(icon: .settingFill)
+                            .resizable()
+                            .renderingMode(.template)
+                            .seugiColor(.gray(.g500))
+                            .frame(width: 32, height: 32)
+                    }
+                    .scaledButtonStyle()
                 }
                 .padding(.vertical, 8)
                 .padding(.horizontal, 16)

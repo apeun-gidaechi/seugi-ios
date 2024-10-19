@@ -1,24 +1,15 @@
-//
-//  ProfileCell.swift
-//  ProfileFeatureInterface
-//
-//  Created by hhhello0507 on 7/23/24.
-//  Copyright © 2024 apeun.gidaechi. All rights reserved.
-//
-
 import SwiftUI
 import Component
 
 struct ProfileCell: View {
-    
     private let title: String
     private let value: String
-    private let action: () -> Void
+    private let action: (() -> Void)?
     
     init(
         _ title: String, 
         value: String,
-        action: @escaping () -> Void
+        action: (() -> Void)? = nil
     ) {
         self.title = title
         self.value = value
@@ -32,15 +23,16 @@ struct ProfileCell: View {
                     .font(.body(.b1))
                     .seugiColor(.gray(.g500))
                 Spacer()
-                Image(icon: .writeLine)
-                    .resizable()
-                    .renderingMode(.template)
-                    .seugiColor(.gray(.g500))
-                    .frame(width: 20, height: 20)
-                    .button {
-                        action()
+                if let action {
+                    Button(action: action) {
+                        Image(icon: .writeLine)
+                            .resizable()
+                            .renderingMode(.template)
+                            .seugiColor(.gray(.g500))
+                            .frame(width: 20, height: 20)
                     }
                     .scaledButtonStyle()
+                }
             }
             .padding(.horizontal, 20)
             SeugiListItem.normal(title: value.isEmpty ? "-" : value)
