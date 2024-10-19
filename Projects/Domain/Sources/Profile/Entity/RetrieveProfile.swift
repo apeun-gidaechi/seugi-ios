@@ -44,6 +44,12 @@ public struct RetrieveProfile: Entity {
     }
 }
 
+extension RetrieveProfile: Identifiable {
+    public var id: String {
+        return self.workspaceId
+    }
+}
+
 public extension RetrieveProfile {
     var nameAndNick: String {
         if self.nick.isEmpty {
