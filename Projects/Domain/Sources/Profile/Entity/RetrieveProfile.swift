@@ -1,6 +1,7 @@
 public struct RetrieveProfile: Entity {
-    public var member: RetrieveMember
     public var workspaceId: String
+    public var member: RetrieveMember
+    public var permission: WorkspaceRole
     public var status: String
     public var nick: String
     public var spot: String
@@ -13,8 +14,9 @@ public struct RetrieveProfile: Entity {
     public var schNumber: Int = 0 // 번호
     
     public init(
-        member: RetrieveMember,
         workspaceId: String,
+        member: RetrieveMember,
+        permission: WorkspaceRole,
         status: String,
         nick: String,
         spot: String,
@@ -26,8 +28,9 @@ public struct RetrieveProfile: Entity {
         schClass: Int,
         schNumber: Int
     ) {
-        self.member = member
         self.workspaceId = workspaceId
+        self.member = member
+        self.permission = permission
         self.status = status
         self.nick = nick
         self.spot = spot

@@ -10,26 +10,23 @@ import SwiftUI
 import Component
 import Domain
 
-struct WorkspaceMemberView: View {
-    
+struct WorkspaceMemberView {
     @EnvironmentObject private var mainViewModel: MainViewModel
+    
     @StateObject private var viewModel = WorkspaceMemberViewModel()
     
     @State private var isSheetPresent: Bool = false
     @State private var sheetSize: CGSize = .zero
     
-    private var members: Flow<[RetrieveProfile]> {
-        viewModel.isSearching ? viewModel.searchedMembers : viewModel.selectedMembers
-    }
-    
     init() {}
-    
+}
+extension WorkspaceMemberView: View {
     var body: some View {
         VStack(spacing: 12) {
             SeugiSegmentedButton(segmentedButtonRoles, selection: $viewModel.selection)
                 .padding(.top, 6)
                 .padding(.horizontal, 20)
-            members.makeView {
+            viewModel.mergedMembers.makeView {
                 ProgressView()
             } success: { members in
                 if let selectedWorkspace = mainViewModel.selectedWorkspace {
@@ -68,6 +65,7 @@ struct WorkspaceMemberView: View {
             }
             Spacer()
         }
+        .ignoresSafeArea()
         .seugiTopBar(title: "멤버")
         .searchable("채팅방 검색", text: $viewModel.searchText, isSearching: $viewModel.isSearching)
         .sheet(isPresented: $isSheetPresent) {
@@ -95,9 +93,7 @@ struct WorkspaceMemberView: View {
             .presentationDetents([.height(sheetSize.height)])
         }
         .onAppear {
-            guard let selectedWorkspace = mainViewModel.selectedWorkspace else {
-                return
-            }
+            guard let selectedWorkspace = mainViewModel.selectedWorkspace else { return }
             viewModel.fetchMembers(workspaceId: selectedWorkspace.workspaceId)
         }
     }
