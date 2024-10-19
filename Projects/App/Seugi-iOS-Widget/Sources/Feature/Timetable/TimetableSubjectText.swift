@@ -1,18 +1,17 @@
 import SwiftUI
 import Component
 
-struct MealMenuText: View {
-    
+struct TimetableSubjectText: View {
     let text: String
-    let isMealEmpty: Bool
+    let isTimetableEmpty: Bool
     
-    init(text: String, isMealEmpty: Bool = false) {
+    init(text: String, isTimetableEmpty: Bool = false) {
         self.text = text
-        self.isMealEmpty = isMealEmpty
+        self.isTimetableEmpty = isTimetableEmpty
     }
     
     var body: some View {
-        if isMealEmpty {
+        if isTimetableEmpty {
             Text(text)
                 .font(.footnote)
                 .multilineTextAlignment(.center)
@@ -30,5 +29,5 @@ struct MealMenuText: View {
 }
 
 #Preview {
-    MealMenuText(text: "test", isMealEmpty: true)
+    TimetableSubjectText(text: "test", isTimetableEmpty: true)
 }

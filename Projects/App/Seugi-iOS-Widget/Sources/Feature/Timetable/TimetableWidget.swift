@@ -1,27 +1,26 @@
 import WidgetKit
 import SwiftUI
+import Domain
 import Component
 
-public struct MealWidget: Widget {
+struct TimetableWidget: Widget {
     private let widgetFamilyList: [WidgetFamily] = if #available(iOSApplicationExtension 16.0, *) {
         [.systemSmall, .systemMedium, .accessoryRectangular, .accessoryCircular]
     } else {
         [.systemSmall, .systemMedium]
     }
-    public static let kind = "Meal_Widget"
+    public static let kind = "Timetable_Widget"
     
-    public init() {}
-    
-    public var body: some WidgetConfiguration {
+    var body: some WidgetConfiguration {
         StaticConfiguration(
             kind: Self.kind,
-            provider: MealProvider()
+            provider: TimetableProvider()
         ) { entry in
-            MealWidgetEntryView(for: entry)
+            TimetableEntryView(for: entry)
                 .safeContainerBackground(color: .gray(.g100))
         }
-        .configurationDisplayName("급식")
-        .description("오늘 우리 학교 급식은?")
+        .configurationDisplayName("시간표")
+        .description("오늘 우리 학교 시간표는?")
         .contentMarginsDisabled()
         .supportedFamilies(widgetFamilyList)
     }

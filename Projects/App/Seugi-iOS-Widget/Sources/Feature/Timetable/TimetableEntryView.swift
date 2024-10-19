@@ -1,26 +1,20 @@
-//  Author: hhhello0507
-//  Created: 10/10/24
-
-
 import SwiftUI
-import WidgetKit
-import Domain
 import Component
+import SwiftUtil
 
-public struct MealWidgetEntryView: View {
+struct TimetableEntryView: View {
     @Environment(\.widgetFamily) private var widgetFamily
-    private let entry: MealEntry
     
-    public init(for entry: MealEntry) {
+    private let entry: TimetableEntry
+    
+    init(for entry: TimetableEntry) {
         self.entry = entry
     }
     
-    public var body: some View {
-        let mealType = MealType.from(.now) ?? .breakfast
-        let meal = entry.meal
+    var body: some View {
         VStack(spacing: 4) {
             HStack(spacing: 0) {
-                Text(mealType.rawValue)
+                Text("시간표")
                     .seugiColor(.sub(.white))
                     .padding(.horizontal, 10)
                     .padding(.vertical, 4)
@@ -28,31 +22,29 @@ public struct MealWidgetEntryView: View {
                     .cornerRadius(14, corners: .allCorners)
                     .font(.footnote)
                 Spacer()
-                if let meal {
-                    Text(meal.calorie)
-                        .font(.caption)
-                        .seugiColor(.gray(.g600))
-                }
+                Text(Date.now.parseString("MM.dd"))
+                    .font(.caption)
+                    .seugiColor(.gray(.g600))
             }
             VStack(alignment: .leading, spacing: 0) {
-                if let meal {
-                    if meal.menu.isEmpty {
-                        MealMenuText(text: "오늘은\n급식이 없어요", isMealEmpty: true)
+                if let timetables = entry.timetables {
+                    if timetables.isEmpty {
+                        TimetableSubjectText(text: "오늘은\n급식이 없어요", isTimetableEmpty: true)
                     } else {
                         HStack(spacing: 8) {
                             if widgetFamily == .systemSmall {
                                 VStack(alignment: .leading, spacing: 0) {
-                                    ForEach(0..<min(meal.menu.count, 6), id: \.self) { idx in
-                                        MealMenuText(
-                                            text: String(meal.menu.count > 6 && idx == 6 ? "..." : meal.menu[idx].split(separator: " ").first ?? "")
+                                    ForEach(0..<min(timetables.count, 6), id: \.self) { idx in
+                                        TimetableSubjectText(
+                                            text: String(timetables.count > 6 && idx == 6 ? "..." : timetables[idx].subject)
                                         )
                                     }
                                 }
                             } else {
-                                ForEach(Array.from(meal.menu.splitArray(position: 6)), id: \.self) { meals in
+                                ForEach(Array.from(timetables.splitArray(position: 6)), id: \.self) { timetables in
                                     VStack(alignment: .leading, spacing: 0) {
-                                        ForEach(meals, id: \.self) { meal in
-                                            MealMenuText(text: String(meal.split(separator: " ").first ?? ""))
+                                        ForEach(timetables, id: \.self) { timetable in
+                                            TimetableSubjectText(text: String(timetable.subject))
                                         }
                                     }
                                 }
@@ -60,7 +52,7 @@ public struct MealWidgetEntryView: View {
                         }
                     }
                 } else {
-                    MealMenuText(text: "급식을\n불러올 수 없어요", isMealEmpty: true)
+                    TimetableSubjectText(text: "급식을\n불러올 수 없어요", isTimetableEmpty: true)
                 }
             }
             .padding(8)

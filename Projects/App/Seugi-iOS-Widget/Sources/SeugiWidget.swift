@@ -13,5 +13,6 @@ struct AppMainWidget: WidgetBundle {
     
     var body: some Widget {
         MealWidget()
+        TimetableWidget()
     }
 }

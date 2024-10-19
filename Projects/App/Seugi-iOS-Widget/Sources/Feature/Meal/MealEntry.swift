@@ -7,7 +7,7 @@ public struct MealEntry: TimelineEntry {
 }
 
 extension MealEntry {
-    static let empty = MealEntry(
+    static let dummy = MealEntry(
         date: .now,
         meal: .dummy
     )

@@ -8,23 +8,24 @@ import SwiftUtil
 class MealProvider: TimelineProvider {
     typealias Entry = MealEntry
     
-    private var subscription = Set<AnyCancellable>()
+    private var subscriptions = Set<AnyCancellable>()
     
     @Inject private var mealRepo: MealRepo
     @Inject private var keyValueRepo: KeyValueRepo
     
     func placeholder(in context: Context) -> Entry {
-        return .empty
+        return .dummy
     }
     
     func getSnapshot(in context: Context, completion: @escaping (Entry) -> Void) {
-        completion(.empty)
+        completion(.dummy)
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         Log.debug("MealProvider.getTimeline is called.")
-        let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: .now)!
+        
         let currentDate = Date()
+        let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate)!
         
         guard let selectedWorkspace = keyValueRepo.load(key: .selectedWorkspaceId) as? String else {
             Log.error("MealProvider - selectedWorkspaceId is nil")
@@ -48,6 +49,6 @@ class MealProvider: TimelineProvider {
             let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
             completion(timeline)
         }
-        .store(in: &subscription)
+        .store(in: &subscriptions)
     }
 }
