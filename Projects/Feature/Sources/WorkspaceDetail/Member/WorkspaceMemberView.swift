@@ -119,6 +119,7 @@ extension WorkspaceMemberView {
                 memberId: member.member.id,
                 anotherMemberId: profile.member.id
             )
+            self.selectedProfile = nil
         }
         .adjustedHeightSheet()
     }

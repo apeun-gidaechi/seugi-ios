@@ -59,8 +59,11 @@ extension ChatView: View {
             showBackButton: false
         )
         .buttons {
-            if roomType != .personal {
-                .init(icon: .addFill) {
+            .init(icon: .addFill) {
+                switch roomType {
+                case .personal:
+                    router.navigate(to: MainDestination.workspaceMembers)
+                case .group:
                     router.navigate(to: MainDestination.createGroupChatCoordinator)
                 }
             }
