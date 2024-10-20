@@ -46,7 +46,7 @@ struct MainCoordinator: View {
                     case .joinWorkspaceRole: JoinWorkspaceRoleView().environmentObject(joinWorkspaceViewModel)
                         
                         // preview
-                    case .imagePreview(let url): ImagePreview(url: url)
+                    case .imagePreview(let path): ImagePreview(path: path)
                     }
                 }
                 .environmentObject(self.stompViewModel)

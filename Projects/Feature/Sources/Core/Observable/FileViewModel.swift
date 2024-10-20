@@ -15,21 +15,32 @@ final class FileViewModel: ObservableObject {
     
     @Inject private var fileRepo: FileRepo
     
-    @Published var fileFlow: Flow<File> = .idle
+    @Published var imageUploadFlow: Flow<File> = .idle
+    @Published var imageFlow: Flow<Image> = .idle
 }
 
 extension FileViewModel {
     @MainActor
-    public func uploadPhoto(photo: PhotosPickerItem) async {
-        guard let data = try? await photo.loadTransferable(type: Data.self) else {
-            fileFlow = .failure(FileError.photoLoadTransferable)
-            return
+    public func uploadPhoto(photo: PhotosPickerItem) {
+        Task {
+            guard let data = try? await photo.loadTransferable(type: Data.self) else {
+                imageUploadFlow = .failure(FileError.photoLoadTransferable)
+                return
+            }
+            
+            fileRepo.upload(type: .image, file: data)
+                .map(\.data)
+                .flow(\.imageUploadFlow, on: self)
+                .silentSink()
+                .store(in: &subscriptions)
         }
-        
-        fileRepo.upload(type: .image, file: data)
-            .map(\.data)
-            .flow(\.fileFlow, on: self)
-            .silentSink()
-            .store(in: &subscriptions)
+        Task {
+            guard let image = try? await photo.loadTransferable(type: Image.self) else {
+                imageFlow = .failure(FileError.photoLoadTransferable)
+                return
+            }
+            
+            self.imageFlow = .success(image)
+        }
     }
 }

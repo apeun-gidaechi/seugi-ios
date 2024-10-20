@@ -79,13 +79,10 @@ extension CreateWorkspaceView: View {
             }
         }
         .onChange(of: photo) { photo in
-            if let photo {
-                Task {
-                    await fileViewModel.uploadPhoto(photo: photo)
-                }
-            }
+            guard let photo else { return }
+            fileViewModel.uploadPhoto(photo: photo)
         }
-        .onReceive(fileViewModel.$fileFlow) { flow in
+        .onReceive(fileViewModel.$imageUploadFlow) { flow in
             switch flow {
             case .success(let file):
                 self.uploadedFile = file

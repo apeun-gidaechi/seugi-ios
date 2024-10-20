@@ -1,15 +1,8 @@
-//
-//  MainDestination.swift
-//  Feature
-//
-//  Created by hhhello0507 on 8/23/24.
-//
-
 import Foundation
 import Domain
+import Component
 
 enum MainDestination: Hashable {
-    
     // catseugi
     case catSeugi
     
@@ -40,5 +33,5 @@ enum MainDestination: Hashable {
     case joinWorkspaceRole
     
     // preview
-    case imagePreview(URL)
+    case imagePreview(ImagePreview.Path)
 }

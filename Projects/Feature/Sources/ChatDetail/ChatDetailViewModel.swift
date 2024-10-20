@@ -2,7 +2,6 @@ import Foundation
 import Domain
 import DIContainer
 import PhotosUI
-import SwiftUI
 import SwiftUtil
 import Combine
 
@@ -17,7 +16,6 @@ final class ChatDetailViewModel: ObservableObject {
     @Published var message: String = ""
     @Published var searchText = ""
     @Published var isSearching: Bool = false
-    @Published var photo: PhotosPickerItem?
     @Published var leftRoomFlow: Flow<BaseVoid> = .idle
     @Published var firstMessageTimestamp: Date?
     
@@ -29,6 +27,11 @@ final class ChatDetailViewModel: ObservableObject {
         self.room = room
         
         self.fetchMessages()
+        self.subscribe()
+    }
+    
+    deinit {
+        self.unsubscribe()
     }
 }
 

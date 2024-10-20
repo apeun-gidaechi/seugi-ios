@@ -16,7 +16,7 @@ struct SettingProfileView {
     
     @State private var showPhotoPicker: Bool = false
     @State private var profileImagePhoto: PhotosPickerItem?
-    @State private var isSheetPresent: Bool = false
+    @State private var isEditNameSheetPresent: Bool = false
     
     private var profile: RetrieveProfile? {
         mainViewModel.profile.data
@@ -48,7 +48,7 @@ extension SettingProfileView: View {
                         .font(.subtitle(.s2))
                         .seugiColor(.sub(.black))
                     Button {
-                        self.isSheetPresent = true
+                        self.isEditNameSheetPresent = true
                     } label: {
                         Image(icon: .writeLine)
                             .resizable()
@@ -103,21 +103,11 @@ extension SettingProfileView: View {
             selection: $profileImagePhoto,
             matching: .any(of: [.images, .screenshots])
         )
-        .sheet(isPresented: $isSheetPresent, content: sheetContent)
         .onChange(of: profileImagePhoto) { photo in
-            guard let photo else {
-                return
-            }
-            Task {
-                await fileViewModel.uploadPhoto(photo: photo)
-            }
+            guard let photo else { return }
+            fileViewModel.uploadPhoto(photo: photo)
         }
-        .onReceive(mainViewModel.$profile) { flow in
-            if case .success(let profile) = flow {
-                viewModel.updateMember = profile.member
-            }
-        }
-        .onReceive(fileViewModel.$fileFlow) { flow in
+        .onReceive(fileViewModel.$imageUploadFlow) { flow in
             switch flow {
             case .success(let file):
                 viewModel.updateMember?.picture = file.url
@@ -128,6 +118,12 @@ extension SettingProfileView: View {
                 break
             }
         }
+        .onReceive(mainViewModel.$profile) { flow in
+            if case .success(let profile) = flow {
+                viewModel.updateMember = profile.member
+            }
+        }
+        .sheet(isPresented: $isEditNameSheetPresent, content: sheetContent)
         .onReceive(viewModel.$editMemberFlow) { flow in
             switch flow {
             case .success:
@@ -171,7 +167,7 @@ extension SettingProfileView: View {
                 viewModel.updateMember?.name = $0
             }
         ) {
-            self.isSheetPresent = false
+            self.isEditNameSheetPresent = false
             self.viewModel.editMember()
         }
     }

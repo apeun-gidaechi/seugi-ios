@@ -12,15 +12,19 @@ struct ChatDetailView: View {
         case bottom, top
     }
     
+    @Environment(\.dismiss) private var dismiss
+    
     @EnvironmentObject private var alert: AlertProvider
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var keyboardMonitor: KeyboardMonitor
     
     @StateObject private var viewModel: ChatDetailViewModel
+    @StateObject private var fileViewModel = FileViewModel()
     
     @State private var isDrawerOpen: Bool = false
     @State private var scrollViewProxy: ScrollViewProxy?
     @State private var showPhotoPicker: Bool = false
+    @State private var photo: PhotosPickerItem?
     
     private let room: Room
     
@@ -57,7 +61,9 @@ extension ChatDetailView {
                             if let url = message.message.split(separator: MessageConstant.fileSeparator) // TODO: refactor
                                 .first
                                 .map(String.init) {
-                                router.navigate(to: MainDestination.imagePreview(URL(string: url) ?? .aboutBlank))
+                                router.navigate(to: MainDestination.imagePreview(
+                                    .init(url: URL(string: url) ?? .aboutBlank))
+                                )
                             }
                         case .downloadFile:
                             // TODO: Handle
@@ -102,19 +108,38 @@ extension ChatDetailView {
         }
         .photosPicker(
             isPresented: $showPhotoPicker,
-            selection: $viewModel.photo,
+            selection: self.$photo,
             matching: .any(of: [.images, .screenshots, .livePhotos])
         )
-        .onAppear {
-            self.viewModel.subscribe()
-        }
-        .onDisappear {
-            self.viewModel.unsubscribe()
-        }
         .onChange(of: isDrawerOpen) { _ in
             hideKeyboard()
         }
-        .onChange(of: viewModel.photo) { _ in } // TODO: impl
+        .onChange(of: photo) {
+            guard let photo = $0 else { return }
+            self.photo = nil
+            fileViewModel.uploadPhoto(photo: photo)
+        }
+        .onReceive(fileViewModel.$imageUploadFlow) { flow in
+            switch flow {
+            case .success(let file):
+                router.navigate(to: MainDestination.imagePreview(
+                    .init(
+                        url: URL(string: file.url) ?? .aboutBlank
+                    ) {
+                        .init(icon: .sendFill) {
+                            self.dismiss()
+                        }
+                    }
+                ))
+            case .failure(let error):
+                alert.present(
+                    .init(title: "업로드 실패")
+                    .message("잠시 후 다시 시도해 주세요")
+                )
+            default:
+                break
+            }
+        }
         .onReceive(viewModel.$leftRoomFlow) { flow in
             switch flow {
             case .success:

@@ -23,7 +23,7 @@ extension WorkspaceMemberView: View {
             viewModel.mergedMembers.makeView {
                 ProgressView()
             } success: { members in
-                if let selectedWorkspace = mainViewModel.selectedWorkspace {
+                if mainViewModel.selectedWorkspace != nil {
                     if members.isEmpty {
                         SeugiError("멤버가 없어요", image: .faceWithDiagonalMouth)
                     } else {

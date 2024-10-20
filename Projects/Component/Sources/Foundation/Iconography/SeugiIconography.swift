@@ -1,6 +1,6 @@
 import SwiftUI
 
-public enum SeugiIconography: String {
+public enum SeugiIconography: String, Hashable {
     case addEmoji = "add_emoji"
     case addFill = "add_fill"
     case addLine = "add_line"
