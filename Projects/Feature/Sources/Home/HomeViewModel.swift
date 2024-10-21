@@ -11,10 +11,12 @@ final class HomeViewModel: ObservableObject {
     @Inject private var mealRepo: MealRepo
     @Inject private var timetableRepo: TimetableRepo
     @Inject private var scheduleRepo: ScheduleRepo
+    @Inject private var taskRepo: TaskRepo
     
     @Published var meals: Flow<[Meal]> = .fetching
     @Published var timetables: Flow<[Timetable]> = .fetching
     @Published var schedules: Flow<[Schedule]> = .fetching
+    @Published var tasks: Flow<[Domain.Task]> = .fetching
     
     var isFirstOnAppear: Bool = true
 }
@@ -24,6 +26,7 @@ extension HomeViewModel: OnAppearProtocol {
         self.fetchMeals(workspaceId: workspaceId)
         self.fetchTimetable(workspaceId: workspaceId)
         self.fetchSchedules(workspaceId: workspaceId)
+        self.fetchTasks(workspaceId: workspaceId)
     }
 }
 
@@ -45,15 +48,23 @@ extension HomeViewModel {
     }
     
     func fetchSchedules(workspaceId: String) {
-        scheduleRepo.fetchSshedulesForMonth(
+        scheduleRepo.fetchSchedulesForMonth(
             .init(
                 workspaceId: workspaceId,
-                month: Date.now[.day]
+                month: Date.now[.month]
             )
         )
         .map(\.data)
         .flow(\.schedules, on: self)
         .silentSink()
         .store(in: &subscriptions)
+    }
+    
+    func fetchTasks(workspaceId: String) {
+        taskRepo.fetchTasks(workspaceId: workspaceId)
+            .map(\.data)
+            .flow(\.tasks, on: self)
+            .silentSink()
+            .store(in: &subscriptions)
     }
 }

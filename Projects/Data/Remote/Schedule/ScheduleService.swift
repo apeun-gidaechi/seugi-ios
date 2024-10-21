@@ -10,7 +10,7 @@ final class ScheduleService: ScheduleRepo {
         runner.deepDive(ScheduleEndpoint.fetchSchedulesForYear(req), res: Base<[Schedule]>.self)
     }
     
-    func fetchSshedulesForMonth(_ req: FetchSchedulesForMonthReq) -> APIResult<Base<[Schedule]>> {
+    func fetchSchedulesForMonth(_ req: FetchSchedulesForMonthReq) -> APIResult<Base<[Schedule]>> {
         runner.deepDive(ScheduleEndpoint.fetchSchedulesForMonth(req), res: Base<[Schedule]>.self)
     }
 }

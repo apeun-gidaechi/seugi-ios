@@ -28,6 +28,7 @@ public extension DependencyProvider {
             OAuthAssembly(),
             CatSeugiAssembly(),
             ScheduleAssembly(),
+            TaskAssembly(),
             // Local
             LocalChatAssembly(),
             // Core

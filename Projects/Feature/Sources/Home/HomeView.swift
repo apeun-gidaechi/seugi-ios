@@ -40,6 +40,7 @@ extension HomeView: View {
                     }
                 }
                 HomeScheduleContainer(for: viewModel.schedules)
+                HomeTaskContainer(for: <#T##Flow<[Task]>#>)
             }
             .padding(.top, 8)
             .padding(.bottom, 80)

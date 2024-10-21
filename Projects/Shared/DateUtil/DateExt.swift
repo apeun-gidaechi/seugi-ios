@@ -71,4 +71,9 @@ public extension Date {
     subscript(components: Calendar.Component) -> Int {
         Calendar.current.dateComponents([components], from: self).value(for: components)!
     }
+    
+    func diff(component: Calendar.Component) -> Int {
+        let calendar = Calendar.current
+        return calendar.dateComponents([component], from: self, to: self).value(for: component)!
+    }
 }

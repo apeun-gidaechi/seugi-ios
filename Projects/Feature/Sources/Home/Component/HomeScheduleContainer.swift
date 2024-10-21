@@ -1,9 +1,9 @@
 import SwiftUI
 import Component
 import Domain
+import DateUtil
 
 struct HomeScheduleContainer: View {
-    
     private let schedule: Flow<[Schedule]>
     
     init(for schedule: Flow<[Schedule]>) {
@@ -42,7 +42,7 @@ struct HomeScheduleContainer: View {
                                     .seugiColor(.sub(.black))
                                     .padding(.leading, 10)
                                 Spacer()
-                                Text("D-3")
+                                Text("D-\(schedule.date.diff(component: .day))")
                                     .font(.caption(.c1))
                                     .seugiColor(.gray(.g600))
                             }
