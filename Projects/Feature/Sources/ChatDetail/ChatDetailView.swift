@@ -160,6 +160,9 @@ extension ChatDetailView {
                 break
             }
         }
+        .onReceive(viewModel.$messages) { _ in
+            scrollToBottom()
+        }
     }
     
     @ViewBuilder
@@ -169,6 +172,7 @@ extension ChatDetailView {
                 switch action {
                 case .sendMessage:
                     viewModel.sendMessage()
+                    scrollToBottom()
                 case .imageMenu:
                     showPhotoPicker = true
                 case .fileMenu:
