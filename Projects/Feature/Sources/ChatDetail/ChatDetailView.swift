@@ -125,7 +125,7 @@ extension ChatDetailView {
                         url: URL(string: file.url) ?? .aboutBlank
                     ) {
                         .init(icon: .sendFill) {
-                            viewModel.sendMessage()
+                            viewModel.sendImage(file: file)
                             router.popToStack()
                         }
                     }

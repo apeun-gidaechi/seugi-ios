@@ -114,12 +114,12 @@ extension ChatDetailViewModel {
         message = ""
     }
     
-    func sendImage(url: String) {
+    func sendImage(file: File) {
         stompMessageRepo.sendMessage(
             .init(
                 roomId: room.id,
                 type: .image,
-                message: message,
+                message: file.joinedString,
                 uuid: "",
                 mention: nil,
                 mentionAll: nil,

@@ -21,7 +21,7 @@ struct ImagePreview: View {
             hasher.combine(self.uuid)
         }
         private let uuid: UUID = UUID()
-        let url: URL
+        let image: LoadedImage
         let bottomButtons: [BottomButton]
         let topBarbuttons: () -> [SeugiTopBarButton]
         
@@ -30,39 +30,62 @@ struct ImagePreview: View {
             bottomButtons: [BottomButton] = [],
             @SeugiTopBarButton.Builder topBarbuttons: @escaping () -> [SeugiTopBarButton] = { [] }
         ) {
-            self.url = url
+            self.image = .url(url)
+            self.bottomButtons = bottomButtons
+            self.topBarbuttons = topBarbuttons
+        }
+        
+        init(
+            image: Image,
+            bottomButtons: [BottomButton] = [],
+            @SeugiTopBarButton.Builder topBarbuttons: @escaping () -> [SeugiTopBarButton] = { [] }
+        ) {
+            self.image = .image(image)
             self.bottomButtons = bottomButtons
             self.topBarbuttons = topBarbuttons
         }
     }
+    
     struct BottomButton {
         let icon: SeugiIconography
         let action: () -> Void
     }
     
-    private let url: URL
+    enum LoadedImage {
+        case image(Image)
+        case url(URL)
+    }
+    
+    private let image: LoadedImage
     private let bottomButtons: [BottomButton]
     private let topBarbuttons: () -> [SeugiTopBarButton]
     
     init(path: Path) {
-        self.url = path.url
+        self.image = path.image
         self.bottomButtons = path.bottomButtons
         self.topBarbuttons = path.topBarbuttons
     }
     
     var body: some View {
         PinchScrollView {
-            LazyImage(url: url) { phase in
-                if phase.isLoading {
-                    ProgressView()
-                } else if let image = phase.image {
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } else {
-                    Text("이미지 로딩 실패")
-                        .font(.body(.b2))
-                        .seugiColor(.sub(.white))
+            switch image {
+            case .image(let image):
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            case .url(let url):
+                LazyImage(url: url) { phase in
+                    if phase.isLoading {
+                        ProgressView()
+                    } else if let image = phase.image {
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    } else {
+                        Text("이미지 로딩 실패")
+                            .font(.body(.b2))
+                            .seugiColor(.sub(.white))
+                    }
                 }
             }
         }

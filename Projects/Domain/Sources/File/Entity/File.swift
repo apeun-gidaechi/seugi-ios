@@ -15,6 +15,14 @@ public struct File: Entity {
         self.name = splittedMessage[1]
         self.byte = Int(splittedMessage[2])
     }
+    
+    public var joinedString: String {
+        var s = "\(url)::\(name)"
+        if let byte {
+            s += "::\(byte)"
+        }
+        return s
+    }
 }
 
 extension File {
