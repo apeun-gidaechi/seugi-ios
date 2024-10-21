@@ -26,7 +26,13 @@ struct ChatMessageCell: View {
     }
     
     private var type: ChatItemAuthorType {
-        message.author?.id == me?.id ? .me : .other
+        if message.author?.id == me?.id {
+            .me
+        } else if message.type == .bot {
+            .bot
+        } else {
+            .other
+        }
     }
     
     var body: some View {

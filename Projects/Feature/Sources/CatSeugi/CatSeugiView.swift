@@ -35,7 +35,7 @@ extension CatSeugiView: View {
                             if let member = mainViewModel.profile.data?.member {
                                 let isMe = message.userId == member.id
                                 ChatItemView(
-                                    type: isMe ? .me : .ai,
+                                    type: isMe ? .me : .bot,
                                     message: message
                                 )
                             }

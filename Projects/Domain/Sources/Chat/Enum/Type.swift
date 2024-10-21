@@ -10,4 +10,5 @@ public enum `Type`: String, Entity {
     case deleteMessage = "DELETE_MESSAGE"
     case addEmoji = "ADD_EMOJI"
     case removeEmoji = "REMOVE_EMOJI"
+    case bot = "BOT"
 }

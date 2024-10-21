@@ -194,7 +194,7 @@ public extension Message {
     
     var viewType: ViewType? {
         switch self.type {
-        case .message, .deleteMessage:
+        case .message, .deleteMessage, .bot:
                 .text
         case .img:
                 .image

@@ -55,7 +55,7 @@ extension ChatDetailViewModel {
         stompMessageRepo.subGetMessage(roomId: room.id)
             .map { $0.toDomain() }
             .sink { message in
-                print("ChatDetailViewModel.subscribe - subGetMessage() message received")
+                Log.info("ChatDetailViewModel.subscribe - subGetMessage() message received")
                 self.messages = self.messages.map {
                     let messages = $0 + [
                         message
@@ -104,7 +104,7 @@ extension ChatDetailViewModel {
                 type: .message,
                 message: message,
                 uuid: "",
-                mention: nil,
+                mention: message.contains("스기야") ? [-1] : nil,
                 mentionAll: nil,
                 emoticon: nil
             )

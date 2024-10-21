@@ -25,7 +25,7 @@ extension ProfileSheetView: View {
                     .seugiColor(.sub(.black))
                 Spacer()
                 SeugiButton.small("채팅", type: .black, action: sendMessageAction)
-                .scaledButtonStyle()
+                    .scaledButtonStyle()
             }
             .padding(.vertical, 8)
             .padding(.horizontal, 16)

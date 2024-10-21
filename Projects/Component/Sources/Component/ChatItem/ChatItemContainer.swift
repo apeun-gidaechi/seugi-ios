@@ -1,5 +1,4 @@
 import SwiftUI
-
 import Domain
 
 // ChatItemContainer
@@ -14,12 +13,17 @@ struct ChatItemContainer<C: View>: View {
         HStack(alignment: .top) {
             if case .other = type, message.isFirst {
                 SeugiAvatar(message.author?.picture, type: .medium)
-            } else if case .ai = type, message.isFirst {
+            } else if case .bot = type, message.isFirst {
                 SeugiAppIcon(type: .medium)
             }
             VStack(alignment: type.alignent.rawValue, spacing: 4) {
-                if type.alignent == .leading && message.isFirst {
-                    if let author = message.author {
+                if type.alignent == .leading && message.isFirst,
+                   let author = message.author {
+                    if type == .bot {
+                        Text("캣스기")
+                            .font(.body(.b1))
+                            .seugiColor(.gray(.g600))
+                    } else {
                         Text(author.name)
                             .font(.body(.b1))
                             .seugiColor(.gray(.g600))
