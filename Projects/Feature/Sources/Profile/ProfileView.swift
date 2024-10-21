@@ -48,6 +48,10 @@ struct ProfileView: View {
                         viewModel.selectedProfleInfo = \.status
                         isSheetPresent = true
                     }
+                    ProfileCell("닉네임", value: profile.nick) {
+                        viewModel.selectedProfleInfo = \.nick
+                        isSheetPresent = true
+                    }
                     ProfileCell("직위", value: profile.spot) {
                         viewModel.selectedProfleInfo = \.spot
                         isSheetPresent = true

@@ -31,6 +31,7 @@ extension ProfileSheetView: View {
             .padding(.horizontal, 16)
             SeugiDivider(thickness: .thick)
             ProfileCell("상태메세지", value: profile.status)
+            ProfileCell("닉네임", value: profile.nick)
             ProfileCell("직위", value: profile.spot)
             ProfileCell("소속", value: profile.belong)
             ProfileCell("휴대전화번호", value: profile.phone)
