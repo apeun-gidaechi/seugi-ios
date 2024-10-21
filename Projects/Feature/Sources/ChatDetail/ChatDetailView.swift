@@ -12,8 +12,6 @@ struct ChatDetailView: View {
         case bottom, top
     }
     
-    @Environment(\.dismiss) private var dismiss
-    
     @EnvironmentObject private var alert: AlertProvider
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var keyboardMonitor: KeyboardMonitor
@@ -127,11 +125,12 @@ extension ChatDetailView {
                         url: URL(string: file.url) ?? .aboutBlank
                     ) {
                         .init(icon: .sendFill) {
-                            self.dismiss()
+                            viewModel.sendMessage()
+                            router.popToStack()
                         }
                     }
                 ))
-            case .failure(let error):
+            case .failure:
                 alert.present(
                     .init(title: "업로드 실패")
                     .message("잠시 후 다시 시도해 주세요")

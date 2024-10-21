@@ -112,6 +112,20 @@ extension ChatDetailViewModel {
         message = ""
     }
     
+    func sendImage(url: String) {
+        stompMessageRepo.sendMessage(
+            .init(
+                roomId: room.id,
+                type: .image,
+                message: message,
+                uuid: "",
+                mention: nil,
+                mentionAll: nil,
+                emoticon: nil
+            )
+        )
+    }
+    
     func left(roomId: String) {
         chatRepo.leftGroup(roomId: roomId)
             .flow(\.leftRoomFlow, on: self)
