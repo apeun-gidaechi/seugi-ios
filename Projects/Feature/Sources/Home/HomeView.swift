@@ -35,12 +35,14 @@ extension HomeView: View {
                 HomeMealContainer(for: viewModel.meals)
                 HomeCatSeugiContainer(for: flow) { action in
                     switch action {
-                    case .clicked:
+                    case .didClickedChat:
                         router.navigate(to: MainDestination.catSeugi)
                     }
                 }
                 HomeScheduleContainer(for: viewModel.schedules)
-                HomeTaskContainer(for: <#T##Flow<[Task]>#>)
+                HomeTaskContainer(for: viewModel.tasks) {
+                    router.navigate(to: MainDestination.task)
+                }
             }
             .padding(.top, 8)
             .padding(.bottom, 80)

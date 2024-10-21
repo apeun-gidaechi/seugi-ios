@@ -16,7 +16,7 @@ final class HomeViewModel: ObservableObject {
     @Published var meals: Flow<[Meal]> = .fetching
     @Published var timetables: Flow<[Timetable]> = .fetching
     @Published var schedules: Flow<[Schedule]> = .fetching
-    @Published var tasks: Flow<[Domain.Task]> = .fetching
+    @Published var tasks: Flow<[TaskEntity]> = .fetching
     
     var isFirstOnAppear: Bool = true
 }

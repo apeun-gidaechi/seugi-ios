@@ -34,4 +34,7 @@ enum MainDestination: Hashable {
     
     // preview
     case imagePreview(ImagePreview.Path)
+    
+    // task
+    case task
 }

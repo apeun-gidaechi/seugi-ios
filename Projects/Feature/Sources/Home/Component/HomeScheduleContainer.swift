@@ -42,7 +42,7 @@ struct HomeScheduleContainer: View {
                                     .seugiColor(.sub(.black))
                                     .padding(.leading, 10)
                                 Spacer()
-                                Text("D-\(schedule.date.diff(component: .day))")
+                                Text("D-\(schedule.date.diff(endAt: .now, component: .day))")
                                     .font(.caption(.c1))
                                     .seugiColor(.gray(.g600))
                             }

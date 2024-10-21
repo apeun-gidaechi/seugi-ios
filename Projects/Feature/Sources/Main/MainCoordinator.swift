@@ -47,6 +47,9 @@ struct MainCoordinator: View {
                         
                         // preview
                     case .imagePreview(let path): ImagePreview(path: path)
+                        
+                        // task
+                    case .task: TaskView()
                     }
                 }
                 .environmentObject(self.stompViewModel)

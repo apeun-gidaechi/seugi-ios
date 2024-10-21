@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Task: Entity {
+public struct TaskEntity: Entity {
     public let id: Int
     public let workspaceId: String
     public let title: String

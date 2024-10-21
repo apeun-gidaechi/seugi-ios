@@ -11,9 +11,8 @@ import Component
 import SwiftUIUtil
 
 struct HomeCatSeugiContainer: View {
-    
     enum Action {
-        case clicked
+        case didClickedChat
     }
     
     private let flow: HomeFetchFlow
@@ -47,7 +46,7 @@ struct HomeCatSeugiContainer: View {
                     .padding(.vertical, 12)
             case .finished:
                 Button {
-                    action(.clicked)
+                    action(.didClickedChat)
                 } label: {
                     HStack {
                         Text("2학년 4반에서 아무나 한명 뽑아줘...")

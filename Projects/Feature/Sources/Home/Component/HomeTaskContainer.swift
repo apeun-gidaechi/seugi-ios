@@ -5,28 +5,34 @@ import DateUtil
 import ScopeKit
 
 struct HomeTaskContainer: View {
+    private let tasks: Flow<[TaskEntity]>
+    private let action: () -> Void
     
-    private let tasks: Flow<[Domain.Task]>
-    
-    init(for tasks: Flow<[Domain.Task]>) {
+    init(
+        for tasks: Flow<[TaskEntity]>,
+        action: @escaping () -> Void
+    ) {
         self.tasks = tasks
+        self.action = action
     }
     
     var body: some View {
         VStack(spacing: 12) {
-            HStack(spacing: 8) {
-                HomeHeadlineIcon(icon: .calendarLine)
-                Text("다가오는 일정")
-                    .seugiColor(.sub(.black))
-                    .font(.subtitle(.s2))
-                Spacer()
-                Image(icon: .expandRightLine)
-                    .resizable()
-                    .renderingMode(.template)
-                    .seugiColor(.gray(.g500))
-                    .frame(width: 24, height: 24)
+            Button(action: action) {
+                HStack(spacing: 8) {
+                    HomeHeadlineIcon(icon: .calendarLine)
+                    Text("다가오는 과제")
+                        .seugiColor(.sub(.black))
+                        .font(.subtitle(.s2))
+                    Spacer()
+                    Image(icon: .expandRightLine)
+                        .resizable()
+                        .renderingMode(.template)
+                        .seugiColor(.gray(.g500))
+                        .frame(width: 24, height: 24)
+                }
+                .padding(4)
             }
-            .padding(4)
             tasks.makeView {
                 ProgressView()
             } success: { tasks in
@@ -44,7 +50,7 @@ struct HomeTaskContainer: View {
                                     .seugiColor(.sub(.black))
                                     .padding(.leading, 10)
                                 Spacer()
-                                Text("D-\(task.dueDate.diff(component: .day))")
+                                Text("D-\(task.dueDate.diff(endAt: .now, component: .day))")
                                     .font(.caption(.c1))
                                     .seugiColor(.gray(.g600))
                             }

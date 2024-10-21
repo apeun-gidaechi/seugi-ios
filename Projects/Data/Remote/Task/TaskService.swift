@@ -7,8 +7,12 @@ final class TaskService: TaskRepo {
         self.runner = runner
     }
     
-    func fetchTasks(workspaceId: String) -> APIResult<Base<[Domain.Task]>> {
-        runner.deepDive(TaskEndpoint.getTasks(workspaceId: workspaceId), res: Base<[Domain.Task]>.self)
+    func fetchTasks(workspaceId: String) -> APIResult<Base<[TaskEntity]>> {
+        runner.deepDive(TaskEndpoint.getTasks(workspaceId: workspaceId), res: Base<[TaskEntity]>.self)
+    }
+    
+    func fetchClassroomTasks() -> APIResult<Base<[ClassroomTask]>> {
+        runner.deepDive(TaskEndpoint.getClassroomTasks, res: Base<[ClassroomTask]>.self)
     }
     
     func createTask(_ req: CreateTaskReq) -> APIResult<BaseVoid> {

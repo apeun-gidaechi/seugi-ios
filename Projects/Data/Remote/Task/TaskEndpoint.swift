@@ -3,6 +3,7 @@ import Moya
 
 enum TaskEndpoint {
     case getTasks(workspaceId: String)
+    case getClassroomTasks
     case createTask(CreateTaskReq)
 }
 
@@ -12,6 +13,8 @@ extension TaskEndpoint: SeugiEndpoint {
         switch self {
         case .getTasks(let workspaceId):
                 .get(workspaceId)
+        case .getClassroomTasks:
+                .get("classroom")
         case .createTask(let req):
                 .post()
                 .task(req.toJSONParameters())
