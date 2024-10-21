@@ -11,26 +11,38 @@ import Domain
 import Component
 
 struct HomeMealContainer: View {
-    
     private let meals: Flow<[Meal]>
     @State private var maxHeight: CGFloat?
     @State private var selection: Int = 0
     @Namespace private var animation
+    private let action: () -> Void
     
-    init(for meals: Flow<[Meal]>) {
+    init(
+        for meals: Flow<[Meal]>,
+        action: @escaping () -> Void
+    ) {
         self.meals = meals
+        self.action = action
     }
     
     var body: some View {
         VStack(spacing: 12) {
-            HStack(spacing: 8) {
-                HomeHeadlineIcon(icon: .utensilsLine)
-                Text("오늘의 급식")
-                    .font(.subtitle(.s2))
-                    .seugiColor(.sub(.black))
-                Spacer()
+            Button(action: action) {
+                HStack(spacing: 8) {
+                    HomeHeadlineIcon(icon: .utensilsLine)
+                    Text("오늘의 급식")
+                        .font(.subtitle(.s2))
+                        .seugiColor(.sub(.black))
+                    Spacer()
+                    Image(icon: .expandRightLine)
+                        .resizable()
+                        .renderingMode(.template)
+                        .seugiColor(.gray(.g500))
+                        .frame(width: 24, height: 24)
+                }
+                .padding(4)
             }
-            .padding(.horizontal, 4)
+            .scaledButtonStyle()
             meals.makeView {
                 ProgressView()
             } success: { meals in

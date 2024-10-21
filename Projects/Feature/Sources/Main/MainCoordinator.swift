@@ -50,6 +50,9 @@ struct MainCoordinator: View {
                         
                         // task
                     case .task: TaskView()
+                        
+                        // meal
+                    case .meal: MealView()
                     }
                 }
                 .environmentObject(self.stompViewModel)

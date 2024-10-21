@@ -16,8 +16,8 @@ struct HomeWorkspaceContainer: View {
     }
     
     var body: some View {
-        Button(action: action) {
-            VStack(spacing: 12) {
+        VStack(spacing: 12) {
+            Button(action: action) {
                 HStack(spacing: 8) {
                     HomeHeadlineIcon(icon: .schoolFill)
                     Text("내 학교")
@@ -26,24 +26,25 @@ struct HomeWorkspaceContainer: View {
                     Spacer()
                     HomeArrowIcon()
                 }
-                switch flow {
-                case .fetching:
-                    ProgressView()
-                case .empty:
-                    Text("내 학교를 등록해주세요")
+                .padding(4)
+            }
+            .scaledButtonStyle()
+            switch flow {
+            case .fetching:
+                ProgressView()
+            case .empty:
+                Text("내 학교를 등록해주세요")
+                    .seugiColor(.gray(.g600))
+                    .font(.body(.b2))
+            case .finished:
+                if let workspace = mainViewModel.selectedWorkspace {
+                    Text(workspace.workspaceName)
+                        .font(.subtitle(.s2))
                         .seugiColor(.gray(.g600))
-                        .font(.body(.b2))
-                case .finished:
-                    if let workspace = mainViewModel.selectedWorkspace {
-                        Text(workspace.workspaceName)
-                            .font(.subtitle(.s2))
-                            .seugiColor(.gray(.g600))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
-            .applyCardEffect()
         }
-        .scaledButtonStyle()
+        .applyCardEffect()
     }
 }

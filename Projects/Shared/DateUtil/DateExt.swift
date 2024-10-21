@@ -75,4 +75,42 @@ public extension Date {
     func diff(endAt: Date, component: Calendar.Component) -> Int {
         Calendar.current.dateComponents([component], from: self, to: endAt).value(for: component)!
     }
+    
+    func equals(_ other: Date, components: Set<Calendar.Component>) -> Bool {
+        var calendar = Calendar.current
+        let selfComponents = calendar.dateComponents(components, from: self)
+        let otherComponents = calendar.dateComponents(components, from: other)
+        return selfComponents == otherComponents
+    }
+    
+    var range: Range<Int>? {
+        let calendar = Calendar.current
+        return calendar.range(of: .day, in: .month, for: self)
+    }
+    
+    // self의 month를 기준으로 calendar 생성
+    // nil: 이전 month 혹은 다음 month
+    var weeks: [[Date?]] {
+        let calendar = Calendar.current
+        // 해당 월의 첫째 날
+        var components = calendar.dateComponents([.year, .month], from: self)
+        components.day = 1
+        let firstDayOfMonth = calendar.date(from: components)!
+        
+        // 첫째 날의 요일 (일요일 = 1, 월요일 = 2, ..., 토요일 = 7)
+        let firstWeekday = calendar.component(.weekday, from: firstDayOfMonth)
+        
+        // 날짜 배열 생성
+        var days: [Date?] = Array(repeating: nil, count: firstWeekday - 1)
+        days += Array(1...(range?.count ?? 0)).compactMap {
+            components.day = $0
+            return calendar.date(from: components)
+        }
+        days += Array(repeating: nil, count: (7 - days.count % 7) % 7)
+        
+        // 주 단위로 배열을 나눔
+        return stride(from: 0, to: days.count, by: 7).map {
+            Array(days[$0..<$0 + 7])
+        }
+    }
 }

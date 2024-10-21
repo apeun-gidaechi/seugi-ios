@@ -37,4 +37,7 @@ enum MainDestination: Hashable {
     
     // task
     case task
+    
+    // meal
+    case meal
 }

@@ -32,7 +32,9 @@ extension HomeView: View {
                     router.navigate(to: MainDestination.workspaceDetail)
                 }
                 HomeTimetableContainer(for: viewModel.timetables)
-                HomeMealContainer(for: viewModel.meals)
+                HomeMealContainer(for: viewModel.meals) {
+                    router.navigate(to: MainDestination.meal)
+                }
                 HomeCatSeugiContainer(for: flow) { action in
                     switch action {
                     case .didClickedChat:
