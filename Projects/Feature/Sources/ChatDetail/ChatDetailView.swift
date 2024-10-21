@@ -65,8 +65,43 @@ extension ChatDetailView {
                                 )
                             }
                         case .downloadFile:
-                            // TODO: Handle
-                            break
+                            // TODO: 마감기한 때문에 더티 코드
+                            guard let urlString = message.message.split(separator: "::").first.map(String.init),
+                                  let url = URL(string: urlString) else {
+                                print("Invalid URL")
+                                return
+                            }
+                            
+                            let task = URLSession.shared.downloadTask(with: url) { (tempLocalUrl, response, error) in
+                                if let error = error {
+                                    print("Error downloading file: \(error.localizedDescription)")
+                                    return
+                                }
+                                
+                                guard let tempLocalUrl = tempLocalUrl, let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                                    print("Failed to download or invalid response")
+                                    return
+                                }
+                                
+                                do {
+                                    // Create destination file URL
+                                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                                    let destinationUrl = documentsDirectory.appendingPathComponent("file")
+                                    
+                                    // Move the downloaded file to the destination
+                                    try FileManager.default.moveItem(at: tempLocalUrl, to: destinationUrl)
+                                    
+                                    print("File saved to \(destinationUrl.path)")
+                                    // TODO: 스낵바가 더 나은 듯
+                                    alert.present(
+                                        .init(title: "파일 저장 완료")
+                                    )
+                                } catch {
+                                    print("Error saving file: \(error.localizedDescription)")
+                                }
+                            }
+                            
+                            task.resume()
                         }
                     }
                 }
@@ -117,7 +152,7 @@ extension ChatDetailView {
             switch result {
             case .success(let url):
                 fileViewModel.uploadFile(url: url)
-            case .failure(let failure):
+            case .failure:
                 alert.present(
                     .init(title: "파일 불러오기 실패")
                 )

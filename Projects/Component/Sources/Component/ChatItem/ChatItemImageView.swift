@@ -25,11 +25,11 @@ public struct ChatItemImageView: View {
     }
     
     public var body: some View {
-        Button(action: action) {
-            ChatItemContainer(
-                type: type,
-                message: message
-            ) {
+        ChatItemContainer(
+            type: type,
+            message: message
+        ) {
+            Button(action: action) {
                 LazyImage(url: URL(string: imageUrl) ?? .aboutBlank) { state in
                     if state.isLoading {
                         ProgressView()
@@ -41,7 +41,7 @@ public struct ChatItemImageView: View {
                 }
                 .processors([.roundedCorners(radius: 12)])
                 .addTimeLabel(alignment: type.alignent, message: message)
-            }}
-        
+            }
+        }
     }
 }

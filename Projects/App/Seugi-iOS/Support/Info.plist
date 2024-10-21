@@ -88,5 +88,9 @@
 	<string>Light</string>
 	<key>WssBaseUrl</key>
 	<string>${WSS_BASE_URL}</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>스기에서 파일을 저장하려면 &apos;파일&apos;에 접근해야 합니다.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>스기에서 이미지를 저장하려면 &apos;사진&apos;에 접근해야 합니다.</string>
 </dict>
 </plist>
