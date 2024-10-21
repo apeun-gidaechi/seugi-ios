@@ -1,4 +1,6 @@
 import Foundation
+import DateUtil
+import ScopeKit
 
 public protocol MessageProtocol {
     var id: String? { get }
@@ -182,6 +184,82 @@ public extension Message {
         message.detailText = message.getDetailText(room: room)
         return message
     }
+    
+    // - 이 코드는 왜 더러운가?
+    // - 단기적 목표만 이루는 것을 추구하고 포트폴리오용 프로젝트를 양성하려는 학교 분위기 => 다가오는 마감기한, 리팩토링 부족, 그냥 서비스 전반 설계가 잘못됨.
+    // - 나중에 삭제될 코드.
+    func setupBotMessage(room: Room) -> Self {
+        var message = self
+        if message.type == .bot {
+            let myDecoder = run {
+                let d = JSONDecoder()
+                d.dateDecodingStrategy = .custom { decoder in
+                    let container = try decoder.singleValueContainer()
+                    let dateStr = try container.decode(String.self)
+                    
+                    // If the prefix is ​​0000-, it means online.
+                    if dateStr.hasPrefix("0001") {
+                        return Date.distantPast
+                    }
+                    
+                    let dateFormatters = DateFormatterType.allCases
+                    if let date = dateFormatters.compactMap({ DateFormatter(type: $0).date(from: dateStr) }).first {
+                        return date
+                    } else {
+                        let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Invalid date format")
+                        throw DecodingError.dataCorrupted(context)
+                    }
+                }
+                return d
+            }
+            if let jsonData = message.message.data(using: .utf8),
+               let botMessage = try? myDecoder.decode(BotMessage.self, from: jsonData) {
+                switch botMessage.data {
+                case .meal(let data):
+                    message.message = data.map {
+                        "- 오늘의 " + $0.mealType.rawValue + "\n" +
+                        $0.menu.joined(separator: "\n")
+                    }
+                    .joined(separator: "\n\n")
+                case .notification(let data):
+                    message.message = run {
+                        "\(data.userName) 선생님이 공지를 작성하셨어요\n" +
+                        "제목: \(data.title)\n" +
+                        data.content
+                    }
+                case .pickMember(let data):
+                    let pattern = "::(\\d+)::"
+                    if let regex = try? NSRegularExpression(pattern: pattern) {
+                        let results = regex.matches(in: data, range: NSRange(data.startIndex..., in: data))
+                        
+                        // 결과에서 숫자만 추출
+                        let numbers = results.map { result in
+                            Int(String(data[Range(result.range(at: 1), in: data)!]))
+                        }
+                        message.message = "사람을 \(numbers.count)명 뽑았어요\n" +
+                        numbers.compactMap { number in
+                            room.joinUserInfo.map(\.userInfo).first {
+                                $0.id == number
+                            }?.name
+                        }.joined(separator: " ")
+                    }
+                case .schedule(let data):
+                    message.message = "오늘의 시간표에요\n" +
+                    data.map {
+                        "\($0.time)교시 : \($0.subject)"
+                    }.joined(separator: "\n")
+                    break
+                case .teamBuilding(let data):
+                    break
+                case .etc(let data):
+                    message.message = data
+                }
+            } else {
+                print("Message.setupBotMessage decoding failure")
+            }
+        }
+        return message
+    }
 }
 
 public extension Message {
@@ -310,6 +388,10 @@ public extension [Message] {
             messages[i].unread = userIndex
         }
         return messages
+    }
+    
+    func setupBotMessages(room: Room) -> [Message] {
+        return self.map { $0.setupBotMessage(room: room) }
     }
 }
 

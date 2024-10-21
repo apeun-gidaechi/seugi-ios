@@ -12,7 +12,8 @@ let project = Project.make(
             bundleId: makeBundleId("Domain"),
             sources: ["Sources/**"],
             dependencies: [
-                .shared(of: .DateUtil)
+                .shared(of: .DateUtil),
+                .SPM.ScopeKit
             ]
         ),
         .make(
