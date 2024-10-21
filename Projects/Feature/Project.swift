@@ -25,8 +25,7 @@ let project = Project.make(
                 .SPM.FirebaseMessaging,
                 .SPM.Flow,
                 .SPM.Nuke,
-                .SPM.NukeUI,
-                .SPM.SwiftUIIntrospect
+                .SPM.NukeUI
             ]
         )
     ]

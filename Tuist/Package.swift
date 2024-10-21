@@ -37,7 +37,6 @@ let package = Package(
         .package(url: "https://github.com/hhhello0507/ScopeKit", branch: "main"),
         .package(url: "https://github.com/realm/realm-swift", exact: "10.53.0"),
         .package(url: "https://github.com/izyumkin/MCEmojiPicker", exact: "1.2.3"),
-        .package(url: "https://github.com/firebase/firebase-ios-sdk", branch: "main"),
-        .package(url: "https://github.com/siteline/swiftui-introspect", exact: "1.3.0")
+        .package(url: "https://github.com/firebase/firebase-ios-sdk", branch: "main")
     ]
 )
