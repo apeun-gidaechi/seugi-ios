@@ -8,6 +8,7 @@ import Combine
 
 enum FileError: Error {
     case photoLoadTransferable
+    case notFoundFile
 }
 
 final class FileViewModel: ObservableObject {
@@ -17,6 +18,8 @@ final class FileViewModel: ObservableObject {
     
     @Published var imageUploadFlow: Flow<File> = .idle
     @Published var imageFlow: Flow<Image> = .idle
+    
+    @Published var fileUploadFlow: Flow<File> = .idle
 }
 
 extension FileViewModel {
@@ -41,6 +44,30 @@ extension FileViewModel {
             }
             
             self.imageFlow = .success(image)
+        }
+    }
+    
+    public func uploadFile(url: URL) {
+        guard url.startAccessingSecurityScopedResource() else {
+            fileUploadFlow = .failure(FileError.notFoundFile)
+            return
+        }
+        
+        defer {
+            url.stopAccessingSecurityScopedResource()
+        }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            
+            fileRepo.upload(type: .file, file: data)
+                .map(\.data)
+                .flow(\.fileUploadFlow, on: self)
+                .silentSink()
+                .store(in: &subscriptions)
+        } catch {
+            fileUploadFlow = .failure(FileError.notFoundFile)
+            print(error)
         }
     }
 }

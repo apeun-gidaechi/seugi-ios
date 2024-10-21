@@ -23,6 +23,7 @@ struct ChatDetailView: View {
     @State private var scrollViewProxy: ScrollViewProxy?
     @State private var showPhotoPicker: Bool = false
     @State private var photo: PhotosPickerItem?
+    @State private var showFilePicker: Bool = false
     
     private let room: Room
     
@@ -109,6 +110,19 @@ extension ChatDetailView {
             selection: self.$photo,
             matching: .any(of: [.images, .screenshots, .livePhotos])
         )
+        .fileImporter(
+            isPresented: $showFilePicker,
+            allowedContentTypes: [.item]
+        ) { result in
+            switch result {
+            case .success(let url):
+                fileViewModel.uploadFile(url: url)
+            case .failure(let failure):
+                alert.present(
+                    .init(title: "파일 불러오기 실패")
+                )
+            }
+        }
         .onChange(of: isDrawerOpen) { _ in
             hideKeyboard()
         }
@@ -131,6 +145,20 @@ extension ChatDetailView {
                     }
                 ))
             case .failure:
+                alert.present(
+                    .init(title: "업로드 실패")
+                    .message("잠시 후 다시 시도해 주세요")
+                )
+            default:
+                break
+            }
+        }
+        .onReceive(fileViewModel.$fileUploadFlow) { flow in
+            switch flow {
+            case .success(let file):
+                viewModel.sendFile(file: file)
+            case .failure(let err):
+                print(err)
                 alert.present(
                     .init(title: "업로드 실패")
                     .message("잠시 후 다시 시도해 주세요")
@@ -176,7 +204,7 @@ extension ChatDetailView {
                 case .imageMenu:
                     showPhotoPicker = true
                 case .fileMenu:
-                    break
+                    showFilePicker = true
                 }
             }
             .padding(.horizontal, 8)
