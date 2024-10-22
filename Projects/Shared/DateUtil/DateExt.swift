@@ -73,7 +73,7 @@ public extension Date {
     }
     
     func diff(endAt: Date, component: Calendar.Component) -> Int {
-        Calendar.current.dateComponents([component], from: self, to: endAt).value(for: component)!
+        -Calendar.current.dateComponents([component], from: self, to: endAt).value(for: component)!
     }
     
     func equals(_ other: Date, components: Set<Calendar.Component>) -> Bool {

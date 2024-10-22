@@ -63,7 +63,7 @@ public struct ChatItemFileView: View {
                 .cornerRadius(12, corners: .allCorners)
                 .shadow(.evBlack(.ev1))
             }
-            .scaledButtonStyle()
+            .addTimeLabel(alignment: type.alignent, message: message)
         }
     }
 }

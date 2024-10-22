@@ -33,18 +33,21 @@ struct HomeScheduleContainer: View {
                 } else {
                     VStack(spacing: 16) {
                         ForEach(schedules, id: \.id) { schedule in
-                            HStack(spacing: 0) {
-                                Text(schedule.date.parseString("MM/dd"))
-                                    .font(.body(.b1))
-                                    .seugiColor(.primary(.p500))
-                                Text(schedule.eventName)
-                                    .font(.body(.b2))
-                                    .seugiColor(.sub(.black))
-                                    .padding(.leading, 10)
-                                Spacer()
-                                Text("D-\(schedule.date.diff(endAt: .now, component: .day))")
-                                    .font(.caption(.c1))
-                                    .seugiColor(.gray(.g600))
+                            let dueDay = schedule.date.diff(endAt: .now, component: .day)
+                            if dueDay > 0 {
+                                HStack(spacing: 0) {
+                                    Text(schedule.date.parseString("MM/dd"))
+                                        .font(.body(.b1))
+                                        .seugiColor(.primary(.p500))
+                                    Text(schedule.eventName)
+                                        .font(.body(.b2))
+                                        .seugiColor(.sub(.black))
+                                        .padding(.leading, 10)
+                                    Spacer()
+                                    Text("D-\(dueDay)")
+                                        .font(.caption(.c1))
+                                        .seugiColor(.gray(.g600))
+                                }
                             }
                         }
                     }

@@ -40,8 +40,8 @@ public struct ChatItemImageView: View {
                     }
                 }
                 .processors([.roundedCorners(radius: 12)])
-                .addTimeLabel(alignment: type.alignent, message: message)
             }
+            .addTimeLabel(alignment: type.alignent, message: message)
         }
     }
 }
