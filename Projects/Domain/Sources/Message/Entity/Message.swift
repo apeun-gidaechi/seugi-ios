@@ -250,7 +250,24 @@ public extension Message {
                     }.joined(separator: "\n")
                     break
                 case .teamBuilding(let data):
-                    break
+                    let pattern = "::(\\d+)::"
+                    let regex = try! NSRegularExpression(pattern: pattern)
+
+                    let results = regex.matches(in: data, range: NSRange(data.startIndex..., in: data))
+                    
+                    // 결과에서 숫자만 추출
+                    let numbers = results.compactMap { result in
+                        Int(String(data[Range(result.range(at: 1), in: data)!]))
+                    }
+                    
+                    var messageString = data
+                    
+                    numbers.forEach { number in
+                        guard let name = room.joinUserInfo.map(\.userInfo).first(where: { $0.id == number })?.name else { return }
+                        messageString = messageString.replacingOccurrences(of: "::\(number)::", with: name)
+                    }
+                    
+                    message.message = messageString
                 case .etc(let data):
                     message.message = data
                 }
