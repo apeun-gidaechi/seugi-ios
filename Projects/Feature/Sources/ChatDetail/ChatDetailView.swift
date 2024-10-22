@@ -86,7 +86,8 @@ extension ChatDetailView {
                                 do {
                                     // Create destination file URL
                                     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-                                    let destinationUrl = documentsDirectory.appendingPathComponent("file")
+                                    let destinationUrlString = message.message.split(separator: "::")[1]
+                                    let destinationUrl = documentsDirectory.appendingPathComponent(String(destinationUrlString))
                                     
                                     // Move the downloaded file to the destination
                                     try FileManager.default.moveItem(at: tempLocalUrl, to: destinationUrl)
