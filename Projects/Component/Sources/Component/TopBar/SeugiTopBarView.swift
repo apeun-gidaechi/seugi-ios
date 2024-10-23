@@ -150,7 +150,10 @@ public extension SeugiTopBarView {
         public let backgroundColor: Color
         public let tintColor: Color
         
-        public init(backgroundColor: Color, tintColor: Color) {
+        public init(
+            backgroundColor: Color = .seugi(.sub(.white)),
+            tintColor: Color = .seugi(.sub(.black))
+        ) {
             self.backgroundColor = backgroundColor
             self.tintColor = tintColor
         }

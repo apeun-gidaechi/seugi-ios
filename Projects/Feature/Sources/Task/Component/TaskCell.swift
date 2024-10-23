@@ -28,6 +28,7 @@ struct TaskCell: View {
                 Text(title)
                     .font(.body(.b1))
                     .seugiColor(.sub(.black))
+                Spacer()
                 Text(
                     run {
                         if let dueDate {
@@ -41,7 +42,8 @@ struct TaskCell: View {
                 .seugiColor(.sub(.white))
                 .padding(.horizontal, 10)
                 .padding(.vertical, 4)
-                .cornerRadius(14, corners: .allCorners)
+                .seugiBackground(.primary(.p500))
+                .cornerRadius(10, corners: .allCorners)
             }
             if let description {
                 Text(description)
@@ -51,5 +53,8 @@ struct TaskCell: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
+        .seugiBackground(.sub(.white))
+        .cornerRadius(12, corners: .allCorners)
+        .shadow(.evPrimary(.ev1))
     }
 }
