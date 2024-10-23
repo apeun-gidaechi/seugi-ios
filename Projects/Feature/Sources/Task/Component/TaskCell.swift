@@ -3,11 +3,12 @@ import SwiftUI
 import Component
 import Domain
 import DateUtil
+import ScopeKit
 
 struct TaskCell: View {
     private let title: String
-    private let description: String
-    private let dueDate: Date
+    private let description: String?
+    private let dueDate: Date?
     
     init(task: TaskEntity) {
         self.title = task.title
@@ -27,16 +28,26 @@ struct TaskCell: View {
                 Text(title)
                     .font(.body(.b1))
                     .seugiColor(.sub(.black))
-                Text("D-\(dueDate.diff(endAt: .now, component: .day))")
-                    .font(.caption(.c2))
-                    .seugiColor(.sub(.white))
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 4)
-                    .cornerRadius(14, corners: .allCorners)
+                Text(
+                    run {
+                        if let dueDate {
+                            "D-\(dueDate.diff(endAt: .now, component: .day))"
+                        } else {
+                            "기한 없음"
+                        }
+                    }
+                )
+                .font(.caption(.c2))
+                .seugiColor(.sub(.white))
+                .padding(.horizontal, 10)
+                .padding(.vertical, 4)
+                .cornerRadius(14, corners: .allCorners)
             }
-            Text(description)
-                .font(.body(.b2))
-                .seugiColor(.gray(.g600))
+            if let description {
+                Text(description)
+                    .font(.body(.b2))
+                    .seugiColor(.gray(.g600))
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)

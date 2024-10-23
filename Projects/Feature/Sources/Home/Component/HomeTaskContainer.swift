@@ -42,23 +42,36 @@ struct HomeTaskContainer: View {
                     VStack(spacing: 16) {
                         ForEach(tasks, id: \.id) { task in
                             HStack(spacing: 0) {
-                                Text(task.dueDate.parseString("MM/dd"))
-                                    .font(.body(.b1))
-                                    .seugiColor(.primary(.p500))
+                                Text(run {
+                                    if let dueDate = task.dueDate {
+                                        dueDate.parseString("MM/dd")
+                                    } else {
+                                        "기한없음"
+                                    }
+                                })
+                                .font(.body(.b1))
+                                .seugiColor(.primary(.p500))
                                 Text(task.title)
                                     .font(.body(.b2))
                                     .seugiColor(.sub(.black))
                                     .padding(.leading, 10)
+                                    .lineLimit(1)
                                 Spacer()
-                                Text("D-\(task.dueDate.diff(endAt: .now, component: .day))")
-                                    .font(.caption(.c1))
-                                    .seugiColor(.gray(.g600))
+                                Text(run {
+                                    if let dueDate = task.dueDate {
+                                        "D-\(dueDate.diff(endAt: .now, component: .day))"
+                                    } else {
+                                        "기한없음"
+                                    }
+                                })
+                                .font(.caption(.c1))
+                                .seugiColor(.gray(.g600))
                             }
                         }
                     }
                 }
             } failure: { _ in
-                Text("학교를 등록하고 일정을 확인하세요")
+                Text("과제를 불러올 수 없어요")
                     .seugiColor(.gray(.g600))
                     .font(.body(.b2))
                     .padding(.vertical, 12)

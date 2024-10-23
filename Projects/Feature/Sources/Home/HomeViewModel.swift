@@ -63,6 +63,7 @@ extension HomeViewModel {
     func fetchTasks(workspaceId: String) {
         taskRepo.fetchTasks(workspaceId: workspaceId)
             .map(\.data)
+            .map { $0.sorted { $0.dueDate ?? .distantFuture < $1.dueDate ?? .distantFuture } }
             .flow(\.tasks, on: self)
             .silentSink()
             .store(in: &subscriptions)
