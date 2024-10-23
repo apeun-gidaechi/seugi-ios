@@ -1,14 +1,12 @@
 import Domain
+import Moya
 
 enum CatSeugiEndpoint {
-    case sendMessage(CatSeugiSendMessageReq)
+    case sendMessage(SendMessageReq)
 }
 
-extension CatSeugiEndpoint: AIEndpoint {
-    var host: String {
-        "ai"
-    }
-    
+extension CatSeugiEndpoint: SeugiEndpoint {
+    var host: String { "ai" }
     var route: Route {
         switch self {
         case .sendMessage(let req):

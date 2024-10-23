@@ -20,15 +20,23 @@ final class CatSeugiViewModel: ObservableObject {
                 .just(
                     userId: userId,
                     message: message,
-                    isFirst: $0.isFirstMessage(at: $0.count - 1),
-                    isLast: $0.isLastMessage(at: $0.count - 1),
+                    isFirst: false,
+                    isLast: false,
                     joinUserCount: 2
                 )
             ]
         }
         
         catSeugiRepo.sendMessage(
-            .init(text: message)
+            .init(
+                roomId: "67177e4ac6b844040200d65c", // cat seugi room id constant
+                type: .message,
+                message: message,
+                uuid: "",
+                mention: nil,
+                mentionAll: nil,
+                emoticon: nil
+            )
         )
         .map(\.data)
         .flow(\.sendMessageFlow, on: self)

@@ -8,7 +8,7 @@ final class CatSeugiService: CatSeugiRepo {
         self.runner = runner
     }
     
-    func sendMessage(_ req: CatSeugiSendMessageReq) -> APIResult<Base<String>> {
+    func sendMessage(_ req: SendMessageReq) -> APIResult<Base<String>> {
         runner.deepDive(CatSeugiEndpoint.sendMessage(req), res: Base<String>.self)
     }
 }
