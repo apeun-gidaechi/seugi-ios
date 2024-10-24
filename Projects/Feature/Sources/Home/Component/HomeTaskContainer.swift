@@ -33,6 +33,7 @@ struct HomeTaskContainer: View {
                 }
                 .padding(4)
             }
+            .scaledButtonStyle()
             tasks.makeView {
                 ProgressView()
             } success: { tasks in

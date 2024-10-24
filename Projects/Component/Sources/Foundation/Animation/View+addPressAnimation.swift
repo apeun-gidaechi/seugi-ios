@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftUIUtil
 
 struct SeugiAnimationButton: ButtonStyle {
     public func makeBody(configuration: Configuration) -> some View {
@@ -12,8 +13,9 @@ public extension View {
         self
             .opacity(isPressed ? 0.64 : 1)
             .scaleEffect(isPressed ? 0.96 : 1)
-            .animation(.easeOut, value: 1)
             .disabled(isPressed)
+            .animation(.easeOut(duration: 0.2), value: isPressed)
+            .contentShape(Rectangle())  // Ensure the entire area is clickable
     }
     
     func scaledButtonStyle() -> some View {
