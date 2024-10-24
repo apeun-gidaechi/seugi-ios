@@ -147,6 +147,7 @@ public struct Message: Entity, MessageProtocol {
 
 public extension Message {
     static func just(
+        type: Type = .message,
         userId: Int,
         message: String,
         isFirst: Bool,
@@ -156,7 +157,7 @@ public extension Message {
         Message(
             id: nil,
             chatRoomId: "",
-            type: .message,
+            type: type,
             userId: userId,
             message: message,
             eventList: [],
@@ -222,10 +223,13 @@ public extension Message {
                     }
                     .joined(separator: "\n\n")
                 case .notification(let data):
-                    message.message = run {
-                        "\(data.userName) 선생님이 공지를 작성하셨어요\n" +
-                        "제목: \(data.title)\n" +
-                        data.content
+                    print("NOTIFICATION")
+                    if let notification = data.first {
+                        message.message = run {
+                            "\(notification.userName) 선생님이 공지를 작성하셨어요\n" +
+                            "제목: \(notification.title)\n" +
+                            "내용: \(notification.content)"
+                        }
                     }
                 case .pickMember(let data):
                     let pattern = "::(\\d+)::"

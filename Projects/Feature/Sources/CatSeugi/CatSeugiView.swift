@@ -23,46 +23,43 @@ struct CatSeugiView {
 extension CatSeugiView: View {
     public var body: some View {
         viewModel.messages.makeView {
-            ProgressView()
+            VStack {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
         } success: { messages in
-            ScrollViewReader { scrollViewProxy in
-                ScrollView {
-                    LazyVStack(spacing: 0) {
-                        Color.clear
-                            .id(Id.top)
-                        ForEach(messages.indices, id: \.self) { index in
-                            let message = messages[index]
-                            if let member = mainViewModel.profile.data?.member {
-                                let isMe = message.userId == member.id
-                                ChatItemView(
-                                    type: isMe ? .me : .bot,
-                                    message: message
-                                )
-                            }
-                        }
-                        Color.clear
-                            .id(Id.bottom)
-                    }
-                    .onAppear {
-                        // 시작시 아래로 스크롤
-                        self.scrollViewProxy = scrollViewProxy
-                        scrollToBottom()
+            CustomScrollView(scrollViewProxy: $scrollViewProxy) {
+                EmptyView()
+                    .id(Id.top)
+                ForEach(messages.indices, id: \.self) { index in
+                    let message = messages[index]
+                    if let member = mainViewModel.profile.data?.member {
+                        let isMe = message.userId == member.id
+                        ChatItemView(
+                            type: isMe ? .me : .bot,
+                            message: message
+                        )
                     }
                 }
-                .seugiBackground(.primary(.p050))
+                .padding(.horizontal, 8)
+                EmptyView()
+                    .id(Id.bottom)
             }
+            .seugiBackground(.primary(.p050))
         } failure: { _ in
-            SeugiError("채팅 불러오기 실패", image: .sadButRelievedFace)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-        .safeAreaInset(edge: .bottom) {
-            makeBottomTextField()
+            VStack {
+                SeugiError("채팅 불러오기 실패", image: .sadButRelievedFace)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
         }
         .hideKeyboardWhenTap()
         .seugiTopBar(
             title: "캣스기",
             showShadow: true
         )
+        .safeAreaInset(edge: .bottom) {
+            makeBottomTextField()
+        }
         .onReceive(viewModel.$sendMessageFlow) { flow in
             switch flow {
             case .success:

@@ -14,7 +14,7 @@ public struct BotMessage: Entity {
     public enum MessageData: Entity {
         case meal([Meal])
         case schedule([Timetable])
-        case notification(Domain.Notification)
+        case notification([Domain.Notification])
         case pickMember(String)
         case teamBuilding(String)
         case etc(String)
@@ -41,7 +41,7 @@ public struct BotMessage: Entity {
             self.data = .schedule(scheduleData)
             
         case .notification:
-            let notificationData = try container.decode(Domain.Notification.self, forKey: .data)
+            let notificationData = try container.decode([Domain.Notification].self, forKey: .data)
             self.data = .notification(notificationData)
             
         case .pickMember:

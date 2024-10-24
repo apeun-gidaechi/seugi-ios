@@ -33,7 +33,7 @@ struct InvitateMemberView: View {
             ScrollView {
                 VStack(spacing: 24) {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("학교코드로 멤버를 코대할 수 있어요")
+                        Text("학교코드로 멤버를 초대할 수 있어요")
                             .font(.subtitle(.s2))
                             .seugiColor(.sub(.black))
                             .toLeading()

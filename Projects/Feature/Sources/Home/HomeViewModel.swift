@@ -34,6 +34,7 @@ extension HomeViewModel {
     func fetchMeals(workspaceId: String) {
         mealRepo.getByDate(workspaceId: workspaceId, date: .now)
             .map(\.data)
+            .map { $0.sorted { $0.mealType < $1.mealType } }
             .flow(\.meals, on: self)
             .silentSink()
             .store(in: &subscriptions)

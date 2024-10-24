@@ -31,6 +31,7 @@ extension MealViewModel {
     func fetchMealData(workspaceId: String) {
         mealRepo.getAll(workspaceId: workspaceId)
             .map(\.data)
+            .map { $0.sorted { $0.mealType < $1.mealType } }
             .flow(\.meals, on: self)
             .silentSink()
             .store(in: &subscriptions)
