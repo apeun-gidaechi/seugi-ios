@@ -11,12 +11,12 @@ final class HomeViewModel: ObservableObject {
     @Inject private var mealRepo: MealRepo
     @Inject private var timetableRepo: TimetableRepo
     @Inject private var scheduleRepo: ScheduleRepo
-    @Inject private var taskRepo: TaskRepo
+    @Inject private var assignmentRepo: AssignmentRepo
     
     @Published var meals: Flow<[Meal]> = .fetching
     @Published var timetables: Flow<[Timetable]> = .fetching
     @Published var schedules: Flow<[Schedule]> = .fetching
-    @Published var tasks: Flow<[TaskEntity]> = .fetching
+    @Published var tasks: Flow<[AssignmentEntity]> = .fetching
     
     var isFirstOnAppear: Bool = true
 }
@@ -62,7 +62,7 @@ extension HomeViewModel {
     }
     
     func fetchTasks(workspaceId: String) {
-        taskRepo.fetchTasks(workspaceId: workspaceId)
+        assignmentRepo.fetchTasks(workspaceId: workspaceId)
             .map(\.data)
             .map { $0.sorted { $0.dueDate ?? .distantFuture < $1.dueDate ?? .distantFuture } }
             .flow(\.tasks, on: self)

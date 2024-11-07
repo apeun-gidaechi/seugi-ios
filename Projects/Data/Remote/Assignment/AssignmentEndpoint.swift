@@ -1,13 +1,13 @@
 import Domain
 import Moya
 
-enum TaskEndpoint {
+enum AssignmentEndpoint {
     case getTasks(workspaceId: String)
     case getClassroomTasks
-    case createTask(CreateTaskReq)
+    case createAssignment(CreateAssignmentReq)
 }
 
-extension TaskEndpoint: SeugiEndpoint {
+extension AssignmentEndpoint: SeugiEndpoint {
     var host: String { "task" }
     var route: Route {
         switch self {
@@ -15,7 +15,7 @@ extension TaskEndpoint: SeugiEndpoint {
                 .get(workspaceId)
         case .getClassroomTasks:
                 .get("classroom")
-        case .createTask(let req):
+        case .createAssignment(let req):
                 .post()
                 .task(req.toJSONParameters())
         }

@@ -10,7 +10,7 @@ struct TaskCell: View {
     private let description: String?
     private let dueDate: Date?
     
-    init(task: TaskEntity) {
+    init(task: AssignmentEntity) {
         self.title = task.title
         self.description = task.description
         self.dueDate = task.dueDate

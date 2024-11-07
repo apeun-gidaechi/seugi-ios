@@ -5,11 +5,11 @@ import DateUtil
 import ScopeKit
 
 struct HomeTaskContainer: View {
-    private let tasks: Flow<[TaskEntity]>
+    private let tasks: Flow<[AssignmentEntity]>
     private let action: () -> Void
     
     init(
-        for tasks: Flow<[TaskEntity]>,
+        for tasks: Flow<[AssignmentEntity]>,
         action: @escaping () -> Void
     ) {
         self.tasks = tasks

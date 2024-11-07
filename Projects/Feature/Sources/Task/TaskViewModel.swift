@@ -7,9 +7,9 @@ import SwiftUtil
 final class TaskViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     
-    @Inject private var taskRepo: TaskRepo
+    @Inject private var assignmentRepo: AssignmentRepo
     
-    @Published var tasks: Flow<[TaskEntity]> = .fetching
+    @Published var tasks: Flow<[AssignmentEntity]> = .fetching
     @Published var classroomTasks: Flow<[ClassroomTask]> = .fetching
     
     var isFirstOnAppear: Bool = true
@@ -24,7 +24,7 @@ extension TaskViewModel: OnAppearProtocol {
 
 extension TaskViewModel {
     func fetchTasks(workspaceId: String) {
-        taskRepo.fetchTasks(workspaceId: workspaceId)
+        assignmentRepo.fetchTasks(workspaceId: workspaceId)
             .map(\.data)
             .flow(\.tasks, on: self)
             .silentSink()
@@ -32,7 +32,7 @@ extension TaskViewModel {
     }
     
     func fetchClassroomTasks() {
-        taskRepo.fetchClassroomTasks()
+        assignmentRepo.fetchClassroomTasks()
             .map(\.data)
             .flow(\.classroomTasks, on: self)
             .silentSink()

@@ -85,13 +85,15 @@ extension StartView: View {
         .onReceive(googleLoginViewModel.$loginFlow) { flow in
             switch flow {
             case .success(let result):
+                Log.info("StartView - google login success", result)
                 if let code = result.serverAuthCode {
                     viewModel.signIn(
                         code: code,
                         provider: .google
                     )
                 }
-            case .failure:
+            case .failure(let err):
+                Log.error("StartView - google login failure", err)
                 isPresented = false
             default:
                 break
