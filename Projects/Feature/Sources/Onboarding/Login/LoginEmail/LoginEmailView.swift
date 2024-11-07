@@ -10,9 +10,11 @@ struct LoginEmailView {
     }
     
     @EnvironmentObject private var alertProvider: AlertProvider
-    @StateObject private var viewModel = LoginEmailViewModel()
     @EnvironmentObject private var router: RouterViewModel
     @EnvironmentObject private var appState: AppViewModel
+    
+    @StateObject private var viewModel = LoginEmailViewModel()
+    
     @FocusState private var focused: FocusedField?
 }
 

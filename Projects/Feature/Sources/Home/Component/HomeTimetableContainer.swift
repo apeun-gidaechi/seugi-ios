@@ -19,22 +19,30 @@ struct HomeTimetableContainer: View {
     @State private var current = 3
     
     private let timetable: Flow<[Timetable]>
+    private let action: () -> Void
     
-    init(for timetable: Flow<[Timetable]>) {
+    init(
+        for timetable: Flow<[Timetable]>,
+        action: @escaping () -> Void
+    ) {
+        self.action = action
         self.timetable = timetable
     }
     
     var body: some View {
         VStack(spacing: 12) {
-            HStack(spacing: 8) {
-                HomeHeadlineIcon(icon: .bookFill)
-                Text("오늘의 시간표")
-                    .font(.subtitle(.s2))
-                    .seugiColor(.sub(.black))
-                Spacer()
-                HomeArrowIcon()
+            Button(action: action) {
+                HStack(spacing: 8) {
+                    HomeHeadlineIcon(icon: .bookFill)
+                    Text("오늘의 시간표")
+                        .font(.subtitle(.s2))
+                        .seugiColor(.sub(.black))
+                    Spacer()
+                    HomeArrowIcon()
+                }
+                .padding(4)
             }
-            .padding(4)
+            .scaledButtonStyle()
             timetable.makeView {
                 ProgressView()
             } success: { data in

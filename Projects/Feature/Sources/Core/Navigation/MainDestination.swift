@@ -40,4 +40,7 @@ enum MainDestination: Hashable {
     
     // meal
     case meal
+    
+    // timetable
+    case timetable
 }

@@ -31,7 +31,9 @@ extension HomeView: View {
                 HomeWorkspaceContainer(for: flow) {
                     router.navigate(to: MainDestination.workspaceDetail)
                 }
-                HomeTimetableContainer(for: viewModel.timetables)
+                HomeTimetableContainer(for: viewModel.timetables) {
+                    router.navigate(to: MainDestination.timetable)
+                }
                 HomeMealContainer(for: viewModel.meals) {
                     router.navigate(to: MainDestination.meal)
                 }

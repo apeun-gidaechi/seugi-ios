@@ -53,6 +53,9 @@ struct MainCoordinator: View {
                         
                         // meal
                     case .meal: MealView()
+                        
+                        // timetable
+                    case .timetable: TimetableView()
                     }
                 }
                 .environmentObject(self.stompViewModel)

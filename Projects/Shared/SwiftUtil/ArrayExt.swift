@@ -48,4 +48,18 @@ public extension Array where Element: Equatable {
             self.append(element)
         }
     }
+    
+    func groupBy(isGroupCriteria: (Element, Element) -> Bool) -> [[Element]] {
+        var grouped: [[Element]] = []
+
+        for element in self {
+            if let index = grouped.firstIndex(where: { isGroupCriteria($0.first!, element) }) {
+                grouped[index].append(element)
+            } else {
+                grouped.append([element])
+            }
+        }
+
+        return grouped
+    }
 }
