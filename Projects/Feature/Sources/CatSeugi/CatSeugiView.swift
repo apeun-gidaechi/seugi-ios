@@ -58,7 +58,10 @@ extension CatSeugiView: View {
             showShadow: true
         )
         .safeAreaInset(edge: .bottom) {
-            makeBottomTextField()
+            VStack(spacing: 12) {
+                makeHelperButtons()
+                makeBottomTextField()
+            }
         }
         .onReceive(viewModel.$sendMessageFlow) { flow in
             switch flow {
@@ -81,9 +84,7 @@ extension CatSeugiView: View {
         SeugiChatTextField("메세지 보내기", text: $viewModel.message, hasMenu: false) { action in
             switch action {
             case .sendMessage:
-                guard let member = mainViewModel.profile.data?.member else {
-                    return
-                }
+                guard let member = mainViewModel.profile.data?.member else { return }
                 viewModel.sendMessage(userId: member.id)
             default:
                 break
@@ -98,6 +99,30 @@ extension CatSeugiView: View {
                 try? await Task.sleep(for: .seconds(0.1))
                 withAnimation {
                     scrollToBottom()
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func makeHelperButtons() -> some View {
+        if let messages = viewModel.messages.data,
+           messages.count == 1 {
+            HStack(spacing: 8) {
+                ForEach(["오늘 급식 뭐야?", "8월 행사 알려줘"], id: \.self) { helperText in
+                    Button {
+                        viewModel.message = helperText
+                        guard let member = mainViewModel.profile.data?.member else { return }
+                        viewModel.sendMessage(userId: member.id)
+                    } label: {
+                        Text(helperText)
+                            .seugiColor(.gray(.g700))
+                            .font(.body(.b1))
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 12)
+                            .seugiBackground(.primary(.p100))
+                            .cornerRadius(12, corners: .allCorners)
+                    }
                 }
             }
         }
