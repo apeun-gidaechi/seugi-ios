@@ -8,8 +8,8 @@ public extension JSONDecoder {
             let container = try decoder.singleValueContainer()
             let dateStr = try container.decode(String.self)
             
-            // If the prefix is ​​0000-, it means online.
-            if dateStr.hasPrefix("0001") {
+            // If the prefix is ​​0000- or 0001-, it means online.
+            if ["0001", "0000"].contains(where: { dateStr.hasPrefix($0) }) {
                 return Date.distantPast
             }
             
