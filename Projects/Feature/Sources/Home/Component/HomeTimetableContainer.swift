@@ -9,14 +9,20 @@
 import SwiftUI
 import Domain
 import Component
+import ScopeKit
 
 struct HomeTimetableContainer: View {
     enum Id {
         case current
     }
     
-    // TODO: Fix Dummy
-    @State private var current = 3
+    @State private var nowTime = Date()
+
+    var selectedPeriod: Int {
+        let totalInterval = timeSize + freeTimeSize
+        let duration = Calendar.current.dateComponents([.minute], from: startTime, to: nowTime).minute ?? 0
+        return duration / totalInterval
+    }
     
     private let timetable: Flow<[Timetable]>
     private let action: () -> Void
@@ -53,7 +59,7 @@ struct HomeTimetableContainer: View {
                         ScrollView(.horizontal) {
                             LazyHStack(spacing: 0) {
                                 ForEach(Array(data.enumerated()), id: \.offset) { idx, subject in
-                                    let now = current == idx
+                                    let now = selectedPeriod == idx
                                     VStack(spacing: 0) {
                                         Text("\(idx + 1)")
                                             .font(.body(.b1))
@@ -62,11 +68,11 @@ struct HomeTimetableContainer: View {
                                             .padding(.vertical, 8)
                                         Text(subject.subject)
                                             .font(.body(.b1))
-                                            .seugiColor(now ? .sub(.white) : current < idx ? .primary(.p200) : .primary(.p300))
+                                            .seugiColor(now ? .sub(.white) : selectedPeriod < idx ? .primary(.p200) : .primary(.p300))
                                             .padding(8)
                                             .lineLimit(1)
                                             .frame(maxWidth: .infinity)
-                                            .if(current >= idx) { view in
+                                            .if(selectedPeriod >= idx) { view in
                                                 view.seugiBackground(.primary(.p500))
                                             }
                                             .if(now) { view in
@@ -93,7 +99,7 @@ struct HomeTimetableContainer: View {
                             }
                         }
                         .scrollIndicators(.hidden)
-                        .onChange(of: current) { _ in
+                        .onChange(of: selectedPeriod) { _ in
                             proxy.scrollTo(Id.current, anchor: .center)
                         }
                         .onAppear {
@@ -111,3 +117,12 @@ struct HomeTimetableContainer: View {
         .applyCardEffect()
     }
 }
+
+private let startTime: Date = run {
+    var components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+    components.hour = 8
+    components.minute = 50
+    return Calendar.current.date(from: components)!
+}
+private let freeTimeSize = 10
+private let timeSize = 50
